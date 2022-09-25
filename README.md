@@ -12,5 +12,3 @@ The Data Mesh platform is built to support most cloud providers and provisioning
 - Kind (for local development)
 
 ## Getting started
-
-To run the Data Mesh platform locally ensure that you have the prerequisites installed. Then start either the `DevAntler.DataMesh.Platform.Api` or `DevAntler.DataMesh.Platform` project. The API project will start an API server which can be used to manage the Data Mesh in a headless manner. The platform project will start a web server and the API server, so the Data Mesh can be managed and visualized through a web interface, or through the API.

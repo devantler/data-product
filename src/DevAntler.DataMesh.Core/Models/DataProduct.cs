@@ -1,14 +1,13 @@
 ﻿namespace DevAntler.DataMesh.Core.Models;
 public class DataProduct
 {
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public bool Enabled { get; set; }
     public DataProduct(string name, string description)
     {
-        Id = Guid.NewGuid();
         Name = name;
         Description = description;
     }
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public bool Enabled { get; set; } = false;
 }

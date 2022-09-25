@@ -3,7 +3,7 @@ using CliWrap.Buffered;
 
 namespace DevAntler.DataMesh.Platform.Provisioning.Local;
 
-public class LocalDataProductProvisioningService : IDataProductProvisioningService
+public class LocalProvisioningService : IDataProductProvisioningService
 {
     public async void CreateDataProduct(Guid id)
     {
