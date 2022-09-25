@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{52
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.DataProductService", "src\Services\DevAntler.DataMesh.DataProductService\DevAntler.DataMesh.DataProductService.csproj", "{29DF140D-FE63-4898-92CE-F65241C862B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.Provisioning", "src\Services\DevAntler.DataMesh.ProvisioningService\DevAntler.DataMesh.Provisioning.csproj", "{5B44FF2F-C0B8-4BBF-8FAA-AA405A57FE09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.ProvisioningService", "src\Services\DevAntler.DataMesh.ProvisioningService\DevAntler.DataMesh.ProvisioningService.csproj", "{5B44FF2F-C0B8-4BBF-8FAA-AA405A57FE09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

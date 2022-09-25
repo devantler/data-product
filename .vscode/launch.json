@@ -28,9 +28,6 @@
             },
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
-            },
-            "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
             }
         },
         {
@@ -51,9 +48,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/DevAntler.DataMesh.DataProductService/bin/Debug/net6.0/DevAntler.DataMesh.DataProductService.dll",
+            "program": "${workspaceFolder}/src/Services/DevAntler.DataMesh.DataProductService/bin/Debug/net6.0/DevAntler.DataMesh.DataProductService.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/DevAntler.DataMesh.DataProductService",
+            "cwd": "${workspaceFolder}/src/Services/DevAntler.DataMesh.DataProductService",
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
@@ -64,9 +61,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/DevAntler.DataMesh.ProvisioningService/bin/Debug/net6.0/DevAntler.DataMesh.ProvisioningService.dll",
+            "program": "${workspaceFolder}/src/Services/DevAntler.DataMesh.ProvisioningService/bin/Debug/net6.0/DevAntler.DataMesh.ProvisioningService.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/DevAntler.DataMesh.ProvisioningService",
+            "cwd": "${workspaceFolder}/src/Services/DevAntler.DataMesh.ProvisioningService",
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"

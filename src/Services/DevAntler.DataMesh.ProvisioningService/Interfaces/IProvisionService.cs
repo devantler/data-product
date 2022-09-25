@@ -1,10 +1,8 @@
-using System;
-
-namespace DevAntler.DataMesh.Provisioning;
+namespace DevAntler.DataMesh.ProvisioningService.Interfaces;
 
 public interface IProvisioningService
 {
-    public Task<Guid> Provision();
+    public Task<Guid> Create();
     public Task Teardown(Guid id);
     public Task Enable(Guid id);
     public Task Disable(Guid id);
