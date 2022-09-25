@@ -14,7 +14,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch-api-gateway",
+            "label": "watch api-gateway",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -26,7 +26,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch-platworm-web",
+            "label": "watch platworm-web",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -38,7 +38,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch-data-product-service",
+            "label": "watch data-product-service",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -46,18 +46,6 @@
                 "run",
                 "--project",
                 "src/Services/Devantler.DataMesh.DataProductService",
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "watch-provisioning-service",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
-                "--project",
-                "src/Services/Devantler.DataMesh.ProvisioningService",
             ],
             "problemMatcher": "$msCompile"
         }

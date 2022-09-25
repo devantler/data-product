@@ -32,13 +32,3 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
-
-  provisioning-service:
-    build: Services/DevAntler.DataMesh.ProvisioningService
-    image: devantler/datamesh-provisioning-service
-    ports:
-      - 60001:60001
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    volumes:
-      - ~/.vsdbg:/remote_debugger:rw

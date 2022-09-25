@@ -7,7 +7,6 @@
                 ".NET Core Watch (web)",
                 ".NET Core Watch (api-gateway)",
                 ".NET Core Watch (data-product-service)",
-                ".NET Core Watch (provisioning-service)"
             ],
             "stopAll": true,
         },
@@ -17,7 +16,6 @@
                 ".NET Core Launch (web)",
                 ".NET Core Launch (api-gateway)",
                 ".NET Core Launch (data-product-service)",
-                ".NET Core Launch (provisioning-service)"
             ],
             "stopAll": true,
         }
@@ -88,28 +86,6 @@
             "program": "${workspaceFolder}/src/Services/DevAntler.DataMesh.DataProductService/bin/Debug/net6.0/DevAntler.DataMesh.DataProductService.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Services/DevAntler.DataMesh.DataProductService",
-            "stopAtEntry": false,
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
-        {
-            "type": "DotNetWatch",
-            "request": "launch",
-            "name": ".NET Core Watch (provisioning-service)",
-            "project": "/Users/nikolaiemildamm/git-school/thesis-project/src/data-mesh/src/Services/DevAntler.DataMesh.ProvisioningService/DevAntler.DataMesh.ProvisioningService.csproj",
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
-        {
-            "name": ".NET Core Launch (provisioning-service)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "watch-provisioning-service",
-            "program": "${workspaceFolder}/src/Services/DevAntler.DataMesh.ProvisioningService/bin/Debug/net6.0/DevAntler.DataMesh.ProvisioningService.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/src/Services/DevAntler.DataMesh.ProvisioningService",
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"

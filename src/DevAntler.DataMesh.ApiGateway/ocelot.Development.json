@@ -6,27 +6,28 @@
             "DownstreamHostAndPorts": [
                 {
                     "Host": "localhost",
-                    "Port": 60001
+                    "Port": 60000
                 }
             ],
-            "UpstreamPathTemplate": "/api/provisioning/{everything}",
+            "UpstreamPathTemplate": "/api/{everything}",
             "UpstreamHttpMethod": [
+                "Get",
                 "Post",
                 "Put",
                 "Delete"
             ],
-            "SwaggerKey": "provisioning",
+            "SwaggerKey": "data-product-service",
             "DangerousAcceptAnyServerCertificateValidator": true
         }
     ],
     "SwaggerEndPoints": [
         {
-            "Key": "provisioning",
+            "Key": "data-product-service",
             "Config": [
                 {
-                    "Name": "Provisioning API",
+                    "Name": "Data Product API",
                     "Version": "v1",
-                    "Url": "https://localhost:60001/swagger/v1/swagger.json"
+                    "Url": "https://localhost:60000/swagger/v1/swagger.json"
                 }
             ]
         }

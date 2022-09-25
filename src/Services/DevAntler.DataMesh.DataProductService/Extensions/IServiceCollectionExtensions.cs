@@ -1,7 +1,7 @@
-using DevAntler.DataMesh.ProvisioningService.Interfaces;
-using DevAntler.DataMesh.ProvisioningService.Targets.Local;
+using DevAntler.DataMesh.DataProductService.Interfaces;
+using DevAntler.DataMesh.DataProductService.Targets.Local;
 
-namespace DevAntler.DataMesh.ProvisioningService.Extensions;
+namespace DevAntler.DataMesh.DataProductService.Extensions;
 
 public static class IServiceCollectionExtensions
 {

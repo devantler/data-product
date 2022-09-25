@@ -1,7 +1,14 @@
+using DevAntler.DataMesh.DataProductService.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSwaggerDoc();
+    options.IncludeXmlComments();
+});
+builder.Services.AddProvisioningTargets();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
