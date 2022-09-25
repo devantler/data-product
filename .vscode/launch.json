@@ -2,6 +2,16 @@
     "version": "0.2.0",
     "compounds": [
         {
+            "name": ".NET Core Watch (compound)",
+            "configurations": [
+                ".NET Core Watch (web)",
+                ".NET Core Watch (api-gateway)",
+                ".NET Core Watch (data-product-service)",
+                ".NET Core Watch (provisioning-service)"
+            ],
+            "stopAll": true,
+        },
+        {
             "name": ".NET Core Launch (compound)",
             "configurations": [
                 ".NET Core Launch (web)",
@@ -13,6 +23,15 @@
         }
     ],
     "configurations": [
+        {
+            "type": "DotNetWatch",
+            "request": "launch",
+            "name": ".NET Core Watch (web)",
+            "project": "/Users/nikolaiemildamm/git-school/thesis-project/src/data-mesh/src/DevAntler.DataMesh.Platform.Web/DevAntler.DataMesh.Platform.Web.csproj",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
         {
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
@@ -31,10 +50,19 @@
             }
         },
         {
+            "type": "DotNetWatch",
+            "request": "launch",
+            "name": ".NET Core Watch (api-gateway)",
+            "project": "/Users/nikolaiemildamm/git-school/thesis-project/src/data-mesh/src/DevAntler.DataMesh.ApiGateway/DevAntler.DataMesh.ApiGateway.csproj",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
             "name": ".NET Core Launch (api-gateway)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "watch-api-gateway",
             "program": "${workspaceFolder}/src/DevAntler.DataMesh.ApiGateway/bin/Debug/net6.0/DevAntler.DataMesh.ApiGateway.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/DevAntler.DataMesh.ApiGateway",
@@ -44,10 +72,19 @@
             }
         },
         {
+            "type": "DotNetWatch",
+            "request": "launch",
+            "name": ".NET Core Watch (data-product-service)",
+            "project": "/Users/nikolaiemildamm/git-school/thesis-project/src/data-mesh/src/Services/DevAntler.DataMesh.DataProductService/DevAntler.DataMesh.DataProductService.csproj",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
             "name": ".NET Core Launch (data-product-service)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "watch-data-product-service",
             "program": "${workspaceFolder}/src/Services/DevAntler.DataMesh.DataProductService/bin/Debug/net6.0/DevAntler.DataMesh.DataProductService.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Services/DevAntler.DataMesh.DataProductService",
@@ -57,10 +94,19 @@
             }
         },
         {
+            "type": "DotNetWatch",
+            "request": "launch",
+            "name": ".NET Core Watch (provisioning-service)",
+            "project": "/Users/nikolaiemildamm/git-school/thesis-project/src/data-mesh/src/Services/DevAntler.DataMesh.ProvisioningService/DevAntler.DataMesh.ProvisioningService.csproj",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
             "name": ".NET Core Launch (provisioning-service)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
+            "preLaunchTask": "watch-provisioning-service",
             "program": "${workspaceFolder}/src/Services/DevAntler.DataMesh.ProvisioningService/bin/Debug/net6.0/DevAntler.DataMesh.ProvisioningService.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Services/DevAntler.DataMesh.ProvisioningService",

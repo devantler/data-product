@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="MMLib.SwaggerForOcelot" Version="5.2.0" />
     <PackageReference Include="Ocelot" Version="18.0.0" />
   </ItemGroup>
 </Project>

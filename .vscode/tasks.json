@@ -14,14 +14,50 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch",
+            "label": "watch-api-gateway",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "watch",
                 "run",
                 "--project",
-                "DevAntler.DataMesh.sln",
+                "src/Devantler.DataMesh.ApiGateway",
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch-platworm-web",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "src/Devantler.DataMesh.Platform.Web",
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch-data-product-service",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "src/Services/Devantler.DataMesh.DataProductService",
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch-provisioning-service",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "src/Services/Devantler.DataMesh.ProvisioningService",
             ],
             "problemMatcher": "$msCompile"
         }
