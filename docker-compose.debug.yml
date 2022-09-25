@@ -1,0 +1,44 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: '3.9'
+
+services:
+  platform-web:
+    build: DevAntler.DataMesh.Platform.Web/
+    image: devantler/datamesh-platform-web
+    ports:
+      - 8080:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  api-gateway:
+    build: DevAntler.DataMesh.ApiGateway/
+    image: devantler/datamesh-api-gateway
+    ports:
+      - 8000:8000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  data-product-service:
+    build: ./Services/DevAntler.DataMesh.DataProductService
+    image: devantler/datamesh-data-product-service
+    ports:
+      - 60000:60000
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+
+  provisioning-service:
+    build: ./Services/DevAntler.DataMesh.ProvisioningService
+    image: devantler/datamesh-provisioning-service
+    ports:
+      - 60001:60001
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw

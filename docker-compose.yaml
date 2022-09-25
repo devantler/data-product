@@ -12,8 +12,15 @@ services:
     image: devantler/datamesh-api-gateway
     ports:
       - 8000:8000
-  # data-product-service:
-  #   build: ./Services/DevAntler.DataMesh.DataProductService
 
-  # provisioning-service:
-  #   build: ./Services/DevAntler.DataMesh.ProvisioningService
+  data-product-service:
+    build: ./Services/DevAntler.DataMesh.DataProductService
+    image: devantler/datamesh-data-product-service
+    ports:
+      - 60000:60000
+
+  provisioning-service:
+    build: ./Services/DevAntler.DataMesh.ProvisioningService
+    image: devantler/datamesh-provisioning-service
+    ports:
+      - 60001:60001
