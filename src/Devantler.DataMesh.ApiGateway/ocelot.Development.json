@@ -1,0 +1,35 @@
+{
+    "Routes": [
+        {
+            "DownstreamPathTemplate": "/{everything}",
+            "DownstreamScheme": "https",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 60000
+                }
+            ],
+            "UpstreamPathTemplate": "/api/{everything}",
+            "UpstreamHttpMethod": [
+                "Get",
+                "Post",
+                "Put",
+                "Delete"
+            ],
+            "SwaggerKey": "dataspace-service",
+            "DangerousAcceptAnyServerCertificateValidator": true
+        }
+    ],
+    "SwaggerEndPoints": [
+        {
+            "Key": "dataspace-service",
+            "Config": [
+                {
+                    "Name": "Dataspace API",
+                    "Version": "v1",
+                    "Url": "https://localhost:60000/swagger/v1/swagger.json"
+                }
+            ]
+        }
+    ]
+}
