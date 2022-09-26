@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Devantler.DataMesh.Services.Core/DevAntler.DataMesh.Services.Core.csproj" />
+    <ProjectReference Include="../Devantler.DataMesh.Services.Core/Devantler.DataMesh.Services.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
