@@ -13,6 +13,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{52
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.DataProductService", "src\Services\DevAntler.DataMesh.DataProductService\DevAntler.DataMesh.DataProductService.csproj", "{29DF140D-FE63-4898-92CE-F65241C862B2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{03B9165C-D4FA-4DE0-A872-299F2C7E681B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{36F6EAB1-9624-4288-BB41-4553767D29F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.SwaggerGenExtensions", "src\Services\DevAntler.DataMesh.SwaggerGenExtensions\DevAntler.DataMesh.SwaggerGenExtensions.csproj", "{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,8 +44,14 @@ Global
 		{29DF140D-FE63-4898-92CE-F65241C862B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29DF140D-FE63-4898-92CE-F65241C862B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29DF140D-FE63-4898-92CE-F65241C862B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{29DF140D-FE63-4898-92CE-F65241C862B2} = {52CB2DF9-3BF5-4241-BFCA-C9BA8B04FB91}
+		{36F6EAB1-9624-4288-BB41-4553767D29F5} = {03B9165C-D4FA-4DE0-A872-299F2C7E681B}
+		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736} = {36F6EAB1-9624-4288-BB41-4553767D29F5}
 	EndGlobalSection
 EndGlobal
