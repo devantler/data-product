@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "DevAntler.DataMesh.Platform.Web": {
+    "Devantler.DataMesh.Platform.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

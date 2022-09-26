@@ -6,7 +6,7 @@
             "configurations": [
                 ".NET Core Watch (web)",
                 ".NET Core Watch (api-gateway)",
-                ".NET Core Watch (data-product-service)",
+                ".NET Core Watch (dataspace-service)",
             ],
             "stopAll": true,
         },
@@ -15,7 +15,7 @@
             "configurations": [
                 ".NET Core Launch (web)",
                 ".NET Core Launch (api-gateway)",
-                ".NET Core Launch (data-product-service)",
+                ".NET Core Launch (dataspace-service)",
             ],
             "stopAll": true,
         }
@@ -25,7 +25,7 @@
             "type": "DotNetWatch",
             "request": "launch",
             "name": ".NET Core Watch (web)",
-            "project": "${workspaceFolder}/src/DevAntler.DataMesh.Platform.Web/DevAntler.DataMesh.Platform.Web.csproj",
+            "project": "${workspaceFolder}/src/Devantler.DataMesh.Platform.Web/Devantler.DataMesh.Platform.Web.csproj",
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
@@ -35,9 +35,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/DevAntler.DataMesh.Platform.Web/bin/Debug/net6.0/DevAntler.DataMesh.Platform.Web.dll",
+            "program": "${workspaceFolder}/src/Devantler.DataMesh.Platform.Web/bin/Debug/net6.0/Devantler.DataMesh.Platform.Web.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/DevAntler.DataMesh.Platform.Web",
+            "cwd": "${workspaceFolder}/src/Devantler.DataMesh.Platform.Web",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -51,7 +51,7 @@
             "type": "DotNetWatch",
             "request": "launch",
             "name": ".NET Core Watch (api-gateway)",
-            "project": "${workspaceFolder}/src/DevAntler.DataMesh.ApiGateway/DevAntler.DataMesh.ApiGateway.csproj",
+            "project": "${workspaceFolder}/src/Devantler.DataMesh.ApiGateway/Devantler.DataMesh.ApiGateway.csproj",
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
@@ -61,9 +61,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/DevAntler.DataMesh.ApiGateway/bin/Debug/net6.0/DevAntler.DataMesh.ApiGateway.dll",
+            "program": "${workspaceFolder}/src/Devantler.DataMesh.ApiGateway/bin/Debug/net6.0/Devantler.DataMesh.ApiGateway.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/DevAntler.DataMesh.ApiGateway",
+            "cwd": "${workspaceFolder}/src/Devantler.DataMesh.ApiGateway",
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
@@ -72,20 +72,20 @@
         {
             "type": "DotNetWatch",
             "request": "launch",
-            "name": ".NET Core Watch (data-product-service)",
-            "project": "${workspaceFolder}/src/Services/DevAntler.DataMesh.DataProductService/DevAntler.DataMesh.DataProductService.csproj",
+            "name": ".NET Core Watch (dataspace-service)",
+            "project": "${workspaceFolder}/src/Services/Devantler.DataMesh.Services.Dataspace/Devantler.DataMesh.Services.Dataspace.csproj",
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
         },
         {
-            "name": ".NET Core Launch (data-product-service)",
+            "name": ".NET Core Launch (dataspace-service)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Services/DevAntler.DataMesh.DataProductService/bin/Debug/net6.0/DevAntler.DataMesh.DataProductService.dll",
+            "program": "${workspaceFolder}/src/Services/Devantler.DataMesh.Services.Dataspace/bin/Debug/net6.0/Devantler.DataMesh.Services.Dataspace.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Services/DevAntler.DataMesh.DataProductService",
+            "cwd": "${workspaceFolder}/src/Services/Devantler.DataMesh.Services.Dataspace",
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"

@@ -16,16 +16,16 @@
                 "Put",
                 "Delete"
             ],
-            "SwaggerKey": "data-product-service",
+            "SwaggerKey": "dataspace-service",
             "DangerousAcceptAnyServerCertificateValidator": true
         }
     ],
     "SwaggerEndPoints": [
         {
-            "Key": "data-product-service",
+            "Key": "dataspace-service",
             "Config": [
                 {
-                    "Name": "Data Product API",
+                    "Name": "Dataspace API",
                     "Version": "v1",
                     "Url": "https://localhost:60000/swagger/v1/swagger.json"
                 }

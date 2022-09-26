@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.Platform.Web", "src\DevAntler.DataMesh.Platform.Web\DevAntler.DataMesh.Platform.Web.csproj", "{42E5196E-D18E-4B81-9467-9A4F2FCD5550}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Platform.Web", "src\Devantler.DataMesh.Platform.Web\Devantler.DataMesh.Platform.Web.csproj", "{42E5196E-D18E-4B81-9467-9A4F2FCD5550}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.Core", "src\DevAntler.DataMesh.Core\DevAntler.DataMesh.Core.csproj", "{226B1BBD-3779-4F7A-803B-B814A6D3931B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Core", "src\Devantler.DataMesh.Core\Devantler.DataMesh.Core.csproj", "{226B1BBD-3779-4F7A-803B-B814A6D3931B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.ApiGateway", "src\DevAntler.DataMesh.ApiGateway\DevAntler.DataMesh.ApiGateway.csproj", "{5A16D570-2D10-4E9E-A083-FC91A58CE52A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.ApiGateway", "src\Devantler.DataMesh.ApiGateway\Devantler.DataMesh.ApiGateway.csproj", "{5A16D570-2D10-4E9E-A083-FC91A58CE52A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{52CB2DF9-3BF5-4241-BFCA-C9BA8B04FB91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.DataProductService", "src\Services\DevAntler.DataMesh.DataProductService\DevAntler.DataMesh.DataProductService.csproj", "{29DF140D-FE63-4898-92CE-F65241C862B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Services.Dataspace", "src\Services\Devantler.DataMesh.Services.Dataspace\Devantler.DataMesh.Services.Dataspace.csproj", "{29DF140D-FE63-4898-92CE-F65241C862B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{03B9165C-D4FA-4DE0-A872-299F2C7E681B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{36F6EAB1-9624-4288-BB41-4553767D29F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevAntler.DataMesh.SwaggerGenExtensions", "src\Services\DevAntler.DataMesh.SwaggerGenExtensions\DevAntler.DataMesh.SwaggerGenExtensions.csproj", "{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Services.Core", "src\Services\Devantler.DataMesh.Services.Core\Devantler.DataMesh.Services.Core.csproj", "{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,4 @@
-using DevAntler.DataMesh.DataProductService.Interfaces;
-using DevAntler.DataMesh.DataProductService.ProvisioningTools;
-
-namespace DevAntler.DataMesh.DataProductService.Targets.Local;
+namespace Devantler.DataMesh.Services.Dataspace.Provisioning.Targets.Local;
 
 public class LocalProvisioningService : IProvisioningService
 {

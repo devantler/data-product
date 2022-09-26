@@ -1,7 +1,7 @@
 using CliWrap;
 using CliWrap.Buffered;
 
-namespace DevAntler.DataMesh.DataProductService.ProvisioningTools;
+namespace Devantler.DataMesh.Services.Dataspace.Provisioning;
 
 public static class KindCli
 {

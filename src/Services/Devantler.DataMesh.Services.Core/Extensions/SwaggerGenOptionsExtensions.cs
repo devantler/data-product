@@ -1,10 +1,10 @@
 using System.Reflection;
-using DevAntler.DataMesh.SwaggerGenExtensions;
+using Devantler.DataMesh.Services.Core.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace DevAntler.DataMesh.SwaggerGenExtensions;
+namespace Devantler.DataMesh.Services.Core.Extensions;
 
 public static class SwaggerGenOptionsExtensions
 {

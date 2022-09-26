@@ -1,47 +1,47 @@
-using DevAntler.DataMesh.DataProductService.Interfaces;
+using Devantler.DataMesh.Services.Dataspace.Provisioning;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DevAntler.DataMesh.DataProductService.Controllers;
+namespace Devantler.DataMesh.Services.Dataspace.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DataProductController : ControllerBase
+public class DataspaceController : ControllerBase
 {
     private readonly IProvisioningService _ProvisioningService;
-    private readonly ILogger<DataProductController> _logger;
+    private readonly ILogger<DataspaceController> _logger;
 
-    public DataProductController(IProvisioningService ProvisioningService, ILogger<DataProductController> logger)
+    public DataspaceController(IProvisioningService ProvisioningService, ILogger<DataspaceController> logger)
     {
         _ProvisioningService = ProvisioningService;
         _logger = logger;
     }
 
     /// <summary>
-    /// Lists all data products.
+    /// Lists all dataspaces.
     /// </summary>
     [HttpGet]
     public string[] List() => _ProvisioningService.List().Result;
 
     /// <summary>
-    /// Creates a new data product.
+    /// Creates a new dataspace.
     /// </summary>
     [HttpPost]
     public string Create() => _ProvisioningService.Create().Result;
 
     /// <summary>
-    /// Deletes a data product.
+    /// Deletes a dataspace.
     /// </summary>
     [HttpDelete("{id}")]
     public void Teardown(Guid id) => Ok(_ProvisioningService.Teardown(id));
 
     /// <summary>
-    /// Enables a data product.
+    /// Enables a dataspace.
     /// </summary>
     [HttpPut("{id}/enable")]
     public void Enable(Guid id) => Ok(_ProvisioningService.Enable(id));
 
     /// <summary>
-    /// Disables a data product.
+    /// Disables a dataspace.
     /// </summary>
     [HttpPut("{id}/disable")]
     public void Disable(Guid id) => Ok(_ProvisioningService.Enable(id));

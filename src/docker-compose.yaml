@@ -2,19 +2,19 @@ version: '3.9'
 
 services:
   platform-web:
-    build: DevAntler.DataMesh.Platform.Web/
+    build: Devantler.DataMesh.Platform.Web/
     image: devantler/datamesh-platform-web
     ports:
       - 8080:8080
 
   api-gateway:
-    build: DevAntler.DataMesh.ApiGateway/
+    build: Devantler.DataMesh.ApiGateway/
     image: devantler/datamesh-api-gateway
     ports:
       - 8000:8000
 
   data-product-service:
-    build: Services/DevAntler.DataMesh.DataProductService
-    image: devantler/datamesh-data-product-service
+    build: Services/Devantler.DataMesh.Services.Dataspace
+    image: devantler/datamesh-dataspace-service
     ports:
       - 60000:60000

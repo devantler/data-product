@@ -11,7 +11,7 @@ USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /src
-COPY DevAntler.DataMesh.DataProductService.csproj .
+COPY Devantler.DataMesh.Services.Dataspace.csproj .
 RUN dotnet restore
 COPY . .
 RUN dotnet build -c Release -o /app/build
@@ -22,4 +22,4 @@ RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DevAntler.DataMesh.DataProductService.dll"]
+ENTRYPOINT ["dotnet", "Devantler.DataMesh.Services.Dataspace.dll"]

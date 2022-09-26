@@ -1,4 +1,4 @@
-namespace DevAntler.DataMesh.DataProductService.Interfaces;
+namespace Devantler.DataMesh.Services.Dataspace.Provisioning;
 
 public interface IProvisioningService
 {

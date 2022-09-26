@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "DevAntler.DataMesh.ApiGateway": {
+    "Devantler.DataMesh.ApiGateway": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
