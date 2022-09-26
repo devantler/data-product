@@ -3,6 +3,5 @@
 *.pdf
 
 # .NET
-
 bin/
 obj/
