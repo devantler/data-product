@@ -11,10 +11,11 @@ USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /src
-COPY Devantler.DataMesh.Services.Dataspace/*.csproj Devantler.DataMesh.Services.Dataspace/
-COPY Devantler.DataMesh.Services.Core/*.csproj Devantler.DataMesh.Services.Core/
+COPY Devantler.DataMesh.Services.Dataspace/*.csproj Devantler.DataMesh.Services.Dataspace
+COPY Devantler.DataMesh.Services.Core/*.csproj Devantler.DataMesh.Services.Core
 RUN dotnet restore Devantler.DataMesh.Services.Dataspace/Devantler.DataMesh.Services.Dataspace.csproj
-COPY . .
+COPY Devantler.DataMesh.Services.Dataspace .
+COPY Devantler.DataMesh.Services.Core .
 RUN dotnet build Devantler.DataMesh.Services.Dataspace/Devantler.DataMesh.Services.Dataspace.csproj -c Release -o /app/build
 
 FROM build AS publish
