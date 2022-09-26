@@ -1,0 +1,25 @@
+name: Build and Test Data Mesh
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        dotnet-version: ["6.0.x"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup .NET SDK v${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal

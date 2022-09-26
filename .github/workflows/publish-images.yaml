@@ -1,11 +1,11 @@
 name: Publish Images to GitHub Container Registry
-on: 
+on:
   workflow_dispatch:
-  push: 
+  push:
     paths:
-    - 'src/**'
-    - '.github/workflows/publish-images.yaml'
-    branches: 
+      - "src/**"
+      - ".github/workflows/publish-images.yaml"
+    branches:
       - main
 
 jobs:
