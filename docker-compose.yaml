@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  platform-web:
+    image: devantler/datamesh-platform-web:main
+    ports:
+      - 8080:8080
+
+  api-gateway:
+    image: devantler/datamesh-api-gateway:main
+    ports:
+      - 8000:8000
+
+  data-product-service:
+    image: devantler/datamesh-dataspace-service:main
+    ports:
+      - 60000:60000
