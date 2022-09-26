@@ -11,10 +11,11 @@ USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /src
-COPY *.csproj .
-RUN dotnet restore
+COPY Devantler.DataMesh.Services.Dataspace/*.csproj Devantler.DataMesh.Services.Dataspace/
+COPY Devantler.DataMesh.Services.Core/*.csproj Devantler.DataMesh.Services.Core/
+RUN dotnet restore Devantler.DataMesh.Services.Dataspace/Devantler.DataMesh.Services.Dataspace.csproj
 COPY . .
-RUN dotnet build -c Release -o /app/build
+RUN dotnet build Devantler.DataMesh.Services.Dataspace/Devantler.DataMesh.Services.Dataspace.csproj -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false

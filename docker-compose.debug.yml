@@ -24,7 +24,9 @@ services:
       - ~/.vsdbg:/remote_debugger:rw
 
   data-product-service:
-    build: Services/Devantler.DataMesh.Services.Dataspace
+    build: 
+      context: Services/
+      dockerfile: DataProductService/Dockerfile
     image: devantler/datamesh-dataspace-service
     ports:
       - 60000:60000
