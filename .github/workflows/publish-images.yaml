@@ -103,7 +103,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
-          context: src/Services/Devantler.DataMesh.Services.Dataspace
+          context: src/Services
           file: src/Services/Devantler.DataMesh.Services.Dataspace/Dockerfile
           platforms: linux/amd64, linux/arm64
           push: true
