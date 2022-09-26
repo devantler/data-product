@@ -19,7 +19,7 @@ COPY Devantler.DataMesh.Services.Core .
 RUN dotnet build Devantler.DataMesh.Services.Dataspace/Devantler.DataMesh.Services.Dataspace.csproj -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish Devantler.DataMesh.Services.Dataspace/Devantler.DataMesh.Services.Dataspace.csproj -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
