@@ -33,6 +33,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: src/Devantler.DataMesh.ApiGateway
+          file: src/Devantler.DataMesh.ApiGateway/Dockerfile
           platforms: linux/amd64, linux/arm64, linux/arm/v7
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -66,6 +67,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: src/Devantler.DataMesh.Platform.Web
+          file: src/Devantler.DataMesh.Platform.Web/Dockerfile
           platforms: linux/amd64, linux/arm64, linux/arm/v7
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -99,6 +101,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: src/Services/Devantler.DataMesh.Services.Dataspace
+          file: src/Services/Devantler.DataMesh.Services.Dataspace/Dockerfile
           platforms: linux/amd64, linux/arm64, linux/arm/v7
           push: true
           tags: ${{ steps.meta.outputs.tags }}

@@ -11,7 +11,7 @@ USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build
 WORKDIR /src
-COPY ./Devantler.DataMesh.Platform.Web.csproj .
+COPY *.csproj .
 RUN dotnet restore
 COPY . .
 RUN dotnet build -c Release -o /app/build
