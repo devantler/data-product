@@ -7,6 +7,7 @@ public static class KindCli
 {
     public static CommandTask<BufferedCommandResult> GetClusters()
     {
+
         return Cli.Wrap("kind")
             .WithArguments("get clusters")
             .ExecuteBufferedAsync();

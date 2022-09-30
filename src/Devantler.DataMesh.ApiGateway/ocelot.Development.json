@@ -16,6 +16,10 @@
                 "Put",
                 "Delete"
             ],
+            "AuthenticationOptions": {
+                "AuthenticationProviderKey": "Bearer",
+                "AllowedScopes": []
+            },
             "SwaggerKey": "dataspace-service",
             "DangerousAcceptAnyServerCertificateValidator": true
         }
