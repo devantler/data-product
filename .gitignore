@@ -5,3 +5,4 @@
 # .NET
 bin/
 obj/
+app.db
