@@ -3,17 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Platform.Web", "src\Devantler.DataMesh.Platform.Web\Devantler.DataMesh.Platform.Web.csproj", "{42E5196E-D18E-4B81-9467-9A4F2FCD5550}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8B094D4D-7AE8-42BB-9089-D561CEE4B87D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Core", "src\Devantler.DataMesh.Core\Devantler.DataMesh.Core.csproj", "{226B1BBD-3779-4F7A-803B-B814A6D3931B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Core", "src\Devantler.DataMesh.Core\Devantler.DataMesh.Core.csproj", "{F5863641-205B-436D-BA03-F8DBF58222D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.ApiGateway", "src\Devantler.DataMesh.ApiGateway\Devantler.DataMesh.ApiGateway.csproj", "{5A16D570-2D10-4E9E-A083-FC91A58CE52A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct", "src\Devantler.DataMesh.DataProduct\Devantler.DataMesh.DataProduct.csproj", "{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Services.Dataspace", "src\Services\Devantler.DataMesh.Services.Dataspace\Devantler.DataMesh.Services.Dataspace.csproj", "{29DF140D-FE63-4898-92CE-F65241C862B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.SourceGenerators", "src\Devantler.DataMesh.DataProduct.SourceGenerators\Devantler.DataMesh.DataProduct.SourceGenerators.csproj", "{A762AE3B-CC1D-470E-B78F-3D89545779F8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{36F6EAB1-9624-4288-BB41-4553767D29F5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Services.Core", "src\Services\Devantler.DataMesh.Services.Core\Devantler.DataMesh.Services.Core.csproj", "{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Provisioning", "src\Devantler.DataMesh.Provisioning\Devantler.DataMesh.Provisioning.csproj", "{C186B934-0E92-49D3-BDCD-009615CB4AD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,29 +22,27 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{42E5196E-D18E-4B81-9467-9A4F2FCD5550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{42E5196E-D18E-4B81-9467-9A4F2FCD5550}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{42E5196E-D18E-4B81-9467-9A4F2FCD5550}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{42E5196E-D18E-4B81-9467-9A4F2FCD5550}.Release|Any CPU.Build.0 = Release|Any CPU
-		{226B1BBD-3779-4F7A-803B-B814A6D3931B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{226B1BBD-3779-4F7A-803B-B814A6D3931B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{226B1BBD-3779-4F7A-803B-B814A6D3931B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{226B1BBD-3779-4F7A-803B-B814A6D3931B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A16D570-2D10-4E9E-A083-FC91A58CE52A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A16D570-2D10-4E9E-A083-FC91A58CE52A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A16D570-2D10-4E9E-A083-FC91A58CE52A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A16D570-2D10-4E9E-A083-FC91A58CE52A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29DF140D-FE63-4898-92CE-F65241C862B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29DF140D-FE63-4898-92CE-F65241C862B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29DF140D-FE63-4898-92CE-F65241C862B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29DF140D-FE63-4898-92CE-F65241C862B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5863641-205B-436D-BA03-F8DBF58222D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5863641-205B-436D-BA03-F8DBF58222D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5863641-205B-436D-BA03-F8DBF58222D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5863641-205B-436D-BA03-F8DBF58222D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A762AE3B-CC1D-470E-B78F-3D89545779F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A762AE3B-CC1D-470E-B78F-3D89545779F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A762AE3B-CC1D-470E-B78F-3D89545779F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A762AE3B-CC1D-470E-B78F-3D89545779F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C186B934-0E92-49D3-BDCD-009615CB4AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C186B934-0E92-49D3-BDCD-009615CB4AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C186B934-0E92-49D3-BDCD-009615CB4AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C186B934-0E92-49D3-BDCD-009615CB4AD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{3EDA74E4-4DBB-4F86-83AA-2BDFA815E736} = {36F6EAB1-9624-4288-BB41-4553767D29F5}
-		{29DF140D-FE63-4898-92CE-F65241C862B2} = {36F6EAB1-9624-4288-BB41-4553767D29F5}
+		{F5863641-205B-436D-BA03-F8DBF58222D2} = {8B094D4D-7AE8-42BB-9089-D561CEE4B87D}
+		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74} = {8B094D4D-7AE8-42BB-9089-D561CEE4B87D}
+		{A762AE3B-CC1D-470E-B78F-3D89545779F8} = {8B094D4D-7AE8-42BB-9089-D561CEE4B87D}
+		{C186B934-0E92-49D3-BDCD-009615CB4AD3} = {8B094D4D-7AE8-42BB-9089-D561CEE4B87D}
 	EndGlobalSection
 EndGlobal

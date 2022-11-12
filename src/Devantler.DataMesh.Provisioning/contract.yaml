@@ -1,0 +1,33 @@
+---
+Contract:
+  Domain: Students
+  Models:
+  - Name: Student
+    Properties:
+    - Name: Name
+      Type: string
+    - Name: Age
+      Type: int
+    - Name: Courses
+      Type: list<Course>
+    - Name: Grades
+      Type: list<int>
+    - Name: FavoriteCourse
+      Type: Course
+  - Name: Course
+    Properties:
+    - Name: Name
+      Type: string
+    - Name: Credits
+      Type: int
+  Storage:
+    Type: PostgreSQL
+    ConnectionString: Server=localhost;Port=5432;Database=students;User Id=postgres;Password=postgres;
+    Username: postgres
+    Password: postgres
+  Source:
+    Type: MongoDB
+    ConnectionString: mongodb://localhost:27017
+    Database: students
+    Username: admin
+    Password: admin

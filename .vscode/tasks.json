@@ -7,47 +7,91 @@
             "type": "process",
             "args": [
                 "build",
-                "Devantler.DataMesh.sln",
+                "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch api-gateway",
+            "label": "publish",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "watch",
-                "run",
-                "--project",
-                "src/Devantler.DataMesh.ApiGateway",
+                "publish",
+                "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch platworm-web",
+            "label": "watch",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "watch",
                 "run",
                 "--project",
-                "src/Devantler.DataMesh.Platform.Web",
+                "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch dataspace-service",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "watch",
-                "run",
-                "--project",
-                "src/Services/Devantler.DataMesh.Services.Dataspace",
+            "type": "docker-build",
+            "label": "docker-build: debug",
+            "dependsOn": [
+                "build"
             ],
-            "problemMatcher": "$msCompile"
+            "dockerBuild": {
+                "tag": "datamesh:dev",
+                "target": "base",
+                "dockerfile": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj"
+            }
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: release",
+            "dependsOn": [
+                "build"
+            ],
+            "dockerBuild": {
+                "tag": "datamesh:latest",
+                "dockerfile": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj"
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: debug",
+            "dependsOn": [
+                "docker-build: debug"
+            ],
+            "dockerRun": {},
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj",
+                "enableDebugging": true
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: release",
+            "dependsOn": [
+                "docker-build: release"
+            ],
+            "dockerRun": {},
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj"
+            }
         }
     ]
 }
