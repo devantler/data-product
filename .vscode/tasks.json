@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj",
+                "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj",
+                "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj"
+                "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj"
             ],
             "problemMatcher": "$msCompile"
         },
@@ -46,12 +46,12 @@
             "dockerBuild": {
                 "tag": "datamesh:dev",
                 "target": "base",
-                "dockerfile": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Dockerfile",
+                "dockerfile": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Dockerfile",
                 "context": "${workspaceFolder}",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj"
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj"
             }
         },
         {
@@ -62,12 +62,12 @@
             ],
             "dockerBuild": {
                 "tag": "datamesh:latest",
-                "dockerfile": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Dockerfile",
+                "dockerfile": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Dockerfile",
                 "context": "${workspaceFolder}",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj"
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj"
             }
         },
         {
@@ -78,7 +78,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj",
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj",
                 "enableDebugging": true
             }
         },
@@ -90,7 +90,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj"
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj"
             }
         }
     ]

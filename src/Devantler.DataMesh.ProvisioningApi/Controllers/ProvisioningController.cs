@@ -1,9 +1,9 @@
-using Devantler.DataMesh.Provisioning.Interfaces;
-using Devantler.DataMesh.Provisioning.Models;
+using Devantler.DataMesh.ProvisioningApi.Interfaces;
+using Devantler.DataMesh.ProvisioningApi.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Devantler.DataMesh.Provisioning.Controllers;
+namespace Devantler.DataMesh.ProvisioningApi.Controllers;
 
 [Authorize]
 [ApiController]

@@ -1,8 +1,8 @@
-using Devantler.DataMesh.Provisioning.Interfaces;
-using Devantler.DataMesh.Provisioning.Models;
+using Devantler.DataMesh.ProvisioningApi.Interfaces;
+using Devantler.DataMesh.ProvisioningApi.Models;
 using Devantler.KindCLI;
 
-namespace Devantler.DataMesh.Provisioning.Services;
+namespace Devantler.DataMesh.ProvisioningApi.Services;
 
 public class K8sDataProductProvisioningService : IDataProductProvisioningService
 {

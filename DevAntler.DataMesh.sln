@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.SourceGenerators", "src\Devantler.DataMesh.DataProduct.SourceGenerators\Devantler.DataMesh.DataProduct.SourceGenerators.csproj", "{A762AE3B-CC1D-470E-B78F-3D89545779F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Provisioning", "src\Devantler.DataMesh.Provisioning\Devantler.DataMesh.Provisioning.csproj", "{C186B934-0E92-49D3-BDCD-009615CB4AD3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.ProvisioningApi", "src\Devantler.DataMesh.ProvisioningApi\Devantler.DataMesh.ProvisioningApi.csproj", "{C186B934-0E92-49D3-BDCD-009615CB4AD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

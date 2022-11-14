@@ -1,8 +1,8 @@
-using Devantler.DataMesh.Provisioning.Interfaces;
-using Devantler.DataMesh.Provisioning.Services;
+using Devantler.DataMesh.ProvisioningApi.Interfaces;
+using Devantler.DataMesh.ProvisioningApi.Services;
 using Devantler.KindCLI;
 
-namespace Devantler.DataMesh.Provisioning.Extensions;
+namespace Devantler.DataMesh.ProvisioningApi.Extensions;
 
 public static class IServiceCollectionExtensions
 {

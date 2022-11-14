@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Devantler.DataMesh.Provisioning": {
+    "Devantler.DataMesh.ProvisioningApi": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

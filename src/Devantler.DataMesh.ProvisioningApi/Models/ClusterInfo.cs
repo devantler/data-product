@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.Provisioning.Models;
+namespace Devantler.DataMesh.ProvisioningApi.Models;
 
 public class ClusterInfo
 {
