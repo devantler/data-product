@@ -26,9 +26,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/bin/Debug/net6.0/Devantler.DataMesh.Provisioning.dll",
+            "program": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/bin/Debug/net6.0/Devantler.DataMesh.ProvisioningApi.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning",
+            "cwd": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -52,7 +52,7 @@
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.Provisioning/Devantler.DataMesh.Provisioning.csproj"
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj"
             }
         }
     ]

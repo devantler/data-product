@@ -1,6 +1,6 @@
-using Devantler.DataMesh.Provisioning.Models;
+using Devantler.DataMesh.ProvisioningApi.Models;
 
-namespace Devantler.DataMesh.Provisioning.Interfaces;
+namespace Devantler.DataMesh.ProvisioningApi.Interfaces;
 
 public interface IDataProductProvisioningService
 {
