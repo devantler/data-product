@@ -10,6 +10,7 @@
             "args": [],
             "cwd": "${workspaceFolder}/src/Devantler.DataMesh.DataProduct",
             "stopAtEntry": false,
+            "requireExactSource": false,
             "serverReadyAction": {
                 "action": "openExternally",
                 "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
