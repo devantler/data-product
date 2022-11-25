@@ -4,28 +4,18 @@
     "description": "JSON Schema for Data Product configurations",
     "type": "object",
     "properties": {
-        "domain": {
-            "type": "object",
-            "description": "The domain that the data product leverages.",
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "The name of the domain."
-                },
-                "version": {
-                    "type": "string",
-                    "pattern": "^v?(\\d+(?:\\.\\d+)*)$",
-                    "description": "The version of the domain. (e.g. v1.0)"
-                },
-                "description": {
-                    "type": "string",
-                    "description": "A description of the domain."
-                }
-            },
-            "required": [
-                "name",
-                "version"
-            ]
+        "name": {
+            "type": "string",
+            "description": "The name of the domain."
+        },
+        "version": {
+            "type": "string",
+            "pattern": "^v?(\\d+(?:\\.\\d+)*)$",
+            "description": "The version of the domain. (e.g. v1.0)"
+        },
+        "description": {
+            "type": "string",
+            "description": "A description of the domain."
         },
         "owner": {
             "type": "object",
@@ -224,7 +214,8 @@
         }
     },
     "required": [
-        "domain",
+        "name",
+        "version",
         "owner",
         "schemas"
     ],

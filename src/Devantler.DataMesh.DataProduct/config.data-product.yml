@@ -1,10 +1,13 @@
-domain:
-    name: Students
-    description: A data product to query and manage students and courses at SDU.
-    version: v0.1
+name: Students
+description: A data product to query and manage students and courses at SDU.
+version: v0.1
 
 owner:
     name: Nikolai Emil Damm
+    email: nikolaiemildamm@icloud.com
+    organization: Umbraco HQ
+    phone: +45 41240202
+    website: www.devantler.com
 
 schemas:
     - name: Student
@@ -33,15 +36,8 @@ features:
     - graphql
     - rest
   database: relational
-  caching: false
-  metadata: false
-  authentication: false
-  authorization: false
-  metrics: false
-  tracing: false
-  health: false
-  logging: false
 
+# TODO: conditional feature configurations
 # authorization:
 #     ClientID: ""
 #     ClientSecret: ""
