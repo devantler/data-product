@@ -1,6 +1,5 @@
-namespace Devantler.DataMesh.Core.Interfaces.Repositories
+namespace Devantler.DataMesh.Core.Interfaces.Repositories;
+
+public interface IRepository<T> : ICrudRepository<T>, IQueryRepository<T>
 {
-    public interface IRepository<T> : ICrudRepository<T>, IQueryRepository<T>
-    {
-    }
 }

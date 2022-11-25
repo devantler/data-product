@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj",
+                "${workspaceFolder}/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj",
+                "${workspaceFolder}/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,65 +33,9 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj"
+                "${workspaceFolder}/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj"
             ],
             "problemMatcher": "$msCompile"
-        },
-        {
-            "type": "docker-build",
-            "label": "docker-build: debug",
-            "dependsOn": [
-                "build"
-            ],
-            "dockerBuild": {
-                "tag": "datamesh:dev",
-                "target": "base",
-                "dockerfile": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Dockerfile",
-                "context": "${workspaceFolder}",
-                "pull": true
-            },
-            "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj"
-            }
-        },
-        {
-            "type": "docker-build",
-            "label": "docker-build: release",
-            "dependsOn": [
-                "build"
-            ],
-            "dockerBuild": {
-                "tag": "datamesh:latest",
-                "dockerfile": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Dockerfile",
-                "context": "${workspaceFolder}",
-                "pull": true
-            },
-            "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj"
-            }
-        },
-        {
-            "type": "docker-run",
-            "label": "docker-run: debug",
-            "dependsOn": [
-                "docker-build: debug"
-            ],
-            "dockerRun": {},
-            "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj",
-                "enableDebugging": true
-            }
-        },
-        {
-            "type": "docker-run",
-            "label": "docker-run: release",
-            "dependsOn": [
-                "docker-build: release"
-            ],
-            "dockerRun": {},
-            "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.ProvisioningApi/Devantler.DataMesh.ProvisioningApi.csproj"
-            }
         }
     ]
 }

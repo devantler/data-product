@@ -1,0 +1,32 @@
+Domain:
+  Name: Students
+  Description: Students Domain
+Owner:
+  Name: Nikolai Emil Damm
+  Email: nikolaiemildamm@icloud.com
+  Phone: "+4541240202"
+Models:
+- Name: Student
+  Properties:
+  - Name: Name
+    Type: string
+  - Name: Age
+    Type: int
+  - Name: Courses
+    Type: Course[]
+  - Name: Grades
+    Type: int[]
+  - Name: FavoriteCourse
+    Type: Course
+- Name: Course
+  Properties:
+  - Name: Name
+    Type: string
+  - Name: Credits
+    Type: int
+Features:
+  GraphQL: false
+  Rest: false
+  Database: true
+  Caching: false
+  Metadata: false

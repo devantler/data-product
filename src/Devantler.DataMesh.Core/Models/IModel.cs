@@ -1,9 +1,8 @@
 using System;
 
-namespace Devantler.DataMesh.Core.Models
+namespace Devantler.DataMesh.Core.Models;
+
+public interface IModel
 {
-    public interface IModel
-    {
-        Guid Id { get; set; }
-    }
+    Guid Id { get; set; }
 }

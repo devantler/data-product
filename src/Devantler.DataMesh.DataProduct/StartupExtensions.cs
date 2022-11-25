@@ -1,16 +1,15 @@
-using Devantler.DataMesh.DataProduct.Features.EntityFramework;
-using Devantler.DataMesh.DataProduct.Features.GraphQL;
-using Devantler.DataMesh.DataProduct.Features.StateStore;
+using Microsoft.FeatureManagement;
 
 namespace Devantler.DataMesh.DataProduct;
 
 public static class StartupExtensions
 {
-    public static IServiceCollection AddDomain(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddFeatures(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddEntityFramework(configuration);
-        services.AddGraphQL(configuration);
-        services.AddStateStore(configuration);
+        services.AddFeatureManagement();
+        //services.AddEntityFramework(configuration);
+        //services.AddGraphQL(configuration);
+        //services.AddStateStore(configuration);
 
         //services.AddControllers();
         //services.AddSwaggerGen();
@@ -19,9 +18,9 @@ public static class StartupExtensions
         return services;
     }
 
-    public static void UseDomain(this WebApplication app)
+    public static void UseFeatures(this WebApplication app)
     {
-        app.UseGraphQL();
+        //app.UseGraphQL();
         // Configure the HTTP request pipeline.
         // if (app.Environment.IsDevelopment())
         // {

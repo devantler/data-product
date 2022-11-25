@@ -23,7 +23,7 @@ public class K8sDataProductProvisioningService : IDataProductProvisioningService
         return id.ToString();
     }
 
-    public async Task TeardownAsync(Guid id)
+    public Task TeardownAsync(Guid id)
     {
         //Delete data product with kubectl
         throw new NotImplementedException();

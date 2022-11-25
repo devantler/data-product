@@ -20,11 +20,13 @@ Contract:
       Type: string
     - Name: Credits
       Type: int
+
   Storage:
     Type: PostgreSQL
     ConnectionString: Server=localhost;Port=5432;Database=students;User Id=postgres;Password=postgres;
     Username: postgres
     Password: postgres
+
   Source:
     Type: MongoDB
     ConnectionString: mongodb://localhost:27017
