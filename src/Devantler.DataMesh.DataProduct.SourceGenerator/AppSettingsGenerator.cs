@@ -11,3 +11,6 @@ public static class AppSettingsGenerator
         throw new NotImplementedException();
     }
 }
+
+
+
