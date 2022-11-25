@@ -25,7 +25,7 @@ Models:
   - Name: Credits
     Type: int
 Features:
-  GraphQL: false
+  GraphQL: true
   Rest: false
   Database: true
   Caching: false
