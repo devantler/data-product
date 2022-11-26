@@ -111,8 +111,12 @@
                             "properties"
                         ],
                         "not": {
-                            "required": [
-                                "url"
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "url"
+                                    ]
+                                }
                             ]
                         }
                     },
@@ -123,8 +127,12 @@
                             "url"
                         ],
                         "not": {
-                            "required": [
-                                "properties"
+                            "anyOf": [
+                                {
+                                    "required": [
+                                        "properties"
+                                    ]
+                                }
                             ]
                         }
                     }
