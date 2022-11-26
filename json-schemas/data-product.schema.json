@@ -106,18 +106,28 @@
                 "oneOf": [
                     {
                         "required": [
-                            "url"
-                        ]
+                            "name",
+                            "version",
+                            "properties"
+                        ],
+                        "not": {
+                            "required": [
+                                "url"
+                            ]
+                        }
                     },
                     {
                         "required": [
-                            "properties"
-                        ]
+                            "name",
+                            "version",
+                            "url"
+                        ],
+                        "not": {
+                            "required": [
+                                "properties"
+                            ]
+                        }
                     }
-                ],
-                "required": [
-                    "name",
-                    "version"
                 ]
             }
         },
