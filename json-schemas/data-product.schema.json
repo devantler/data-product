@@ -42,9 +42,7 @@
                     "description": "The phone number of the owner."
                 }
             },
-            "required": [
-                "name"
-            ]
+            "required": [ "name" ]
         },
         "schemas": {
             "type": "array",
@@ -75,65 +73,35 @@
                         "description": "The properties of the schema.",
                         "items": {
                             "type": "object",
-                            "description": "A property of the schema.",
-                            "properties": {
-                                "name": {
-                                    "type": "string",
-                                    "description": "The name of the property."
-                                },
-                                "type": {
-                                    "type": "string",
-                                    "description": "The type of the property.",
-                                    "examples": [
-                                        "string",
-                                        "number",
-                                        "boolean",
-                                        "Type",
-                                        "string[]",
-                                        "number[]",
-                                        "boolean[]",
-                                        "Type[]"
-                                    ]
-                                }
+                            "description": "A property name and type.",
+                            "minProperties": 1,
+                            "additionalProperties": {
+                                "not": { "type": "null" }
                             },
-                            "required": [
-                                "name",
-                                "type"
+                            "examples": [
+                                { "address": "string" },
+                                { "age": "number" },
+                                { "enabled": "boolean" },
+                                { "person": "Person" },
+                                { "addresses": "string[]" },
+                                { "ages": "number[]" },
+                                { "enables": "boolean[]" },
+                                { "people": "Person[]" }
                             ]
                         }
                     }
                 },
                 "oneOf": [
                     {
-                        "required": [
-                            "name",
-                            "version",
-                            "properties"
-                        ],
+                        "required": [ "name", "version", "properties" ],
                         "not": {
-                            "anyOf": [
-                                {
-                                    "required": [
-                                        "url"
-                                    ]
-                                }
-                            ]
+                            "required": [ "url" ]
                         }
                     },
                     {
-                        "required": [
-                            "name",
-                            "version",
-                            "url"
-                        ],
+                        "required": [ "name", "version", "url" ],
                         "not": {
-                            "anyOf": [
-                                {
-                                    "required": [
-                                        "properties"
-                                    ]
-                                }
-                            ]
+                            "required": [ "properties" ]
                         }
                     }
                 ]
@@ -149,39 +117,16 @@
                     "items": {
                         "type": "string",
                         "description": "The name of the API.",
-                        "examples": [
-                            "rest",
-                            "graphql",
-                            "grpc"
-                        ]
+                        "examples": [ "rest", "graphql", "grpc" ]
                     },
                     "examples": [
-                        [
-                            "rest"
-                        ],
-                        [
-                            "graphql"
-                        ],
-                        [
-                            "grpc"
-                        ],
-                        [
-                            "rest",
-                            "graphql"
-                        ],
-                        [
-                            "rest",
-                            "grpc"
-                        ],
-                        [
-                            "graphql",
-                            "grpc"
-                        ],
-                        [
-                            "rest",
-                            "graphql",
-                            "grpc"
-                        ]
+                        [ "rest" ],
+                        [ "graphql" ],
+                        [ "grpc" ],
+                        [ "rest", "graphql" ],
+                        [ "rest", "grpc" ],
+                        [ "graphql", "grpc" ],
+                        [ "rest", "graphql", "grpc" ]
                     ]
                 },
                 "database": {
@@ -240,17 +185,9 @@
                     "default": false
                 }
             },
-            "required": [
-                "apis",
-                "database"
-            ]
+            "required": [ "apis", "database" ]
         }
     },
-    "required": [
-        "name",
-        "version",
-        "owner",
-        "schemas"
-    ],
+    "required": [ "name", "version", "owner", "schemas" ],
     "additionalProperties": false
 }

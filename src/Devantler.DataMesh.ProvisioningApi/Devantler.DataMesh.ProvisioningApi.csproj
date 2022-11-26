@@ -11,8 +11,4 @@
     <PackageReference Include="Devantler.KindCli" Version="0.17.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="../Devantler.DataMesh.Core/Devantler.DataMesh.Core.csproj" />
-  </ItemGroup>
-
 </Project>

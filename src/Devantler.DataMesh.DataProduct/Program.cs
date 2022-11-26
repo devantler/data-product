@@ -5,5 +5,5 @@ builder.Services.AddFeatures(builder.Configuration);
 var app = builder.Build();
 app.UseHttpsRedirection();
 
-app.UseFeatures();
+app.UseFeatures(builder.Configuration);
 app.Run();

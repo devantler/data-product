@@ -4,26 +4,27 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <WarningsAsErrors>nullable</WarningsAsErrors>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Dapr.AspNetCore" Version="1.9.0" />
-        <PackageReference Include="HotChocolate.AspNetCore" Version="12.15.2" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0" />
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
+        <PackageReference Include="HotChocolate.AspNetCore" Version="12.15.2" />
+        <PackageReference Include="FluentValidation" Version="11.4.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../Devantler.DataMesh.DataProduct.SourceGenerator/Devantler.DataMesh.DataProduct.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-        <ProjectReference Include="../Devantler.DataMesh.Core/Devantler.DataMesh.Core.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+        <ProjectReference Include="../Devantler.DataMesh.DataProduct.SourceGenerators/Devantler.DataMesh.DataProduct.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
-
-
     <ItemGroup>
-        <AdditionalFiles Include="config.yaml" />
+        <AdditionalFiles Include="config.data-product.yaml" />
     </ItemGroup>
 
 </Project>
