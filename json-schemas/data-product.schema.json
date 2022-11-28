@@ -133,14 +133,14 @@
                     "type": "string",
                     "description": "Which database to use for the data product.",
                     "enum": [
+                        "auto",
                         "relational",
                         "document",
                         "graph",
-                        "relational-sqlite",
-                        "relational-postgresql",
-                        "document-mongodb",
-                        "graph-neo4j",
-                        "auto"
+                        "sqlite",
+                        "postgresql",
+                        "mongodb",
+                        "neo4j"
                     ],
                     "default": "auto"
                 },

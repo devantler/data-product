@@ -32,10 +32,9 @@ schemas:
             type: number
 
 features:
-  apis: 
-    - rest
-  database: relational-sqlite
-  
+    apis:
+        - rest
+    database: sqlite
 # TODO: conditional feature configurations
 # authorization:
 #     ClientID: ""

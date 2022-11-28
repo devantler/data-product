@@ -1,5 +1,7 @@
 using Microsoft.FeatureManagement;
 using Devantler.DataMesh.DataProduct.Apis;
+using Devantler.DataMesh.DataProduct.Clients;
+
 namespace Devantler.DataMesh.DataProduct;
 
 public static class StartupExtensions
@@ -8,10 +10,7 @@ public static class StartupExtensions
     {
         services.AddFeatureManagement();
         services.AddApis(configuration);
-        //services.AddGraphQL(configuration);
-        //services.AddEntityFramework(configuration);
-        //services.AddGraphQL(configuration);
-        //services.AddStateStore(configuration);
+        services.AddClients(configuration);
 
         return services;
     }

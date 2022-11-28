@@ -5,9 +5,9 @@ public enum Database
     Relational,
     Document,
     Graph,
-    Relational_SQLite,
-    Relational_PostgreSQL,
-    Document_MongoDB,
-    Graph_Neo4j,
+    SQLite,
+    PostgreSQL,
+    MongoDB,
+    Neo4j,
     Auto
 }

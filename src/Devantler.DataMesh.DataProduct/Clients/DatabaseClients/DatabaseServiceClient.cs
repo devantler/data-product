@@ -1,10 +1,10 @@
-namespace Devantler.DataMesh.DataProduct.Clients.DatabaseClients.SQLite;
+namespace Devantler.DataMesh.DataProduct.Clients.DatabaseClients;
 
-public class SQLiteServiceClient<T> : ISQLiteServiceClient<T>
+public class DatabaseServiceClient<T> : IDatabaseServiceClient<T>
 {
     private readonly HttpClient _httpClient;
 
-    public SQLiteServiceClient(HttpClient httpClient)
+    public DatabaseServiceClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
@@ -15,7 +15,7 @@ public class SQLiteServiceClient<T> : ISQLiteServiceClient<T>
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task<T?> ReadAsync(string id, CancellationToken cancellationToken = default) => 
+    public async Task<T?> ReadAsync(string id, CancellationToken cancellationToken = default) =>
         await _httpClient.GetFromJsonAsync<T>(id, cancellationToken);
 
     public async Task UpdateAsync(T model, CancellationToken cancellationToken = default)
@@ -30,6 +30,6 @@ public class SQLiteServiceClient<T> : ISQLiteServiceClient<T>
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task<IEnumerable<T>> Query(string query, CancellationToken cancellationToken = default) => 
+    public async Task<IEnumerable<T>> Query(string query, CancellationToken cancellationToken = default) =>
         await _httpClient.GetFromJsonAsync<IEnumerable<T>>(query, cancellationToken) ?? Enumerable.Empty<T>();
 }
