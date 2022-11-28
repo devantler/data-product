@@ -1,6 +1,6 @@
-namespace Devantler.DataMesh.DataProduct.Core.Behaviours;
+namespace Devantler.DataMesh.DataProduct.Interfaces.Services;
 
-public interface IReadablePaged<T>
+public interface IPagedService<T>
 {
     Task<IEnumerable<T>> ReadPagedAsync(int page, int pageSize, CancellationToken cancellationToken = default);
 }

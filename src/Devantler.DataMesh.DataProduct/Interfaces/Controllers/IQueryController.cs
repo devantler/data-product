@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Devantler.DataMesh.DataProduct.Core.Controllers;
+namespace Devantler.DataMesh.DataProduct.Interfaces.Controllers;
 
 public interface IQueryController<T>
 {

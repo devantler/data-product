@@ -1,6 +1,6 @@
-namespace Devantler.DataMesh.DataProduct.Core.Behaviours;
+namespace Devantler.DataMesh.DataProduct.Interfaces.Services;
 
-public interface IQueryable<T>
+public interface IQueryService<T>
 {
     Task<IEnumerable<T>> Query(string query, CancellationToken cancellationToken = default);
 }

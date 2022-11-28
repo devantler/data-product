@@ -6,22 +6,20 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-        <WarningsAsErrors>nullable</WarningsAsErrors>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Dapr.AspNetCore" Version="1.9.0" />
-        <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
+        <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0-preview" />
         <PackageReference Include="HotChocolate.AspNetCore" Version="12.15.2" />
         <PackageReference Include="FluentValidation" Version="11.4.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
     </ItemGroup>
 
-    <ItemGroup>
+    <!-- <ItemGroup>
         <ProjectReference Include="../Devantler.DataMesh.DataProduct.SourceGenerators/Devantler.DataMesh.DataProduct.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    </ItemGroup>
+    </ItemGroup> -->
 
     <ItemGroup>
         <AdditionalFiles Include="config.data-product.yaml" />
