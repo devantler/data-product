@@ -46,7 +46,7 @@
         },
         "schemas": {
             "type": "array",
-            "description": "The schemas for the data product.",
+            "description": "The schemas for the data product. (The first schema is the root schema.)",
             "items": {
                 "type": "object",
                 "description": "A schema for the data product.",
