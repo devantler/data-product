@@ -10,7 +10,7 @@ public abstract class GeneratorBase
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var files = context.AdditionalTextsProvider
-            .Where(additionalText => additionalText.Path.EndsWith(".data-product.yaml"))
+            .Where(additionalText => additionalText.Path.EndsWith(".data-product.yml") || additionalText.Path.EndsWith(".data-product.yaml"))
             .Select((additionalText, cancellationToken) =>
                 (Path.GetFileNameWithoutExtension(additionalText.Path),
                 additionalText.GetText(cancellationToken)!.Deserialize())

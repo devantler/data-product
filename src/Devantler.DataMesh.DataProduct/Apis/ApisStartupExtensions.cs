@@ -1,5 +1,5 @@
 using Devantler.DataMesh.DataProduct.Apis.REST;
-using Devantler.DataMesh.DataProduct.Core.Extensions;
+using Devantler.DataMesh.DataProduct.Extensions;
 
 namespace Devantler.DataMesh.DataProduct.Apis;
 

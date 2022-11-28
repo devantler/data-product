@@ -1,7 +1,7 @@
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Devantler.DataMesh.DataProduct.Core.Extensions;
+namespace Devantler.DataMesh.DataProduct.Extensions;
 
 public static class FluentValidationExtensions
 {
