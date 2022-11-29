@@ -1,8 +1,8 @@
-using Devantler.DataMesh.DataProduct.SourceGenerators.Base;
-using Devantler.DataMesh.DataProduct.SourceGenerators.Models;
+using Devantler.DataMesh.DataProduct.SourceGenerator.Base;
+using Devantler.DataMesh.DataProduct.SourceGenerator.Models;
 using Microsoft.CodeAnalysis;
 
-namespace Devantler.DataMesh.DataProduct.SourceGenerators.Generators.Features.GraphQL.Queries;
+namespace Devantler.DataMesh.DataProduct.SourceGenerator.Generators.Features.GraphQL.Queries;
 
 [Generator]
 public class QueriesGenerator : GeneratorBase, IIncrementalGenerator

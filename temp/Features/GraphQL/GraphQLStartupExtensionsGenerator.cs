@@ -1,12 +1,12 @@
 // using System;
 // using System.Text;
-// using Devantler.DataMesh.DataProduct.SourceGenerators.Base;
-// using Devantler.DataMesh.DataProduct.SourceGenerators.Extensions;
-// using Devantler.DataMesh.DataProduct.SourceGenerators.Models;
+// using Devantler.DataMesh.DataProduct.SourceGenerator.Base;
+// using Devantler.DataMesh.DataProduct.SourceGenerator.Extensions;
+// using Devantler.DataMesh.DataProduct.SourceGenerator.Models;
 // using Microsoft.CodeAnalysis;
 // using Microsoft.CodeAnalysis.Text;
 
-// namespace Devantler.DataMesh.DataProduct.SourceGenerators.Generators.Features.GraphQL;
+// namespace Devantler.DataMesh.DataProduct.SourceGenerator.Generators.Features.GraphQL;
 
 // [Generator]
 // public class GraphQLStartupExtensionsGenerator : GeneratorBase, IIncrementalGenerator

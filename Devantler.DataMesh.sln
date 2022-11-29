@@ -1,33 +1,62 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
- # Visual Studio Version 17
- VisualStudioVersion = 17.0.31903.59
- MinimumVisualStudioVersion = 10.0.40219.1
- Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8B094D4D-7AE8-42BB-9089-D561CEE4B87D}"
- EndProject
- Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct", "src\Devantler.DataMesh.DataProduct\Devantler.DataMesh.DataProduct.csproj", "{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}"
- EndProject
- Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.SourceGenerators", "src\Devantler.DataMesh.DataProduct.SourceGenerators\Devantler.DataMesh.DataProduct.SourceGenerators.csproj", "{A762AE3B-CC1D-470E-B78F-3D89545779F8}"
- EndProject
- Global
- 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
- 		Debug|Any CPU = Debug|Any CPU
- 		Release|Any CPU = Release|Any CPU
- 	EndGlobalSection
- 	GlobalSection(SolutionProperties) = preSolution
- 		HideSolutionNode = FALSE
- 	EndGlobalSection
- 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
- 		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
- 		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}.Debug|Any CPU.Build.0 = Debug|Any CPU
- 		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}.Release|Any CPU.ActiveCfg = Release|Any CPU
- 		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74}.Release|Any CPU.Build.0 = Release|Any CPU
- 		{A762AE3B-CC1D-470E-B78F-3D89545779F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
- 		{A762AE3B-CC1D-470E-B78F-3D89545779F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
- 		{A762AE3B-CC1D-470E-B78F-3D89545779F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
- 		{A762AE3B-CC1D-470E-B78F-3D89545779F8}.Release|Any CPU.Build.0 = Release|Any CPU
- 	EndGlobalSection
- 	GlobalSection(NestedProjects) = preSolution
- 		{F0582B06-E4CA-46CC-82DE-E2A456CC1C74} = {8B094D4D-7AE8-42BB-9089-D561CEE4B87D}
- 		{A762AE3B-CC1D-470E-B78F-3D89545779F8} = {8B094D4D-7AE8-42BB-9089-D561CEE4B87D}
- 	EndGlobalSection
- EndGlobal
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9BEF9E36-9D19-414A-8431-BD35217FC2CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.Web", "src\Devantler.DataMesh.DataProduct.Web\Devantler.DataMesh.DataProduct.Web.csproj", "{C52384EB-3980-4813-B179-2CB928587CBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.Core", "src\Devantler.DataMesh.DataProduct.Core\Devantler.DataMesh.DataProduct.Core.csproj", "{D4B466BD-ABEF-43CE-86AC-20FC5EF5FE9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.Core.SourceGenerator", "src\Devantler.DataMesh.DataProduct.Core.SourceGenerator\Devantler.DataMesh.DataProduct.Core.SourceGenerator.csproj", "{F94E00E7-1535-4A79-AE0A-52CFCD73A817}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.Web.SourceGenerator", "src\Devantler.DataMesh.DataProduct.Web.SourceGenerator\Devantler.DataMesh.DataProduct.Web.SourceGenerator.csproj", "{DDD80AF6-8207-469E-ABE1-EE0710D0CBD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.SourceGenerator.Core", "packages\Devantler.SourceGenerator.Core\Devantler.SourceGenerator.Core.csproj", "{9233E476-AF10-444D-898B-6D1EA6D1A847}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.Configuration", "src\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj", "{393D0FF5-A24C-4861-9752-9408C3BA77CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C52384EB-3980-4813-B179-2CB928587CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C52384EB-3980-4813-B179-2CB928587CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52384EB-3980-4813-B179-2CB928587CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C52384EB-3980-4813-B179-2CB928587CBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B466BD-ABEF-43CE-86AC-20FC5EF5FE9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B466BD-ABEF-43CE-86AC-20FC5EF5FE9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B466BD-ABEF-43CE-86AC-20FC5EF5FE9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B466BD-ABEF-43CE-86AC-20FC5EF5FE9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F94E00E7-1535-4A79-AE0A-52CFCD73A817}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F94E00E7-1535-4A79-AE0A-52CFCD73A817}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F94E00E7-1535-4A79-AE0A-52CFCD73A817}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F94E00E7-1535-4A79-AE0A-52CFCD73A817}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDD80AF6-8207-469E-ABE1-EE0710D0CBD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDD80AF6-8207-469E-ABE1-EE0710D0CBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDD80AF6-8207-469E-ABE1-EE0710D0CBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDD80AF6-8207-469E-ABE1-EE0710D0CBD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9233E476-AF10-444D-898B-6D1EA6D1A847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9233E476-AF10-444D-898B-6D1EA6D1A847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9233E476-AF10-444D-898B-6D1EA6D1A847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9233E476-AF10-444D-898B-6D1EA6D1A847}.Release|Any CPU.Build.0 = Release|Any CPU
+		{393D0FF5-A24C-4861-9752-9408C3BA77CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{393D0FF5-A24C-4861-9752-9408C3BA77CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{393D0FF5-A24C-4861-9752-9408C3BA77CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{393D0FF5-A24C-4861-9752-9408C3BA77CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9233E476-AF10-444D-898B-6D1EA6D1A847} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
+		{C52384EB-3980-4813-B179-2CB928587CBC} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
+		{D4B466BD-ABEF-43CE-86AC-20FC5EF5FE9F} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
+		{F94E00E7-1535-4A79-AE0A-52CFCD73A817} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
+		{DDD80AF6-8207-469E-ABE1-EE0710D0CBD6} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
+		{393D0FF5-A24C-4861-9752-9408C3BA77CA} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
+	EndGlobalSection
+EndGlobal
