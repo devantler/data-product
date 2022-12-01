@@ -1,4 +1,4 @@
-using Devantler.DataMesh.ProvisioningApi.Models;
+using Devantler.DataMesh.ProvisioningApi.DTOs;
 
 namespace Devantler.DataMesh.ProvisioningApi.Interfaces;
 

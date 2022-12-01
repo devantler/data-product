@@ -2,17 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.0" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
         <ProjectReference Include="..\..\packages\Devantler.SourceGenerator.Core\Devantler.SourceGenerator.Core.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
         <ProjectReference Include="..\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
         <ProjectReference Include="../Devantler.DataMesh.DataProduct.Core.SourceGenerator/Devantler.DataMesh.DataProduct.Core.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />

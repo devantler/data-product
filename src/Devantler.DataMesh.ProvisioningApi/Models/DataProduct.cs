@@ -1,4 +1,4 @@
-﻿namespace Devantler.DataMesh.ProvisioningApi.Models;
+﻿namespace Devantler.DataMesh.ProvisioningApi.DTOs;
 public class DataProduct
 {
     public Guid Id { get; } = Guid.NewGuid();

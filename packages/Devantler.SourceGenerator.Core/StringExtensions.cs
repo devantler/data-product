@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Core.SourceGenerator;
+namespace Devantler.SourceGenerator.Core;
 
 public static class StringExtensions
 {

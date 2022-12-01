@@ -1,14 +1,22 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0
-ENV ASPNETCORE_URLS=http://+:5001
-EXPOSE 5001
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
-WORKDIR /src
+WORKDIR /build
 
-COPY Devantler.DataMesh.DataProduct ./Devantler.DataMesh.DataProduct
-COPY Devantler.DataMesh.DataProduct.SourceGenerator ./Devantler.DataMesh.DataProduct.SourceGenerator
-COPY Devantler.DataMesh.DataProduct.Core ./Devantler.DataMesh.DataProduct.Core
-COPY Devantler.DataMesh.DataProduct.Core.SourceGenerator ./Devantler.DataMesh.DataProduct.Core.SourceGenerator
+COPY Devantler.DataMesh.sln .
+COPY src/Devantler.DataMesh.DataProduct.Web ./src/Devantler.DataMesh.DataProduct.Web
+COPY src/Devantler.DataMesh.DataProduct.Web.SourceGenerator ./src/Devantler.DataMesh.DataProduct.Web.SourceGenerator
+COPY src/Devantler.DataMesh.DataProduct.Core ./src/Devantler.DataMesh.DataProduct.Core
+COPY src/Devantler.DataMesh.DataProduct.Core.SourceGenerator ./src/Devantler.DataMesh.DataProduct.Core.SourceGenerator
+COPY src/Devantler.DataMesh.DataProduct.Configuration ./src/Devantler.DataMesh.DataProduct.Configuration
+COPY packages/Devantler.SourceGenerator.Core ./packages/Devantler.SourceGenerator.Core
 
-RUN dotnet dev-certs https --trust
-WORKDIR /src/Devantler.DataMesh.DataProduct
-ENTRYPOINT ["dotnet", "run", "-c Release"]
+WORKDIR /build/src/Devantler.DataMesh.DataProduct.Web
+RUN dotnet publish -c Release -o /app
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+ENV ASPNETCORE_URLS=http://+:80
+EXPOSE 80
+WORKDIR /app
+COPY --from=build /app ./
+
+ENTRYPOINT ["dotnet", "Devantler.DataMesh.DataProduct.Web.dll"]

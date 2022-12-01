@@ -1,5 +1,5 @@
 using Devantler.DataMesh.ProvisioningApi.Interfaces;
-using Devantler.DataMesh.ProvisioningApi.Models;
+using Devantler.DataMesh.ProvisioningApi.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

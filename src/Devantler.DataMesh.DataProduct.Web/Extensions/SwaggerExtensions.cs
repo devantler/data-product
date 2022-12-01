@@ -3,7 +3,7 @@
 // using System.Reflection;
 // using Devantler.DataMesh.Core.Extensions;
 // using Microsoft.Extensions.DependencyInjection;
-// using Microsoft.OpenApi.Models;
+// using Microsoft.OpenApi.DTOs;
 // using Swashbuckle.AspNetCore.SwaggerGen;
 
 // namespace Devantler.DataMesh.Core.Extensions;

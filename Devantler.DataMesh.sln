@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.SourceGenerator.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.Configuration", "src\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj", "{393D0FF5-A24C-4861-9752-9408C3BA77CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.DataStore.SQLite.SourceGenerator", "src\Devantler.DataMesh.DataProduct.DataStore.SQLite.SourceGenerator\Devantler.DataMesh.DataProduct.DataStore.SQLite.SourceGenerator.csproj", "{C197DE2D-1E94-4B72-AEDB-095DA18E0049}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.DataStore.SQLite", "src\Devantler.DataMesh.DataProduct.DataStore.SQLite\Devantler.DataMesh.DataProduct.DataStore.SQLite.csproj", "{BB7964C0-35F0-4CCB-B0D2-8A4BE7AC9E17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +54,14 @@ Global
 		{393D0FF5-A24C-4861-9752-9408C3BA77CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{393D0FF5-A24C-4861-9752-9408C3BA77CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{393D0FF5-A24C-4861-9752-9408C3BA77CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C197DE2D-1E94-4B72-AEDB-095DA18E0049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C197DE2D-1E94-4B72-AEDB-095DA18E0049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C197DE2D-1E94-4B72-AEDB-095DA18E0049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C197DE2D-1E94-4B72-AEDB-095DA18E0049}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7964C0-35F0-4CCB-B0D2-8A4BE7AC9E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7964C0-35F0-4CCB-B0D2-8A4BE7AC9E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7964C0-35F0-4CCB-B0D2-8A4BE7AC9E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7964C0-35F0-4CCB-B0D2-8A4BE7AC9E17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9233E476-AF10-444D-898B-6D1EA6D1A847} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
@@ -58,5 +70,7 @@ Global
 		{F94E00E7-1535-4A79-AE0A-52CFCD73A817} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
 		{DDD80AF6-8207-469E-ABE1-EE0710D0CBD6} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
 		{393D0FF5-A24C-4861-9752-9408C3BA77CA} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
+		{C197DE2D-1E94-4B72-AEDB-095DA18E0049} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
+		{BB7964C0-35F0-4CCB-B0D2-8A4BE7AC9E17} = {9BEF9E36-9D19-414A-8431-BD35217FC2CD}
 	EndGlobalSection
 EndGlobal

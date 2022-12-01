@@ -1,4 +1,4 @@
-using Devantler.DataMesh.DataProduct.Core.Interfaces.Services;
+using Devantler.DataMesh.DataProduct.Core.Base.Services;
 
 namespace Devantler.DataMesh.DataProduct.Web.Features.Clients.DataStoreServiceClients;
 

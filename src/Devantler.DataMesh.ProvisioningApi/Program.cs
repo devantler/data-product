@@ -1,5 +1,5 @@
 using Devantler.DataMesh.Core.Extensions;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
