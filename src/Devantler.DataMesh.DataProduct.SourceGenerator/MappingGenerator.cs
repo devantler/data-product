@@ -1,9 +1,11 @@
 using System.Linq;
+using System.Text;
 using Devantler.DataMesh.DataProduct.Configuration;
 using Devantler.DataMesh.DataProduct.SourceGenerator.Base;
 using Devantler.DataMesh.DataProduct.SourceGenerator.Extensions;
 using Devantler.DataMesh.DataProduct.SourceGenerator.Parsers;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.SourceGenerator;
@@ -14,7 +16,6 @@ public class MappingGenerator : GeneratorBase
     public override void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration)
     {
         var schemas = configuration.GetSection("Schemas").Get<Schema[]>();
-        var rootSchema = schemas.First();
         var rootNamespace = compilation.AssemblyName;
         var localNamespace = $"{rootNamespace}.Mapping";
 
@@ -31,13 +32,12 @@ public class MappingGenerator : GeneratorBase
         {
             public MappingProfile()
             {
-                {{SchemaParser.Parse(schemas).IndentBy(4)}}
+                {{SchemaParser.Parse(schemas).IndentBy(8)}}
             }
         }
         
         """;
 
-
-
+        context.AddSource("MappingProfile.cs", SourceText.From(source, Encoding.UTF8));
     }
 }

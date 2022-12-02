@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Text;
 using static Devantler.DataMesh.DataProduct.Configuration.Schema;
 
 namespace Devantler.DataMesh.DataProduct.SourceGenerator.Parsers;
@@ -8,11 +8,16 @@ public static class PropertyParser
 {
     public static string Parse(List<Property> properties)
     {
-        var source = new StringBuilder();
-        foreach (var property in properties)
+        var source = "";
+        for (int i = 0; i < properties.Count; i++)
         {
-            var type = TypeParser.Parse(property.Type);
-            source.AppendLine($"public {type} {property.Name} {{ get; set; }}");
+            source +=
+            $$"""
+            public {{TypeParser.Parse(properties[i].Type)}} {{properties[i].Name}} { get; set; }
+            """;
+            if (i < properties.Count - 1)
+                source += Environment.NewLine;
+
         }
         return source.ToString();
     }
