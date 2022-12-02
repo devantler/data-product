@@ -9,6 +9,10 @@ owner:
     phone: +45 41240202
     website: www.devantler.com
 
+license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
 schemas:
     - name: Student
       version: v0.1

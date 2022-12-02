@@ -5,7 +5,7 @@
             // Use IntelliSense to find out which attributes exist for C# debugging
             // Use hover for the description of the existing attributes
             // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-            "name": ".NET Core Launch (web)",
+            "name": "Run: DataProduct",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -27,7 +27,17 @@
             }
         },
         {
-            "name": ".NET Core Attach",
+            "type": "DotNetWatch",
+            "request": "launch",
+            "name": "Watch: DataProduct",
+            "project": "src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj",
+            "args": [],
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        },
+        {
+            "name": "Attach: DataProduct",
             "type": "coreclr",
             "request": "attach"
         }
