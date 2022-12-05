@@ -23,13 +23,13 @@ public abstract class ControllerBase<TModel, TEntity> : ControllerBase, IControl
     }
 
     /// <summary>
-    /// Get one or more entities by id, or paging.
+    /// Get one or more <typeparamref name="TModel"/> by id, or paging.
     /// </summary>
     /// <param name="id">Ids of entities.</param>
     /// <param name="page">The number of pages to return.</param>
     /// <param name="pageSize">The size of each page.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
-    /// <returns>A list of one or more entities.</returns>
+    /// <returns>A list of one or more <typeparamref name="TModel"/>.</returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TModel>>> Get([FromQuery] IEnumerable<Guid> id, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, CancellationToken cancellationToken = default)
     {
