@@ -137,7 +137,7 @@
                         "relational",
                         "document",
                         "graph",
-                        "sqlite",
+                        "Sqlite",
                         "postgresql",
                         "mongodb",
                         "neo4j"

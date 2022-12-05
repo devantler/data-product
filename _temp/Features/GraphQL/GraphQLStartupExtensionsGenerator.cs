@@ -6,16 +6,16 @@
 // using Microsoft.CodeAnalysis;
 // using Microsoft.CodeAnalysis.Text;
 
-// namespace Devantler.DataMesh.DataProduct.SourceGenerator.Generators.Features.GraphQL;
+// namespace Devantler.DataMesh.DataProduct.SourceGenerator.Generators.GraphQL;
 
 // [Generator]
 // public class GraphQLStartupExtensionsGenerator : GeneratorBase, IIncrementalGenerator
 // {
 //     public override void Generate(SourceProductionContext context, Compilation compilation, Configuration configuration)
 //     {
-//         if (configuration.Features.Apis.Contains("graphql") is false) return;
+//         if (configuration.Apis.Contains("graphql") is false) return;
 
-//         var @namespace = compilation.AssemblyName + ".Features.Apis.GraphQL";
+//         var @namespace = compilation.AssemblyName + ".Apis.GraphQL";
 //         var @class = GetType().Name[..^"Generator".Length];
 
 //         var source = string.Join(Environment.NewLine,

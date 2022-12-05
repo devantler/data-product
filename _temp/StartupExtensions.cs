@@ -3,17 +3,17 @@ using Devantler.DataMesh.DataProduct.Core.Base.Repositories;
 using Devantler.DataMesh.DataProduct.Core.Base.Services;
 using Devantler.DataMesh.DataProduct.Core.Entities;
 using Devantler.DataMesh.DataProduct.Core.Models;
-using Devantler.DataMesh.DataProduct.DataStore.SQLite.Contexts;
-using Devantler.DataMesh.DataProduct.DataStore.SQLite.Repositories;
-using Devantler.DataMesh.DataProduct.DataStore.SQLite.Services;
+using Devantler.DataMesh.DataProduct.DataStore.Sqlite.Contexts;
+using Devantler.DataMesh.DataProduct.DataStore.Sqlite.Repositories;
+using Devantler.DataMesh.DataProduct.DataStore.Sqlite.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
-namespace Devantler.DataMesh.DataProduct.DataStore.SQLite;
+namespace Devantler.DataMesh.DataProduct.DataStore.Sqlite;
 
 public static partial class StartupExtensions
 {
-    public static IServiceCollection AddSQLiteService(this IServiceCollection services)
+    public static IServiceCollection AddSqliteService(this IServiceCollection services)
     {
         var coreAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == "Devantler.DataMesh.DataProduct.Core");
         services.AddAutoMapper(coreAssembly);
@@ -52,7 +52,7 @@ public static partial class StartupExtensions
         return services;
     }
 
-    public static WebApplication UseSQLiteService(this WebApplication app)
+    public static WebApplication UseSqliteService(this WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {

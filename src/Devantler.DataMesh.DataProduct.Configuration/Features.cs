@@ -3,20 +3,29 @@ namespace Devantler.DataMesh.DataProduct.Configuration;
 public class Features
 {
     public List<string> Apis { get; set; } = new();
-    public DataStore DataStore { get; set; } = DataStore.Auto;
-    public bool Caching { get; set; } = false;
-    public bool Metadata { get; set; } = false;
-    public bool Authentication { get; set; } = false;
-    public bool Authorisation { get; set; } = false;
-    public bool Metrics { get; set; } = false;
-    public bool Tracing { get; set; } = false;
-    public bool Logging { get; set; } = false;
-    public bool Health { get; set; } = false;
+    public DataStoreType DataStoreType { get; set; }
+    public DataStoreProvider DataStoreProvider { get; set; } = DataStoreProvider.Auto;
+    public bool Caching { get; set; }
+    public bool Metadata { get; set; }
+    public bool Authentication { get; set; }
+    public bool Authorisation { get; set; }
+    public bool Metrics { get; set; }
+    public bool Tracing { get; set; }
+    public bool Logging { get; set; }
+    public bool Health { get; set; }
 }
-public enum DataStore
+
+public enum DataStoreType
 {
-    SQLite,
-    PostgreSQL,
-    MongoDB,
-    Auto
+    Relational,
+    Document,
+    Graph
+}
+
+public enum DataStoreProvider
+{
+    Auto,
+    Sqlite,
+    MongoDb,
+    Neo4j,
 }

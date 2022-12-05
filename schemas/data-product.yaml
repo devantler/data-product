@@ -38,7 +38,7 @@ schemas:
 features:
     apis:
         - rest
-    database: sqlite
+    database: Sqlite
 # TODO: conditional feature configurations
 # authorization:
 #     ClientID: ""

@@ -1,4 +1,4 @@
-using Devantler.DataMesh.DataProduct.Features;
+using Devantler.DataMesh.DataProduct;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddFeatures(builder.Configuration);
