@@ -8,6 +8,7 @@ namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 
 [ApiController]
 [Route("[controller]")]
+[Produces("application/json")]
 public abstract class ControllerBase<TModel, TEntity> : ControllerBase, IController<TModel>
     where TModel : IModel
     where TEntity : IEntity
@@ -21,32 +22,35 @@ public abstract class ControllerBase<TModel, TEntity> : ControllerBase, IControl
         _mapper = mapper;
     }
 
+    /// <summary>
+    /// Get one or more entities by id, or paging.
+    /// </summary>
+    /// <param name="id">Ids of entities.</param>
+    /// <param name="page">The number of pages to return.</param>
+    /// <param name="pageSize">The size of each page.</param>
+    /// <param name="cancellationToken">A cancellation token.</param>
+    /// <returns>A list of one or more entities.</returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TModel>>> Get([FromQuery] IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IEnumerable<TModel>>> Get([FromQuery] IEnumerable<Guid> id, [FromQuery] int page = 1, [FromQuery] int pageSize = 10, CancellationToken cancellationToken = default)
     {
-        if (!ids.Any())
-            throw new ArgumentException("No ids provided");
-
-        if (ids.Count() == 1)
+        if (!id.Any())
         {
-            var entity = await _repository.Read(ids.First(), cancellationToken);
+            var entities = await _repository.ReadPaged(page, pageSize, cancellationToken);
+            var models = _mapper.Map<List<TModel>>(entities);
+            return Ok(models);
+        }
+        else if (id.Count() == 1)
+        {
+            var entity = await _repository.Read(id.First(), cancellationToken);
             var model = _mapper.Map<TModel>(entity);
             return Ok(model);
         }
         else
         {
-            var entities = await _repository.ReadMany(ids, cancellationToken);
-            var models = _mapper.Map<IEnumerable<TModel>>(entities);
+            var entities = await _repository.ReadMany(id, cancellationToken);
+            var models = _mapper.Map<List<TModel>>(entities);
             return Ok(models);
         }
-    }
-
-    [HttpGet("paged")]
-    public async Task<ActionResult<IEnumerable<TModel>>> GetPaged([FromQuery] int page = 1, [FromQuery] int pageSize = 10, CancellationToken cancellationToken = default)
-    {
-        var entities = await _repository.ReadPaged(page, pageSize, cancellationToken);
-        var models = _mapper.Map<IEnumerable<TModel>>(entities);
-        return Ok(models);
     }
 
     // 

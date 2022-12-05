@@ -21,25 +21,26 @@ public class SqliteRepositoryGenerator : AppSettingsGenerator
 
         var usings = new string[] {
             "Microsoft.EntityFrameworkCore",
+            NamespaceResolver.Resolve(compilation.GlobalNamespace, "RelationalDbContext"),
             repositoriesNamespace,
             entitiesNamespace
         };
 
-        var @namespace = NamespaceResolver.Resolve(compilation.GlobalNamespace, "ISqlRepository");
+        var @namespace = NamespaceResolver.Resolve(compilation.GlobalNamespace, "ISqliteRepository");
 
         foreach (var schema in schemas)
         {
-            var schemaName = schema.Name.ToPascalCase().ToPlural();
-            var className = $"{schemaName}Repository";
+            var schemaName = schema.Name.ToPascalCase();
+            var className = $"{schemaName.ToPlural()}Repository";
             var source =
             $$"""
             {{UsingsParser.Parse(usings)}}
 
             namespace {{@namespace}};
 
-            public class {{className}} : EntityFrameworkRepository<{{schemaName}}>, ISqlRepository
+            public class {{className}} : EntityFrameworkRepository<{{schemaName}}>, ISqliteRepository
             {
-                public {{className}}(DbContext dbContext) : base(dbContext)
+                public {{className}}(RelationalDbContext dbContext) : base(dbContext)
                 {
                 }
             }

@@ -1,14 +1,21 @@
+using System.Reflection;
 using Devantler.DataMesh.DataProduct.Extensions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 
-public static class RESTStartupExtensions
+public static partial class RestStartupExtensions
 {
     public static void AddRestApi(this IServiceCollection services)
     {
         services.AddControllers(options => options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(options =>
+        {
+            GenerateSwaggerDoc(options);
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, xmlFilename));
+        });
         services.AddEndpointsApiExplorer();
     }
 
@@ -21,4 +28,6 @@ public static class RESTStartupExtensions
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+
+    static partial void GenerateSwaggerDoc(SwaggerGenOptions options);
 }

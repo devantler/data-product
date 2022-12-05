@@ -1,6 +1,6 @@
 namespace Devantler.DataMesh.DataProduct.Configuration;
 
-public abstract class Schema
+public class Schema
 {
     public string Name { get; set; } = string.Empty;
 
@@ -8,7 +8,7 @@ public abstract class Schema
 
     public List<Property> Properties { get; set; } = new();
 
-    public abstract class Property
+    public class Property
     {
         public string Name { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;

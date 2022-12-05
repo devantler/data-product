@@ -6,24 +6,24 @@ namespace Devantler.DataMesh.DataProduct.SourceGenerator.Core;
 
 public abstract class AppSettingsGenerator : IIncrementalGenerator
 {
-  public void Initialize(IncrementalGeneratorInitializationContext context)
-  {
-    // while (!System.Diagnostics.Debugger.IsAttached)
-    //     System.Threading.Thread.Sleep(500);
-
-    var files = context.AdditionalTextsProvider
-        .Where(a => a.Path.EndsWith("appsettings.json"))
-        .Select((a, _) => (Path.GetFileNameWithoutExtension(a.Path), a.Path));
-
-    var compilationProvider = context.CompilationProvider.Combine(files.Collect());
-    context.RegisterSourceOutput(compilationProvider, (sourceProductionContext, compilationAndFiles) =>
+    public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-      IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-      configurationBuilder.AddJsonFile(compilationAndFiles.Right[0].Path);
-      var configuration = configurationBuilder.Build();
-      Generate(sourceProductionContext, compilationAndFiles.Left, configuration);
-    });
-  }
+        // while (!System.Diagnostics.Debugger.IsAttached)
+        //     System.Threading.Thread.Sleep(500);
 
-  protected abstract void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration);
+        var files = context.AdditionalTextsProvider
+            .Where(a => a.Path.EndsWith("appsettings.json"))
+            .Select((a, _) => (Path.GetFileNameWithoutExtension(a.Path), a.Path));
+
+        var compilationProvider = context.CompilationProvider.Combine(files.Collect());
+        context.RegisterSourceOutput(compilationProvider, (context, compilationAndFiles) =>
+        {
+            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+            configurationBuilder.AddJsonFile(compilationAndFiles.Right[0].Path);
+            var configuration = configurationBuilder.Build();
+            Generate(context, compilationAndFiles.Left, configuration);
+        });
+    }
+
+    protected abstract void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration);
 }

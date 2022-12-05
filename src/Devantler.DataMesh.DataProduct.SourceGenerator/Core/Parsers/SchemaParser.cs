@@ -26,7 +26,6 @@ public static class SchemaParser
         return $$"""
         // {{schema.Name}} Mappings
         CreateMap<{{relativeEntitiesNamespace}}.{{schema.Name}}, {{relativeModelsNamespace}}.{{schema.Name}}>().ReverseMap();
-        CreateMap<IEnumerable<{{relativeEntitiesNamespace}}.{{schema.Name}}>, IEnumerable<{{relativeModelsNamespace}}.{{schema.Name}}>>().ReverseMap();
         """;
     }
 
@@ -36,7 +35,7 @@ public static class SchemaParser
         for (var i = 0; i < schemas.Length; i++)
         {
             var schemaName = schemas[i].Name.ToPascalCase();
-            var repositoryName = $"{schemaName}Repository";
+            var repositoryName = $"{schemaName.ToPlural()}Repository";
             source +=
             $$"""
             services.AddScoped<IRepository<{{relativeEntitiesNamespace}}.{{schemaName}}>, {{repositoryName}}>();

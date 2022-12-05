@@ -7,9 +7,7 @@ public interface IController<T> where T : IModel
 {
     // Task<ActionResult<Response<T>>> Query(string query, CancellationToken cancellationToken = default);
 
-    Task<ActionResult<IEnumerable<T>>> Get(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
-
-    Task<ActionResult<IEnumerable<T>>> GetPaged(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<T>>> Get(IEnumerable<Guid> id, int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
 
     // Task<ActionResult<Response<Guid>>> Post(Request<T> request, CancellationToken cancellationToken = default);
 
