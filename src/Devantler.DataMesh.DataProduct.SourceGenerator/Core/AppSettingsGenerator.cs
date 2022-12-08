@@ -12,14 +12,18 @@ public abstract class AppSettingsGenerator : IIncrementalGenerator
         //     System.Threading.Thread.Sleep(500);
 
         var files = context.AdditionalTextsProvider
-            .Where(a => a.Path.EndsWith("appsettings.json"))
+            .Where(a => a.Path.EndsWith("appsettings.json") || a.Path.EndsWith("appsettings.Development.json") || a.Path.EndsWith("appsettings.Production.json"))
             .Select((a, _) => (Path.GetFileNameWithoutExtension(a.Path), a.Path));
 
         var compilationProvider = context.CompilationProvider.Combine(files.Collect());
         context.RegisterSourceOutput(compilationProvider, (context, compilationAndFiles) =>
         {
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddJsonFile(compilationAndFiles.Right[0].Path);
+
+            foreach (var file in compilationAndFiles.Right)
+                configurationBuilder.AddJsonFile(file.Path);
+            configurationBuilder.AddEnvironmentVariables();
+            
             var configuration = configurationBuilder.Build();
             Generate(context, compilationAndFiles.Left, configuration);
         });

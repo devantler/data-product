@@ -31,6 +31,8 @@
         <!-- Exclude the output of source generators from the compilation -->
         <Compile Remove="$(CompilerGeneratedFilesOutputPath)/**/*.cs" />
         <AdditionalFiles Include="appsettings.json" />
+        <AdditionalFiles Include="appsettings.Development.json" />
+        <AdditionalFiles Include="appsettings.Production.json" />
     </ItemGroup>
 
 </Project>

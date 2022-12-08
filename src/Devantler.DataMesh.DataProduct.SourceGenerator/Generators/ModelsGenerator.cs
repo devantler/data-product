@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Text;
-using Devantler.DataMesh.DataProduct.Configuration;
+using Avro;
+using Confluent.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.SourceGenerator.Core;
 using Devantler.DataMesh.DataProduct.SourceGenerator.Core.Extensions;
 using Devantler.DataMesh.DataProduct.SourceGenerator.Core.Parsers;
@@ -12,15 +14,26 @@ namespace Devantler.DataMesh.DataProduct.SourceGenerator.Generators;
 [Generator]
 public class ModelsGenerator : AppSettingsGenerator
 {
-    protected override void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration)
+    protected override async void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration)
     {
-        var schemas = configuration.GetSection("Schemas").Get<Schema[]>();
+        var schemaRegistryUrl = configuration.GetSection("Kafka").GetSection("SchemaRegistryUrl").Value;
+        using var schemaRegistryClient = new CachedSchemaRegistryClient(new SchemaRegistryConfig { Url = schemaRegistryUrl });
 
-        var @namespace = NamespaceResolver.Resolve(compilation.GlobalNamespace, "IModel");
-
-        foreach (var schema in schemas)
+        var schema = configuration.GetSection("Schema").Get<Configuration.Schema>();
+        var registeredSchemas = new List<RegisteredSchema>
         {
-            var @class = schema.Name.ToPascalCase();
+            await schemaRegistryClient.GetRegisteredSchemaAsync(schema.Subject, schema.Version)
+        };
+        var schemaReferences = registeredSchemas[0].References.ConvertAll(x => schemaRegistryClient.GetRegisteredSchemaAsync(x.Subject, x.Version).Result);
+        if (schemaReferences != null)
+            registeredSchemas.AddRange(schemaReferences);
+
+        foreach (var registeredSchema in registeredSchemas)
+        {
+            var @namespace = NamespaceResolver.Resolve(compilation.GlobalNamespace, "IModel");
+            var schemaRecord = Avro.Schema.Parse(registeredSchema.SchemaString) as RecordSchema;
+
+            var @class = schemaRecord.Name.ToPascalCase();
             var source =
             $$"""
             namespace {{@namespace}};
@@ -28,7 +41,7 @@ public class ModelsGenerator : AppSettingsGenerator
             public class {{@class}} : IModel
             {
                 public Guid Id { get; set; }
-                {{PropertyParser.Parse(schema.Properties).IndentBy(4)}}    
+                {{AvroFieldParser.Parse(schemaRecord.Fields).IndentBy(4)}}    
             }
 
             """;

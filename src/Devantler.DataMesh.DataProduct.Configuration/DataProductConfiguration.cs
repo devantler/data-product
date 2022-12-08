@@ -7,5 +7,5 @@ public class DataProductConfiguration
     public string Version { get; set; } = string.Empty;
     public Owner Owner { get; set; } = new();
     public Features Features { get; set; } = new();
-    public List<Schema> Schemas { get; set; } = new();
+    public Schema Schema { get; set; } = new();
 }
