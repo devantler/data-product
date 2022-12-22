@@ -27,5 +27,5 @@ public enum DataStoreProvider
     Auto,
     Sqlite,
     MongoDb,
-    Neo4j,
+    Neo4J,
 }

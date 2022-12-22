@@ -9,12 +9,13 @@ public static partial class RestStartupExtensions
 {
     public static void AddRestApi(this IServiceCollection services)
     {
-        services.AddControllers(options => options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
+        services.AddControllers(options =>
+            options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
         services.AddSwaggerGen(options =>
         {
             GenerateSwaggerDoc(options);
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            options.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            options.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory,
+                $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
         });
         services.AddEndpointsApiExplorer();
     }

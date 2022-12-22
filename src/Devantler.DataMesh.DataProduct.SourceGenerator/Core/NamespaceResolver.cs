@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
@@ -14,7 +13,7 @@ public static class NamespaceResolver
             return namespaceSymbol.ToDisplayString();
         }
 
-        foreach (var ns in (IEnumerable<INamespaceSymbol>)namespaceSymbol.GetNamespaceMembers())
+        foreach (var ns in namespaceSymbol.GetNamespaceMembers())
         {
             var result = Resolve(ns, typeName);
             if (result != null)

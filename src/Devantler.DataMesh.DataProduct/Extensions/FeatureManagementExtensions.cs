@@ -4,6 +4,7 @@ public static class FeatureManagementExtensions
 {
     public static string GetFeatureValue(this IConfiguration configuration, string featureName) =>
         configuration.GetSection("Features").GetValue<string>(featureName) ?? string.Empty;
+
     public static bool IsFeatureEnabled(this IConfiguration configuration, string featureFlag) =>
         configuration.GetValue<bool>($"Features:{featureFlag}");
 

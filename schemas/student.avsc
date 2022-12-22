@@ -1,0 +1,45 @@
+{
+    "name": "student",
+    "type": "record",
+    "namespace": "devantler.data.mesh",
+    "fields": [
+        {
+            "name": "id",
+            "type": "string"
+        },
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "age",
+            "type": "int"
+        },
+        {
+            "name": "address",
+            "type": "string"
+        },
+        {
+            "name": "school",
+            "type": {
+                "name": "school",
+                "type": "record",
+                "namespace": "devantler.data.mesh",
+                "fields": [
+                    {
+                        "name": "id",
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "type": "string"
+                    }
+                ]
+            }
+        }
+    ]
+}

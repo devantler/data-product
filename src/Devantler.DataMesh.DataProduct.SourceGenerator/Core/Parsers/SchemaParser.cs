@@ -1,7 +1,3 @@
-using System;
-using Devantler.DataMesh.DataProduct.Configuration;
-using Devantler.DataMesh.DataProduct.SourceGenerator.Core.Extensions;
-
 namespace Devantler.DataMesh.DataProduct.SourceGenerator.Core.Parsers;
 
 public static class SchemaParser
