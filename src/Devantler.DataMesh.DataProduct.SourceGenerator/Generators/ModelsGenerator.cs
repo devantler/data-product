@@ -16,24 +16,45 @@ public class ModelsGenerator : AppSettingsGenerator
 {
     protected override async void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration)
     {
-        var schemaRegistryUrl = configuration.GetSection("Kafka").GetSection("SchemaRegistryUrl").Value;
-        using var schemaRegistryClient = new CachedSchemaRegistryClient(new SchemaRegistryConfig { Url = schemaRegistryUrl });
+        var schemaRegistryOptions = configuration.GetSection(nameof(Configuration.SchemaRegistry)).Get<Configuration.SchemaRegistry>();
+        var schemaOptions = configuration.GetSection(nameof(Configuration.Schema)).Get<Configuration.Schema>();
 
-        var schema = configuration.GetSection("Schema").Get<Configuration.Schema>();
-        var registeredSchemas = new List<RegisteredSchema>
+        var schemas = new List<RecordSchema>();
+        switch (schemaRegistryOptions.Type)
         {
-            await schemaRegistryClient.GetRegisteredSchemaAsync(schema.Subject, schema.Version)
-        };
-        var schemaReferences = registeredSchemas[0].References.ConvertAll(x => schemaRegistryClient.GetRegisteredSchemaAsync(x.Subject, x.Version).Result);
-        if (schemaReferences != null)
-            registeredSchemas.AddRange(schemaReferences);
+            case Configuration.SchemaRegistryType.Local:
+                var schemaFile = System.IO.Directory.GetFiles(schemaRegistryOptions.Path, $"{schemaOptions.Subject.ToCamelCase()}-v{schemaOptions.Version}.avsc");
+                if (schemaFile.Length == 0)
+                    throw new System.IO.FileNotFoundException($"Schema file not found for {schemaOptions.Subject}-{schemaOptions.Version}.avsc");
 
-        foreach (var registeredSchema in registeredSchemas)
+                var schemaString = System.IO.File.ReadAllText(schemaFile[0]);
+                schemas.Add(Avro.Schema.Parse(schemaString) as RecordSchema);
+
+                break;
+            case Configuration.SchemaRegistryType.Kafka:
+                var cachedSchemaRegistryClient = new CachedSchemaRegistryClient(new SchemaRegistryConfig { Url = schemaRegistryOptions.Url });
+                var registeredSchemas = new List<RegisteredSchema>
+                {
+                     await cachedSchemaRegistryClient.GetRegisteredSchemaAsync(schemaOptions.Subject, schemaOptions.Version)
+                };
+                var schemaReferences = registeredSchemas[0].References.ConvertAll(x => cachedSchemaRegistryClient.GetRegisteredSchemaAsync(x.Subject, x.Version).Result);
+                if (schemaReferences != null)
+                    registeredSchemas.AddRange(schemaReferences);
+
+                foreach (var registeredSchema in registeredSchemas)
+                {
+                    schemas.Add(Avro.Schema.Parse(registeredSchema.SchemaString) as RecordSchema);
+                }
+                break;
+            default:
+                throw new System.NotImplementedException($"Schema registry type {schemaRegistryOptions.Type} not implemented");
+        }
+
+        foreach (var schema in schemas)
         {
             var @namespace = NamespaceResolver.Resolve(compilation.GlobalNamespace, "IModel");
-            var schemaRecord = Avro.Schema.Parse(registeredSchema.SchemaString) as RecordSchema;
 
-            var @class = schemaRecord.Name.ToPascalCase();
+            var @class = schema.Name.ToPascalCase();
             var source =
             $$"""
             namespace {{@namespace}};
@@ -41,7 +62,7 @@ public class ModelsGenerator : AppSettingsGenerator
             public class {{@class}} : IModel
             {
                 public Guid Id { get; set; }
-                {{AvroFieldParser.Parse(schemaRecord.Fields).IndentBy(4)}}    
+                {{AvroFieldParser.Parse(schema.Fields).IndentBy(4)}}    
             }
 
             """;

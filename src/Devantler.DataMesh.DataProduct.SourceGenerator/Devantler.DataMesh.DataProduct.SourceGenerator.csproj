@@ -20,6 +20,7 @@
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Confluent.SchemaRegistry" Version="1.9.3" GeneratePathProperty="true" PrivateAssets="all" />
@@ -35,6 +36,7 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_Extensions_Configuration_Binder)\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_Extensions_Configuration_Abstractions)\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_Extensions_Configuration_FileExtensions)\lib\netstandard2.0\Microsoft.Extensions.Configuration.FileExtensions.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_Extensions_Configuration_EnvironmentVariables)\lib\netstandard2.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_Extensions_FileProviders_Abstractions)\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Abstractions.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_Extensions_FileProviders_Physical)\lib\netstandard2.0\Microsoft.Extensions.FileProviders.Physical.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGConfluent_SchemaRegistry)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />

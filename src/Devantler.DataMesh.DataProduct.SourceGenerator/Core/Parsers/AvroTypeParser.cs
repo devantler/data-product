@@ -24,6 +24,7 @@ public static class AvroTypeParser
             Avro.Schema.Type.Fixed => throw new NotImplementedException(),
             Avro.Schema.Type.Error => throw new NotImplementedException(),
             Avro.Schema.Type.Logical => throw new NotImplementedException(),
+            _ => throw new NotImplementedException(),
         };
     }
 }

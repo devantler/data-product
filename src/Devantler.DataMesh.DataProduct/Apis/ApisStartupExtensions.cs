@@ -21,8 +21,8 @@ public static class ApisStartupExtensions
         if (configuration.IsFeatureEnabled<string[]>(Rest.Constants.REST_FEATURE_FLAG,
                 Rest.Constants.REST_FEATURE_FLAG_VALUE))
             app.UseRestApi(configuration);
-        if (configuration.IsFeatureEnabled<string[]>(GraphQL.Constants.GRAPHQL_FEATURE_FLAG,
-                GraphQL.Constants.GRAPHQL_FEATURE_FLAG_VALUE))
-            app.UseGraphQL();
+        //if (configuration.IsFeatureEnabled<string[]>(GraphQL.Constants.GRAPHQL_FEATURE_FLAG,
+                //GraphQL.Constants.GRAPHQL_FEATURE_FLAG_VALUE))
+            //app.UseGraphQL();
     }
 }
