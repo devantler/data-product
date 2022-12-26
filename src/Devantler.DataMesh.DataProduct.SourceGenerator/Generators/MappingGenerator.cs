@@ -44,7 +44,7 @@
 //                 {{SchemaParser.ParseToMappings(schemas, modelsNamespace, entitiesNamespace).IndentBy(8)}}
 //             }
 //         }
-        
+
 //         """;
 
 //         context.AddSource($"{CLASS}.cs", SourceText.From(source.AddMetadata(), Encoding.UTF8));

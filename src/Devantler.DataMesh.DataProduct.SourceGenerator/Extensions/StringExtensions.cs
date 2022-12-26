@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace Devantler.DataMesh.DataProduct.SourceGenerator.Core.Extensions;
+namespace Devantler.DataMesh.DataProduct.SourceGenerator.Extensions;
 
 public static class StringExtensions
 {

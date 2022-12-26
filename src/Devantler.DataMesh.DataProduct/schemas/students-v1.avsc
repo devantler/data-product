@@ -1,9 +1,34 @@
-{
-    "type" : "record",
-    "namespace" : "Tutorialspoint",
-    "name" : "Employee",
-    "fields" : [
-       { "name" : "Name" , "type" : "string" },
-       { "name" : "Age" , "type" : "int" }
-    ]
- }
+[
+   {
+     "type": "record",
+     "name": "School",
+     "fields": [
+       {
+         "name": "Name",
+         "type": "string"
+       },
+       {
+         "name": "City",
+         "type": "string"
+       }
+     ]
+   },
+   {
+     "type": "record",
+     "name": "Student",
+     "fields": [
+       {
+         "name": "FirstName",
+         "type": "string"
+       },
+       {
+         "name": "LastName",
+         "type": "string"
+       },
+       {
+         "name": "School",
+         "type": "School"
+       }
+     ]
+   }
+ ]

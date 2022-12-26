@@ -1,15 +1,18 @@
 using System.IO;
+using Devantler.DataMesh.DataProduct.Configuration;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
-namespace Devantler.DataMesh.DataProduct.SourceGenerator.Core;
+namespace Devantler.DataMesh.DataProduct.SourceGenerator.Generators;
 
-public abstract class AppSettingsGenerator : IIncrementalGenerator
+public abstract class GeneratorBase : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        // while (!System.Diagnostics.Debugger.IsAttached)
-        //     System.Threading.Thread.Sleep(500);
+        // #if DEBUG
+        //         while (!System.Diagnostics.Debugger.IsAttached)
+        //             System.Threading.Thread.Sleep(500);
+        // #endif
 
         var files = context.AdditionalTextsProvider
             .Where(a => a.Path.EndsWith("appsettings.json") || a.Path.EndsWith("appsettings.Development.json") || a.Path.EndsWith("appsettings.Production.json"))
@@ -23,11 +26,12 @@ public abstract class AppSettingsGenerator : IIncrementalGenerator
             foreach (var file in compilationAndFiles.Right)
                 configurationBuilder.AddJsonFile(file.Path);
             configurationBuilder.AddEnvironmentVariables();
-            
+
             var configuration = configurationBuilder.Build();
-            Generate(context, compilationAndFiles.Left, configuration);
+            var dataProductOptions = configuration.GetSection(DataProductOptions.KEY).Get<DataProductOptions>();
+            Generate(context, compilationAndFiles.Left, dataProductOptions);
         });
     }
 
-    protected abstract void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration);
+    protected abstract void Generate(SourceProductionContext context, Compilation compilation, DataProductOptions options);
 }

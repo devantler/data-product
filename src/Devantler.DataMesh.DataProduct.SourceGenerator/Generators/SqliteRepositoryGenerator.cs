@@ -44,7 +44,7 @@
 //                 {
 //                 }
 //             }
-            
+
 //             """;
 
 //             context.AddSource($"{className}.cs", SourceText.From(source.AddMetadata(), Encoding.UTF8));

@@ -1,7 +1,9 @@
 namespace Devantler.DataMesh.DataProduct.Configuration;
 
-public class Features
+public class FeaturesOptions
 {
+    public const string KEY = "DataProduct:Features";
+
     public List<string> Apis { get; set; } = new();
     public DataStoreType DataStoreType { get; set; }
     public DataStoreProvider DataStoreProvider { get; set; } = DataStoreProvider.Auto;

@@ -1,6 +1,6 @@
-using Devantler.DataMesh.DataProduct.SourceGenerator.Core.Exceptions;
+using Devantler.DataMesh.DataProduct.SourceGenerator.Exceptions;
 
-namespace Devantler.DataMesh.DataProduct.SourceGenerator.Core.Parsers;
+namespace Devantler.DataMesh.DataProduct.SourceGenerator.Parsers;
 
 public static class NameParser
 {

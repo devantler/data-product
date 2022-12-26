@@ -46,9 +46,9 @@
 //             var source =
 //             $$"""
 //             {{UsingsParser.Parse(usings)}}
-            
+
 //             namespace {{@namespace}};
-            
+
 //             [ApiController]
 //             [Route("[controller]")]
 //             [Produces("application/json")]
@@ -106,7 +106,7 @@
 //                     return Ok();
 //                 }
 //             }
-            
+
 //             """;
 
 //             context.AddSource($"{@class}.cs", SourceText.From(source.AddMetadata(), Encoding.UTF8));

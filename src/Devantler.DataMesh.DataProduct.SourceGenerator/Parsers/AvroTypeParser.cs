@@ -1,6 +1,6 @@
 using System;
 
-namespace Devantler.DataMesh.DataProduct.SourceGenerator.Core.Parsers;
+namespace Devantler.DataMesh.DataProduct.SourceGenerator.Parsers;
 
 public static class AvroTypeParser
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Devantler.DataMesh.DataProduct.SourceGenerator.Core.Exceptions;
+namespace Devantler.DataMesh.DataProduct.SourceGenerator.Exceptions;
 
 public class ParseException : Exception
 {

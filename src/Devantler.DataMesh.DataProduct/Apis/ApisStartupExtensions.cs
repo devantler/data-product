@@ -1,5 +1,4 @@
 using Devantler.DataMesh.DataProduct.Extensions;
-using Devantler.DataMesh.DataProduct.Apis.GraphQL;
 using Devantler.DataMesh.DataProduct.Apis.Rest;
 
 namespace Devantler.DataMesh.DataProduct.Apis;
