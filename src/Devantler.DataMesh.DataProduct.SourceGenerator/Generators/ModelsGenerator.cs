@@ -73,7 +73,7 @@ public class ModelsGenerator : GeneratorBase
 
             """;
 
-            context.AddSource($"{@class}.cs", SourceText.From(source.AddMetadata(), Encoding.UTF8));
+            context.AddSource($"{@class}.cs", SourceText.From(source, Encoding.UTF8));
         }
     }
 }
