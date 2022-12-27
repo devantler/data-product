@@ -20,7 +20,7 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.1" />
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0-preview" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
         <ProjectReference Include="../Devantler.DataMesh.DataProduct.Configuration/Devantler.DataMesh.DataProduct.Configuration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
