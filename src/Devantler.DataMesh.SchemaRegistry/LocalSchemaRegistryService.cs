@@ -1,6 +1,6 @@
 using Avro;
+using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration;
-using Devantler.StringHelpers;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 
