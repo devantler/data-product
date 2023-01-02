@@ -7,6 +7,10 @@ on:
       - ".github/workflows/publish-images.yaml"
     branches: ["main"]
 
+env:
+  NUGET_FEED: https://nuget.pkg.github.com/devantler/index.json
+  NUGET_USER: devantler
+
 jobs:
   build-and-publish-data-mesh-data-product:
     runs-on: ubuntu-latest
