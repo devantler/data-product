@@ -11,6 +11,7 @@ COPY src/Devantler.DataMesh.DataProduct.Configuration ./src/Devantler.DataMesh.D
 COPY src/Devantler.DataMesh.SchemaRegistry ./src/Devantler.DataMesh.SchemaRegistry
 
 WORKDIR /build/src/Devantler.DataMesh.DataProduct
+RUN dotnet nuget add source --username devantler --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/devantler/index.json"
 RUN dotnet publish -c Release -o /app
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
@@ -19,5 +20,4 @@ EXPOSE 80
 WORKDIR /app
 COPY --from=build /app ./
 
-CMD ["dotnet", 'nuget add source --username devantler --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/devantler/index.json"']
 ENTRYPOINT ["dotnet", "Devantler.DataMesh.DataProduct.dll"]
