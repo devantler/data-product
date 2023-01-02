@@ -1,6 +1,6 @@
 [
    {
-     "name": "School"
+     "name": "School",
      "type": "record",
      "fields": [
        {
