@@ -3,7 +3,6 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /build
 
 COPY Devantler.DataMesh.sln .
-COPY NuGet.Config .
 COPY src/Devantler.DataMesh.DataProduct ./src/Devantler.DataMesh.DataProduct
 COPY src/Devantler.DataMesh.DataProduct.SourceGenerator ./src/Devantler.DataMesh.DataProduct.SourceGenerator
 COPY src/Devantler.DataMesh.DataProduct.Configuration ./src/Devantler.DataMesh.DataProduct.Configuration
