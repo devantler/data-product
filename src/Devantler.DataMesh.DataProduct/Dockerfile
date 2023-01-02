@@ -15,16 +15,16 @@ COPY src/Devantler.DataMesh.DataProduct.SourceGenerator/Devantler.DataMesh.DataP
 COPY src/Devantler.DataMesh.DataProduct.Configuration/Devantler.DataMesh.DataProduct.Configuration.csproj ./src/Devantler.DataMesh.DataProduct.Configuration/
 COPY src/Devantler.DataMesh.SchemaRegistry/Devantler.DataMesh.SchemaRegistry.csproj ./src/Devantler.DataMesh.SchemaRegistry/
 
-RUN dotnet nuget add source --username devantler --password ${GITHUB_TOKEN} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/devantler/index.json"
+RUN dotnet nuget add source --username devantler --password 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 --store-password-in-clear-text --name github "https://nuget.pkg.github.com/devantler/index.json"
 RUN dotnet restore src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj
 
-COPY ./src ./src
+COPY . .
 
 WORKDIR /build/src/Devantler.DataMesh.DataProduct
-RUN dotnet build "Devantler.DataMesh.DataProduct.csproj" -c Release -o /app/build --no-restore
+RUN dotnet build "Devantler.DataMesh.DataProduct.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Devantler.DataMesh.DataProduct.csproj" -c Release -o /app/publish /p:UseAppHost=false --no-build
+RUN dotnet publish "Devantler.DataMesh.DataProduct.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
