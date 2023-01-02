@@ -1,7 +1,7 @@
 [
    {
+     "name": "School"
      "type": "record",
-     "name": "School",
      "fields": [
        {
          "name": "Name",
@@ -14,8 +14,8 @@
      ]
    },
    {
-     "type": "record",
      "name": "Student",
+     "type": "record",
      "fields": [
        {
          "name": "FirstName",
