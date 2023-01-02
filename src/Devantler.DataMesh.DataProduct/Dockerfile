@@ -1,3 +1,5 @@
+ARG GITHUB_TOKEN
+
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
@@ -5,10 +7,8 @@ EXPOSE 80
 ENV ASPNETCORE_URLS=http://+:80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-
-ARG GITHUB_TOKEN
-
 WORKDIR /build
+
 COPY Devantler.DataMesh.sln .
 COPY src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj ./src/Devantler.DataMesh.DataProduct/
 COPY src/Devantler.DataMesh.DataProduct.SourceGenerator/Devantler.DataMesh.DataProduct.SourceGenerator.csproj ./src/Devantler.DataMesh.DataProduct.SourceGenerator/
