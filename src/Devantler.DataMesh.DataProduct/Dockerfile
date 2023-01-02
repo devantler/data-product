@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
-ENV GITHUB_TOKEN unset
+ARG GITHUB_TOKEN
 
 WORKDIR /build
 
