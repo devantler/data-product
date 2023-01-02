@@ -4,8 +4,15 @@ on:
   push:
     branches: [ "main" ]
 
+  pull_request:
+    branches: [ "main" ]
+
   schedule:
     - cron: '35 4 * * 6'
+
+env:
+  NUGET_FEED: https://nuget.pkg.github.com/devantler/index.json
+  NUGET_USER: devantler
 
 jobs:
   analyze:

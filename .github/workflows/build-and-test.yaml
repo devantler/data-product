@@ -1,8 +1,7 @@
 name: Build and Test Data Mesh
 on:
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
 
 env:
   DOTNET_VERSION: 7.0.x
