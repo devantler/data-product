@@ -1,9 +1,8 @@
 using Avro;
 
-namespace Devantler.DataMesh.SchemaRegistry
+namespace Devantler.DataMesh.SchemaRegistry;
+
+public interface ISchemaRegistryService
 {
-    public interface ISchemaRegistryService
-    {
-        public Schema GetSchema(string subject, int version);
-    }
+    public Schema GetSchema(string subject, int version);
 }
