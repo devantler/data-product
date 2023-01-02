@@ -21,10 +21,10 @@ RUN dotnet restore src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataPro
 COPY ./src ./src
 
 WORKDIR /build/src/Devantler.DataMesh.DataProduct
-RUN dotnet build "Devantler.DataMesh.DataProduct.csproj" -c Release -o /app/build
+RUN dotnet build "Devantler.DataMesh.DataProduct.csproj" -c Release -o /app/build --no-restore
 
 FROM build AS publish
-RUN dotnet publish "Devantler.DataMesh.DataProduct.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Devantler.DataMesh.DataProduct.csproj" -c Release -o /app/publish /p:UseAppHost=false --no-build
 
 FROM base AS final
 WORKDIR /app
