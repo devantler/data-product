@@ -28,6 +28,9 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+      - name: Add NuGet Source
+        run: dotnet nuget add source --username $NUGET_USER --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "${{ env.NUGET_FEED }}"
+
       - name: Install dependencies
         run: dotnet restore
 

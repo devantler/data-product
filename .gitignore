@@ -6,4 +6,5 @@
 bin/
 obj/
 app.db
+NuGet.Config
 generated/
