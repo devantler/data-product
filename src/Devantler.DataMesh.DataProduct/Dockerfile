@@ -21,12 +21,9 @@ RUN dotnet restore src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataPro
 COPY . .
 
 WORKDIR /build/src/Devantler.DataMesh.DataProduct
-RUN dotnet build -c Release -o /app/build
-
-FROM build AS publish
 RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Devantler.DataMesh.DataProduct.dll"]
