@@ -1,5 +1,3 @@
-using Devantler.DataMesh.DataProduct.DataStores.Relational.Entities;
-
 namespace Devantler.DataMesh.DataProduct.DataStores.Relational.Repositories;
 
 public interface IRepository<T> where T : IEntity

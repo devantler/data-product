@@ -1,4 +1,3 @@
-using Devantler.DataMesh.DataProduct.DataStores.Relational.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Devantler.DataMesh.DataProduct.DataStores.Relational.Repositories;
