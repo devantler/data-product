@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Devantler.DataMesh.DataProduct.DataStores.Relational.Contexts;
+namespace Devantler.DataMesh.DataProduct.DataStores.Relational;
 
 public class RelationalDbContext : DbContext
 {

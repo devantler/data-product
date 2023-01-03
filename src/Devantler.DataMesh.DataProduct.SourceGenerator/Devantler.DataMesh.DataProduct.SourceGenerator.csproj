@@ -42,12 +42,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference
-            Include="..\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj"
-            GeneratePathProperty="true" PrivateAssets="all" />
-        <ProjectReference
-            Include="..\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj"
-            GeneratePathProperty="true" PrivateAssets="all" />
+        <ProjectReference Include="..\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj" />
+        <ProjectReference Include="..\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj" />
     </ItemGroup>
 
     <Target Name="GetDependencyTargetPaths">
@@ -91,7 +87,6 @@
             <TargetPathWithTargetPlatformMoniker
                 Include="$(PKGDevantler_Commons_StringHelpers)\lib\netstandard2.1\*.dll"
                 IncludeRuntimeDependency="false" />
-
         </ItemGroup>
     </Target>
 

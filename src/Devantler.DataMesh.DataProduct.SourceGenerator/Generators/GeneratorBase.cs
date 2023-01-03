@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using Devantler.DataMesh.DataProduct.Configuration;
 using Microsoft.CodeAnalysis;
@@ -15,16 +16,26 @@ public abstract class GeneratorBase : IIncrementalGenerator
         // #endif
 
         var files = context.AdditionalTextsProvider
-            .Where(a => a.Path.EndsWith("appsettings.json") || a.Path.EndsWith("appsettings.Development.json") || a.Path.EndsWith("appsettings.Production.json"))
-            .Select((a, _) => (Path.GetFileNameWithoutExtension(a.Path), a.Path));
+            .Select((a, _) => (Path.GetFileNameWithoutExtension(a.Path), a.Path))
+            .Collect();
 
-        var compilationProvider = context.CompilationProvider.Combine(files.Collect());
+        var compilationProvider = context.CompilationProvider.Combine(files);
         context.RegisterSourceOutput(compilationProvider, (context, compilationAndFiles) =>
         {
             IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 
+            Dictionary<string, string> schemas = new();
             foreach (var file in compilationAndFiles.Right)
-                configurationBuilder.AddJsonFile(file.Path);
+            {
+                if (file.Path.EndsWith(".avsc"))
+                {
+                    schemas.Add(file.Item1, file.Path);
+                }
+                else
+                {
+                    configurationBuilder.AddJsonFile(file.Path);
+                }
+            }
             configurationBuilder.AddEnvironmentVariables();
 
             var configuration = configurationBuilder.Build();
@@ -33,5 +44,5 @@ public abstract class GeneratorBase : IIncrementalGenerator
         });
     }
 
-    protected abstract void Generate(SourceProductionContext context, Compilation compilation, DataProductOptions options);
+    protected abstract void Generate(SourceProductionContext context, Compilation left, DataProductOptions dataProductOptions);
 }

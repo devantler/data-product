@@ -1,12 +1,14 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Text;
 using Avro;
-using Confluent.SchemaRegistry;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration;
 using Devantler.DataMesh.DataProduct.SourceGenerator.Parsers;
 using Devantler.DataMesh.DataProduct.SourceGenerator.Resolvers;
+using Devantler.DataMesh.SchemaRegistry.Providers;
+using Devantler.DataMesh.SchemaRegistry.Providers.Kafka;
+using Devantler.DataMesh.SchemaRegistry.Providers.Local;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 
@@ -15,65 +17,68 @@ namespace Devantler.DataMesh.DataProduct.SourceGenerator.Generators;
 [Generator]
 public class ModelsGenerator : GeneratorBase
 {
+    private ISchemaRegistryService _schemaRegistryService;
+
     protected override async void Generate(SourceProductionContext context, Compilation compilation, DataProductOptions options)
     {
-        var schemas = new List<RecordSchema>();
-        switch (options.SchemaRegistry.Type)
+        Validate(options);
+
+        _schemaRegistryService = Resolve(options.SchemaRegistry);
+
+        var rootSchema = await _schemaRegistryService.GetSchemaAsync(options.Schema.Subject, options.Schema.Version);
+
+        foreach (var schema in Resolve(rootSchema))
         {
-            case SchemaRegistryType.Local:
-                var schemaFile = System.IO.Directory.GetFiles(options.SchemaRegistry.Path, $"{options.Schema.Subject.ToCamelCase()}-v{options.Schema.Version}.avsc");
-                if (schemaFile.Length == 0)
-                    throw new System.IO.FileNotFoundException($"Schema file not found for {options.Schema.Subject.ToCamelCase()}-{options.Schema.Version}.avsc");
+            var className = schema.Name.ToPascalCase();
 
-                var schemaString = System.IO.File.ReadAllText(schemaFile[0]);
+            string modelString = GenerateModel(compilation, schema, className);
 
-                switch (Avro.Schema.Parse(schemaString))
-                {
-                    case RecordSchema recordSchema:
-                        schemas.Add(recordSchema);
-                        break;
-                    case UnionSchema unionSchema:
-                        schemas.AddRange(unionSchema.Schemas.Where(x => x is RecordSchema).Select(x => x as RecordSchema));
-                        break;
-                }
-                break;
-            case SchemaRegistryType.Kafka:
-                var cachedSchemaRegistryClient = new CachedSchemaRegistryClient(new SchemaRegistryConfig { Url = options.SchemaRegistry.Url });
-                var registeredSchemas = new List<RegisteredSchema>
-                {
-                     await cachedSchemaRegistryClient.GetRegisteredSchemaAsync(options.Schema.Subject, options.Schema.Version)
-                };
-                var schemaReferences = registeredSchemas[0].References.ConvertAll(x => cachedSchemaRegistryClient.GetRegisteredSchemaAsync(x.Subject, x.Version).Result);
-                if (schemaReferences != null)
-                    registeredSchemas.AddRange(schemaReferences);
-
-                foreach (var registeredSchema in registeredSchemas)
-                {
-                    schemas.Add(Avro.Schema.Parse(registeredSchema.SchemaString) as RecordSchema);
-                }
-                break;
-            default:
-                throw new System.NotImplementedException($"Schema registry type {options.SchemaRegistry.Type} not implemented");
+            context.AddSource($"{className}.cs", SourceText.From(modelString, Encoding.UTF8));
         }
+    }
 
-        foreach (var schema in schemas)
-        {
-            var @namespace = NamespaceResolver.Resolve(compilation.GlobalNamespace, "IModel");
+    private static string GenerateModel(Compilation compilation, RecordSchema schema, string className)
+    {
+        var @namespace = NamespaceResolver.Resolve(compilation.GlobalNamespace, "IModel");
 
-            var @class = schema.Name.ToPascalCase();
-            var source =
-            $$"""
+        return $$"""
             namespace {{@namespace}};
 
-            public class {{@class}} : IModel
+            public class {{className}} : IModel
             {
                 public Guid Id { get; set; }
                 {{AvroFieldParser.Parse(schema.Fields).IndentBy(4)}}    
             }
 
             """;
+    }
 
-            context.AddSource($"{@class}.cs", SourceText.From(source, Encoding.UTF8));
-        }
+    private static void Validate(DataProductOptions options)
+    {
+        if (options.SchemaRegistry == null)
+            throw new InvalidOperationException($"{nameof(options.SchemaRegistry)} not set");
+
+        if (options.Schema == null)
+            throw new InvalidOperationException($"{nameof(options.Schema)} not set");
+    }
+
+    private static RecordSchema[] Resolve(Schema rootSchema)
+    {
+        return rootSchema switch
+        {
+            RecordSchema recordSchema => new[] { recordSchema },
+            UnionSchema unionSchema => unionSchema.Schemas.OfType<RecordSchema>().ToArray(),
+            _ => throw new NotImplementedException($"Schema type {rootSchema.GetType()} not implemented")
+        };
+    }
+
+    private ISchemaRegistryService Resolve(SchemaRegistryOptions schemaRegistryOptions)
+    {
+        return schemaRegistryOptions.Type switch
+        {
+            SchemaRegistryType.Local => new LocalSchemaRegistryService(new LocalSchemaRegistryOptions { Path = schemaRegistryOptions.Path }),
+            SchemaRegistryType.Kafka => new KafkaSchemaRegistryService(new KafkaSchemaRegistryOptions { Url = schemaRegistryOptions.Url }),
+            _ => throw new NotImplementedException($"Schema registry type {schemaRegistryOptions.Type} not implemented")
+        };
     }
 }
