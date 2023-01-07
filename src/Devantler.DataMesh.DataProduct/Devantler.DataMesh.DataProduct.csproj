@@ -7,32 +7,54 @@
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <NoWarn>$(NoWarn);1591</NoWarn> <!-- TODO: #129 Move <NoWarn>$(NoWarn);1591</NoWarn> to an .editorconfig file -->
+        <NoWarn>$(NoWarn);1591</NoWarn> <!-- TODO: #129 Move <NoWarn>$(NoWarn);1591</NoWarn> to an
+        .editorconfig file -->
     </PropertyGroup>
     <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection"
+            Version="12.0.0" />
         <PackageReference Include="AutoMapper" Version="12.0.0" />
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
         <PackageReference Include="Dapr.AspNetCore" Version="1.9.0" />
         <PackageReference Include="FluentValidation" Version="11.4.0" />
         <PackageReference Include="HotChocolate.AspNetCore" Version="12.16.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.1">
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-          <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.1" />
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.0.0-preview" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-        <ProjectReference Include="../Devantler.DataMesh.DataProduct.Configuration/Devantler.DataMesh.DataProduct.Configuration.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
-        <ProjectReference Include="../Devantler.DataMesh.DataProduct.SourceGenerator/Devantler.DataMesh.DataProduct.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference
+            Include="../Devantler.DataMesh.DataProduct.Generator/Devantler.DataMesh.DataProduct.Generator.csproj"
+            OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+        <!-- It is necessary to add project references as dependencies here, to make them work in
+        the generator. See
+        https://github.com/dotnet/roslyn/discussions/47517#discussioncomment-64145 -->
+        <ProjectReference
+            Include="..\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj"
+            OutputItemType="Analyzer" />
+        <ProjectReference
+            Include="..\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj"
+            OutputItemType="Analyzer" />
     </ItemGroup>
 
     <ItemGroup>
         <!-- Exclude the output of source generators from the compilation -->
         <Compile Remove="$(CompilerGeneratedFilesOutputPath)/**/*.cs" />
-        <AdditionalFiles Include="appsettings.json" />
-        <AdditionalFiles Include="appsettings.Development.json" />
-        <AdditionalFiles Include="appsettings.Production.json" />
     </ItemGroup>
 
+    <ItemGroup>
+        <AdditionalFiles Include="appsettings*.json" />
+    </ItemGroup>
+
+    <!-- <ItemGroup>
+        <InternalsVisibleTo
+    Include="Devantler.DataMesh.DataProduct.Generator.Tests.Unit" />
+        <InternalsVisibleTo
+    Include="Devantler.DataMesh.DataProduct.Tests.Unit" />
+    </ItemGroup> -->
 </Project>

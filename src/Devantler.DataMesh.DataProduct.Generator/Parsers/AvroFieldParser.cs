@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Avro;
 
-namespace Devantler.DataMesh.DataProduct.SourceGenerator.Parsers;
+namespace Devantler.DataMesh.DataProduct.Generator.Parsers;
 
 public static class AvroFieldParser
 {
