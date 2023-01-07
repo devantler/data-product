@@ -8,10 +8,10 @@ public abstract class GeneratorBase : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-// #if DEBUG
-//         while (!System.Diagnostics.Debugger.IsAttached)
-//             Thread.Sleep(500);
-// #endif
+        // #if DEBUG
+        //         while (!System.Diagnostics.Debugger.IsAttached)
+        //             Thread.Sleep(500);
+        // #endif
 
         var files = context.AdditionalTextsProvider
             .Select((a, _) => (Path.GetFileNameWithoutExtension(a.Path), a.Path))
@@ -32,8 +32,13 @@ public abstract class GeneratorBase : IIncrementalGenerator
 
             var configuration = configurationBuilder.Build();
             var dataProductOptions = configuration.GetSection(DataProductOptions.KEY).Get<DataProductOptions>();
-            var assemblyName = compilationAndFiles.Left.Assembly.Name;
-            var assemblyPath = compilationAndFiles.Left.Assembly.Locations.FirstOrDefault().SourceTree.FilePath.Split(assemblyName)[0] + assemblyName + "/";
+            const string targetAssembly = "Devantler.DataMesh.DataProduct";
+            var assemblyPath = "";
+            if (compilationAndFiles.Left.Assembly.Name == targetAssembly)
+            {
+                assemblyPath = compilationAndFiles.Left.Assembly.Locations.FirstOrDefault().SourceTree.FilePath.Split(targetAssembly)[0] + targetAssembly + "/";
+            }
+
             Generate(assemblyPath, sourceProductionContext, compilationAndFiles.Left, dataProductOptions);
         });
     }
