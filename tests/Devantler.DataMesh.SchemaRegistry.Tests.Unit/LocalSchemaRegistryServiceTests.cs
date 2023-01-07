@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.SchemaRegistry.Test;
+namespace Devantler.DataMesh.SchemaRegistry.Tests.Unit;
 
 public class UnitTest1
 {

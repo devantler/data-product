@@ -1,31 +1,29 @@
-using System;
-using System.Linq;
 using System.Text;
 using Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration;
-using Devantler.DataMesh.DataProduct.SourceGenerator.Parsers;
-using Devantler.DataMesh.DataProduct.SourceGenerator.Resolvers;
+using Devantler.DataMesh.DataProduct.Generator.Parsers;
+using Devantler.DataMesh.DataProduct.Generator.Resolvers;
 using Devantler.DataMesh.SchemaRegistry.Providers;
 using Devantler.DataMesh.SchemaRegistry.Providers.Kafka;
 using Devantler.DataMesh.SchemaRegistry.Providers.Local;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Devantler.DataMesh.DataProduct.SourceGenerator.Generators;
+namespace Devantler.DataMesh.DataProduct.Generator.Generators;
 
 [Generator]
 public class ModelsGenerator : GeneratorBase
 {
     private ISchemaRegistryService _schemaRegistryService;
 
-    protected override async void Generate(SourceProductionContext context, Compilation compilation, DataProductOptions options)
+    public override void Generate(string assemblyPath, SourceProductionContext context, Compilation compilation, DataProductOptions options)
     {
         Validate(options);
 
-        _schemaRegistryService = Resolve(options.SchemaRegistry);
+        _schemaRegistryService = Resolve(options.SchemaRegistry, assemblyPath);
 
-        var rootSchema = await _schemaRegistryService.GetSchemaAsync(options.Schema.Subject, options.Schema.Version);
+        var rootSchema = _schemaRegistryService.GetSchemaAsync(options.Schema.Subject, options.Schema.Version).Result;
 
         foreach (var schema in Resolve(rootSchema))
         {
@@ -47,7 +45,7 @@ public class ModelsGenerator : GeneratorBase
             public class {{className}} : IModel
             {
                 public Guid Id { get; set; }
-                {{AvroFieldParser.Parse(schema.Fields).IndentBy(4)}}    
+                {{AvroFieldParser.Parse(schema.Fields, 4)}}
             }
 
             """;
@@ -72,11 +70,17 @@ public class ModelsGenerator : GeneratorBase
         };
     }
 
-    private ISchemaRegistryService Resolve(SchemaRegistryOptions schemaRegistryOptions)
+    private ISchemaRegistryService Resolve(SchemaRegistryOptions schemaRegistryOptions, string assemblyPath)
     {
         return schemaRegistryOptions.Type switch
         {
-            SchemaRegistryType.Local => new LocalSchemaRegistryService(new LocalSchemaRegistryOptions { Path = schemaRegistryOptions.Path }),
+            SchemaRegistryType.Local => new LocalSchemaRegistryService(new LocalSchemaRegistryOptions
+            {
+                Path = schemaRegistryOptions.Path.StartsWith("/") ?
+                    schemaRegistryOptions.Path :
+                    assemblyPath + schemaRegistryOptions.Path
+            }
+            ),
             SchemaRegistryType.Kafka => new KafkaSchemaRegistryService(new KafkaSchemaRegistryOptions { Url = schemaRegistryOptions.Url }),
             _ => throw new NotImplementedException($"Schema registry type {schemaRegistryOptions.Type} not implemented")
         };

@@ -1,7 +1,6 @@
-using System.Linq;
 using Microsoft.CodeAnalysis;
 
-namespace Devantler.DataMesh.DataProduct.SourceGenerator.Resolvers;
+namespace Devantler.DataMesh.DataProduct.Generator.Resolvers;
 
 public static class NamespaceResolver
 {
