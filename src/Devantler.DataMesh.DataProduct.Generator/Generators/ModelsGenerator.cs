@@ -45,7 +45,7 @@ public class ModelsGenerator : GeneratorBase
             public class {{className}} : IModel
             {
                 public Guid Id { get; set; }
-                {{AvroFieldParser.Parse(schema.Fields).Indent(4)}}    
+                {{AvroFieldParser.Parse(schema.Fields, 4)}}
             }
 
             """;
