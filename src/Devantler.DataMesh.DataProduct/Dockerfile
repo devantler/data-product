@@ -11,7 +11,7 @@ WORKDIR /build
 
 COPY Devantler.DataMesh.sln .
 COPY src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj ./src/Devantler.DataMesh.DataProduct/
-COPY src/Devantler.DataMesh.DataProduct.SourceGenerator/Devantler.DataMesh.DataProduct.Generator.csproj ./src/Devantler.DataMesh.DataProduct.Generator/
+COPY src/Devantler.DataMesh.DataProduct.Generator/Devantler.DataMesh.DataProduct.Generator.csproj ./src/Devantler.DataMesh.DataProduct.Generator/
 COPY src/Devantler.DataMesh.DataProduct.Configuration/Devantler.DataMesh.DataProduct.Configuration.csproj ./src/Devantler.DataMesh.DataProduct.Configuration/
 COPY src/Devantler.DataMesh.SchemaRegistry/Devantler.DataMesh.SchemaRegistry.csproj ./src/Devantler.DataMesh.SchemaRegistry/
 
