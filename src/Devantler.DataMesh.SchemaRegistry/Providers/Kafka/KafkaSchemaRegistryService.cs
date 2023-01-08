@@ -4,17 +4,14 @@ namespace Devantler.DataMesh.SchemaRegistry.Providers.Kafka;
 
 public class KafkaSchemaRegistryService : ISchemaRegistryService
 {
-    private readonly KafkaSchemaRegistryOptions _schemaRegistryOptions;
+    readonly KafkaSchemaRegistryOptions _schemaRegistryOptions;
 
-    public KafkaSchemaRegistryService(KafkaSchemaRegistryOptions schemaRegistryOptions)
-    {
-        _schemaRegistryOptions = schemaRegistryOptions;
-    }
+    public KafkaSchemaRegistryService(KafkaSchemaRegistryOptions schemaRegistryOptions) => _schemaRegistryOptions = schemaRegistryOptions;
 
     public async Task<Avro.Schema> GetSchemaAsync(string subject, int version)
     {
-        var cachedSchemaRegistryClient = new CachedSchemaRegistryClient(new SchemaRegistryConfig { Url = _schemaRegistryOptions.Url });
-        var registeredSchemas = new List<RegisteredSchema>
+        CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _schemaRegistryOptions.Url });
+        List<RegisteredSchema> registeredSchemas = new()
         {
             await cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version)
         };

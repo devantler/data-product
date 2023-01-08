@@ -9,25 +9,24 @@ public static partial class RestStartupExtensions
 {
     public static void AddRestApi(this IServiceCollection services)
     {
-        services.AddControllers(options =>
-            options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
-        services.AddSwaggerGen(options =>
+        _ = services.AddControllers(options =>
+                options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
+        _ = services.AddSwaggerGen(options =>
         {
             GenerateSwaggerDoc(options);
             options.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory,
                 $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
         });
-        services.AddEndpointsApiExplorer();
+        _ = services.AddEndpointsApiExplorer();
     }
 
     public static void UseRestApi(this WebApplication app, IConfiguration configuration)
     {
-        if (configuration.IsFeatureEnabled(Constants.AUTHORISATION_FEATURE_FLAG))
-            app.UseAuthorization();
+        if (configuration.IsFeatureEnabled(Constants.AuthorisationFeatureFlag))
+            _ = app.UseAuthorization();
 
-        app.MapControllers();
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        _ = app.MapControllers();
+        _ = app.UseSwagger().UseSwaggerUI();
     }
 
     static partial void GenerateSwaggerDoc(SwaggerGenOptions options);

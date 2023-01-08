@@ -7,9 +7,9 @@ public static class DataStoresStartupExtensions
 {
     public static void AddDataStore(this IServiceCollection services, IConfiguration configuration)
     {
-        switch (configuration.GetFeatureValue(Constants.DATASTORE_TYPE_FEATURE_FLAG))
+        switch (configuration.GetFeatureValue(Constants.DataStoreTypeFeatureFlag))
         {
-            case Relational.Constants.DATASTORE_TYPE_FEATURE_FLAG_VALUE:
+            case Relational.Constants.DataStoreTypeFeatureFlagValue:
                 services.AddRelationalDataStore(configuration);
                 break;
             default:
@@ -19,9 +19,9 @@ public static class DataStoresStartupExtensions
 
     public static void UseDataStore(this WebApplication app, IConfiguration configuration)
     {
-        switch (configuration.GetFeatureValue(Constants.DATASTORE_TYPE_FEATURE_FLAG))
+        switch (configuration.GetFeatureValue(Constants.DataStoreTypeFeatureFlag))
         {
-            case Relational.Constants.DATASTORE_TYPE_FEATURE_FLAG_VALUE:
+            case Relational.Constants.DataStoreTypeFeatureFlagValue:
                 app.UseRelationalDataStore(configuration);
                 break;
             default:

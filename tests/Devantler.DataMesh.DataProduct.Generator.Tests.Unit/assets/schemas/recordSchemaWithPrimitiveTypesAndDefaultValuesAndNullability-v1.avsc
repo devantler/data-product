@@ -1,0 +1,42 @@
+{
+  "name": "RecordSchemaWithPrimitiveTypesAndDefaultValuesAndNullability",
+  "namespace": "whatever.you.want",
+  "type": "record",
+  "fields": [
+    {
+      "name": "BooleanType",
+      "type": [ "null", "boolean" ],
+      "default": true
+    },
+    {
+      "name": "ByteType",
+      "type": [ "null", "bytes" ],
+      "default": "0x00"
+    },
+    {
+      "name": "DoubleType",
+      "type": [ "null", "double" ],
+      "default": 0.0
+    },
+    {
+      "name": "FloatType",
+      "type": [ "null", "float" ],
+      "default": 0.0
+    },
+    {
+      "name": "IntType",
+      "type": [ "null", "int" ],
+      "default": 0
+    },
+    {
+      "name": "LongType",
+      "type": [ "null", "long" ],
+      "default": 0
+    },
+    {
+      "name": "StringType",
+      "type": [ "null", "string" ],
+      "default": "default"
+    }
+  ]
+}

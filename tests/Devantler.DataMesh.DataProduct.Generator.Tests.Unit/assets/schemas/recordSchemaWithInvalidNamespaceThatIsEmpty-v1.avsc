@@ -1,0 +1,6 @@
+{
+  "name": "RecordSchemaWithInvalidNamespaceThatIsEmpty",
+  "namespace": "",
+  "type": "record",
+  "fields": [ ]
+}
