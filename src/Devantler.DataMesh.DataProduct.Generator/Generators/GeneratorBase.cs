@@ -1,5 +1,7 @@
-using Devantler.DataMesh.DataProduct.Configuration;
+using System.Collections.Immutable;
+using System.Text;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Generator.Generators;
@@ -12,36 +14,53 @@ public abstract class GeneratorBase : IIncrementalGenerator
         //         while (!System.Diagnostics.Debugger.IsAttached)
         //             Thread.Sleep(500);
         // #endif
+        IncrementalValueProvider<ImmutableArray<(string Name, SourceText? Text)>> collectedFiles = CollectFiles(context);
 
-        var files = context.AdditionalTextsProvider
-            .Select((a, _) => (Path.GetFileNameWithoutExtension(a.Path), a.Path))
-            .Collect();
-
-        var incrementalValueProvider = context.CompilationProvider.Combine(files);
+        IncrementalValueProvider<(Compilation Left, ImmutableArray<(string Name, SourceText? Text)> Right)> incrementalValueProvider = context.CompilationProvider.Combine(collectedFiles);
 
         context.RegisterSourceOutput(incrementalValueProvider, (sourceProductionContext, compilationAndFiles) =>
         {
-            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+            IConfigurationRoot configuration = BuildConfiguration(compilationAndFiles.Right);
 
-            foreach (var file in compilationAndFiles.Right)
-            {
-                if (file.Item1.Contains("appsettings"))
-                    configurationBuilder.AddJsonFile(file.Path);
-            }
-            configurationBuilder.AddEnvironmentVariables();
+            //A hack to get the path to the assembly, as omnisharp does not set the calling assembly path correctly.
+            string assemblyPath = GetCurrentAssemblyPath(compilationAndFiles.Left);
 
-            var configuration = configurationBuilder.Build();
-            var dataProductOptions = configuration.GetSection(DataProductOptions.KEY).Get<DataProductOptions>();
-            const string targetAssembly = "Devantler.DataMesh.DataProduct";
-            var assemblyPath = "";
-            if (compilationAndFiles.Left.Assembly.Name == targetAssembly)
-            {
-                assemblyPath = compilationAndFiles.Left.Assembly.Locations.FirstOrDefault().SourceTree.FilePath.Split(targetAssembly)[0] + targetAssembly + "/";
-            }
-
-            Generate(assemblyPath, sourceProductionContext, compilationAndFiles.Left, dataProductOptions);
+            Generate(assemblyPath, sourceProductionContext, compilationAndFiles.Left, configuration);
         });
     }
 
-    public abstract void Generate(string assemblyPath, SourceProductionContext context, Compilation left, DataProductOptions dataProductOptions);
+    static IncrementalValueProvider<ImmutableArray<(string Name, SourceText? Text)>> CollectFiles(IncrementalGeneratorInitializationContext context)
+    {
+        return context.AdditionalTextsProvider
+            .Select((additionalFile, _) => (Name: Path.GetFileNameWithoutExtension(additionalFile.Path), Text: additionalFile.GetText()))
+            .Collect();
+    }
+
+    static IConfigurationRoot BuildConfiguration(ImmutableArray<(string Name, SourceText? Text)> files)
+    {
+        IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+
+        foreach ((string Name, SourceText? Text) in files)
+        {
+            if (Name.Contains("appsettings"))
+                _ = configurationBuilder.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(Text?.ToString())));
+        }
+        _ = configurationBuilder.AddEnvironmentVariables();
+
+        return configurationBuilder.Build();
+    }
+
+    static string GetCurrentAssemblyPath(Compilation compilation)
+    {
+        const string targetAssembly = "Devantler.DataMesh.DataProduct";
+        string assemblyPath = "";
+        if (compilation.Assembly.Name == targetAssembly)
+        {
+            assemblyPath = compilation.Assembly.Locations.FirstOrDefault()?.SourceTree?.FilePath.Split(targetAssembly)[0] + targetAssembly + "/";
+        }
+
+        return assemblyPath;
+    }
+
+    public abstract void Generate(string assemblyPath, SourceProductionContext context, Compilation compilation, IConfiguration configuration);
 }

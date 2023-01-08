@@ -1,0 +1,34 @@
+[
+    {
+        "name": "RecordSchemaOne",
+        "type": "record",
+        "fields": [
+            {
+                "name": "Name",
+                "type": "string"
+            },
+            {
+                "name": "Age",
+                "type": "int"
+            }
+        ]
+    },
+    {
+        "name": "RecordSchemaTwo",
+        "type": "record",
+        "fields": [
+            {
+                "name": "Name",
+                "type": "string"
+            },
+            {
+                "name": "Age",
+                "type": "int"
+            },
+            {
+                "name": "RecordSchemaOne",
+                "type": "RecordSchemaOne"
+            }
+        ]
+    }
+]

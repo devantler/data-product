@@ -8,12 +8,12 @@ namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.Generators;
 
 public abstract class GeneratorTestsBase<T> where T : GeneratorBase, new()
 {
-    private readonly CSharpCompilation _compilation;
-    private readonly CSharpGeneratorDriver _driver;
+    readonly CSharpCompilation _compilation;
+    readonly CSharpGeneratorDriver _driver;
 
     protected GeneratorTestsBase()
     {
-        var references = LoadAssemblyReferences();
+        List<PortableExecutableReference> references = LoadAssemblyReferences();
         _compilation = CSharpCompilation.Create(
             "Devantler.DataMesh.DataProduct.Generator.Tests.Unit",
             references: references
@@ -23,48 +23,45 @@ public abstract class GeneratorTestsBase<T> where T : GeneratorBase, new()
             .Create(new T());
     }
 
-    public Task Verify(string[] additionalTextPaths)
+    public Task Verify(CustomAdditionalText additionalText)
     {
-        var additionalTexts = CreateAdditionalTexts(additionalTextPaths);
-        var driver = _driver.AddAdditionalTexts(additionalTexts.ToImmutableArray())
+        if (additionalText is null)
+            throw new ArgumentNullException(nameof(additionalText));
+        ImmutableArray<AdditionalText> additionalTexts = ImmutableArray.Create<AdditionalText>(additionalText);
+        GeneratorDriver driver = _driver.AddAdditionalTexts(additionalTexts)
             .RunGenerators(_compilation);
-        return Verifier.Verify(driver).UseDirectory("snapshots");
+        string directoryName = GetTestDirectoryName();
+        return Verifier.Verify(driver).UseDirectory(directoryName);
     }
 
-    private static List<PortableExecutableReference> LoadAssemblyReferences()
+    static List<PortableExecutableReference> LoadAssemblyReferences()
     {
         return AppDomain.CurrentDomain.GetAssemblies()
             .Where(a => !a.IsDynamic)
             .Select(a => a.Location)
-            .Where(s => s.Contains("Devantler.DataMesh.DataProduct.dll"))
+            .Where(s => s.Contains("Devantler.DataMesh.DataProduct.dll", StringComparison.Ordinal))
             .Select(s => MetadataReference.CreateFromFile(s))
             .ToList();
     }
 
-    private static List<AdditionalText> CreateAdditionalTexts(string[] additionalTextPaths)
+    string GetTestDirectoryName()
     {
-        var additionalTexts = new List<AdditionalText>();
-        foreach (string additionalTextPath in additionalTextPaths)
-        {
-            AdditionalText additionalText = new CustomAdditionalText(additionalTextPath);
-            additionalTexts.Add(additionalText);
-        }
-        return additionalTexts;
+        int indexOfDirectoryNameInNamespace = GetType()?.Namespace?.LastIndexOf('.') + 1 ?? 0;
+        return GetType()?.Namespace?[indexOfDirectoryNameInNamespace..] ?? string.Empty;
     }
 }
 
 public class CustomAdditionalText : AdditionalText
 {
-    private readonly string _text;
+    public override string Path { get; } = string.Empty;
 
-    public override string Path { get; }
+    readonly string _text;
 
-    public CustomAdditionalText(string path)
+    public CustomAdditionalText(string path, string text)
     {
         Path = path;
-        _text = File.ReadAllText(path);
+        _text = text;
     }
 
-    public override SourceText GetText(CancellationToken cancellationToken = new CancellationToken()) =>
-        SourceText.From(_text);
+    public override SourceText? GetText(CancellationToken cancellationToken = default) => SourceText.From(_text);
 }

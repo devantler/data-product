@@ -1,0 +1,5 @@
+{
+  "name": "RecordSchemaWithInvalidNamespaceThatIsNull",
+  "type": "record",
+  "fields": [ ]
+}
