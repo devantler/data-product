@@ -22,11 +22,9 @@ public class ModelsGenerator : GeneratorBase
     public override void Generate(string assemblyPath, SourceProductionContext context, Compilation compilation, IConfiguration configuration)
     {
         ISchemaRegistryOptions schemaRegistryOptions = GetSchemaRegistryOptions(configuration);
+        SchemaOptions schemaOptions = GetSchemaOptions(configuration);
 
-        SchemaOptions schemaOptions = configuration.GetSection(SchemaOptions.Key).Get<SchemaOptions>() ??
-            throw new NullReferenceException($"{nameof(SchemaOptions)} is null");
-
-        ISchemaRegistryService schemaRegistryService = GetSchemaRegistry(schemaRegistryOptions, assemblyPath);
+        ISchemaRegistryService schemaRegistryService = GetSchemaRegistryService(schemaRegistryOptions, assemblyPath);
 
         Schema rootSchema = schemaRegistryService.GetSchemaAsync(schemaOptions.Subject, schemaOptions.Version).Result;
 
@@ -54,7 +52,13 @@ public class ModelsGenerator : GeneratorBase
         };
     }
 
-    ISchemaRegistryService GetSchemaRegistry(ISchemaRegistryOptions schemaRegistryOptions, string assemblyPath)
+    static SchemaOptions GetSchemaOptions(IConfiguration configuration)
+    {
+        return configuration.GetSection(SchemaOptions.Key).Get<SchemaOptions>() ??
+            throw new NullReferenceException($"{nameof(SchemaOptions)} is null");
+    }
+
+    ISchemaRegistryService GetSchemaRegistryService(ISchemaRegistryOptions schemaRegistryOptions, string assemblyPath)
     {
         //return a switch statement that casts the schemaRegistryOptions to the correct type and returns the correct service
         return schemaRegistryOptions switch
@@ -83,6 +87,7 @@ public class ModelsGenerator : GeneratorBase
 
     string GenerateModel(RecordSchema schema)
     {
+        //TODO: Replace Avro logic with custom CodeCompileUnit logic to generate classes.
         if (!schema.Fields.Any(x => x.Name.Equals("id", StringComparison.OrdinalIgnoreCase)))
             schema.Fields = AddCustomFields(schema.Fields);
 
