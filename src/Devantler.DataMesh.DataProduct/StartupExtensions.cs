@@ -1,6 +1,7 @@
 using System.Reflection;
 using Devantler.DataMesh.DataProduct.Apis;
-using Devantler.DataMesh.DataProduct.DataStores;
+using Devantler.DataMesh.DataProduct.Configuration;
+using Devantler.DataMesh.DataProduct.DataStore;
 using Microsoft.FeatureManagement;
 
 namespace Devantler.DataMesh.DataProduct;
@@ -21,13 +22,12 @@ public static class FeaturesStartupExtensions
         {
             throw new ArgumentNullException(nameof(configuration));
         }
-        _ = services.AddFeatureManagement(configuration.GetSection("Features"));
+        _ = services.AddFeatureManagement(configuration.GetSection(FeaturesOptions.Key));
         _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         services.AddApis(configuration);
         services.AddDataStore(configuration);
     }
-
 
     /// <summary>
     /// Configures the web application to use enabled features.

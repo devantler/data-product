@@ -1,34 +1,34 @@
 [
-   {
-     "name": "School",
-     "type": "record",
-     "fields": [
-       {
-         "name": "Name",
-         "type": "string"
-       },
-       {
-         "name": "City",
-         "type": "string"
-       }
-     ]
-   },
-   {
-     "name": "Student",
-     "type": "record",
-     "fields": [
-       {
-         "name": "FirstName",
-         "type": "string"
-       },
-       {
-         "name": "LastName",
-         "type": "string"
-       },
-       {
-         "name": "School",
-         "type": "School"
-       }
-     ]
-   }
- ]
+  {
+    "name": "School",
+    "type": "record",
+    "fields": [
+      {
+        "name": "Name",
+        "type": "string"
+      },
+      {
+        "name": "City",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "name": "Student",
+    "type": "record",
+    "fields": [
+      {
+        "name": "FirstName",
+        "type": "string"
+      },
+      {
+        "name": "LastName",
+        "type": "string"
+      },
+      {
+        "name": "School",
+        "type": "School"
+      }
+    ]
+  }
+]

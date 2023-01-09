@@ -1,3 +1,5 @@
+using Devantler.DataMesh.DataProduct.Configuration;
+
 namespace Devantler.DataMesh.DataProduct.Extensions;
 
 /// <summary>
@@ -15,7 +17,7 @@ public static class FeatureManagementExtensions
     {
         return configuration == null
             ? throw new ArgumentNullException(nameof(configuration))
-            : configuration.GetSection("Features").GetValue<string>(featureName) ?? string.Empty;
+            : configuration.GetSection(FeaturesOptions.Key).GetValue<string>(featureName) ?? string.Empty;
     }
 
     /// <summary>
@@ -25,7 +27,7 @@ public static class FeatureManagementExtensions
     /// <param name="featureFlag"></param>
     /// <returns></returns>
     public static bool IsFeatureEnabled(this IConfiguration configuration, string featureFlag) =>
-        configuration.GetValue<bool>($"Features:{featureFlag}");
+        configuration.GetValue<bool>($"{FeaturesOptions.Key}:{featureFlag}");
 
     /// <summary>
     /// Checks whether a feature is enabled or not.
@@ -42,7 +44,7 @@ public static class FeatureManagementExtensions
             throw new ArgumentNullException(nameof(configuration));
         }
 
-        T? featureValue = configuration.GetSection($"Features:{featureFlag}").Get<T>();
+        T? featureValue = configuration.GetSection($"{FeaturesOptions.Key}:{featureFlag}").Get<T>();
         return featureValue switch
         {
             bool boolValue => boolValue == (value as bool?),

@@ -16,16 +16,6 @@ public class FeaturesOptions
     public List<string> Apis { get; set; } = new();
 
     /// <summary>
-    /// The type of the data store that should be used by the data product.
-    /// </summary>
-    public DataStoreType DataStoreType { get; set; }
-
-    /// <summary>
-    /// The specific provider that should be used for the chosen data store type.
-    /// </summary>
-    public DataStoreProvider DataStoreProvider { get; set; } = DataStoreProvider.Auto;
-
-    /// <summary>
     /// Whether a client-side cache should be enabled for the data product.
     /// </summary>
     public bool Caching { get; set; }
@@ -64,51 +54,4 @@ public class FeaturesOptions
     /// Whether health data should be collected and made observable from a liveability platform.
     /// </summary>
     public bool Health { get; set; }
-}
-
-/// <summary>
-/// Supported data store types.
-/// </summary>
-public enum DataStoreType
-{
-    /// <summary>
-    /// A relational data store.
-    /// </summary>
-    Relational,
-
-    /// <summary>
-    /// A document-based data store.
-    /// </summary>
-    Document,
-
-    /// <summary>
-    /// A graph-based data store.
-    /// </summary>
-    Graph
-}
-
-/// <summary>
-/// Supported data store providers for the different data store types.
-/// </summary>
-public enum DataStoreProvider
-{
-    /// <summary>
-    /// Automatically decide the which data store provider to use for the specified data store type.
-    /// </summary>
-    Auto,
-
-    /// <summary>
-    /// SQLite a relational data store provider.
-    /// </summary>
-    Sqlite,
-
-    /// <summary>
-    /// MongoDb a document-based data store provider
-    /// </summary>
-    MongoDb,
-
-    /// <summary>
-    /// Neo4J a graph-based data store provider.
-    /// </summary>
-    Neo4J,
 }

@@ -1,3 +1,4 @@
+#pragma warning disable CA1852
 using Devantler.DataMesh.DataProduct;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
