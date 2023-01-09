@@ -1,7 +1,16 @@
 namespace Devantler.DataMesh.DataProduct.Extensions;
 
+/// <summary>
+/// Extensions to more easily interact with feature configurations from feature flags.
+/// </summary>
 public static class FeatureManagementExtensions
 {
+    /// <summary>
+    /// Retrieves the value for a feature flag key.
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <param name="featureName"></param>
+    /// <returns></returns>
     public static string GetFeatureValue(this IConfiguration configuration, string featureName)
     {
         return configuration == null
@@ -9,9 +18,23 @@ public static class FeatureManagementExtensions
             : configuration.GetSection("Features").GetValue<string>(featureName) ?? string.Empty;
     }
 
+    /// <summary>
+    /// Checks whether a feature is enabled or not.
+    /// </summary>
+    /// <param name="configuration"></param>
+    /// <param name="featureFlag"></param>
+    /// <returns></returns>
     public static bool IsFeatureEnabled(this IConfiguration configuration, string featureFlag) =>
         configuration.GetValue<bool>($"Features:{featureFlag}");
 
+    /// <summary>
+    /// Checks whether a feature is enabled or not.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="configuration"></param>
+    /// <param name="featureFlag"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static bool IsFeatureEnabled<T>(this IConfiguration configuration, string featureFlag, object value)
     {
         if (configuration == null)

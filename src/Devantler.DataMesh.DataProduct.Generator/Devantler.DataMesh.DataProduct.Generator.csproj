@@ -7,8 +7,8 @@
         <Nullable>enable</Nullable>
         <AnalysisMode>All</AnalysisMode>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-        <GetTargetPathDependsOn>
-            $(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+        <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

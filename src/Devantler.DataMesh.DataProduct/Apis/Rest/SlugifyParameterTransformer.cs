@@ -2,8 +2,16 @@ using System.Text.RegularExpressions;
 
 namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 
+/// <summary>
+/// An outbound parameter transformer that converts PascalCase to kebab-case.
+/// </summary>
 public class SlugifyParameterTransformer : IOutboundParameterTransformer
 {
+    /// <summary>
+    /// Transforms an outbound parameter from PascalCase to kebab-case.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public string? TransformOutbound(object? value)
     {
         return value == null ? null :
@@ -13,6 +21,6 @@ public class SlugifyParameterTransformer : IOutboundParameterTransformer
                 "$1-$2",
                 RegexOptions.CultureInvariant,
                 TimeSpan.FromMilliseconds(100)
-            ).ToUpperInvariant();
+            ).ToLower(System.Globalization.CultureInfo.CurrentCulture);
     }
 }

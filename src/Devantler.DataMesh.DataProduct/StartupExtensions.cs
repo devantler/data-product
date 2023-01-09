@@ -5,8 +5,16 @@ using Microsoft.FeatureManagement;
 
 namespace Devantler.DataMesh.DataProduct;
 
+/// <summary>
+/// Extensions for registering features and configuring the web application to use them.
+/// </summary>
 public static class FeaturesStartupExtensions
 {
+    /// <summary>
+    /// Registers features to the DI container.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
     public static void AddFeatures(this IServiceCollection services, IConfiguration configuration)
     {
         if (configuration == null)
@@ -20,6 +28,12 @@ public static class FeaturesStartupExtensions
         services.AddDataStore(configuration);
     }
 
+
+    /// <summary>
+    /// Configures the web application to use enabled features.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <param name="configuration"></param>
     public static void UseFeatures(this WebApplication app, IConfiguration configuration)
     {
         app.UseApis(configuration);
