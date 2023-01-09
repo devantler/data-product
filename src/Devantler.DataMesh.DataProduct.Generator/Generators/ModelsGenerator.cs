@@ -13,12 +13,16 @@ using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Generator.Generators;
 
+/// <summary>
+/// A generator that generates Model classes in the data product.
+/// </summary>
 [Generator]
 public class ModelsGenerator : GeneratorBase
 {
     ISchemaRegistryService _schemaRegistryService = null!;
     readonly CSharpCodeProvider _codeProvider = new();
 
+    /// <inheritdoc/>
     public override void Generate(string assemblyPath, SourceProductionContext context, Compilation compilation, IConfiguration configuration)
     {
         SchemaRegistryOptions schemaRegistryOptions = configuration.GetSection("DataProduct:SchemaRegistry").Get<SchemaRegistryOptions>() ??

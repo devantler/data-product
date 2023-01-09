@@ -3,8 +3,16 @@ using Devantler.DataMesh.DataProduct.Extensions;
 
 namespace Devantler.DataMesh.DataProduct.DataStores.Relational;
 
+/// <summary>
+/// Extensions to register a relation data store and configuring the web application to use it.
+/// </summary>
 public static class RelationalDataStoreStartupExtensions
 {
+    /// <summary>
+    /// Registers a relational data store to the DI container.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
     public static void AddRelationalDataStore(this IServiceCollection services, IConfiguration configuration)
     {
         _ = configuration.GetFeatureValue(Constants.DataStoreProviderFeatureFlag) switch
@@ -14,6 +22,11 @@ public static class RelationalDataStoreStartupExtensions
         };
     }
 
+    /// <summary>
+    /// Configures the web application to use a relation data store.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <param name="configuration"></param>
     public static void UseRelationalDataStore(this WebApplication app, IConfiguration configuration)
     {
         _ = configuration.GetFeatureValue(Constants.DataStoreProviderFeatureFlag) switch

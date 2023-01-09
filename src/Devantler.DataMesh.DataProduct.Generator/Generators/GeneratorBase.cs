@@ -6,8 +6,12 @@ using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Generator.Generators;
 
+/// <summary>
+/// The base for generators that generate code to the data product.
+/// </summary>
 public abstract class GeneratorBase : IIncrementalGenerator
 {
+    /// <inheritdoc/>
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         // #if DEBUG
@@ -62,5 +66,12 @@ public abstract class GeneratorBase : IIncrementalGenerator
         return assemblyPath;
     }
 
+    /// <summary>
+    /// Abstract method to generate code in the data product.
+    /// </summary>
+    /// <param name="assemblyPath"></param>
+    /// <param name="context"></param>
+    /// <param name="compilation"></param>
+    /// <param name="configuration"></param>
     public abstract void Generate(string assemblyPath, SourceProductionContext context, Compilation compilation, IConfiguration configuration);
 }

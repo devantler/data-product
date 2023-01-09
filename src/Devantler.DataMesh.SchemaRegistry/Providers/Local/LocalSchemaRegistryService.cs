@@ -3,12 +3,20 @@ using Devantler.Commons.StringHelpers;
 
 namespace Devantler.DataMesh.SchemaRegistry.Providers.Local;
 
+/// <summary>
+/// A Local schema registry service.
+/// </summary>
 public class LocalSchemaRegistryService : ISchemaRegistryService
 {
     readonly LocalSchemaRegistryOptions _schemaRegistryOptions;
 
+    /// <summary>
+    /// A constructor to construct a Local schema registry service.
+    /// </summary>
+    /// <param name="schemaRegistryOptions"></param>
     public LocalSchemaRegistryService(LocalSchemaRegistryOptions schemaRegistryOptions) => _schemaRegistryOptions = schemaRegistryOptions;
 
+    /// <inheritdoc/>
     public async Task<Schema> GetSchemaAsync(string subject, int version)
     {
         if (_schemaRegistryOptions.Path == null)

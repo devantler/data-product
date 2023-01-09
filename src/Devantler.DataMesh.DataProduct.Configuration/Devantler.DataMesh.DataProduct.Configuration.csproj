@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk='Microsoft.NET.Sdk'>
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
     <AnalysisMode>All</AnalysisMode>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
 </Project>

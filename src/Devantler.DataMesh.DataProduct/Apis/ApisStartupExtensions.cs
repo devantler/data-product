@@ -3,8 +3,16 @@ using Devantler.DataMesh.DataProduct.Extensions;
 
 namespace Devantler.DataMesh.DataProduct.Apis;
 
+/// <summary>
+/// Extensions to registers APIs to the DI container and configure the web application to use them.
+/// </summary>
 public static class ApisStartupExtensions
 {
+    /// <summary>
+    /// Registers APIs to the DI container.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
     public static void AddApis(this IServiceCollection services, IConfiguration configuration)
     {
         if (configuration.IsFeatureEnabled<string[]>(Constants.RestFeatureFlag,
@@ -19,6 +27,11 @@ public static class ApisStartupExtensions
         }
     }
 
+    /// <summary>
+    /// Configures the web application to use APIs.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <param name="configuration"></param>
     public static void UseApis(this WebApplication app, IConfiguration configuration)
     {
         if (configuration.IsFeatureEnabled<string[]>(Constants.RestFeatureFlag,
