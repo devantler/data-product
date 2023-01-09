@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Verify.XUnit" Version="19.5.0" />
+    <PackageReference Include="Verify.XUnit" Version="19.6.0" />
     <PackageReference Include="Verify.SourceGenerators" Version="2.0.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" PrivateAssets="all" />
     <PackageReference Include="System.CodeDom" Version="7.0.0" />
