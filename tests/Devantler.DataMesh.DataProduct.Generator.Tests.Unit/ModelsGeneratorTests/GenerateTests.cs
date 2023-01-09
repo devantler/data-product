@@ -6,7 +6,7 @@ namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.ModelsGeneratorTes
 public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
 {
     [Fact]
-    public Task Generate_WithRecordSchemaWithInvalidNamespaceThatIsEmpty_ThrowsCodeGenException()
+    public Task Generate_GivenRecordSchemaWithInvalidNamespaceThatIsEmpty_ThrowsCodeGenException()
     {
         return Assert.ThrowsAnyAsync<CodeGenException>(() => Verify(
             new CustomAdditionalText("appsettings.json",
@@ -30,7 +30,7 @@ public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
     }
 
     [Fact]
-    public Task Generate_WithRecordSchemaWithInvalidNamespaceThatIsNull_ThrowsCodeGenException()
+    public Task Generate_GivenRecordSchemaWithInvalidNamespaceThatIsNull_ThrowsCodeGenException()
     {
         return Assert.ThrowsAnyAsync<CodeGenException>(() => Verify(
             new CustomAdditionalText("appsettings.json",
@@ -55,7 +55,7 @@ public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
 
     // Default values are not yet supported by Apache.Avro.
     [Fact]
-    public Task Generate_WithRecordSchemaWithPrimitiveTypesAndDefaultValuesAndNullability_GeneratesModel()
+    public Task Generate_GivenRecordSchemaWithPrimitiveTypesAndDefaultValuesAndNullability_GeneratesModel()
     {
         return Verify(
             new CustomAdditionalText("appsettings.json",
@@ -80,7 +80,7 @@ public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
 
     // Default values are not yet supported by Apache.Avro.
     [Fact]
-    public Task Generate_WithRecordSchemaWithPrimitiveTypesAndDefaultValues_GeneratesModel()
+    public Task Generate_GivenRecordSchemaWithPrimitiveTypesAndDefaultValues_GeneratesModel()
     {
         return Verify(
             new CustomAdditionalText("appsettings.json",
@@ -104,7 +104,7 @@ public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
     }
 
     [Fact]
-    public Task Generate_WithRecordSchemaWithPrimitiveTypesAndNullability_GeneratesModel()
+    public Task Generate_GivenRecordSchemaWithPrimitiveTypesAndNullability_GeneratesModel()
     {
         return Verify(
             new CustomAdditionalText("appsettings.json",
@@ -128,7 +128,7 @@ public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
     }
 
     [Fact]
-    public Task Generate_WithRecordSchemaWithPrimitiveTypes_GeneratesModel()
+    public Task Generate_GivenRecordSchemaWithPrimitiveTypes_GeneratesModel()
     {
         return Verify(
             new CustomAdditionalText("appsettings.json",
@@ -138,6 +138,54 @@ public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
                     "DataProduct": {
                         "Schema": {
                             "Subject": "RecordSchemaWithPrimitiveTypes",
+                            "Version": 1
+                        },
+                        "SchemaRegistry": {
+                            "Type": "Local",
+                            "Path": "assets/schemas"
+                        }
+                    }
+                }
+                """
+            )
+        );
+    }
+
+    [Fact]
+    public Task Generate_GivenUnionSchema_GeneratesModels()
+    {
+        return Verify(
+            new CustomAdditionalText("appsettings.json",
+                /*lang=json,strict*/
+                """
+                {
+                    "DataProduct": {
+                        "Schema": {
+                            "Subject": "UnionSchema",
+                            "Version": 1
+                        },
+                        "SchemaRegistry": {
+                            "Type": "Local",
+                            "Path": "assets/schemas"
+                        }
+                    }
+                }
+                """
+            )
+        );
+    }
+
+    [Fact]
+    public Task Generate_GivenUnionSchemaWithReference_GeneratesModels()
+    {
+        return Verify(
+            new CustomAdditionalText("appsettings.json",
+                /*lang=json,strict*/
+                """
+                {
+                    "DataProduct": {
+                        "Schema": {
+                            "Subject": "UnionSchemaWithReference",
                             "Version": 1
                         },
                         "SchemaRegistry": {

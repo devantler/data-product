@@ -2,7 +2,6 @@ using System.Collections.Immutable;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
-using Microsoft.CSharp;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Generator;
@@ -12,11 +11,6 @@ namespace Devantler.DataMesh.DataProduct.Generator;
 /// </summary>
 public abstract class GeneratorBase : IIncrementalGenerator
 {
-    /// <summary>
-    /// The code provider to use for generating code.
-    /// </summary>
-    protected readonly CSharpCodeProvider _codeProvider = new();
-
     /// <inheritdoc/>
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -65,7 +59,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
         const string targetAssembly = "Devantler.DataMesh.DataProduct";
         string assemblyPath = "";
         if (compilation.Assembly.Name == targetAssembly)
-            assemblyPath = compilation.Assembly.Locations.FirstOrDefault()?.SourceTree?.FilePath.Split(targetAssembly.ToCharArray())[0] + targetAssembly + "/";
+            assemblyPath = compilation.Assembly.Locations.FirstOrDefault()?.SourceTree?.FilePath.Split(targetAssembly)[0] + targetAssembly + "/";
 
         return assemblyPath;
     }

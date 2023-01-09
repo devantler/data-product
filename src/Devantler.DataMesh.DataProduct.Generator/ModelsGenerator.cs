@@ -7,6 +7,7 @@ using Devantler.DataMesh.DataProduct.Configuration.SchemaRegistry;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
+using Microsoft.CSharp;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Generator;
@@ -95,7 +96,8 @@ public class ModelsGenerator : GeneratorBase
             BlankLinesBetweenMembers = false
         };
         using StringWriter writer = new();
-        _codeProvider.GenerateCodeFromCompileUnit(codeGen.GenerateCode(), writer, codeGeneratorOptions);
+        CSharpCodeProvider codeProvider = new();
+        codeProvider.GenerateCodeFromCompileUnit(codeGen.GenerateCode(), writer, codeGeneratorOptions);
 
         return writer.ToString();
     }

@@ -1,6 +1,7 @@
 [
   {
     "name": "School",
+    "namespace": "whatever.you.want",
     "type": "record",
     "fields": [
       {
@@ -15,6 +16,7 @@
   },
   {
     "name": "Student",
+    "namespace": "whatever.you.want",
     "type": "record",
     "fields": [
       {

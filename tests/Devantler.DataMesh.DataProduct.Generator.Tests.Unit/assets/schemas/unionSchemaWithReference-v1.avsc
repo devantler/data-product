@@ -1,0 +1,19 @@
+[
+    {
+        "name": "RecordSchemaOneWithoutReference",
+        "namespace": "whatever.you.want",
+        "type": "record",
+        "fields": [ ]
+    },
+    {
+        "name": "RecordSchemaTwoWithReference",
+        "namespace": "whatever.you.want",
+        "type": "record",
+        "fields": [
+            {
+                "name": "RecordSchemaOne",
+                "type": "RecordSchemaOneWithoutReference"
+            }
+        ]
+    }
+]

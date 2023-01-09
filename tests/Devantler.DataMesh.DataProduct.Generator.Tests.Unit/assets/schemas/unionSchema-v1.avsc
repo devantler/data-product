@@ -1,33 +1,71 @@
 [
     {
         "name": "RecordSchemaOne",
+        "namespace": "whatever.you.want",
         "type": "record",
         "fields": [
             {
-                "name": "Name",
-                "type": "string"
+                "name": "BooleanType",
+                "type": "boolean"
             },
             {
-                "name": "Age",
+                "name": "ByteType",
+                "type": "bytes"
+            },
+            {
+                "name": "DoubleType",
+                "type": "double"
+            },
+            {
+                "name": "FloatType",
+                "type": "float"
+            },
+            {
+                "name": "IntType",
                 "type": "int"
+            },
+            {
+                "name": "LongType",
+                "type": "long"
+            },
+            {
+                "name": "StringType",
+                "type": "string"
             }
         ]
     },
     {
         "name": "RecordSchemaTwo",
+        "namespace": "whatever.you.want",
         "type": "record",
         "fields": [
             {
-                "name": "Name",
-                "type": "string"
+                "name": "BooleanType",
+                "type": "boolean"
             },
             {
-                "name": "Age",
+                "name": "ByteType",
+                "type": "bytes"
+            },
+            {
+                "name": "DoubleType",
+                "type": "double"
+            },
+            {
+                "name": "FloatType",
+                "type": "float"
+            },
+            {
+                "name": "IntType",
                 "type": "int"
             },
             {
-                "name": "RecordSchemaOne",
-                "type": "RecordSchemaOne"
+                "name": "LongType",
+                "type": "long"
+            },
+            {
+                "name": "StringType",
+                "type": "string"
             }
         ]
     }
