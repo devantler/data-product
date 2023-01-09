@@ -1,3 +1,6 @@
+using Devantler.DataMesh.DataProduct.Configuration.DataStore;
+using Devantler.DataMesh.DataProduct.Configuration.SchemaRegistry;
+
 namespace Devantler.DataMesh.DataProduct.Configuration;
 
 /// <summary>
@@ -43,5 +46,10 @@ public class DataProductOptions
     /// <summary>
     /// Options for the schema registry used by the data product.
     /// </summary>
-    public SchemaRegistryOptions SchemaRegistry { get; set; } = new();
+    public ISchemaRegistryOptions SchemaRegistry { get; set; } = null!;
+
+    /// <summary>
+    /// Options for the data store used by the data product.
+    /// </summary>
+    public IDataStoreOptions DataStore { get; set; } = null!;
 }

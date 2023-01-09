@@ -12,19 +12,18 @@ public static class NamespaceResolver
     /// </summary>
     /// <param name="namespaceSymbol"></param>
     /// <param name="type"></param>
-    /// <returns></returns>
+    /// <returns>The namespace for the given type</returns>
     public static string ResolveForType(INamespaceSymbol namespaceSymbol, Type type) =>
         ResolveForType(namespaceSymbol, type.Name);
 
     /// <summary>
-    /// Resolves a namespace from a types name.
+    /// Resolves a namespace from a type's name.
     /// </summary>
     /// <param name="namespaceSymbol"></param>
     /// <param name="typeName"></param>
-    /// <returns></returns>
+    /// <returns>The namespace for the given type name</returns>
     public static string ResolveForType(INamespaceSymbol namespaceSymbol, string typeName)
     {
-        // Find namespace for typeName recursively in namespaceSymbol or else throw exception
         foreach (INamespaceOrTypeSymbol member in namespaceSymbol.GetMembers())
         {
             if (member is INamespaceSymbol namespaceMember)
