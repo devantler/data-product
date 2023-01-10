@@ -13,4 +13,3 @@ dotnet_diagnostic.CA1707.severity = none
 
 [*.g.cs]
 generated_code = true
-dotnet_diagnostic.CS1591.severity = none
