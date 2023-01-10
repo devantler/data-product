@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Configuration;
 
-namespace Devantler.DataMesh.DataProduct.Generator;
+namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
 /// <summary>
 /// The base for generators that generate code to the data product.
@@ -26,7 +26,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
         {
             IConfigurationRoot configuration = BuildConfiguration(compilationAndFiles.Right);
 
-            //A hack to get the path to the assembly, as omnisharp does not set the calling assembly path correctly.
+            //TODO: Remove hack to get the path to the assembly, when omnisharp is able to set the calling assembly path correctly.
             string assemblyPath = GetCurrentAssemblyPath(compilationAndFiles.Left);
 
             Generate(assemblyPath, sourceProductionContext, compilationAndFiles.Left, configuration);

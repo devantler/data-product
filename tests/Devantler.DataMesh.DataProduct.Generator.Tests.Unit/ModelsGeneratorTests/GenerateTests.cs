@@ -1,201 +1,52 @@
 using Avro;
+using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
 namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.ModelsGeneratorTests;
 
 [UsesVerify]
 public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
 {
-    [Fact]
-    public Task Generate_GivenRecordSchemaWithInvalidNamespaceThatIsEmpty_ThrowsCodeGenException()
+    [Theory]
+    [InlineData("", 0)]
+    public Task Generate_GivenValidSchema_GeneratesModel(string subject, int version)
     {
-        return Assert.ThrowsAnyAsync<CodeGenException>(() => Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithInvalidNamespaceThatIsEmpty",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        ));
+        //Arrange
+        CustomAdditionalText additionalText = AppSettingsWithLocalSchema(subject, version);
+
+        //Act
+        //Assert
+        return Verify(additionalText);
     }
 
-    [Fact]
-    public Task Generate_GivenRecordSchemaWithInvalidNamespaceThatIsNull_ThrowsCodeGenException()
+    [Theory]
+    [InlineData("", 0)]
+    public Task Generate_GivenInvalidSchema_ThrowsException(string subject, int version)
     {
-        return Assert.ThrowsAnyAsync<CodeGenException>(() => Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithInvalidNamespaceThatIsNull",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        ));
+        //Arrange
+        CustomAdditionalText additionalText = AppSettingsWithLocalSchema(subject, version);
+
+        //Act
+        Func<Task> action = async () => await Verify(additionalText);
+
+        //Assert
+        return action.Should().ThrowAsync<CodeGenException>();
     }
 
-    // Default values are not yet supported by Apache.Avro.
-    [Fact]
-    public Task Generate_GivenRecordSchemaWithPrimitiveTypesAndDefaultValuesAndNullability_GeneratesModel()
-    {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithPrimitiveTypesAndDefaultValuesAndNullability",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
+    static CustomAdditionalText AppSettingsWithLocalSchema(string subject, int version) => new("appsettings.json",
+        /*lang=json,strict*/
+        $$"""
+        {
+            "DataProduct": {
+                "Schema": {
+                    "Subject": "{{subject}}",
+                    "Version": {{version}}
+                },
+                "SchemaRegistry": {
+                    "Type": "Local",
+                    "Path": "assets/schemas"
                 }
-                """
-            )
-        );
-    }
-
-    // Default values are not yet supported by Apache.Avro.
-    [Fact]
-    public Task Generate_GivenRecordSchemaWithPrimitiveTypesAndDefaultValues_GeneratesModel()
-    {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithPrimitiveTypesAndDefaultValues",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        );
-    }
-
-    [Fact]
-    public Task Generate_GivenRecordSchemaWithPrimitiveTypesAndNullability_GeneratesModel()
-    {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithPrimitiveTypesAndNullability",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        );
-    }
-
-    [Fact]
-    public Task Generate_GivenRecordSchemaWithPrimitiveTypes_GeneratesModel()
-    {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithPrimitiveTypes",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        );
-    }
-
-    [Fact]
-    public Task Generate_GivenUnionSchema_GeneratesModels()
-    {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "UnionSchema",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        );
-    }
-
-    [Fact]
-    public Task Generate_GivenUnionSchemaWithReference_GeneratesModels()
-    {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "UnionSchemaWithReference",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        );
-    }
+            }
+        }
+        """
+    );
 }

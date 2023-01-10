@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Generator;
+namespace Devantler.DataMesh.AvroCodeGenerators;
 
 /// <summary>
 /// A resolver that can resolve Apache.Avro primitive types to C# types.

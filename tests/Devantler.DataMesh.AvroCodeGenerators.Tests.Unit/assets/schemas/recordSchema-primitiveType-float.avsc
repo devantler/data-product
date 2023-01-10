@@ -1,0 +1,10 @@
+{
+    "name": "RecordSchemaPrimitiveTypeFloat",
+    "type": "record",
+    "fields": [
+        {
+            "name": "FloatField",
+            "type": "float"
+        }
+    ]
+}

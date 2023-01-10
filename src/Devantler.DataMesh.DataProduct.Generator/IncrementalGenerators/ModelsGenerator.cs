@@ -1,17 +1,15 @@
-using System.CodeDom;
-using System.CodeDom.Compiler;
 using System.Text;
 using Avro;
 using Devantler.Commons.StringHelpers;
+using Devantler.DataMesh.AvroCodeGenerators;
 using Devantler.DataMesh.DataProduct.Configuration;
 using Devantler.DataMesh.DataProduct.Configuration.SchemaRegistry;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
-using Microsoft.CSharp;
 using Microsoft.Extensions.Configuration;
 
-namespace Devantler.DataMesh.DataProduct.Generator;
+namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
 /// <summary>
 /// A generator that generates Model classes in the data product.
@@ -29,10 +27,10 @@ public class ModelsGenerator : GeneratorBase
 
         Schema rootSchema = schemaRegistryService.GetSchemaAsync(schemaOptions.Subject, schemaOptions.Version).Result;
 
-        foreach (Schema schema in GetSchemas(rootSchema))
+        foreach (Schema schema in GetFlattenedSchemas(rootSchema))
         {
-            string model = GenerateModel(schema);
-
+            AvroCodeGenerator codeGenerator = new();
+            string model = codeGenerator.Generate("Devantler.DataMesh.DataProduct.Models", schema);
             context.AddSource($"{schema.Name.ToPascalCase()}.cs", SourceText.From(model, Encoding.UTF8));
         }
     }
@@ -76,7 +74,7 @@ public class ModelsGenerator : GeneratorBase
         };
     }
 
-    List<Schema> GetSchemas(Schema rootSchema)
+    List<Schema> GetFlattenedSchemas(Schema rootSchema)
     {
         static List<Schema> Flatten(Schema schema)
         {
@@ -98,22 +96,5 @@ public class ModelsGenerator : GeneratorBase
         }
 
         return Flatten(rootSchema);
-    }
-
-    string GenerateModel(Schema schema)
-    {
-        AvroCodeGenerator codeGenerator = new();
-
-        CodeCompileUnit codeCompileUnit = codeGenerator.Generate("Devantler.DataMesh.DataProduct.Models", schema);
-
-        CodeGeneratorOptions codeGeneratorOptions = new()
-        {
-            BlankLinesBetweenMembers = false
-        };
-        using StringWriter writer = new();
-        CSharpCodeProvider codeProvider = new();
-        codeProvider.GenerateCodeFromCompileUnit(codeCompileUnit, writer, codeGeneratorOptions);
-
-        return writer.ToString();
     }
 }

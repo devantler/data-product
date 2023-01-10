@@ -1,0 +1,10 @@
+{
+    "name": "RecordSchemaPrimitiveTypeDouble",
+    "type": "record",
+    "fields": [
+        {
+            "name": "DoubleFiled",
+            "type": "double"
+        }
+    ]
+}

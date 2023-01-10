@@ -1,0 +1,10 @@
+{
+    "name": "RecordSchemaPrimitiveTypeBoolean",
+    "type": "record",
+    "fields": [
+        {
+            "name": "BooleanField",
+            "type": "boolean"
+        }
+    ]
+}

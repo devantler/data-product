@@ -33,6 +33,7 @@
         https://github.com/dotnet/roslyn/discussions/47517#discussioncomment-64145 -->
         <ProjectReference Include='..\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj' OutputItemType='Analyzer' />
         <ProjectReference Include='..\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj' OutputItemType='Analyzer' />
+        <ProjectReference Include='..\Devantler.DataMesh.AvroCodeGenerators\Devantler.DataMesh.AvroCodeGenerators.csproj' OutputItemType='Analyzer' />
     </ItemGroup>
 
     <ItemGroup>

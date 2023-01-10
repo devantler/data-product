@@ -1,0 +1,10 @@
+{
+    "name": "RecordSchemaPrimitiveTypeBytes",
+    "type": "record",
+    "fields": [
+        {
+            "name": "BytesField",
+            "type": "bytes"
+        }
+    ]
+}
