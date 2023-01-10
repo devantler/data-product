@@ -1,153 +1,56 @@
-using Avro;
-
 namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.ModelsGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
+public class GenerateTests : ModelsGeneratorTestsBase
 {
-    [Fact]
-    public Task Generate_WithRecordSchemaWithInvalidNamespaceThatIsEmpty_ThrowsCodeGenException()
+    [Theory]
+    [InlineData("RecordSchemaEmpty")]
+    [InlineData("RecordSchemaPrimitiveTypeBoolean")]
+    [InlineData("RecordSchemaPrimitiveTypeBytes")]
+    [InlineData("RecordSchemaPrimitiveTypeDouble")]
+    [InlineData("RecordSchemaPrimitiveTypeFloat")]
+    [InlineData("RecordSchemaPrimitiveTypeInt")]
+    [InlineData("RecordSchemaPrimitiveTypeLong")]
+    [InlineData("RecordSchemaPrimitiveTypeNull")]
+    [InlineData("RecordSchemaPrimitiveTypeString")]
+    [InlineData("RecordSchemaPrimitiveTypes")]
+    public Task GivenValidAppSettingsWithRecordSchema_GenerateValidCode(string subject)
     {
-        return Assert.ThrowsAnyAsync<CodeGenException>(() => Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithInvalidNamespaceThatIsEmpty",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        ));
+        //Arrange
+        CustomAdditionalText additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
+
+        //Act
+        //Assert
+        return Verify(additionalText);
     }
 
-    [Fact]
-    public Task Generate_WithRecordSchemaWithInvalidNamespaceThatIsNull_ThrowsCodeGenException()
+    [Theory]
+    [InlineData("EnumSchemaEmpty")]
+    [InlineData("EnumSchemaSymbols")]
+    public Task GivenValidAppSettingsWithEnumSchema_GenerateValidCode(string subject)
     {
-        return Assert.ThrowsAnyAsync<CodeGenException>(() => Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithInvalidNamespaceThatIsNull",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        ));
+        //Arrange
+        CustomAdditionalText additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
+
+        //Act
+        //Assert
+        return Verify(additionalText);
     }
 
-    // Default values are not yet supported by Apache.Avro.
-    [Fact]
-    public Task Generate_WithRecordSchemaWithPrimitiveTypesAndDefaultValuesAndNullability_GeneratesModel()
+    [Theory]
+    [InlineData("UnionSchemaEmpty")]
+    [InlineData("UnionSchemaEnumSchema")]
+    [InlineData("UnionSchemaEnumSchemas")]
+    [InlineData("UnionSchemaMixedSchemas")]
+    [InlineData("UnionSchemaRecordSchema")]
+    [InlineData("UnionSchemaRecordSchemas")]
+    public Task GivenValidAppSettingsWithUnionSchema_GenerateValidCode(string subject)
     {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithPrimitiveTypesAndDefaultValuesAndNullability",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        );
-    }
+        //Arrange
+        CustomAdditionalText additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
 
-    // Default values are not yet supported by Apache.Avro.
-    [Fact]
-    public Task Generate_WithRecordSchemaWithPrimitiveTypesAndDefaultValues_GeneratesModel()
-    {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithPrimitiveTypesAndDefaultValues",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        );
-    }
-
-    [Fact]
-    public Task Generate_WithRecordSchemaWithPrimitiveTypesAndNullability_GeneratesModel()
-    {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithPrimitiveTypesAndNullability",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        );
-    }
-
-    [Fact]
-    public Task Generate_WithRecordSchemaWithPrimitiveTypes_GeneratesModel()
-    {
-        return Verify(
-            new CustomAdditionalText("appsettings.json",
-                /*lang=json,strict*/
-                """
-                {
-                    "DataProduct": {
-                        "Schema": {
-                            "Subject": "RecordSchemaWithPrimitiveTypes",
-                            "Version": 1
-                        },
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "assets/schemas"
-                        }
-                    }
-                }
-                """
-            )
-        );
+        //Act
+        //Assert
+        return Verify(additionalText);
     }
 }

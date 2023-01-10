@@ -23,11 +23,12 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
         if (_schemaRegistryOptions.Path == null)
             throw new InvalidOperationException("Schema registry path not set");
 
-        string schemaFileName = $"{subject.ToCamelCase()}-v{version}.avsc";
+        string schemaFileName = $"{subject.ToKebabCase()}-v{version}.avsc";
+
         string[] schemaFile = Directory.GetFiles(_schemaRegistryOptions.Path, schemaFileName);
 
         if (schemaFile.Length == 0)
-            throw new FileNotFoundException($"Schema file not found for {Directory.GetCurrentDirectory()}/{_schemaRegistryOptions.Path}{schemaFileName}");
+            throw new FileNotFoundException($"Schema file not found for {Directory.GetCurrentDirectory()}/{schemaFileName}");
 
         string schemaString = await Task.Run(() => File.ReadAllText(schemaFile[0]));
 

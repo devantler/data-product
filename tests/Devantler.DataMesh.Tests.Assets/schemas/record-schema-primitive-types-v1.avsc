@@ -1,0 +1,38 @@
+{
+    "name": "RecordSchemaPrimitiveTypes",
+    "type": "record",
+    "fields": [
+        {
+            "name": "BooleanField",
+            "type": "boolean"
+        },
+        {
+            "name": "BytesField",
+            "type": "bytes"
+        },
+        {
+            "name": "DoubleField",
+            "type": "double"
+        },
+        {
+            "name": "FloatField",
+            "type": "float"
+        },
+        {
+            "name": "IntField",
+            "type": "int"
+        },
+        {
+            "name": "LongField",
+            "type": "long"
+        },
+        {
+            "name": "NullField",
+            "type": "null"
+        },
+        {
+            "name": "StringField",
+            "type": "string"
+        }
+    ]
+}

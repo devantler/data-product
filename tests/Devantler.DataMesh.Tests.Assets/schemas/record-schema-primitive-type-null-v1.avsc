@@ -1,0 +1,10 @@
+{
+    "name": "RecordSchemaPrimitiveTypeNull",
+    "type": "record",
+    "fields": [
+        {
+            "name": "NullField",
+            "type": "null"
+        }
+    ]
+}

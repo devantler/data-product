@@ -1,0 +1,5 @@
+{
+    "name": "EnumSchemaEmpty",
+    "type": "enum",
+    "symbols": [ ]
+}
