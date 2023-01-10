@@ -1,0 +1,12 @@
+[
+    {
+        "name": "UnionSchemaEnumSchema1",
+        "type": "enum",
+        "symbols": [ ]
+    },
+    {
+        "name": "UnionSchemaEnumSchema2",
+        "type": "enum",
+        "symbols": [ ]
+    }
+]

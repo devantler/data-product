@@ -1,0 +1,12 @@
+[
+    {
+        "name": "UnionSchemaRecordSchema1",
+        "type": "record",
+        "fields": [ ]
+    },
+    {
+        "name": "UnionSchemaRecordSchema2",
+        "type": "record",
+        "fields": [ ]
+    }
+]

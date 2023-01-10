@@ -1,0 +1,10 @@
+{
+    "name": "RecordSchemaPrimitiveTypeLong",
+    "type": "record",
+    "fields": [
+        {
+            "name": "LongField",
+            "type": "long"
+        }
+    ]
+}

@@ -21,6 +21,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.SchemaRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.DataProduct.Tests.Unit", "tests\Devantler.DataMesh.DataProduct.Tests.Unit\Devantler.DataMesh.DataProduct.Tests.Unit.csproj", "{71C2C6D6-65BF-4671-872D-5590406D121A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.AvroCodeGenerators", "src\Devantler.DataMesh.AvroCodeGenerators\Devantler.DataMesh.AvroCodeGenerators.csproj", "{76F87FE2-342F-479C-ACE2-2D421BA02CCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.AvroCodeGenerators.Tests.Unit", "tests\Devantler.DataMesh.AvroCodeGenerators.Tests.Unit\Devantler.DataMesh.AvroCodeGenerators.Tests.Unit.csproj", "{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Tests.Assets", "tests\Devantler.DataMesh.Tests.Assets\Devantler.DataMesh.Tests.Assets.csproj", "{259F22A0-EE07-4294-92E9-EC6616112826}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +64,18 @@ Global
 		{71C2C6D6-65BF-4671-872D-5590406D121A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71C2C6D6-65BF-4671-872D-5590406D121A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71C2C6D6-65BF-4671-872D-5590406D121A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76F87FE2-342F-479C-ACE2-2D421BA02CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76F87FE2-342F-479C-ACE2-2D421BA02CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76F87FE2-342F-479C-ACE2-2D421BA02CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76F87FE2-342F-479C-ACE2-2D421BA02CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{259F22A0-EE07-4294-92E9-EC6616112826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{259F22A0-EE07-4294-92E9-EC6616112826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{259F22A0-EE07-4294-92E9-EC6616112826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{259F22A0-EE07-4294-92E9-EC6616112826}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{31614E56-3029-4E97-97C6-2F96806AD0A7} = {A3DC7DF0-F121-45E3-9429-D15AEEDB9640}
@@ -67,5 +85,8 @@ Global
 		{B1F9A272-5BF7-4EE6-9AA1-10D23F52C670} = {297D6B62-6541-4580-8A65-5BD517976B83}
 		{17B45F51-0AF2-4C92-84D5-C34879DEC6B7} = {297D6B62-6541-4580-8A65-5BD517976B83}
 		{71C2C6D6-65BF-4671-872D-5590406D121A} = {297D6B62-6541-4580-8A65-5BD517976B83}
+		{76F87FE2-342F-479C-ACE2-2D421BA02CCD} = {A3DC7DF0-F121-45E3-9429-D15AEEDB9640}
+		{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C} = {297D6B62-6541-4580-8A65-5BD517976B83}
+		{259F22A0-EE07-4294-92E9-EC6616112826} = {297D6B62-6541-4580-8A65-5BD517976B83}
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,12 @@
+[
+    {
+        "name": "UnionSchemaMixedSchema1",
+        "type": "record",
+        "fields": [ ]
+    },
+    {
+        "name": "UnionSchemaMixedSchema2",
+        "type": "enum",
+        "symbols": [ ]
+    }
+]

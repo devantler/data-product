@@ -26,17 +26,19 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include='../Devantler.DataMesh.DataProduct.Generator/Devantler.DataMesh.DataProduct.Generator.csproj' OutputItemType='Analyzer' ReferenceOutputAssembly='false' />
+        <ProjectReference Include='..\Devantler.DataMesh.DataProduct.Generator\Devantler.DataMesh.DataProduct.Generator.csproj' OutputItemType='Analyzer' ReferenceOutputAssembly='false' />
         <!-- It is necessary to add project references as dependencies here, to make them work in
         the generator.
         See
         https://github.com/dotnet/roslyn/discussions/47517#discussioncomment-64145 -->
         <ProjectReference Include='..\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj' OutputItemType='Analyzer' />
+        <ProjectReference Include='..\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj' OutputItemType='Analyzer' />
+        <ProjectReference Include='..\Devantler.DataMesh.AvroCodeGenerators\Devantler.DataMesh.AvroCodeGenerators.csproj' OutputItemType='Analyzer' />
     </ItemGroup>
 
     <ItemGroup>
         <!-- Exclude the output of source generators from the compilation -->
-        <Compile Remove='generated/**/*.cs' />
+        <Compile Remove='generated/**/*.g.cs' />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,0 +1,10 @@
+{
+    "name": "RecordSchemaPrimitiveTypeInt",
+    "type": "record",
+    "fields": [
+        {
+            "name": "IntField",
+            "type": "int"
+        }
+    ]
+}
