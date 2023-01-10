@@ -13,6 +13,7 @@ public class AvroCodeGeneratorTestsBase
         //Arrange
         string schemaText = File.ReadAllText(schemaPath);
         Schema schema = Schema.Parse(schemaText);
+        
         string @namespace = GetType().Name;
 
         //Act

@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.AvroCode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.AvroCodeGenerators.Tests.Unit", "tests\Devantler.DataMesh.AvroCodeGenerators.Tests.Unit\Devantler.DataMesh.AvroCodeGenerators.Tests.Unit.csproj", "{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataMesh.Tests.Assets", "tests\Devantler.DataMesh.Tests.Assets\Devantler.DataMesh.Tests.Assets.csproj", "{259F22A0-EE07-4294-92E9-EC6616112826}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{259F22A0-EE07-4294-92E9-EC6616112826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{259F22A0-EE07-4294-92E9-EC6616112826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{259F22A0-EE07-4294-92E9-EC6616112826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{259F22A0-EE07-4294-92E9-EC6616112826}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{31614E56-3029-4E97-97C6-2F96806AD0A7} = {A3DC7DF0-F121-45E3-9429-D15AEEDB9640}
@@ -81,5 +87,6 @@ Global
 		{71C2C6D6-65BF-4671-872D-5590406D121A} = {297D6B62-6541-4580-8A65-5BD517976B83}
 		{76F87FE2-342F-479C-ACE2-2D421BA02CCD} = {A3DC7DF0-F121-45E3-9429-D15AEEDB9640}
 		{D39E81ED-A185-4EEE-9444-6F1BB44A4B3C} = {297D6B62-6541-4580-8A65-5BD517976B83}
+		{259F22A0-EE07-4294-92E9-EC6616112826} = {297D6B62-6541-4580-8A65-5BD517976B83}
 	EndGlobalSection
 EndGlobal

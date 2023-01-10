@@ -1,18 +1,19 @@
 namespace Devantler.DataMesh.AvroCodeGenerators.Tests.Unit.AvroClassGeneratorTests;
 
+[UsesVerify]
 public class GenerateTests : AvroClassGeneratorTestsBase
 {
     [Theory]
-    [InlineData("assets/schemas/recordSchema-empty.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-boolean.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-bytes.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-double.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-float.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-int.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-long.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-null.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-string.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveTypes.avsc")]
-    public Task Generate_WithValidRecordSchema_GeneratesValidClass(string schemaPath) =>
+    [InlineData("schemas/record-schema-empty-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-boolean-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-bytes-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-double-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-float-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-int-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-long-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-null-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-string-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-types-v1.avsc")]
+    public Task GivenValidRecordSchema_GenerateValidClass(string schemaPath) =>
         VerifySchema(schemaPath);
 }

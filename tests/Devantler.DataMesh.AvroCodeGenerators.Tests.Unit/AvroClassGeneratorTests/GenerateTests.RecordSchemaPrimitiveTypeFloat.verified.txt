@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AvroCodeGenerators.Tests
+namespace GenerateTests
 {
     
-    public class RecordSchemaPrimitiveTypeLong
+    public class RecordSchemaPrimitiveTypeFloat
     {
         private System.Guid _id;
         /// The unique identifier of the model.
@@ -25,16 +25,16 @@ namespace AvroCodeGenerators.Tests
                 _id = value;
             }
         }
-        private long _longField;
-        public long LongField
+        private float _floatField;
+        public float FloatField
         {
             get
             {
-                return _longField;
+                return _floatField;
             }
             set
             {
-                _longField = value;
+                _floatField = value;
             }
         }
     }

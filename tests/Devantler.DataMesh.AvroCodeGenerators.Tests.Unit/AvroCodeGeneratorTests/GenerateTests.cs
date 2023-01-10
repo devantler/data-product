@@ -4,32 +4,22 @@ namespace Devantler.DataMesh.AvroCodeGenerators.Tests.Unit.AvroCodeGeneratorTest
 public class GenerateTests : AvroCodeGeneratorTestsBase
 {
     [Theory]
-    [InlineData("assets/schemas/recordSchema-empty.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-boolean.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-bytes.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-double.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-float.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-int.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-long.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-null.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveType-string.avsc")]
-    [InlineData("assets/schemas/recordSchema-primitiveTypes.avsc")]
-    public Task Generate_WithValidRecordSchema_GeneratesValidCode(string schemaPath) =>
+    [InlineData("schemas/record-schema-empty-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-boolean-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-bytes-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-double-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-float-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-int-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-long-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-null-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-type-string-v1.avsc")]
+    [InlineData("schemas/record-schema-primitive-types-v1.avsc")]
+    public Task GivenValidRecordSchema_GenerateValidCode(string schemaPath) =>
         VerifySchema(schemaPath);
 
     [Theory]
-    [InlineData("assets/schemas/enumsSchema-empty.avsc")]
-    [InlineData("assets/schemas/enumsSchema-symbols.avsc")]
-    public Task Generate_WithValidEnumSchema_GeneratesValidCode(string schemaPath) =>
-        VerifySchema(schemaPath);
-
-    [Theory]
-    [InlineData("assets/schemas/unionSchema-empty.avsc")]
-    [InlineData("assets/schemas/unionSchema-enum.avsc")]
-    [InlineData("assets/schemas/unionSchema-enums.avsc")]
-    [InlineData("assets/schemas/unionSchema-recordSchema.avsc")]
-    [InlineData("assets/schemas/unionSchema-recordSchemas.avsc")]
-    [InlineData("assets/schemas/unionSchema-mixed.avsc")]
-    public Task Generate_WithValidUnionSchema_GeneratesValidCode(string schemaPath) =>
+    [InlineData("schemas/enum-schema-empty-v1.avsc")]
+    [InlineData("schemas/enum-schema-symbols-v1.avsc")]
+    public Task GivenValidEnumSchema_GenerateValidCode(string schemaPath) =>
         VerifySchema(schemaPath);
 }

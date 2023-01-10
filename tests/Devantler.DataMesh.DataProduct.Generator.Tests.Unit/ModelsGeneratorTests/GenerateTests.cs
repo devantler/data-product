@@ -1,17 +1,23 @@
-using Avro;
-using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
-
 namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.ModelsGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
+public class GenerateTests : ModelsGeneratorTestsBase
 {
     [Theory]
-    [InlineData("", 0)]
-    public Task Generate_GivenValidSchema_GeneratesModel(string subject, int version)
+    [InlineData("RecordSchemaEmpty")]
+    [InlineData("RecordSchemaPrimitiveTypeBoolean")]
+    [InlineData("RecordSchemaPrimitiveTypeBytes")]
+    [InlineData("RecordSchemaPrimitiveTypeDouble")]
+    [InlineData("RecordSchemaPrimitiveTypeFloat")]
+    [InlineData("RecordSchemaPrimitiveTypeInt")]
+    [InlineData("RecordSchemaPrimitiveTypeLong")]
+    [InlineData("RecordSchemaPrimitiveTypeNull")]
+    [InlineData("RecordSchemaPrimitiveTypeString")]
+    [InlineData("RecordSchemaPrimitiveTypes")]
+    public Task GivenValidAppSettingsWithRecordSchema_GenerateValidCode(string subject)
     {
         //Arrange
-        CustomAdditionalText additionalText = AppSettingsWithLocalSchema(subject, version);
+        CustomAdditionalText additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
 
         //Act
         //Assert
@@ -19,34 +25,32 @@ public class GenerateTests : GeneratorTestsBase<ModelsGenerator>
     }
 
     [Theory]
-    [InlineData("", 0)]
-    public Task Generate_GivenInvalidSchema_ThrowsException(string subject, int version)
+    [InlineData("EnumSchemaEmpty")]
+    [InlineData("EnumSchemaSymbols")]
+    public Task GivenValidAppSettingsWithEnumSchema_GenerateValidCode(string subject)
     {
         //Arrange
-        CustomAdditionalText additionalText = AppSettingsWithLocalSchema(subject, version);
+        CustomAdditionalText additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
 
         //Act
-        Func<Task> action = async () => await Verify(additionalText);
-
         //Assert
-        return action.Should().ThrowAsync<CodeGenException>();
+        return Verify(additionalText);
     }
 
-    static CustomAdditionalText AppSettingsWithLocalSchema(string subject, int version) => new("appsettings.json",
-        /*lang=json,strict*/
-        $$"""
-        {
-            "DataProduct": {
-                "Schema": {
-                    "Subject": "{{subject}}",
-                    "Version": {{version}}
-                },
-                "SchemaRegistry": {
-                    "Type": "Local",
-                    "Path": "assets/schemas"
-                }
-            }
-        }
-        """
-    );
+    [Theory]
+    [InlineData("UnionSchemaEmpty")]
+    [InlineData("UnionSchemaEnumSchema")]
+    [InlineData("UnionSchemaEnumSchemas")]
+    [InlineData("UnionSchemaMixedSchemas")]
+    [InlineData("UnionSchemaRecordSchema")]
+    [InlineData("UnionSchemaRecordSchemas")]
+    public Task GivenValidAppSettingsWithUnionSchema_GenerateValidCode(string subject)
+    {
+        //Arrange
+        CustomAdditionalText additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
+
+        //Act
+        //Assert
+        return Verify(additionalText);
+    }
 }

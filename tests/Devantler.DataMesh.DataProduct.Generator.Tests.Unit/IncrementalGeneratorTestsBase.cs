@@ -6,12 +6,12 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit;
 
-public abstract class GeneratorTestsBase<T> where T : GeneratorBase, new()
+public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, new()
 {
     readonly CSharpCompilation _compilation;
     readonly CSharpGeneratorDriver _driver;
 
-    protected GeneratorTestsBase()
+    protected IncrementalGeneratorTestsBase()
     {
         List<PortableExecutableReference> references = LoadAssemblyReferences();
         _compilation = CSharpCompilation.Create(
@@ -19,11 +19,10 @@ public abstract class GeneratorTestsBase<T> where T : GeneratorBase, new()
             references: references
         );
 
-        _driver = CSharpGeneratorDriver
-            .Create(new T());
+        _driver = CSharpGeneratorDriver.Create(new T());
     }
 
-    public Task Verify(CustomAdditionalText additionalText)
+    public SettingsTask Verify(CustomAdditionalText additionalText)
     {
         if (additionalText is null)
             throw new ArgumentNullException(nameof(additionalText));
@@ -31,7 +30,13 @@ public abstract class GeneratorTestsBase<T> where T : GeneratorBase, new()
         GeneratorDriver driver = _driver.AddAdditionalTexts(additionalTexts)
             .RunGenerators(_compilation);
         string directoryName = GetTestDirectoryName();
-        return Verifier.Verify(driver).UseDirectory(directoryName);
+        return Verifier.Verify(driver).UseDirectory(directoryName).DisableRequireUniquePrefix();
+    }
+
+    string GetTestDirectoryName()
+    {
+        int indexOfDirectoryNameInNamespace = GetType()?.Namespace?.LastIndexOf('.') + 1 ?? 0;
+        return GetType()?.Namespace?[indexOfDirectoryNameInNamespace..] ?? string.Empty;
     }
 
     static List<PortableExecutableReference> LoadAssemblyReferences()
@@ -42,12 +47,6 @@ public abstract class GeneratorTestsBase<T> where T : GeneratorBase, new()
             .Where(s => s.Contains("Devantler.DataMesh.DataProduct.dll", StringComparison.Ordinal))
             .Select(s => MetadataReference.CreateFromFile(s))
             .ToList();
-    }
-
-    string GetTestDirectoryName()
-    {
-        int indexOfDirectoryNameInNamespace = GetType()?.Namespace?.LastIndexOf('.') + 1 ?? 0;
-        return GetType()?.Namespace?[indexOfDirectoryNameInNamespace..] ?? string.Empty;
     }
 }
 

@@ -27,10 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Devantler.DataMesh.AvroCodeGenerators\Devantler.DataMesh.AvroCodeGenerators.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="assets/**" CopyToOutputDirectory="PreserveNewest" />
+    <ProjectReference Include="..\Devantler.DataMesh.Tests.Assets\Devantler.DataMesh.Tests.Assets.csproj" />
   </ItemGroup>
 
   <ItemGroup>
