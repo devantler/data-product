@@ -13,7 +13,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Using Include="Devantler.DataMesh.AvroCodeGenerators.Extensions" />
+    <Using Include="System.CodeDom" />
+    <Using Include="Avro" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Apache.Avro" Version="1.11.1" />
-    <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.0.8" />
+    <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.0.9" />
   </ItemGroup>
 </Project>

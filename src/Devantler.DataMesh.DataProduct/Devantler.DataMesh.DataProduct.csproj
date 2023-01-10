@@ -38,7 +38,7 @@
 
     <ItemGroup>
         <!-- Exclude the output of source generators from the compilation -->
-        <Compile Remove='generated/**/*.cs' />
+        <Compile Remove='generated/**/*.g.cs' />
     </ItemGroup>
 
     <ItemGroup>

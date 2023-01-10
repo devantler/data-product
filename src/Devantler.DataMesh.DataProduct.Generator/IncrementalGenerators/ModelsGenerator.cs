@@ -31,7 +31,7 @@ public class ModelsGenerator : GeneratorBase
         {
             AvroCodeGenerator codeGenerator = new();
             string model = codeGenerator.Generate("Devantler.DataMesh.DataProduct.Models", schema);
-            context.AddSource($"{schema.Name.ToPascalCase()}.cs", SourceText.From(model, Encoding.UTF8));
+            context.AddSource($"{schema.Name.ToPascalCase()}.g.cs", SourceText.From(model, Encoding.UTF8));
         }
     }
 

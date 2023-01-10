@@ -15,5 +15,5 @@ public class GenerateTests : AvroClassGeneratorTestsBase
     [InlineData("schemas/record-schema-primitive-type-string-v1.avsc")]
     [InlineData("schemas/record-schema-primitive-types-v1.avsc")]
     public Task GivenValidRecordSchema_GenerateValidClass(string schemaPath) =>
-        VerifySchema(schemaPath);
+        Verify(schemaPath);
 }

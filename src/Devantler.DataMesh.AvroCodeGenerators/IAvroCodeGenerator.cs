@@ -1,5 +1,3 @@
-using Avro;
-
 namespace Devantler.DataMesh.AvroCodeGenerators;
 
 /// <summary>

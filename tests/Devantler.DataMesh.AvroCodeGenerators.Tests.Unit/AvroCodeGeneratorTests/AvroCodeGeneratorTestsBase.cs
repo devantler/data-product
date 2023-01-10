@@ -8,18 +8,18 @@ public class AvroCodeGeneratorTestsBase
 
     public AvroCodeGeneratorTestsBase() => _avroCodeGenerator = new();
 
-    internal Task VerifySchema(string schemaPath)
+    internal Task Verify(string schemaPath)
     {
         //Arrange
         string schemaText = File.ReadAllText(schemaPath);
         Schema schema = Schema.Parse(schemaText);
-        
+
         string @namespace = GetType().Name;
 
         //Act
         string code = _avroCodeGenerator.Generate(@namespace, schema);
 
         //Assert
-        return Verify(code).UseMethodName(schema.Name);
+        return Verifier.Verify(code).UseMethodName(schema.Name);
     }
 }

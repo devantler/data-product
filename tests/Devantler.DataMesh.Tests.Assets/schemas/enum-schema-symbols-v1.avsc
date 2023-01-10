@@ -1,5 +1,5 @@
 {
-    "name": "EnumSchemaEmpty",
+    "name": "EnumSchemaSymbols",
     "type": "enum",
     "symbols": [ "symbol1", "symbol2", "symbol3" ]
 }

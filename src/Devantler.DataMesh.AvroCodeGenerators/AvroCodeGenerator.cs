@@ -1,6 +1,3 @@
-using System.CodeDom;
-using Avro;
-
 namespace Devantler.DataMesh.AvroCodeGenerators;
 
 /// <summary>
@@ -17,9 +14,11 @@ public class AvroCodeGenerator : IAvroCodeGenerator<Schema>
     public string Generate(string @namespace, Schema schema)
     {
         AvroClassGenerator avroClassGenerator = new();
+        AvroEnumGenerator avroEnumGenerator = new();
         return schema switch
         {
             RecordSchema recordSchema => avroClassGenerator.Generate(@namespace, recordSchema),
+            EnumSchema enumSchema => avroEnumGenerator.Generate(@namespace, enumSchema),
             _ => throw new NotImplementedException($"A generator for the specified shema type {schema?.GetType()} is not implemented yet.")
         };
     }

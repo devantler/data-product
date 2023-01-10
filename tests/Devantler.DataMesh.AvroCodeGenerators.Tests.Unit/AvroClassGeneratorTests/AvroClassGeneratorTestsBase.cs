@@ -8,18 +8,19 @@ public class AvroClassGeneratorTestsBase
 
     public AvroClassGeneratorTestsBase() => _avroClassGenerator = new();
 
-    internal Task VerifySchema(string schemaPath)
+    internal Task Verify(string schemaPath)
     {
         //Arrange
         string schemaText = File.ReadAllText(schemaPath);
         Schema schema = Schema.Parse(schemaText);
         RecordSchema recordSchema = (RecordSchema)schema;
+
         string @namespace = GetType().Name;
 
         //Act
         string code = _avroClassGenerator.Generate(@namespace, recordSchema);
 
         //Assert
-        return Verify(code).UseMethodName(schema.Name);
+        return Verifier.Verify(code).UseMethodName(schema.Name);
     }
 }

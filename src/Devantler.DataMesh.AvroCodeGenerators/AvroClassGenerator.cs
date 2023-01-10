@@ -1,7 +1,4 @@
-using System.CodeDom;
-using Avro;
 using Devantler.Commons.StringHelpers;
-using Devantler.DataMesh.AvroCodeGenerators.Extensions;
 
 namespace Devantler.DataMesh.AvroCodeGenerators;
 
@@ -20,7 +17,7 @@ public class AvroClassGenerator : IAvroCodeGenerator<RecordSchema>
     {
         CodeCompileUnit compileUnit = new();
         _ = compileUnit.AddNamespace(@namespace);
-        _ = compileUnit.AddType(schema.Name, schema.Documentation);
+        _ = compileUnit.AddType(schema.Name, false, schema.Documentation);
 
         if (!schema.Fields.Any(x => x.Name.Equals("id", StringComparison.OrdinalIgnoreCase)))
             _ = compileUnit.AddPropertyWithBackingField("Id", new CodeTypeReference(typeof(Guid)), "The unique identifier of the model.");

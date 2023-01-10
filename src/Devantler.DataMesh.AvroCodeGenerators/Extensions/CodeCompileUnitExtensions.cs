@@ -1,5 +1,4 @@
 #pragma warning disable RCS1130
-using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Text;
 using Devantler.Commons.StringHelpers;
@@ -53,14 +52,19 @@ public static class CodeCompileUnitExtensions
     /// </summary>
     /// <param name="codeCompileUnit"></param>
     /// <param name="type"></param>
+    /// <param name="isEnum"></param>
     /// <param name="docBlock"></param>
     /// <returns></returns>
-    public static CodeCompileUnit AddType(this CodeCompileUnit codeCompileUnit, string @type, string? docBlock = null)
+    public static CodeCompileUnit AddType(this CodeCompileUnit codeCompileUnit, string @type, bool isEnum, string? docBlock = null)
     {
-        CodeTypeDeclaration codeTypeDeclaration = new(@type);
+        CodeTypeDeclaration codeTypeDeclaration = new(@type)
+        {
+            IsEnum = isEnum
+        };
 
-        if (docBlock != null)
-            _ = codeTypeDeclaration.Comments.Add(new CodeCommentStatement(docBlock, true));
+        _ = codeTypeDeclaration.Comments.Add(new CodeCommentStatement("/// <summary>", true));
+        _ = codeTypeDeclaration.Comments.Add(new CodeCommentStatement(docBlock, true));
+        _ = codeTypeDeclaration.Comments.Add(new CodeCommentStatement("/// </summary>", true));
 
         if (codeCompileUnit.Namespaces.Count == 0)
             throw new AvroCodeGeneratorException("No namespace has been added to the code compile unit.");
@@ -92,9 +96,9 @@ public static class CodeCompileUnitExtensions
         CodeMemberField field = CreateCodeMemberField(type, fieldName);
         CodeMemberProperty property = CreateCodeMemberProperty(propertyName, type, fieldName);
 
-        if (documentation is not null)
-            _ = property.Comments.Add(new CodeCommentStatement(documentation, true));
-
+        _ = property.Comments.Add(new CodeCommentStatement("<summary>", true));
+        _ = property.Comments.Add(new CodeCommentStatement(documentation, true));
+        _ = property.Comments.Add(new CodeCommentStatement("</summary>", true));
         _ = codeCompileUnit.Namespaces[0].Types[0].Members.Add(field);
         _ = codeCompileUnit.Namespaces[0].Types[0].Members.Add(property);
         return codeCompileUnit;
