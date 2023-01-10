@@ -1,3 +1,4 @@
+using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Text;
 using Avro;
@@ -28,7 +29,7 @@ public class ModelsGenerator : GeneratorBase
 
         Schema rootSchema = schemaRegistryService.GetSchemaAsync(schemaOptions.Subject, schemaOptions.Version).Result;
 
-        foreach (RecordSchema schema in GetRecordSchemas(rootSchema))
+        foreach (Schema schema in GetSchemas(rootSchema))
         {
             string model = GenerateModel(schema);
 
@@ -75,26 +76,35 @@ public class ModelsGenerator : GeneratorBase
         };
     }
 
-    static RecordSchema[] GetRecordSchemas(Schema rootSchema)
+    List<Schema> GetSchemas(Schema rootSchema)
     {
-        return rootSchema switch
+        static List<Schema> Flatten(Schema schema)
         {
-            RecordSchema recordSchema => new[] { recordSchema },
-            UnionSchema unionSchema => unionSchema.Schemas.OfType<RecordSchema>().ToArray(),
-            _ => throw new NotImplementedException($"Schema type {rootSchema.GetType()} not implemented")
-        };
+            List<Schema> schemas = new();
+
+            if (schema is RecordSchema recordSchema)
+            {
+                schemas.Add(recordSchema);
+            }
+            else if (schema is EnumSchema enumSchema)
+            {
+                schemas.Add(enumSchema);
+            }
+            else if (schema is UnionSchema unionSchema)
+            {
+                schemas.AddRange(unionSchema.Schemas.ToList().SelectMany(Flatten));
+            }
+            return schemas;
+        }
+
+        return Flatten(rootSchema);
     }
 
-    string GenerateModel(RecordSchema schema)
+    string GenerateModel(Schema schema)
     {
-        //TODO: Replace Avro logic with custom CodeCompileUnit logic to generate classes.
-        if (!schema.Fields.Any(x => x.Name.Equals("id", StringComparison.OrdinalIgnoreCase)))
-            schema.Fields = AddCustomFields(schema.Fields);
+        AvroCodeGenerator codeGenerator = new();
 
-        CodeGen codeGen = new();
-        codeGen.AddSchema(schema.ToString(), new List<KeyValuePair<string, string>>() {
-            new(schema.Namespace, "Devantler.DataMesh.DataProduct.Models")
-        });
+        CodeCompileUnit codeCompileUnit = codeGenerator.Generate("Devantler.DataMesh.DataProduct.Models", schema);
 
         CodeGeneratorOptions codeGeneratorOptions = new()
         {
@@ -102,18 +112,8 @@ public class ModelsGenerator : GeneratorBase
         };
         using StringWriter writer = new();
         CSharpCodeProvider codeProvider = new();
-        codeProvider.GenerateCodeFromCompileUnit(codeGen.GenerateCode(), writer, codeGeneratorOptions);
+        codeProvider.GenerateCodeFromCompileUnit(codeCompileUnit, writer, codeGeneratorOptions);
 
         return writer.ToString();
-    }
-
-    static List<Field> AddCustomFields(List<Field> fields)
-    {
-        List<Field> customFields = new()
-        {
-            new Field(PrimitiveSchema.Create(Schema.Type.String), "Id", 0)
-        };
-        List<Field> updatedFields = fields.ConvertAll(x => new Field(x.Schema, x.Name.ToPascalCase(), x.Pos, x.Aliases, x.Documentation, x.DefaultValue, x.Ordering ?? Field.SortOrder.ignore));
-        return customFields.Concat(fields).ToList();
     }
 }
