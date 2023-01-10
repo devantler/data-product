@@ -19,11 +19,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: "csharp"
-
       - name: Setup .NET SDK v${{ env.DOTNET_VERSION }}
         uses: actions/setup-dotnet@v3.0.3
         with:
@@ -46,8 +41,3 @@ jobs:
         with:
           files: tests/**/TestResults/**/coverage.cobertura.xml
           fail_ci_if_error: true
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
-        with:
-          category: "/language:csharp"

@@ -8,3 +8,6 @@ obj/
 app.db
 NuGet.Config
 generated/
+
+# Visual Studio
+.vs/
