@@ -10,6 +10,9 @@
 namespace GenerateTests
 {
     
+    /// <summary>
+    /// 
+    /// </summary>
     public enum EnumSchemaEmpty
     {
     }

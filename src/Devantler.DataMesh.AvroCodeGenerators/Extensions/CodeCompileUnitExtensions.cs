@@ -62,9 +62,9 @@ public static class CodeCompileUnitExtensions
             IsEnum = isEnum
         };
 
-        _ = codeTypeDeclaration.Comments.Add(new CodeCommentStatement("/// <summary>", true));
+        _ = codeTypeDeclaration.Comments.Add(new CodeCommentStatement("<summary>", true));
         _ = codeTypeDeclaration.Comments.Add(new CodeCommentStatement(docBlock, true));
-        _ = codeTypeDeclaration.Comments.Add(new CodeCommentStatement("/// </summary>", true));
+        _ = codeTypeDeclaration.Comments.Add(new CodeCommentStatement("</summary>", true));
 
         if (codeCompileUnit.Namespaces.Count == 0)
             throw new AvroCodeGeneratorException("No namespace has been added to the code compile unit.");

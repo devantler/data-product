@@ -10,10 +10,15 @@
 namespace GenerateTests
 {
     
+    /// <summary>
+    /// 
+    /// </summary>
     public class RecordSchemaPrimitiveTypeBytes
     {
         private System.Guid _id;
+        /// <summary>
         /// The unique identifier of the model.
+        /// </summary>
         public System.Guid Id
         {
             get
@@ -26,6 +31,9 @@ namespace GenerateTests
             }
         }
         private byte[] _bytesField;
+        /// <summary>
+        /// 
+        /// </summary>
         public byte[] BytesField
         {
             get

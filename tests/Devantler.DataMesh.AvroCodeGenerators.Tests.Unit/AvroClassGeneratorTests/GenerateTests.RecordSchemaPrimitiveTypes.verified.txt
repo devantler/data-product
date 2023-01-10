@@ -10,10 +10,15 @@
 namespace GenerateTests
 {
     
+    /// <summary>
+    /// 
+    /// </summary>
     public class RecordSchemaPrimitiveTypes
     {
         private System.Guid _id;
+        /// <summary>
         /// The unique identifier of the model.
+        /// </summary>
         public System.Guid Id
         {
             get
@@ -26,6 +31,9 @@ namespace GenerateTests
             }
         }
         private bool _booleanField;
+        /// <summary>
+        /// 
+        /// </summary>
         public bool BooleanField
         {
             get
@@ -38,6 +46,9 @@ namespace GenerateTests
             }
         }
         private byte[] _bytesField;
+        /// <summary>
+        /// 
+        /// </summary>
         public byte[] BytesField
         {
             get
@@ -50,6 +61,9 @@ namespace GenerateTests
             }
         }
         private double _doubleField;
+        /// <summary>
+        /// 
+        /// </summary>
         public double DoubleField
         {
             get
@@ -62,6 +76,9 @@ namespace GenerateTests
             }
         }
         private float _floatField;
+        /// <summary>
+        /// 
+        /// </summary>
         public float FloatField
         {
             get
@@ -74,6 +91,9 @@ namespace GenerateTests
             }
         }
         private int _intField;
+        /// <summary>
+        /// 
+        /// </summary>
         public int IntField
         {
             get
@@ -86,6 +106,9 @@ namespace GenerateTests
             }
         }
         private long _longField;
+        /// <summary>
+        /// 
+        /// </summary>
         public long LongField
         {
             get
@@ -98,6 +121,9 @@ namespace GenerateTests
             }
         }
         private object _nullField;
+        /// <summary>
+        /// 
+        /// </summary>
         public object NullField
         {
             get
@@ -110,6 +136,9 @@ namespace GenerateTests
             }
         }
         private string _stringField;
+        /// <summary>
+        /// 
+        /// </summary>
         public string StringField
         {
             get

@@ -10,10 +10,15 @@
 namespace GenerateTests
 {
     
+    /// <summary>
+    /// 
+    /// </summary>
     public class RecordSchemaEmpty
     {
         private System.Guid _id;
+        /// <summary>
         /// The unique identifier of the model.
+        /// </summary>
         public System.Guid Id
         {
             get
