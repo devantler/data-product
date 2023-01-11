@@ -2,6 +2,8 @@
 
 [![codecov](https://codecov.io/gh/devantler/data-mesh/branch/main/graph/badge.svg?token=9lh1Z59deC)](https://codecov.io/gh/devantler/data-mesh)
 
+//TODO: Update the README to describe the DataProduct.
+
 This repo contains a Data Mesh Provisiong API that can provision data products. A Data Product is an IaaS unit (small k8s cluster) with dedicated data storage, data processing, data discovery-, and data governance- tooling for a specific domain model. A domain model is a single data model that covers a concrete domain, e.g. Accounts, Books, Authors etc.
 
 The Data Mesh is built to support most cloud providers and provisioning tools by being built for Kubernetes. For local development, the platform uses [kind](https://kind.sigs.k8s.io/).
