@@ -9,7 +9,6 @@ public static partial class SqliteStartupExtensions
     /// Registers the SQLite data store to the DI container.
     /// </summary>
     /// <param name="services"></param>
-    /// <returns></returns>
     public static IServiceCollection AddSqlite(this IServiceCollection services)
     {
         GenerateServiceRegistrations(services);
@@ -20,7 +19,6 @@ public static partial class SqliteStartupExtensions
     /// Configures the web application to use SQLite as a data store.
     /// </summary>
     /// <param name="app"></param>
-    /// <returns></returns>
     public static WebApplication UseSqlite(this WebApplication app)
     {
         GenerateMiddlewareRegistrations(app);

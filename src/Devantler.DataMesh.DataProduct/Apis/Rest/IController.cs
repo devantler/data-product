@@ -17,7 +17,6 @@ public interface IController<T>
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     Task<ActionResult<IEnumerable<T>>> Read(IEnumerable<Guid> ids, int page = 1, int pageSize = 10,
         CancellationToken cancellationToken = default);
 
@@ -26,7 +25,6 @@ public interface IController<T>
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     Task<ActionResult<IEnumerable<Guid>>> Create(IEnumerable<T> models, CancellationToken cancellationToken = default);
 
     // Task<ActionResult> Update(Request<T> request, CancellationToken cancellationToken = default);

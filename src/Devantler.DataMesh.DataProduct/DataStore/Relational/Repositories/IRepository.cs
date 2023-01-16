@@ -14,7 +14,6 @@ public interface IRepository<T> where T : IEntity
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     Task<T> Read(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -22,7 +21,6 @@ public interface IRepository<T> where T : IEntity
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     Task<IEnumerable<T>> ReadMany(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -31,7 +29,6 @@ public interface IRepository<T> where T : IEntity
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     Task<IEnumerable<T>> ReadPaged(int page, int pageSize, CancellationToken cancellationToken = default);
 
     // Task Update(T entity, CancellationToken cancellationToken = default);

@@ -8,10 +8,10 @@ public enum RelationalDataStoreProvider
     /// <summary>
     /// Automatically decide the which data store provider to use for the relational data store type.
     /// </summary>
-    Auto,
+    Auto = 0,
 
     /// <summary>
     /// SQLite a relational data store provider.
     /// </summary>
-    SQlite
+    SQlite = 1
 }

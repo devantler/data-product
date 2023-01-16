@@ -13,6 +13,7 @@ public static class DataStoreStartupExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
+    /// <exception cref="NotSupportedException">Thrown when the data store is not supported.</exception>
     public static void AddDataStore(this IServiceCollection services, IConfiguration configuration)
     {
         switch (configuration.GetFeatureValue(Constants.DataStoreTypeFeatureFlag))
@@ -30,6 +31,7 @@ public static class DataStoreStartupExtensions
     /// </summary>
     /// <param name="app"></param>
     /// <param name="configuration"></param>
+    /// <exception cref="NotSupportedException">Thrown when the data store is not supported.</exception>
     public static void UseDataStore(this WebApplication app, IConfiguration configuration)
     {
         switch (configuration.GetFeatureValue(Constants.DataStoreTypeFeatureFlag))

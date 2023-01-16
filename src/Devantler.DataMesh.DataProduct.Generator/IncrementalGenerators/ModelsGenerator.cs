@@ -1,7 +1,6 @@
 using System.Text;
 using Avro;
 using Devantler.Commons.StringHelpers;
-using Devantler.DataMesh.AvroCodeGenerators;
 using Devantler.DataMesh.DataProduct.Configuration;
 using Devantler.DataMesh.DataProduct.Configuration.SchemaRegistry;
 using Devantler.DataMesh.SchemaRegistry;
@@ -27,12 +26,13 @@ public class ModelsGenerator : GeneratorBase
 
         Schema rootSchema = schemaRegistryService.GetSchemaAsync(schemaOptions.Subject, schemaOptions.Version).Result;
 
+        AvroCodeCollectionMapper<Schema> mapper = new();
         foreach (Schema schema in GetFlattenedSchemas(rootSchema))
         {
             AvroCodeGenerator codeGenerator = new();
             string model = codeGenerator.Generate("Devantler.DataMesh.DataProduct.Models", schema);
-            context.AddSource($"{schema.Name.ToPascalCase()}.g.cs", SourceText.From(model, Encoding.UTF8));
         }
+        context.AddSource($"{schema.Name.ToPascalCase()}.g.cs", SourceText.From(model, Encoding.UTF8));
     }
 
     static ISchemaRegistryOptions GetSchemaRegistryOptions(IConfiguration configuration)
@@ -72,29 +72,5 @@ public class ModelsGenerator : GeneratorBase
             KafkaSchemaRegistryOptions kafkaSchemaRegistryOptions => new KafkaSchemaRegistryService(new KafkaSchemaRegistryOptions { Url = kafkaSchemaRegistryOptions.Url }),
             _ => throw new NotImplementedException($"Schema registry type {schemaRegistryOptions.Type} not implemented")
         };
-    }
-
-    List<Schema> GetFlattenedSchemas(Schema rootSchema)
-    {
-        static List<Schema> Flatten(Schema schema)
-        {
-            List<Schema> schemas = new();
-
-            if (schema is RecordSchema recordSchema)
-            {
-                schemas.Add(recordSchema);
-            }
-            else if (schema is EnumSchema enumSchema)
-            {
-                schemas.Add(enumSchema);
-            }
-            else if (schema is UnionSchema unionSchema)
-            {
-                schemas.AddRange(unionSchema.Schemas.ToList().SelectMany(Flatten));
-            }
-            return schemas;
-        }
-
-        return Flatten(rootSchema);
     }
 }

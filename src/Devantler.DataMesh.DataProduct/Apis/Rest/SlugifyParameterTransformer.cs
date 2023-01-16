@@ -11,7 +11,6 @@ public class SlugifyParameterTransformer : IOutboundParameterTransformer
     /// Transforms an outbound parameter from PascalCase to kebab-case.
     /// </summary>
     /// <param name="value"></param>
-    /// <returns></returns>
     public string? TransformOutbound(object? value)
     {
         return value == null ? null :

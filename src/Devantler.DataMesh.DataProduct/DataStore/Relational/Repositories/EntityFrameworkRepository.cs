@@ -21,7 +21,7 @@ public abstract class EntityFrameworkRepository<T> : IRepository<T> where T : cl
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <exception cref="InvalidOperationException">Thrown when the entity is not found.</exception>
     public async Task<T> Read(Guid id, CancellationToken cancellationToken = default) =>
         await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken) ??
         throw new InvalidOperationException($"Entity of type {typeof(T).Name} with id {id} not found");
@@ -31,7 +31,6 @@ public abstract class EntityFrameworkRepository<T> : IRepository<T> where T : cl
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     public async Task<IEnumerable<T>> ReadMany(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
         => await _context.Set<T>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
 
@@ -41,7 +40,6 @@ public abstract class EntityFrameworkRepository<T> : IRepository<T> where T : cl
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     public async Task<IEnumerable<T>> ReadPaged(int page, int pageSize, CancellationToken cancellationToken = default)
         => await _context.Set<T>().Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
 }

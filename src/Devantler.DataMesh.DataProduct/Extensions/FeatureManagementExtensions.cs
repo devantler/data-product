@@ -12,7 +12,7 @@ public static class FeatureManagementExtensions
     /// </summary>
     /// <param name="configuration"></param>
     /// <param name="featureName"></param>
-    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">Thrown when the <paramref name="configuration"/> is null.</exception>
     public static string GetFeatureValue(this IConfiguration configuration, string featureName)
     {
         return configuration == null
@@ -25,7 +25,6 @@ public static class FeatureManagementExtensions
     /// </summary>
     /// <param name="configuration"></param>
     /// <param name="featureFlag"></param>
-    /// <returns></returns>
     public static bool IsFeatureEnabled(this IConfiguration configuration, string featureFlag) =>
         configuration.GetValue<bool>($"{FeaturesOptions.Key}:{featureFlag}");
 
@@ -36,13 +35,11 @@ public static class FeatureManagementExtensions
     /// <param name="configuration"></param>
     /// <param name="featureFlag"></param>
     /// <param name="value"></param>
-    /// <returns></returns>
+    /// <exception cref="ArgumentNullException">Thrown when the <paramref name="configuration"/> is null.</exception>
     public static bool IsFeatureEnabled<T>(this IConfiguration configuration, string featureFlag, object value)
     {
         if (configuration == null)
-        {
             throw new ArgumentNullException(nameof(configuration));
-        }
 
         T? featureValue = configuration.GetSection($"{FeaturesOptions.Key}:{featureFlag}").Get<T>();
         return featureValue switch

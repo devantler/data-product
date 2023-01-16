@@ -5,9 +5,9 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AnalysisMode>All</AnalysisMode>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
         <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
     </PropertyGroup>
 
@@ -28,13 +28,13 @@
         <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Primitives" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="System.CodeDom" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
+        <!-- <PackageReference Include="System.CodeDom" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" /> -->
     </ItemGroup>
 
-    <ItemGroup>
+    <!-- <ItemGroup>
         <ProjectReference Include="..\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj" />
-        <ProjectReference Include="..\Devantler.DataMesh.AvroCodeGenerators\Devantler.DataMesh.AvroCodeGenerators.csproj" />
-    </ItemGroup>
+        <ProjectReference Include="..\Devantler.Commons.CodeGen\Devantler.Commons.CodeGen.csproj" />
+    </ItemGroup> -->
 
     <Target Name="GetDependencyTargetPaths">
         <ItemGroup>
@@ -50,7 +50,7 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_Extensions_FileProviders_Physical)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_Extensions_Primitives)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGNewtonsoft_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_CodeDom)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <!-- <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_CodeDom)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" /> -->
             <!-- <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_DataMesh_DataProduct_Configuration)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_DataMesh_SchemaRegistry)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" /> -->
         </ItemGroup>
