@@ -1,0 +1,6 @@
+{
+    "name": "EnumSchemaNamespace",
+    "namespace": "Namespace",
+    "type": "enum",
+    "symbols": [ ]
+}

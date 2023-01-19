@@ -18,18 +18,18 @@ public abstract class GeneratorBase : IIncrementalGenerator
         //         while (!System.Diagnostics.Debugger.IsAttached)
         //             Thread.Sleep(500);
         // #endif
-        IncrementalValueProvider<ImmutableArray<(string Name, SourceText? Text)>> collectedFiles = CollectFiles(context);
+        var collectedFiles = CollectFiles(context);
 
-        IncrementalValueProvider<(Compilation Left, ImmutableArray<(string Name, SourceText? Text)> Right)> incrementalValueProvider = context.CompilationProvider.Combine(collectedFiles);
+        var incrementalValueProvider = context.CompilationProvider.Combine(collectedFiles);
 
         context.RegisterSourceOutput(incrementalValueProvider, (sourceProductionContext, compilationAndFiles) =>
         {
-            IConfigurationRoot configuration = BuildConfiguration(compilationAndFiles.Right);
+            var configuration = BuildConfiguration(compilationAndFiles.Right);
 
             //TODO: Remove hack to get the path to the assembly, when omnisharp is able to set the calling assembly path correctly.
-            string assemblyPath = GetCurrentAssemblyPath(compilationAndFiles.Left);
+            // string assemblyPath = GetCurrentAssemblyPath(compilationAndFiles.Left);
 
-            Generate(assemblyPath, sourceProductionContext, compilationAndFiles.Left, configuration);
+            Generate(sourceProductionContext, compilationAndFiles.Left, configuration);
         });
     }
 
@@ -44,7 +44,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
     {
         IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
 
-        foreach ((string Name, SourceText? Text) in files)
+        foreach ((string Name, var Text) in files)
         {
             if (Name.Contains("appsettings"))
                 _ = configurationBuilder.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(Text?.ToString())));
@@ -54,22 +54,21 @@ public abstract class GeneratorBase : IIncrementalGenerator
         return configurationBuilder.Build();
     }
 
-    static string GetCurrentAssemblyPath(Compilation compilation)
-    {
-        const string targetAssembly = "Devantler.DataMesh.DataProduct";
-        string assemblyPath = "";
-        if (compilation.Assembly.Name == targetAssembly)
-            assemblyPath = compilation.Assembly.Locations.FirstOrDefault()?.SourceTree?.FilePath.Split(targetAssembly)[0] + targetAssembly + "/";
+    // static string GetCurrentAssemblyPath(Compilation compilation)
+    // {
+    //     const string targetAssembly = "Devantler.DataMesh.DataProduct";
+    //     string assemblyPath = "";
+    //     if (compilation.Assembly.Name == targetAssembly)
+    //         assemblyPath = compilation.Assembly.Locations.FirstOrDefault()?.SourceTree?.FilePath.Split(targetAssembly)[0] + targetAssembly + "/";
 
-        return assemblyPath;
-    }
+    //     return assemblyPath;
+    // }
 
     /// <summary>
     /// Abstract method to generate code in the data product.
     /// </summary>
-    /// <param name="assemblyPath"></param>
     /// <param name="context"></param>
     /// <param name="compilation"></param>
     /// <param name="configuration"></param>
-    public abstract void Generate(string assemblyPath, SourceProductionContext context, Compilation compilation, IConfiguration configuration);
+    public abstract void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration);
 }

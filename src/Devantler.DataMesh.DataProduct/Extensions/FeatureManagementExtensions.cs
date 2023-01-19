@@ -41,7 +41,7 @@ public static class FeatureManagementExtensions
         if (configuration == null)
             throw new ArgumentNullException(nameof(configuration));
 
-        T? featureValue = configuration.GetSection($"{FeaturesOptions.Key}:{featureFlag}").Get<T>();
+        var featureValue = configuration.GetSection($"{FeaturesOptions.Key}:{featureFlag}").Get<T>();
         return featureValue switch
         {
             bool boolValue => boolValue == (value as bool?),

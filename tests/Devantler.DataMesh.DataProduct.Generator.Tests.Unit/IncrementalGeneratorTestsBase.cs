@@ -13,7 +13,7 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
 
     protected IncrementalGeneratorTestsBase()
     {
-        List<PortableExecutableReference> references = LoadAssemblyReferences();
+        var references = LoadAssemblyReferences();
         _compilation = CSharpCompilation.Create(
             "Devantler.DataMesh.DataProduct.Generator.Tests.Unit",
             references: references
@@ -27,7 +27,7 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
         if (additionalText is null)
             throw new ArgumentNullException(nameof(additionalText));
         var additionalTexts = ImmutableArray.Create<AdditionalText>(additionalText);
-        GeneratorDriver driver = _driver.AddAdditionalTexts(additionalTexts)
+        var driver = _driver.AddAdditionalTexts(additionalTexts)
             .RunGenerators(_compilation);
         string directoryName = GetTestDirectoryName();
         return Verifier.Verify(driver).UseDirectory(directoryName).DisableRequireUniquePrefix();
