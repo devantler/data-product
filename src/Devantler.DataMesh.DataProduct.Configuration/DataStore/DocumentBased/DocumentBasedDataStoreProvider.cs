@@ -8,10 +8,10 @@ public enum DocumentBasedDataStoreProvider
     /// <summary>
     /// Automatically decide the which data store provider to use for the document-based data store type.
     /// </summary>
-    Auto,
+    Auto = 0,
 
     /// <summary>
     /// MongoDb a document-based data store provider
     /// </summary>
-    MongoDb
+    MongoDb = 1
 }

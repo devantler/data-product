@@ -5,11 +5,11 @@
         <LangVersion>latest</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AnalysisMode>All</AnalysisMode>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
         <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
         <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -33,7 +33,6 @@
         https://github.com/dotnet/roslyn/discussions/47517#discussioncomment-64145 -->
         <ProjectReference Include='..\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj' OutputItemType='Analyzer' />
         <ProjectReference Include='..\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj' OutputItemType='Analyzer' />
-        <ProjectReference Include='..\Devantler.DataMesh.AvroCodeGenerators\Devantler.DataMesh.AvroCodeGenerators.csproj' OutputItemType='Analyzer' />
     </ItemGroup>
 
     <ItemGroup>

@@ -16,6 +16,7 @@ public static class FeaturesStartupExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="configuration"/> is null.</exception>
     public static void AddFeatures(this IServiceCollection services, IConfiguration configuration)
     {
         if (configuration == null)

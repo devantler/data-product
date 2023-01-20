@@ -1,7 +1,8 @@
 using System.Text;
-using Avro;
-using Devantler.Commons.StringHelpers;
-using Devantler.DataMesh.AvroCodeGenerators;
+using Devantler.Commons.CodeGen.Core;
+using Devantler.Commons.CodeGen.CSharp;
+using Devantler.Commons.CodeGen.CSharp.Models;
+using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.DataMesh.DataProduct.Configuration;
 using Devantler.DataMesh.DataProduct.Configuration.SchemaRegistry;
 using Devantler.DataMesh.SchemaRegistry;
@@ -18,26 +19,27 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 public class ModelsGenerator : GeneratorBase
 {
     /// <inheritdoc/>
-    public override void Generate(string assemblyPath, SourceProductionContext context, Compilation compilation, IConfiguration configuration)
+    public override void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration)
     {
-        ISchemaRegistryOptions schemaRegistryOptions = GetSchemaRegistryOptions(configuration);
-        SchemaOptions schemaOptions = GetSchemaOptions(configuration);
+        var schemaRegistryOptions = GetSchemaRegistryOptions(configuration);
+        var schemaOptions = GetSchemaOptions(configuration);
 
-        ISchemaRegistryService schemaRegistryService = GetSchemaRegistryService(schemaRegistryOptions, assemblyPath);
+        var schemaRegistryService = GetSchemaRegistryService(schemaRegistryOptions);
 
-        Schema rootSchema = schemaRegistryService.GetSchemaAsync(schemaOptions.Subject, schemaOptions.Version).Result;
+        var rootSchema = schemaRegistryService.GetSchemaAsync(schemaOptions.Subject, schemaOptions.Version).Result;
 
-        foreach (Schema schema in GetFlattenedSchemas(rootSchema))
+        AvroCompilationMapper mapper = new();
+        var codeCompilation = (CSharpCompilation)mapper.Map(rootSchema, Language.CSharp);
+        var generator = new CSharpCodeGenerator();
+        foreach (var codeItem in generator.Generate(codeCompilation))
         {
-            AvroCodeGenerator codeGenerator = new();
-            string model = codeGenerator.Generate("Devantler.DataMesh.DataProduct.Models", schema);
-            context.AddSource($"{schema.Name.ToPascalCase()}.g.cs", SourceText.From(model, Encoding.UTF8));
+            context.AddSource(codeItem.Key, SourceText.From(codeItem.Value, Encoding.UTF8));
         }
     }
 
     static ISchemaRegistryOptions GetSchemaRegistryOptions(IConfiguration configuration)
     {
-        SchemaRegistryType schemaRegistryType = configuration
+        var schemaRegistryType = configuration
             .GetSection(SchemaRegistryOptionsBase.Key)
             .GetValue<SchemaRegistryType>(nameof(SchemaRegistryOptionsBase.Type));
 
@@ -57,44 +59,13 @@ public class ModelsGenerator : GeneratorBase
             throw new NullReferenceException($"{nameof(SchemaOptions)} is null");
     }
 
-    ISchemaRegistryService GetSchemaRegistryService(ISchemaRegistryOptions schemaRegistryOptions, string assemblyPath)
+    ISchemaRegistryService GetSchemaRegistryService(ISchemaRegistryOptions schemaRegistryOptions)
     {
-        //return a switch statement that casts the schemaRegistryOptions to the correct type and returns the correct service
         return schemaRegistryOptions switch
         {
-            LocalSchemaRegistryOptions localSchemaRegistryOptions => new LocalSchemaRegistryService(new LocalSchemaRegistryOptions
-            {
-                Path = localSchemaRegistryOptions.Path?.StartsWith("/") == true ?
-                    localSchemaRegistryOptions.Path :
-                    assemblyPath + localSchemaRegistryOptions.Path
-            }
-            ),
-            KafkaSchemaRegistryOptions kafkaSchemaRegistryOptions => new KafkaSchemaRegistryService(new KafkaSchemaRegistryOptions { Url = kafkaSchemaRegistryOptions.Url }),
-            _ => throw new NotImplementedException($"Schema registry type {schemaRegistryOptions.Type} not implemented")
+            LocalSchemaRegistryOptions localSchemaRegistryOptions => new LocalSchemaRegistryService(localSchemaRegistryOptions),
+            KafkaSchemaRegistryOptions kafkaSchemaRegistryOptions => new KafkaSchemaRegistryService(kafkaSchemaRegistryOptions),
+            _ => throw new NotImplementedException($"The specified schema registry type {schemaRegistryOptions.Type} is not implemented"),
         };
-    }
-
-    List<Schema> GetFlattenedSchemas(Schema rootSchema)
-    {
-        static List<Schema> Flatten(Schema schema)
-        {
-            List<Schema> schemas = new();
-
-            if (schema is RecordSchema recordSchema)
-            {
-                schemas.Add(recordSchema);
-            }
-            else if (schema is EnumSchema enumSchema)
-            {
-                schemas.Add(enumSchema);
-            }
-            else if (schema is UnionSchema unionSchema)
-            {
-                schemas.AddRange(unionSchema.Schemas.ToList().SelectMany(Flatten));
-            }
-            return schemas;
-        }
-
-        return Flatten(rootSchema);
     }
 }

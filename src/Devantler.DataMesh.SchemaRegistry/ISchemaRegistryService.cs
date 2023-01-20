@@ -12,6 +12,5 @@ public interface ISchemaRegistryService
     /// </summary>
     /// <param name="subject"></param>
     /// <param name="version"></param>
-    /// <returns></returns>
     public Task<Schema> GetSchemaAsync(string subject, int version);
 }

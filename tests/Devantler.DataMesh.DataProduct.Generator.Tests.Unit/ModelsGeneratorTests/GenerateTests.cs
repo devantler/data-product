@@ -5,6 +5,7 @@ public class GenerateTests : ModelsGeneratorTestsBase
 {
     [Theory]
     [InlineData("RecordSchemaEmpty")]
+    [InlineData("RecordSchemaNamespace")]
     [InlineData("RecordSchemaPrimitiveTypeBoolean")]
     [InlineData("RecordSchemaPrimitiveTypeBytes")]
     [InlineData("RecordSchemaPrimitiveTypeDouble")]
@@ -17,7 +18,7 @@ public class GenerateTests : ModelsGeneratorTestsBase
     public Task GivenValidAppSettingsWithRecordSchema_GenerateValidCode(string subject)
     {
         //Arrange
-        CustomAdditionalText additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
+        var additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
 
         //Act
         //Assert
@@ -26,11 +27,12 @@ public class GenerateTests : ModelsGeneratorTestsBase
 
     [Theory]
     [InlineData("EnumSchemaEmpty")]
+    [InlineData("EnumSchemaNamespace")]
     [InlineData("EnumSchemaSymbols")]
     public Task GivenValidAppSettingsWithEnumSchema_GenerateValidCode(string subject)
     {
         //Arrange
-        CustomAdditionalText additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
+        var additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
 
         //Act
         //Assert
@@ -47,7 +49,7 @@ public class GenerateTests : ModelsGeneratorTestsBase
     public Task GivenValidAppSettingsWithUnionSchema_GenerateValidCode(string subject)
     {
         //Arrange
-        CustomAdditionalText additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
+        var additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
 
         //Act
         //Assert

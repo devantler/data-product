@@ -13,6 +13,7 @@ public static class RelationalDataStoreStartupExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
+    /// <exception cref="NotSupportedException">Thrown when the relational data store is not supported.</exception>
     public static void AddRelationalDataStore(this IServiceCollection services, IConfiguration configuration)
     {
         _ = configuration.GetFeatureValue(Constants.DataStoreProviderFeatureFlag) switch
@@ -27,6 +28,7 @@ public static class RelationalDataStoreStartupExtensions
     /// </summary>
     /// <param name="app"></param>
     /// <param name="configuration"></param>
+    /// <exception cref="NotSupportedException">Thrown when the relational data store is not supported.</exception>
     public static void UseRelationalDataStore(this WebApplication app, IConfiguration configuration)
     {
         _ = configuration.GetFeatureValue(Constants.DataStoreProviderFeatureFlag) switch

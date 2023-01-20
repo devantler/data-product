@@ -24,7 +24,7 @@ public static class NamespaceResolver
     /// <returns>The namespace for the given type name</returns>
     public static string ResolveForType(INamespaceSymbol namespaceSymbol, string typeName)
     {
-        foreach (INamespaceOrTypeSymbol member in namespaceSymbol.GetMembers())
+        foreach (var member in namespaceSymbol.GetMembers())
         {
             if (member is INamespaceSymbol namespaceMember)
             {

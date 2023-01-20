@@ -1,0 +1,6 @@
+{
+    "name": "RecordSchemaNamespace",
+    "namespace": "Namespace",
+    "type": "record",
+    "fields": []
+}

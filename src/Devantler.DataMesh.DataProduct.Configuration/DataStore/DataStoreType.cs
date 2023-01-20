@@ -8,15 +8,15 @@ public enum DataStoreType
     /// <summary>
     /// A relational data store.
     /// </summary>
-    Relational,
+    Relational = 0,
 
     /// <summary>
     /// A document-based data store.
     /// </summary>
-    DocumentBased,
+    DocumentBased = 1,
 
     /// <summary>
     /// A graph-based data store.
     /// </summary>
-    GraphBased
+    GraphBased = 2
 }
