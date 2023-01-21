@@ -41,7 +41,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include='schemas/**/*' CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
         <AdditionalFiles Include='appsettings*.json' />
+        <AdditionalFiles Include='schemas/*.avsc' />
     </ItemGroup>
 
 </Project>

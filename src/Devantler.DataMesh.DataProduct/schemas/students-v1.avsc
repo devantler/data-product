@@ -1,7 +1,7 @@
 [
   {
     "name": "School",
-    "namespace": "whatever.you.want",
+    "namespace": "Devantler.DataMesh.DataProduct.Models",
     "type": "record",
     "fields": [
       {
@@ -16,7 +16,7 @@
   },
   {
     "name": "Student",
-    "namespace": "whatever.you.want",
+    "namespace": "Devantler.DataMesh.DataProduct.Models",
     "type": "record",
     "fields": [
       {
