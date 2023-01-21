@@ -20,17 +20,11 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     /// <inheritdoc/>
     public async Task<Schema> GetSchemaAsync(string subject, int version)
     {
-        if (_schemaRegistryOptions.Path == null)
-            throw new InvalidOperationException("Schema registry path not set");
-
         string schemaFileName = $"{subject.ToKebabCase()}-v{version}.avsc";
 
         string[] schemaFile = Directory.GetFiles(_schemaRegistryOptions.Path, schemaFileName);
 
-        if (schemaFile.Length == 0)
-            throw new FileNotFoundException($"Schema file not found for {Directory.GetCurrentDirectory()}/{schemaFileName}");
-
-        string schemaString = await Task.Run(() => File.ReadAllText(schemaFile[0]));
+        string schemaString = await File.ReadAllTextAsync(schemaFile[0]);
 
         return Schema.Parse(schemaString);
     }
