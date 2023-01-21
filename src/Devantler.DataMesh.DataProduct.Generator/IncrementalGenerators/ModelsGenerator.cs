@@ -19,9 +19,9 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 public class ModelsGenerator : GeneratorBase
 {
     /// <inheritdoc/>
-    public override void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration)
+    public override void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration, string localSchemaRegistryPath)
     {
-        var schemaRegistryOptions = GetSchemaRegistryOptions(configuration);
+        var schemaRegistryOptions = GetSchemaRegistryOptions(configuration, localSchemaRegistryPath);
         var schemaOptions = GetSchemaOptions(configuration);
 
         var schemaRegistryService = GetSchemaRegistryService(schemaRegistryOptions);
@@ -33,24 +33,32 @@ public class ModelsGenerator : GeneratorBase
         var generator = new CSharpCodeGenerator();
         foreach (var codeItem in generator.Generate(codeCompilation))
         {
-            context.AddSource(codeItem.Key, SourceText.From(codeItem.Value, Encoding.UTF8));
+            string sourceText = codeItem.Value.AddMetadata();
+            context.AddSource(codeItem.Key, SourceText.From(sourceText, Encoding.UTF8));
         }
     }
 
-    static ISchemaRegistryOptions GetSchemaRegistryOptions(IConfiguration configuration)
+    static ISchemaRegistryOptions GetSchemaRegistryOptions(IConfiguration configuration, string localSchemaRegistryPath)
     {
         var schemaRegistryType = configuration
             .GetSection(SchemaRegistryOptionsBase.Key)
             .GetValue<SchemaRegistryType>(nameof(SchemaRegistryOptionsBase.Type));
 
-        return schemaRegistryType switch
+        switch (schemaRegistryType)
         {
-            SchemaRegistryType.Local => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<LocalSchemaRegistryOptions>() ??
-                    throw new NullReferenceException($"{nameof(LocalSchemaRegistryOptions)} is null"),
-            SchemaRegistryType.Kafka => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<KafkaSchemaRegistryOptions>() ??
-                    throw new NullReferenceException($"{nameof(KafkaSchemaRegistryOptions)} is null"),
-            _ => throw new NotImplementedException($"The specified schema registry type {schemaRegistryType} is not implemented")
-        };
+            case SchemaRegistryType.Local:
+                var localSchemaRegistryOptions = configuration
+                    .GetSection(SchemaRegistryOptionsBase.Key)
+                    .Get<LocalSchemaRegistryOptions>()
+                    ?? throw new NullReferenceException($"{nameof(LocalSchemaRegistryOptions)} is null");
+                localSchemaRegistryOptions.Path = localSchemaRegistryPath;
+                return localSchemaRegistryOptions;
+            case SchemaRegistryType.Kafka:
+                return configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<KafkaSchemaRegistryOptions>()
+                    ?? throw new NullReferenceException($"{nameof(KafkaSchemaRegistryOptions)} is null");
+            default:
+                throw new NotImplementedException($"The specified schema registry type {schemaRegistryType} is not implemented");
+        }
     }
 
     static SchemaOptions GetSchemaOptions(IConfiguration configuration)

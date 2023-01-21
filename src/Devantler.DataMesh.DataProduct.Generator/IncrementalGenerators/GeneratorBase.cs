@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using System.Text;
+using Devantler.DataMesh.DataProduct.Configuration.SchemaRegistry;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Configuration;
@@ -25,44 +26,52 @@ public abstract class GeneratorBase : IIncrementalGenerator
         context.RegisterSourceOutput(incrementalValueProvider, (sourceProductionContext, compilationAndFiles) =>
         {
             var configuration = BuildConfiguration(compilationAndFiles.Right);
-
-            //TODO: Remove hack to get the path to the assembly, when omnisharp is able to set the calling assembly path correctly.
-            // string assemblyPath = GetCurrentAssemblyPath(compilationAndFiles.Left);
-
-            Generate(sourceProductionContext, compilationAndFiles.Left, configuration);
+            string localSchemaRegistryPath = GetLocalSchemaRegistryPath(compilationAndFiles.Right, configuration);
+            Generate(sourceProductionContext, compilationAndFiles.Left, configuration, localSchemaRegistryPath);
         });
     }
 
-    static IncrementalValueProvider<ImmutableArray<(string Name, SourceText? Text)>> CollectFiles(IncrementalGeneratorInitializationContext context)
+    static IncrementalValueProvider<ImmutableArray<(string fileName, string filePath, SourceText? sourceText)>> CollectFiles(IncrementalGeneratorInitializationContext context)
     {
         return context.AdditionalTextsProvider
-            .Select((additionalFile, _) => (Name: Path.GetFileNameWithoutExtension(additionalFile.Path), Text: additionalFile.GetText()))
+            .Select((additionalFile, _) => (fileName: Path.GetFileName(additionalFile.Path), filePath: additionalFile.Path, sourceText: additionalFile.GetText()))
             .Collect();
     }
 
-    static IConfigurationRoot BuildConfiguration(ImmutableArray<(string Name, SourceText? Text)> files)
+    static IConfigurationRoot BuildConfiguration(ImmutableArray<(string fileName, string filePath, SourceText? sourceText)> files)
     {
         IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-
-        foreach ((string Name, var Text) in files)
+        foreach ((string fileName, _, var sourceText) in files)
         {
-            if (Name.Contains("appsettings"))
-                _ = configurationBuilder.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(Text?.ToString())));
+            if (fileName.Contains("appsettings"))
+                _ = configurationBuilder.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(sourceText?.ToString())));
         }
         _ = configurationBuilder.AddEnvironmentVariables();
 
         return configurationBuilder.Build();
     }
 
-    // static string GetCurrentAssemblyPath(Compilation compilation)
-    // {
-    //     const string targetAssembly = "Devantler.DataMesh.DataProduct";
-    //     string assemblyPath = "";
-    //     if (compilation.Assembly.Name == targetAssembly)
-    //         assemblyPath = compilation.Assembly.Locations.FirstOrDefault()?.SourceTree?.FilePath.Split(targetAssembly)[0] + targetAssembly + "/";
+    string GetLocalSchemaRegistryPath(ImmutableArray<(string fileName, string filePath, SourceText? sourceText)> right, IConfiguration configuration)
+    {
+        var schemaRegistryType = configuration
+            .GetSection(SchemaRegistryOptionsBase.Key)
+            .GetValue<SchemaRegistryType>(nameof(SchemaRegistryOptionsBase.Type));
+        if (schemaRegistryType != SchemaRegistryType.Local)
+            return string.Empty;
 
-    //     return assemblyPath;
-    // }
+        var localSchemaRegistryOptions = configuration
+            .GetSection(SchemaRegistryOptionsBase.Key)
+            .Get<LocalSchemaRegistryOptions>();
+        if (localSchemaRegistryOptions?.Path != null)
+            return localSchemaRegistryOptions.Path;
+
+        foreach ((string fileName, string filePath, _) in right)
+        {
+            if (fileName.EndsWith(".avsc"))
+                return Path.GetDirectoryName(filePath);
+        }
+        return string.Empty;
+    }
 
     /// <summary>
     /// Abstract method to generate code in the data product.
@@ -70,5 +79,6 @@ public abstract class GeneratorBase : IIncrementalGenerator
     /// <param name="context"></param>
     /// <param name="compilation"></param>
     /// <param name="configuration"></param>
-    public abstract void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration);
+    /// <param name="localSchemaRegistryPath"></param>
+    public abstract void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration, string localSchemaRegistryPath);
 }
