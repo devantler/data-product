@@ -16,7 +16,7 @@ COPY src/Devantler.DataMesh.DataProduct.Configuration/Devantler.DataMesh.DataPro
 COPY src/Devantler.DataMesh.SchemaRegistry/Devantler.DataMesh.SchemaRegistry.csproj ./src/Devantler.DataMesh.SchemaRegistry/
 
 RUN dotnet nuget add source --username devantler --password $GITHUB_TOKEN --store-password-in-clear-text --name github "https://nuget.pkg.github.com/devantler/index.json"
-RUN dotnet restore src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj
+    && dotnet restore src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj
 
 COPY . .
 
