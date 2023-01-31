@@ -41,3 +41,8 @@ jobs:
         with:
           files: tests/**/TestResults/**/coverage.cobertura.xml
           fail_ci_if_error: true
+
+      - name: Run Hadolint
+        uses: hadolint/hadolint-action@v2.0.0
+        with:
+          recursive: true
