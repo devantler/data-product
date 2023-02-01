@@ -43,6 +43,6 @@ jobs:
           fail_ci_if_error: true
 
       - name: Run Hadolint
-        uses: hadolint/hadolint-action@v2.0.0
+        uses: hadolint/hadolint-action@v3.1.0
         with:
           recursive: true
