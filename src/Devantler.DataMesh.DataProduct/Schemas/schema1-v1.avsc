@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "name": "Schema2",
+        "namespace": "org.akhq",
+        "type": "record",
+        "fields": [
+            {
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "name": "schema1",
+                "type": "Schema1"
+            }
+        ]
+    },
+    "references": [
+        {
+            "name": "Schema1",
+            "subject": "Schema1",
+            "version": 1
+        }
+    ]
+}

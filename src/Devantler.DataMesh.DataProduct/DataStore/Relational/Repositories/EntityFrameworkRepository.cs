@@ -1,3 +1,4 @@
+using Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Repositories;
@@ -23,8 +24,8 @@ public abstract class EntityFrameworkRepository<T> : IRepository<T> where T : cl
     /// <param name="cancellationToken"></param>
     /// <exception cref="InvalidOperationException">Thrown when the entity is not found.</exception>
     public async Task<T> Read(Guid id, CancellationToken cancellationToken = default) =>
-        await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken) ??
-        throw new InvalidOperationException($"Entity of type {typeof(T).Name} with id {id} not found");
+        await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken)
+            ?? throw new InvalidOperationException($"Entity of type {typeof(T).Name} with id {id} not found");
 
     /// <summary>
     /// Abstract method to read multiple entities from a relational database.

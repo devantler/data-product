@@ -20,4 +20,7 @@ public class ModelsGeneratorTestsBase : IncrementalGeneratorTestsBase<ModelsGene
         }
         """
     );
+
+    protected static CustomAdditionalText CreateAppSettings(string appSettings) =>
+        new("appsettings.json", appSettings);
 }

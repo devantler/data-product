@@ -1,0 +1,72 @@
+using System.Collections.Immutable;
+using System.Text;
+using Devantler.DataMesh.DataProduct.Configuration.Extensions;
+using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
+
+namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators.Base;
+
+/// <summary>
+/// The base for generators that generate code to the data product.
+/// </summary>
+public abstract class GeneratorBase : IIncrementalGenerator
+{
+    /// <inheritdoc/>
+    public void Initialize(IncrementalGeneratorInitializationContext context)
+    {
+        // #if DEBUG
+        //         while (!System.Diagnostics.Debugger.IsAttached)
+        //             Thread.Sleep(500);
+        // #endif
+        var collectedFiles = CollectFiles(context);
+
+        var incrementalValueProvider = context.CompilationProvider.Combine(collectedFiles);
+
+        context.RegisterSourceOutput(incrementalValueProvider, (sourceProductionContext, compilationAndFiles) =>
+        {
+            var configuration = BuildConfiguration(compilationAndFiles.Right);
+            var dataProductOptions = configuration.GetDataProductOptions();
+            Generate(sourceProductionContext, compilationAndFiles.Left, compilationAndFiles.Right, dataProductOptions);
+        });
+    }
+
+    static IncrementalValueProvider<ImmutableArray<AdditionalFile>> CollectFiles(IncrementalGeneratorInitializationContext context)
+    {
+        return context.AdditionalTextsProvider
+          .Select((additionalFile, _) => new AdditionalFile(
+                Path.GetFileName(additionalFile.Path),
+                additionalFile.Path,
+                Path.GetDirectoryName(additionalFile.Path),
+                additionalFile.GetText())
+            )
+          .Collect();
+    }
+
+    static IConfigurationRoot BuildConfiguration(ImmutableArray<AdditionalFile> files)
+    {
+        IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+        foreach (var file in files)
+        {
+            if (file.FileName.Contains("appsettings"))
+                _ = configurationBuilder.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(file.Contents?.ToString())));
+        }
+        _ = configurationBuilder.AddEnvironmentVariables();
+
+        return configurationBuilder.Build();
+    }
+
+    /// <summary>
+    /// Abstract method to generate code in the data product.
+    /// </summary>
+    /// <param name="context"></param>
+    /// <param name="compilation"></param>
+    /// <param name="additionalFiles"></param>
+    /// <param name="options"></param>
+    public abstract void Generate(
+        SourceProductionContext context,
+        Compilation compilation,
+        ImmutableArray<AdditionalFile> additionalFiles,
+        DataProductOptions options
+    );
+}

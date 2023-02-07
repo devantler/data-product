@@ -1,5 +1,4 @@
 using System.Reflection;
-using Devantler.DataMesh.DataProduct.Extensions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Swashbuckle.AspNetCore.SwaggerGen;
 

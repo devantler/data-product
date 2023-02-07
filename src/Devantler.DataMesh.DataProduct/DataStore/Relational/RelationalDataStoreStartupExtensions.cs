@@ -1,5 +1,5 @@
-using Devantler.DataMesh.DataProduct.DataStore.Relational.Providers.Sqlite;
-using Devantler.DataMesh.DataProduct.Extensions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
+using Devantler.DataMesh.DataProduct.DataStore.Relational.Sqlite;
 
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational;
 
@@ -12,29 +12,47 @@ public static class RelationalDataStoreStartupExtensions
     /// Registers a relational data store to the DI container.
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="configuration"></param>
-    /// <exception cref="NotSupportedException">Thrown when the relational data store is not supported.</exception>
-    public static void AddRelationalDataStore(this IServiceCollection services, IConfiguration configuration)
+    /// <param name="options"></param>
+    /// <exception cref="NotImplementedException">Thrown when the relational data store is not implemented yet.</exception>
+    public static IServiceCollection AddRelationalDataStore(this IServiceCollection services,
+        RelationalDataStoreOptionsBase? options)
     {
-        _ = configuration.GetFeatureValue(Constants.DataStoreProviderFeatureFlag) switch
+        _ = options?.Provider switch
         {
-            Providers.Sqlite.Constants.DataStoreProviderFeatureFlagValue => services.AddSqlite(),
-            _ => throw new NotSupportedException("Provided relational DataStore is not supported"),
+            RelationalDataStoreProvider.SQlite => services.AddSqlite(options as SqliteDataStoreOptions),
+            _ => throw new NotImplementedException(
+                $"The {options?.Provider} relational DataStore is not implemented yet."),
         };
+        _ = services.AddDatabaseDeveloperPageExceptionFilter();
+        return services;
     }
 
     /// <summary>
     /// Configures the web application to use a relation data store.
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="configuration"></param>
-    /// <exception cref="NotSupportedException">Thrown when the relational data store is not supported.</exception>
-    public static void UseRelationalDataStore(this WebApplication app, IConfiguration configuration)
+    /// <param name="options"></param>
+    /// <exception cref="NotImplementedException">Thrown when the relational data store is not implemented yet.</exception>
+    public static WebApplication UseRelationalDataStore(this WebApplication app,
+        RelationalDataStoreOptionsBase? options)
     {
-        _ = configuration.GetFeatureValue(Constants.DataStoreProviderFeatureFlag) switch
+        if (!app.Environment.IsDevelopment())
         {
-            Providers.Sqlite.Constants.DataStoreProviderFeatureFlagValue => app.UseSqlite(),
-            _ => throw new NotSupportedException("Provided relational DataStore is not supported"),
+            _ = app.UseExceptionHandler("/Error");
+            _ = app.UseHsts();
+        }
+        else
+        {
+            _ = app.UseDeveloperExceptionPage();
+            _ = app.UseMigrationsEndPoint();
+        }
+
+        _ = options?.Provider switch
+        {
+            RelationalDataStoreProvider.SQlite => app.UseSqlite(),
+            _ => throw new NotImplementedException(
+                $"The {options?.Provider} relational DataStore is not implemented yet."),
         };
+        return app;
     }
 }

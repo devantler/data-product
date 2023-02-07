@@ -1,4 +1,4 @@
-using Avro;
+using Chr.Avro.Abstract;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 

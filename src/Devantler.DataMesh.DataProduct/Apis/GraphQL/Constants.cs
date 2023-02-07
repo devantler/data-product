@@ -8,12 +8,12 @@ public static class Constants
     /// <summary>
     /// Feature flag for the GraphQL API configuration key.
     /// </summary>
-    public const string GraphQlFeatureFlag = "Apis";
+    public const string GraphQLFeatureFlag = "Apis";
 
     /// <summary>
     /// Feature flag for the GraphQL API configuration value.
     /// </summary>
-    public const string GraphQlFeatureFlagValue = "graphql";
+    public const string GraphQLFeatureFlagValue = "graphql";
 
     /// <summary>
     /// Feature flag for authorisation on the GraphQL API.

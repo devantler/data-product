@@ -1,5 +1,5 @@
 using System.Collections.Immutable;
-using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
+using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators.Base;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
@@ -22,14 +22,18 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
         _driver = CSharpGeneratorDriver.Create(new T());
     }
 
-    public SettingsTask Verify(CustomAdditionalText additionalText)
+    public GeneratorDriver RunGenerator(CustomAdditionalText additionalText)
     {
         if (additionalText is null)
             throw new ArgumentNullException(nameof(additionalText));
         var additionalTexts = ImmutableArray.Create<AdditionalText>(additionalText);
-        var driver = _driver.AddAdditionalTexts(additionalTexts)
+        return _driver.AddAdditionalTexts(additionalTexts)
             .RunGenerators(_compilation);
+    }
+    public SettingsTask Verify(CustomAdditionalText additionalText)
+    {
         string directoryName = GetTestDirectoryName();
+        var driver = RunGenerator(additionalText);
         return Verifier.Verify(driver).UseDirectory(directoryName).DisableRequireUniquePrefix();
     }
 

@@ -7,7 +7,7 @@ public class GenerateTests : ModelsGeneratorTestsBase
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
     public Task GivenValidAppSettings_GeneratesValidCode(string subject)
     {
-        //Act
+        //Arrange
         var additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
 
         //Assert

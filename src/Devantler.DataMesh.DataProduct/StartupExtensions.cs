@@ -1,9 +1,5 @@
-using System.Reflection;
-using Devantler.DataMesh.DataProduct.Apis;
-using Devantler.DataMesh.DataProduct.Configuration;
+using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.DataStore;
-using Microsoft.FeatureManagement;
-
 namespace Devantler.DataMesh.DataProduct;
 
 /// <summary>
@@ -15,29 +11,27 @@ public static class FeaturesStartupExtensions
     /// Registers features to the DI container.
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="configuration"></param>
-    /// <exception cref="ArgumentNullException">Thrown when <paramref name="configuration"/> is null.</exception>
-    public static void AddFeatures(this IServiceCollection services, IConfiguration configuration)
+    /// <param name="options"></param>
+    public static IServiceCollection AddFeatures(this IServiceCollection services, DataProductOptions options)
     {
-        if (configuration == null)
-        {
-            throw new ArgumentNullException(nameof(configuration));
-        }
-        _ = services.AddFeatureManagement(configuration.GetSection(FeaturesOptions.Key));
-        _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
-        services.AddApis(configuration);
-        services.AddDataStore(configuration);
+        if (options.FeatureFlags.EnableDataStore)
+            _ = services.AddDataStore(options.DataStoreOptions);
+        //services.AddApis(configuration);
+        //_ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        return services;
     }
 
     /// <summary>
     /// Configures the web application to use enabled features.
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="configuration"></param>
-    public static void UseFeatures(this WebApplication app, IConfiguration configuration)
+    /// <param name="options"></param>
+    public static WebApplication UseFeatures(this WebApplication app, DataProductOptions options)
     {
-        app.UseApis(configuration);
-        app.UseDataStore(configuration);
+        if (options.FeatureFlags.EnableDataStore)
+            _ = app.UseDataStore(options.DataStoreOptions);
+        //app.UseApis(configuration);
+
+        return app;
     }
 }
