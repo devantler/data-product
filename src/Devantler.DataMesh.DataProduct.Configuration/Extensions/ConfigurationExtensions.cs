@@ -23,7 +23,7 @@ public static class ConfigurationExtensions
         var dataProductOptions = configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
             ?? throw new InvalidOperationException($"The configuration section '{DataProductOptions.Key}' is missing.");
 
-        dataProductOptions.DataStoreOptions = GetDataStoreOptions(configuration);
+        //dataProductOptions.DataStoreOptions = GetDataStoreOptions(configuration);
 
         dataProductOptions.SchemaRegistryOptions = GetSchemaRegistryOptions(configuration);
 

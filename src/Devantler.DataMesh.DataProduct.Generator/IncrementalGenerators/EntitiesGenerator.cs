@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using System.Text;
-using Chr.Avro.Abstract;
 using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.Mapping.Avro.Mappers;
@@ -28,7 +27,7 @@ public class EntitiesGenerator : GeneratorBase
         DataProductOptions options)
     {
         //Hack to set the path to the local schema registry when in a source generator.
-        options.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles.First(x => x.FileName.EndsWith(".avsc")).FileDirectoryPath);
+        options.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles.FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath);
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchemaAsync(options.Schema.Subject, options.Schema.Version).Result;
 

@@ -52,6 +52,26 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
             .Select(s => MetadataReference.CreateFromFile(s))
             .ToList();
     }
+
+    protected static CustomAdditionalText CreateAppSettingsWithLocalSchemaRegistryAndSchema(string subject) => new("appsettings.json",
+    $$"""
+        {
+            "DataProduct": {
+                "Schema": {
+                    "Subject": "{{subject}}",
+                    "Version": 1
+                },
+                "SchemaRegistry": {
+                    "Type": "Local",
+                    "Path": "Schemas"
+                }
+            }
+        }
+        """
+);
+
+    protected static CustomAdditionalText CreateAppSettings(string appSettings) =>
+        new("appsettings.json", appSettings);
 }
 
 public class CustomAdditionalText : AdditionalText
