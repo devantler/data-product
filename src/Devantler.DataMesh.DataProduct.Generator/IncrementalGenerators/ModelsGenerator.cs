@@ -29,8 +29,6 @@ public class ModelsGenerator : GeneratorBase
     {
         //Hack to set the path to the local schema registry when in a source generator.
         options.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles.FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath ?? "Schemas");
-        var localSchemaRegistryOptions = (options.SchemaRegistryOptions as LocalSchemaRegistryOptions);
-        localSchemaRegistryOptions.Path = "Schemas";
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
 
