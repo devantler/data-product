@@ -36,7 +36,7 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
     {
         string directoryName = GetTestDirectoryName();
         var driver = RunGenerator(additionalText);
-        return Verifier.Verify(driver).UseDirectory(directoryName).DisableRequireUniquePrefix();
+        return Verifier.Verify(driver).DisableRequireUniquePrefix();
     }
 
     GeneratorDriver RunGenerator(CustomAdditionalText additionalText)
