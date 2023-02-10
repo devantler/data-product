@@ -22,27 +22,6 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
         _driver = CSharpGeneratorDriver.Create(new T());
     }
 
-    public GeneratorDriver RunGenerator(CustomAdditionalText additionalText)
-    {
-        if (additionalText is null)
-            throw new ArgumentNullException(nameof(additionalText));
-        var additionalTexts = ImmutableArray.Create<AdditionalText>(additionalText);
-        return _driver.AddAdditionalTexts(additionalTexts)
-            .RunGenerators(_compilation);
-    }
-    public SettingsTask Verify(CustomAdditionalText additionalText)
-    {
-        string directoryName = GetTestDirectoryName();
-        var driver = RunGenerator(additionalText);
-        return Verifier.Verify(driver).UseDirectory(directoryName).DisableRequireUniquePrefix();
-    }
-
-    string GetTestDirectoryName()
-    {
-        int indexOfDirectoryNameInNamespace = GetType()?.Namespace?.LastIndexOf('.') + 1 ?? 0;
-        return GetType()?.Namespace?[indexOfDirectoryNameInNamespace..] ?? string.Empty;
-    }
-
     static List<PortableExecutableReference> LoadAssemblyReferences()
     {
         return AppDomain.CurrentDomain.GetAssemblies()
@@ -51,6 +30,28 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
             .Where(s => s.Contains("Devantler.DataMesh.DataProduct.dll", StringComparison.Ordinal))
             .Select(s => MetadataReference.CreateFromFile(s))
             .ToList();
+    }
+
+    public SettingsTask Verify(CustomAdditionalText additionalText)
+    {
+        string directoryName = GetTestDirectoryName();
+        var driver = RunGenerator(additionalText);
+        return Verifier.Verify(driver).UseDirectory(directoryName).DisableRequireUniquePrefix();
+    }
+
+    GeneratorDriver RunGenerator(CustomAdditionalText additionalText)
+    {
+        if (additionalText is null)
+            throw new ArgumentNullException(nameof(additionalText));
+        var additionalTexts = ImmutableArray.Create<AdditionalText>(additionalText);
+        return _driver.AddAdditionalTexts(additionalTexts)
+            .RunGenerators(_compilation);
+    }
+
+    string GetTestDirectoryName()
+    {
+        int indexOfDirectoryNameInNamespace = GetType()?.Namespace?.LastIndexOf('.') + 1 ?? 0;
+        return GetType()?.Namespace?[indexOfDirectoryNameInNamespace..] ?? string.Empty;
     }
 
     protected static CustomAdditionalText CreateAppSettingsWithLocalSchemaRegistryAndSchema(string subject) => new("appsettings.json",
