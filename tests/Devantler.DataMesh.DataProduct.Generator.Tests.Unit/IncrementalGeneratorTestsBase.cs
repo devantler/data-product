@@ -32,26 +32,13 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
             .ToList();
     }
 
-    public SettingsTask Verify(CustomAdditionalText additionalText)
-    {
-        string directoryName = GetTestDirectoryName();
-        var driver = RunGenerator(additionalText);
-        return Verifier.Verify(driver).DisableRequireUniquePrefix();
-    }
-
-    GeneratorDriver RunGenerator(CustomAdditionalText additionalText)
+    protected GeneratorDriver RunGenerator(CustomAdditionalText additionalText)
     {
         if (additionalText is null)
             throw new ArgumentNullException(nameof(additionalText));
         var additionalTexts = ImmutableArray.Create<AdditionalText>(additionalText);
         return _driver.AddAdditionalTexts(additionalTexts)
             .RunGenerators(_compilation);
-    }
-
-    string GetTestDirectoryName()
-    {
-        int indexOfDirectoryNameInNamespace = GetType()?.Namespace?.LastIndexOf('.') + 1 ?? 0;
-        return GetType()?.Namespace?[indexOfDirectoryNameInNamespace..] ?? string.Empty;
     }
 
     protected static CustomAdditionalText CreateAppSettingsWithLocalSchemaRegistryAndSchema(string subject) => new("appsettings.json",

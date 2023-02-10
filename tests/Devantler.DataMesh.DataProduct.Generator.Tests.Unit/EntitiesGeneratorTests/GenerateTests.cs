@@ -12,7 +12,10 @@ public class GenerateTests : IncrementalGeneratorTestsBase<EntitiesGenerator>
         //Arrange
         var additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
 
+        //Act
+        var driver = RunGenerator(additionalText);
+
         //Assert
-        return Verify(additionalText).UseMethodName(subject);
+        return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
     }
 }
