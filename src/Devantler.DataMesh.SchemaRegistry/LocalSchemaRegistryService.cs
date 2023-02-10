@@ -23,7 +23,7 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     {
         string schemaFileName = $"{subject.ToKebabCase()}-v{version}.avsc";
 
-        string[] schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path, schemaFileName);
+        string[] schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName);
 
         string schemaString = await File.ReadAllTextAsync(schemaFile[0]);
 

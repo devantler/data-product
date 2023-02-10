@@ -38,7 +38,7 @@ public class ModelsGenerator : GeneratorBase
         var generator = new CSharpCodeGenerator();
         foreach (var codeItem in generator.Generate(codeCompilation, options => options.NamespaceToUse = "Devantler.DataMesh.DataProduct.Models"))
         {
-            string sourceText = codeItem.Value.AddMetadata(this.GetType().FullName);
+            string sourceText = codeItem.Value.AddMetadata(GetType());
             context.AddSource(codeItem.Key, SourceText.From(sourceText, Encoding.UTF8));
         }
     }
