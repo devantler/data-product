@@ -6,7 +6,7 @@ using Devantler.Commons.CodeGen.Mapping.Avro.Mappers;
 using Devantler.DataMesh.DataProduct.Configuration.Extensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Generator.Extensions;
-using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators.Base;
+using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
@@ -27,7 +27,7 @@ public class EntitiesGenerator : GeneratorBase
         DataProductOptions options)
     {
         //Hack to set the path to the local schema registry when in a source generator.
-        options.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles.FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath);
+        options.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles.FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath ?? "Schemas");
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchemaAsync(options.Schema.Subject, options.Schema.Version).Result;
 
@@ -38,7 +38,7 @@ public class EntitiesGenerator : GeneratorBase
         var generator = new CSharpCodeGenerator();
         foreach (var codeItem in generator.Generate(codeCompilation, options => options.NamespaceToUse = "Devantler.DataMesh.DataProduct.DataStore.Relational.Entities"))
         {
-            string sourceText = codeItem.Value.AddMetadata();
+            string sourceText = codeItem.Value.AddMetadata(this.GetType().FullName);
             context.AddSource(codeItem.Key, SourceText.From(sourceText, Encoding.UTF8));
         }
     }

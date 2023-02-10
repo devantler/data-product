@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis.Text;
 
-namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators.Base;
+namespace Devantler.DataMesh.DataProduct.Generator.Models;
 
 /// <summary>
 /// A model for additional files added to the source generator.

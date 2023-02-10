@@ -1,5 +1,4 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
-using Microsoft.EntityFrameworkCore;
 
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Sqlite;
 

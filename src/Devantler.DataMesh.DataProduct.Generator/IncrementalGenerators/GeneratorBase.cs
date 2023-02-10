@@ -2,10 +2,11 @@ using System.Collections.Immutable;
 using System.Text;
 using Devantler.DataMesh.DataProduct.Configuration.Extensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Generator.Models;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
-namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators.Base;
+namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
 /// <summary>
 /// The base for generators that generate code to the data product.
