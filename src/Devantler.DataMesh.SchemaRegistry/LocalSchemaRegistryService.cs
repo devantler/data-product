@@ -37,9 +37,9 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     {
         string schemaFileName = $"{subject.ToKebabCase()}-v{version}.avsc";
 
-        string[] schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path, schemaFileName);
+        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path, schemaFileName).FirstOrDefault();
 
-        string schemaString = File.ReadAllText(schemaFile.FirstOrDefault());
+        string schemaString = File.ReadAllText(schemaFile);
 
         var schemaReader = new JsonSchemaReader();
 
