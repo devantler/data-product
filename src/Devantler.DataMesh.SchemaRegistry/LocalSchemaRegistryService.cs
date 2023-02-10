@@ -31,7 +31,7 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
 
         return schemaReader.Read(schemaString);
     }
-    
+
     /// <inheritdoc/>
     public Schema GetSchema(string subject, int version)
     {
@@ -39,7 +39,7 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
 
         string[] schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path, schemaFileName);
 
-        string schemaString = File.ReadAllText(schemaFile[0]);
+        string schemaString = File.ReadAllText(schemaFile.FirstOrDefault());
 
         var schemaReader = new JsonSchemaReader();
 
