@@ -11,5 +11,5 @@ public class KafkaSchemaRegistryOptions : SchemaRegistryOptionsBase
     /// <summary>
     /// The URL to the Kafka schema registry.
     /// </summary>
-    public string Url { get; set; } = null!;
+    public string? Url { get; set; }
 }
