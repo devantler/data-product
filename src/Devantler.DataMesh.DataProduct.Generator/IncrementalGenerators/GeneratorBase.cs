@@ -1,8 +1,9 @@
 using System.Collections.Immutable;
 using System.Text;
-using Devantler.DataMesh.DataProduct.Configuration.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Configuration.Extensions;
+using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Generator.Models;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
@@ -25,52 +26,40 @@ public abstract class GeneratorBase : IIncrementalGenerator
 
         context.RegisterSourceOutput(incrementalValueProvider, (sourceProductionContext, compilationAndFiles) =>
         {
-            var configuration = BuildConfiguration(compilationAndFiles.Right);
-            string localSchemaRegistryPath = GetLocalSchemaRegistryPath(compilationAndFiles.Right, configuration);
-            Generate(sourceProductionContext, compilationAndFiles.Left, configuration, localSchemaRegistryPath);
+            var additionalFiles = compilationAndFiles.Right;
+            var configuration = BuildConfiguration(additionalFiles);
+            var dataProductOptions = configuration.GetDataProductOptions();
+
+            //Hack: Sets the schema registry path when the Generator run as an Analyzer. Analyzers do not support IO, so we have to get the path to the Avro Schemas through AdditionalFiles instead.
+            dataProductOptions.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles.FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath ?? "Schemas");
+
+            Generate(sourceProductionContext, compilationAndFiles.Left, compilationAndFiles.Right, dataProductOptions);
         });
     }
 
-    static IncrementalValueProvider<ImmutableArray<(string fileName, string filePath, SourceText? sourceText)>> CollectFiles(IncrementalGeneratorInitializationContext context)
+    static IncrementalValueProvider<ImmutableArray<AdditionalFile>> CollectFiles(IncrementalGeneratorInitializationContext context)
     {
         return context.AdditionalTextsProvider
-            .Select((additionalFile, _) => (fileName: Path.GetFileName(additionalFile.Path), filePath: additionalFile.Path, sourceText: additionalFile.GetText()))
-            .Collect();
+          .Select((additionalFile, _) => new AdditionalFile(
+                Path.GetFileName(additionalFile.Path),
+                additionalFile.Path,
+                Path.GetDirectoryName(additionalFile.Path),
+                additionalFile.GetText())
+            )
+          .Collect();
     }
 
-    static IConfigurationRoot BuildConfiguration(ImmutableArray<(string fileName, string filePath, SourceText? sourceText)> files)
+    static IConfigurationRoot BuildConfiguration(ImmutableArray<AdditionalFile> files)
     {
         IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-        foreach ((string fileName, _, var sourceText) in files)
+        foreach (var file in files)
         {
-            if (fileName.Contains("appsettings"))
-                _ = configurationBuilder.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(sourceText?.ToString())));
+            if (file.FileName.Contains("appsettings"))
+                _ = configurationBuilder.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(file.Contents?.ToString())));
         }
         _ = configurationBuilder.AddEnvironmentVariables();
 
         return configurationBuilder.Build();
-    }
-
-    string GetLocalSchemaRegistryPath(ImmutableArray<(string fileName, string filePath, SourceText? sourceText)> right, IConfiguration configuration)
-    {
-        var schemaRegistryType = configuration
-            .GetSection(SchemaRegistryOptionsBase.Key)
-            .GetValue<SchemaRegistryType>(nameof(SchemaRegistryOptionsBase.Type));
-        if (schemaRegistryType != SchemaRegistryType.Local)
-            return string.Empty;
-
-        var localSchemaRegistryOptions = configuration
-            .GetSection(SchemaRegistryOptionsBase.Key)
-            .Get<LocalSchemaRegistryOptions>();
-        if (localSchemaRegistryOptions?.Path != null)
-            return localSchemaRegistryOptions.Path;
-
-        foreach ((string fileName, string filePath, _) in right)
-        {
-            if (fileName.EndsWith(".avsc"))
-                return Path.GetDirectoryName(filePath);
-        }
-        return string.Empty;
     }
 
     /// <summary>
@@ -78,7 +67,12 @@ public abstract class GeneratorBase : IIncrementalGenerator
     /// </summary>
     /// <param name="context"></param>
     /// <param name="compilation"></param>
-    /// <param name="configuration"></param>
-    /// <param name="localSchemaRegistryPath"></param>
-    public abstract void Generate(SourceProductionContext context, Compilation compilation, IConfiguration configuration, string localSchemaRegistryPath);
+    /// <param name="additionalFiles"></param>
+    /// <param name="options"></param>
+    public abstract void Generate(
+        SourceProductionContext context,
+        Compilation compilation,
+        ImmutableArray<AdditionalFile> additionalFiles,
+        DataProductOptions options
+    );
 }

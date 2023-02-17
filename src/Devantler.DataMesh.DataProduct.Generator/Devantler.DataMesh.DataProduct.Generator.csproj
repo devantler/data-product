@@ -13,13 +13,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Apache.Avro" Version="1.11.1" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Chr.Avro" Version="9.4.0" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Chr.Avro.Json" Version="9.4.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Confluent.SchemaRegistry" Version="2.0.2" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.4.0" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.2" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.3" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
@@ -28,11 +29,11 @@
         <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Primitives" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.0.15" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.0.15" GeneratePathProperty="true" PrivateAssets="all" IncludeAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.0.15" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.0.15" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Scriban" Version="5.5.2" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.15" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.1.15" GeneratePathProperty="true" PrivateAssets="all" IncludeAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.15" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.15" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Scriban" Version="5.6.0" GeneratePathProperty="true" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
@@ -42,7 +43,8 @@
 
     <Target Name="GetDependencyTargetPaths">
         <ItemGroup>
-            <TargetPathWithTargetPlatformMoniker Include="$(PKGApache_Avro)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGChr_Avro)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGChr_Avro_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_CodeGen_Core)\lib\netstandard2.1\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_CodeGen_CSharp)\lib\netstandard2.1\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_CodeGen_CSharp)\templates\**\*" IncludeRuntimeDependency="false" />

@@ -11,3 +11,9 @@ generated/
 
 # Visual Studio
 .vs/
+
+# SQLite
+*.db
+
+# coverlet
+**/TestResults/

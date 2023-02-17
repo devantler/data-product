@@ -4,7 +4,7 @@ namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Repositories;
 /// Generic interface for repositories, with common functionality needed to interact with relational databases.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public interface IRepository<T> where T : IEntity
+public interface IRepository<T>
 {
     // Task<Guid> Create(T entity, CancellationToken cancellationToken = default);
     // Task CreateMany(IEnumerable<T> entities, CancellationToken cancellationToken = default);

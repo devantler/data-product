@@ -1,0 +1,48 @@
+[
+    {
+        "name": "Grade",
+        "namespace": "Devantler.DataMesh.DataProduct.Models",
+        "type": "enum",
+        "symbols": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "F"
+        ]
+    },
+    {
+        "name": "Student",
+        "namespace": "Devantler.DataMesh.DataProduct.Models",
+        "type": "record",
+        "fields": [
+            {
+                "name": "Id",
+                "type": "string"
+            },
+            {
+                "name": "FirstMidName",
+                "type": "string"
+            },
+            {
+                "name": "LastName",
+                "type": "string"
+            }
+        ]
+    },
+    {
+        "name": "Enrollment",
+        "namespace": "Devantler.DataMesh.DataProduct.Models",
+        "type": "record",
+        "fields": [
+            {
+                "name": "Id",
+                "type": "string"
+            },
+            {
+                "name": "Student",
+                "type": "Devantler.DataMesh.DataProduct.Models.Student"
+            }
+        ]
+    }
+]

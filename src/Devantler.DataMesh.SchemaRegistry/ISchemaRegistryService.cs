@@ -1,4 +1,4 @@
-using Avro;
+using Chr.Avro.Abstract;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 
@@ -13,4 +13,11 @@ public interface ISchemaRegistryService
     /// <param name="subject"></param>
     /// <param name="version"></param>
     public Task<Schema> GetSchemaAsync(string subject, int version);
+
+    /// <summary>
+    /// Abstract method to retrieve a schema from a schema registry.
+    /// </summary>
+    /// <param name="subject"></param>
+    /// <param name="version"></param>
+    public Schema GetSchema(string subject, int version);
 }

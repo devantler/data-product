@@ -1,5 +1,6 @@
+using Chr.Avro.Representation;
 using Confluent.SchemaRegistry;
-using Devantler.DataMesh.DataProduct.Configuration.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 
@@ -8,22 +9,35 @@ namespace Devantler.DataMesh.SchemaRegistry;
 /// </summary>
 public class KafkaSchemaRegistryService : ISchemaRegistryService
 {
-    readonly KafkaSchemaRegistryOptions _schemaRegistryOptions;
+    readonly KafkaSchemaRegistryOptions? _schemaRegistryOptions;
 
     /// <summary>
     /// A constructor to construct a kafka schema registry service.
     /// </summary>
     /// <param name="schemaRegistryOptions"></param>
-    public KafkaSchemaRegistryService(KafkaSchemaRegistryOptions schemaRegistryOptions) => _schemaRegistryOptions = schemaRegistryOptions;
+    public KafkaSchemaRegistryService(KafkaSchemaRegistryOptions? schemaRegistryOptions) => _schemaRegistryOptions = schemaRegistryOptions;
 
     /// <inheritdoc/>
-    public async Task<Avro.Schema> GetSchemaAsync(string subject, int version)
+    public Chr.Avro.Abstract.Schema GetSchema(string subject, int version)
     {
-        CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _schemaRegistryOptions.Url });
+        CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _schemaRegistryOptions?.Url });
+        List<RegisteredSchema> registeredSchemas = new()
+        {
+            cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version).Result
+        };
+        var schemaReader = new JsonSchemaReader();
+        return schemaReader.Read(registeredSchemas[0].SchemaString);
+    }
+
+    /// <inheritdoc/>
+    public async Task<Chr.Avro.Abstract.Schema> GetSchemaAsync(string subject, int version)
+    {
+        CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _schemaRegistryOptions?.Url });
         List<RegisteredSchema> registeredSchemas = new()
         {
             await cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version)
         };
-        return Avro.Schema.Parse(registeredSchemas[0].SchemaString);
+        var schemaReader = new JsonSchemaReader();
+        return schemaReader.Read(registeredSchemas[0].SchemaString);
     }
 }

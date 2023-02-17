@@ -22,23 +22,6 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
         _driver = CSharpGeneratorDriver.Create(new T());
     }
 
-    public SettingsTask Verify(CustomAdditionalText additionalText)
-    {
-        if (additionalText is null)
-            throw new ArgumentNullException(nameof(additionalText));
-        var additionalTexts = ImmutableArray.Create<AdditionalText>(additionalText);
-        var driver = _driver.AddAdditionalTexts(additionalTexts)
-            .RunGenerators(_compilation);
-        string directoryName = GetTestDirectoryName();
-        return Verifier.Verify(driver).UseDirectory(directoryName).DisableRequireUniquePrefix();
-    }
-
-    string GetTestDirectoryName()
-    {
-        int indexOfDirectoryNameInNamespace = GetType()?.Namespace?.LastIndexOf('.') + 1 ?? 0;
-        return GetType()?.Namespace?[indexOfDirectoryNameInNamespace..] ?? string.Empty;
-    }
-
     static List<PortableExecutableReference> LoadAssemblyReferences()
     {
         return AppDomain.CurrentDomain.GetAssemblies()
@@ -48,6 +31,18 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
             .Select(s => MetadataReference.CreateFromFile(s))
             .ToList();
     }
+
+    protected GeneratorDriver RunGenerator(CustomAdditionalText additionalText)
+    {
+        if (additionalText is null)
+            throw new ArgumentNullException(nameof(additionalText));
+        var additionalTexts = ImmutableArray.Create<AdditionalText>(additionalText);
+        return _driver.AddAdditionalTexts(additionalTexts)
+            .RunGenerators(_compilation);
+    }
+
+    protected static CustomAdditionalText CreateAppSettings(string appSettings) =>
+        new("appsettings.json", appSettings);
 }
 
 public class CustomAdditionalText : AdditionalText

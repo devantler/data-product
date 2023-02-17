@@ -1,6 +1,6 @@
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
 using Devantler.DataMesh.DataProduct.DataStore.Relational;
-using Devantler.DataMesh.DataProduct.Extensions;
-
 namespace Devantler.DataMesh.DataProduct.DataStore;
 
 /// <summary>
@@ -12,35 +12,31 @@ public static class DataStoreStartupExtensions
     /// Registers a data store to the DI container.
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="configuration"></param>
-    /// <exception cref="NotSupportedException">Thrown when the data store is not supported.</exception>
-    public static void AddDataStore(this IServiceCollection services, IConfiguration configuration)
+    /// <param name="options"></param>
+    /// <exception cref="NotImplementedException">Thrown when a data store is not implemented.</exception>
+    public static IServiceCollection AddDataStore(this IServiceCollection services, IDataStoreOptions options)
     {
-        switch (configuration.GetFeatureValue(Constants.DataStoreTypeFeatureFlag))
+        return options.Type switch
         {
-            case Relational.Constants.DataStoreTypeFeatureFlagValue:
-                services.AddRelationalDataStore(configuration);
-                break;
-            default:
-                throw new NotSupportedException("DataStore not supported");
-        }
+            DataStoreType.Relational => services.AddRelationalDataStore(options as RelationalDataStoreOptionsBase),
+            _ => throw new NotImplementedException(
+                $"The relational DataStore type {options.Type} is not implemented yet."),
+        };
     }
 
     /// <summary>
     /// Configures the web application to use a data store.
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="configuration"></param>
-    /// <exception cref="NotSupportedException">Thrown when the data store is not supported.</exception>
-    public static void UseDataStore(this WebApplication app, IConfiguration configuration)
+    /// <param name="options"></param>
+    /// <exception cref="NotImplementedException">Thrown when a data store is not implemented.</exception>
+    public static WebApplication UseDataStore(this WebApplication app, IDataStoreOptions options)
     {
-        switch (configuration.GetFeatureValue(Constants.DataStoreTypeFeatureFlag))
+        return options.Type switch
         {
-            case Relational.Constants.DataStoreTypeFeatureFlagValue:
-                app.UseRelationalDataStore(configuration);
-                break;
-            default:
-                throw new NotSupportedException("DataStore not supported");
-        }
+            DataStoreType.Relational => app.UseRelationalDataStore(options as RelationalDataStoreOptionsBase),
+            _ => throw new NotImplementedException(
+                $"The relational DataStore type {options.Type} is not implemented yet."),
+        };
     }
 }

@@ -1,5 +1,4 @@
 using Devantler.DataMesh.DataProduct.Apis.Rest;
-using Devantler.DataMesh.DataProduct.Extensions;
 
 namespace Devantler.DataMesh.DataProduct.Apis;
 
@@ -20,8 +19,8 @@ public static class ApisStartupExtensions
         {
             services.AddRestApi();
         }
-        if (configuration.IsFeatureEnabled<string[]>(GraphQL.Constants.GraphQlFeatureFlag,
-                GraphQL.Constants.GraphQlFeatureFlagValue))
+        if (configuration.IsFeatureEnabled<string[]>(GraphQL.Constants.GraphQLFeatureFlag,
+                GraphQL.Constants.GraphQLFeatureFlagValue))
         {
             _ = services.AddGraphQL();
         }

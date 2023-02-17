@@ -1,16 +1,36 @@
+using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
+
 namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.ModelsGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : ModelsGeneratorTestsBase
+public class GenerateTests : IncrementalGeneratorTestsBase<ModelsGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
     public Task GivenValidAppSettings_GeneratesValidCode(string subject)
     {
+        //Arrange
+        var additionalText = CreateAppSettings(
+            $$"""
+            {
+                "DataProduct": {
+                    "Schema": {
+                        "Subject": "{{subject}}",
+                        "Version": 1
+                    },
+                    "SchemaRegistry": {
+                        "Type": "Local",
+                        "Path": "Schemas"
+                    }
+                }
+            }
+            """
+        );
+
         //Act
-        var additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
+        var driver = RunGenerator(additionalText);
 
         //Assert
-        return Verify(additionalText).UseMethodName(subject);
+        return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
     }
 }
