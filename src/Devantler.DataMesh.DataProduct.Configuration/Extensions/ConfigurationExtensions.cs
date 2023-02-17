@@ -45,7 +45,8 @@ public static class ConfigurationExtensions
 
         return (dataStoreType, dataStoreProvider) switch
         {
-            (DataStoreType.Relational, RelationalDataStoreProvider.SQLite) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>() ?? new SqliteDataStoreOptions(),
+            (DataStoreType.Relational, RelationalDataStoreProvider.SQLite) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>()
+                ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(SqliteDataStoreOptions)}' to the configuration section '{DataStoreOptionsBase.Key}"),
             _ => throw new NotImplementedException($"The combination of the data store type '{dataStoreType}' and the data store provider '{dataStoreProvider}' is not implemented yet.")
         };
     }
@@ -60,8 +61,10 @@ public static class ConfigurationExtensions
 
         return schemaRegistryType switch
         {
-            SchemaRegistryType.Local => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<LocalSchemaRegistryOptions>() ?? new LocalSchemaRegistryOptions(),
-            SchemaRegistryType.Kafka => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<KafkaSchemaRegistryOptions>() ?? new KafkaSchemaRegistryOptions(),
+            SchemaRegistryType.Local => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<LocalSchemaRegistryOptions>()
+                ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(LocalSchemaRegistryOptions)}' to the configuration section '{SchemaRegistryOptionsBase.Key}"),
+            SchemaRegistryType.Kafka => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<KafkaSchemaRegistryOptions>()
+                ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(KafkaSchemaRegistryOptions)}' to the configuration section '{SchemaRegistryOptionsBase.Key}"),
             _ => throw new NotImplementedException($"The schema registry type '{schemaRegistryType}' is not implemented yet.")
         };
     }
