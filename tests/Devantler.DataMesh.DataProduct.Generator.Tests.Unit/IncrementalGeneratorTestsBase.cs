@@ -51,9 +51,9 @@ public class CustomAdditionalText : AdditionalText
 
     readonly string _text;
 
-    public CustomAdditionalText(string path, string text)
+    public CustomAdditionalText(string addpath, string text)
     {
-        Path = path;
+        Path = addpath;
         _text = text;
     }
 

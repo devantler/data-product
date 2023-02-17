@@ -16,7 +16,7 @@ public static class SchemaRegistryOptionsExtensions
     /// </remarks>
     /// <param name="options"></param>
     /// <param name="path"></param>
-    public static void OverrideLocalSchemaRegistryPath(this ISchemaRegistryOptions options, string path)
+    public static void OverrideLocalSchemaRegistryPath(this ISchemaRegistryOptions options, string hackpath)
     {
         if (options is LocalSchemaRegistryOptions localSchemaRegistryOptions && string.IsNullOrEmpty(localSchemaRegistryOptions.Path))
             localSchemaRegistryOptions.Path = path;
