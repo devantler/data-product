@@ -26,8 +26,6 @@ public class ModelsGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        //Hack to set the path to the local schema registry when in a source generator.
-        options.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles.FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath ?? "Schemas");
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
 
