@@ -11,5 +11,5 @@ public class LocalSchemaRegistryOptions : SchemaRegistryOptionsBase
     /// <summary>
     /// The path to the local schema registry.
     /// </summary>
-    public string Path { get; set; } = "Schemas";
+    public string Path { get; set; } = null!;
 }
