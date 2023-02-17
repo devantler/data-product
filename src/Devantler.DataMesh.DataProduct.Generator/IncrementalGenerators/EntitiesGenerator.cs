@@ -5,6 +5,7 @@ using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.Mapping.Avro.Mappers;
 using Devantler.DataMesh.DataProduct.Configuration.Extensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
 using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
@@ -26,6 +27,9 @@ public class EntitiesGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
+        if (!(options.FeatureFlags.EnableDataStore && options.DataStoreOptions.Type == DataStoreType.Relational))
+            return;
+
         //Hack to set the path to the local schema registry when in a source generator.
         options.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles.FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath ?? "Schemas");
         var schemaRegistryService = options.GetSchemaRegistryService();

@@ -23,9 +23,9 @@ public static class ConfigurationExtensions
         var dataProductOptions = configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
             ?? throw new InvalidOperationException($"The configuration section '{DataProductOptions.Key}' is missing.");
 
-        //dataProductOptions.DataStoreOptions = GetDataStoreOptions(configuration);
+        dataProductOptions.DataStoreOptions ??= GetDataStoreOptions(configuration);
 
-        dataProductOptions.SchemaRegistryOptions = GetSchemaRegistryOptions(configuration);
+        dataProductOptions.SchemaRegistryOptions ??= GetSchemaRegistryOptions(configuration);
 
         return dataProductOptions;
     }
@@ -45,7 +45,7 @@ public static class ConfigurationExtensions
 
         return (dataStoreType, dataStoreProvider) switch
         {
-            (DataStoreType.Relational, RelationalDataStoreProvider.SQlite) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>() ?? new SqliteDataStoreOptions(),
+            (DataStoreType.Relational, RelationalDataStoreProvider.SQLite) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>() ?? new SqliteDataStoreOptions(),
             _ => throw new NotImplementedException($"The combination of the data store type '{dataStoreType}' and the data store provider '{dataStoreProvider}' is not implemented yet.")
         };
     }

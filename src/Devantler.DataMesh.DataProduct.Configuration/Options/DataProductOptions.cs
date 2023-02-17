@@ -1,4 +1,5 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Options;
@@ -51,5 +52,5 @@ public class DataProductOptions
     /// <summary>
     /// Options for the data store.
     /// </summary>
-    public IDataStoreOptions DataStoreOptions { get; set; } = null!;
+    public IDataStoreOptions DataStoreOptions { get; set; } = new SqliteDataStoreOptions();
 }

@@ -39,6 +39,7 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
 
         string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName).FirstOrDefault();
 
+        //TODO: For some reason schemaFile is null when running in Github Actions.
         string schemaString = File.ReadAllText(schemaFile);
 
         var schemaReader = new JsonSchemaReader();

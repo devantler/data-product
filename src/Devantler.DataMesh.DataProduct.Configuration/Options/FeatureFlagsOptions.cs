@@ -13,7 +13,7 @@ public class FeatureFlagsOptions
     /// <summary>
     /// Whether a data store should be enabled for the data product.
     /// </summary>
-    public bool EnableDataStore { get; set; }
+    public bool EnableDataStore { get; set; } = true;
     /// <summary>
     /// A list of APIs that should be enabled for the data product.
     /// </summary>

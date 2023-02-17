@@ -10,7 +10,22 @@ public class GenerateTests : IncrementalGeneratorTestsBase<EntitiesGenerator>
     public Task GivenValidAppSettings_GeneratesValidCode(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettingsWithLocalSchemaRegistryAndSchema(subject);
+        var additionalText = CreateAppSettings(
+            $$"""
+            {
+                "DataProduct": {
+                    "Schema": {
+                        "Subject": "{{subject}}",
+                        "Version": 1
+                    },
+                    "SchemaRegistry": {
+                        "Type": "Local",
+                        "Path": "Schemas"
+                    }
+                }
+            }
+            """
+        );
 
         //Act
         var driver = RunGenerator(additionalText);

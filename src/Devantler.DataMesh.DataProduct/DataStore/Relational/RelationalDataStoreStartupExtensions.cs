@@ -19,7 +19,7 @@ public static class RelationalDataStoreStartupExtensions
     {
         _ = options?.Provider switch
         {
-            RelationalDataStoreProvider.SQlite => services.AddSqlite(options as SqliteDataStoreOptions),
+            RelationalDataStoreProvider.SQLite => services.AddSqlite(options as SqliteDataStoreOptions),
             _ => throw new NotImplementedException(
                 $"The {options?.Provider} relational DataStore is not implemented yet."),
         };
@@ -49,7 +49,7 @@ public static class RelationalDataStoreStartupExtensions
 
         _ = options?.Provider switch
         {
-            RelationalDataStoreProvider.SQlite => app.UseSqlite(),
+            RelationalDataStoreProvider.SQLite => app.UseSqlite(),
             _ => throw new NotImplementedException(
                 $"The {options?.Provider} relational DataStore is not implemented yet."),
         };

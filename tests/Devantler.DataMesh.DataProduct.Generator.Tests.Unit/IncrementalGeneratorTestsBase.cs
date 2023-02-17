@@ -41,23 +41,6 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
             .RunGenerators(_compilation);
     }
 
-    protected static CustomAdditionalText CreateAppSettingsWithLocalSchemaRegistryAndSchema(string subject) => new("appsettings.json",
-    $$"""
-        {
-            "DataProduct": {
-                "Schema": {
-                    "Subject": "{{subject}}",
-                    "Version": 1
-                },
-                "SchemaRegistry": {
-                    "Type": "Local",
-                    "Path": "Schemas"
-                }
-            }
-        }
-        """
-);
-
     protected static CustomAdditionalText CreateAppSettings(string appSettings) =>
         new("appsettings.json", appSettings);
 }
