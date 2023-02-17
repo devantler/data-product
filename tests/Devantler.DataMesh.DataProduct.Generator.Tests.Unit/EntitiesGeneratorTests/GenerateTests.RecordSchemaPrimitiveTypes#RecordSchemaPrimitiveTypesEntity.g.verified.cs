@@ -11,6 +11,8 @@ public class RecordSchemaPrimitiveTypesEntity
     public float FloatField { get; set; }
     public int IntField { get; set; }
     public long LongField { get; set; }
+    #nullable enable
     public object? NullField { get; set; }
+    #nullable disable
     public string StringField { get; set; }
 }

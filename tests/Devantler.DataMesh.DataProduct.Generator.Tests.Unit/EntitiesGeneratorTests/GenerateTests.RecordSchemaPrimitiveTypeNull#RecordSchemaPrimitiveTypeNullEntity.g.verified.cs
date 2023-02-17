@@ -5,5 +5,7 @@
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
 public class RecordSchemaPrimitiveTypeNullEntity
 {
+    #nullable enable
     public object? NullField { get; set; }
+    #nullable disable
 }
