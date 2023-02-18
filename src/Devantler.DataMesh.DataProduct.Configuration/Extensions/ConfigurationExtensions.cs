@@ -23,9 +23,8 @@ public static class ConfigurationExtensions
         var dataProductOptions = configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
             ?? throw new InvalidOperationException($"The configuration section '{DataProductOptions.Key}' is missing.");
 
-        dataProductOptions.DataStoreOptions ??= GetDataStoreOptions(configuration);
-
-        dataProductOptions.SchemaRegistryOptions ??= GetSchemaRegistryOptions(configuration);
+        dataProductOptions.DataStoreOptions.SetDataStoreOptions(configuration);
+        dataProductOptions.SchemaRegistryOptions.SetSchemaRegistryOptions(configuration);
 
         return dataProductOptions;
     }
@@ -33,9 +32,13 @@ public static class ConfigurationExtensions
     /// <summary>
     /// Gets the data store options from the configuration.
     /// </summary>
+    /// <param name="dataStoreOptions"></param>
     /// <param name="configuration"></param>
-    public static IDataStoreOptions GetDataStoreOptions(IConfiguration configuration)
+    public static void SetDataStoreOptions(this IDataStoreOptions dataStoreOptions, IConfiguration configuration)
     {
+        if (!configuration.GetSection(DataStoreOptionsBase.Key).Exists())
+            return;
+
         var dataStoreType = configuration.GetSection(DataStoreOptionsBase.Key).GetValue<DataStoreType>("Type");
         var dataStoreProvider = dataStoreType switch
         {
@@ -43,7 +46,7 @@ public static class ConfigurationExtensions
             _ => throw new NotImplementedException($"The data store type '{dataStoreType}' is not implemented yet.")
         };
 
-        return (dataStoreType, dataStoreProvider) switch
+        dataStoreOptions = (dataStoreType, dataStoreProvider) switch
         {
             (DataStoreType.Relational, RelationalDataStoreProvider.SQLite) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>()
                 ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(SqliteDataStoreOptions)}' to the configuration section '{DataStoreOptionsBase.Key}"),
@@ -54,12 +57,16 @@ public static class ConfigurationExtensions
     /// <summary>
     /// Gets the schema registry options from the configuration.
     /// </summary>
+    /// <param name="schemaRegistryOptions"></param>
     /// <param name="configuration"></param>
-    public static ISchemaRegistryOptions GetSchemaRegistryOptions(IConfiguration configuration)
+    public static void SetSchemaRegistryOptions(this ISchemaRegistryOptions schemaRegistryOptions, IConfiguration configuration)
     {
+        if (!configuration.GetSection(SchemaRegistryOptionsBase.Key).Exists())
+            return;
+
         var schemaRegistryType = configuration.GetSection(SchemaRegistryOptionsBase.Key).GetValue<SchemaRegistryType>("Type");
 
-        return schemaRegistryType switch
+        schemaRegistryOptions = schemaRegistryType switch
         {
             SchemaRegistryType.Local => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<LocalSchemaRegistryOptions>()
                 ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(LocalSchemaRegistryOptions)}' to the configuration section '{SchemaRegistryOptionsBase.Key}"),

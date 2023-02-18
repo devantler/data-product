@@ -1,4 +1,5 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
+using Microsoft.EntityFrameworkCore;
 
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Sqlite;
 
@@ -37,17 +38,17 @@ public static partial class SqliteStartupExtensions
 {
     static partial void GenerateServiceRegistrations(IServiceCollection services, SqliteDataStoreOptions? options)
     {
-        //_ = services.AddDbContext<SqliteDbContext>(dbOptions =>
-        //    dbOptions.UseSqlite(options?.ConnectionString)
-        //);
+        _ = services.AddDbContext<SqliteDbContext>(dbOptions =>
+            dbOptions.UseSqlite(options?.ConnectionString)
+        );
     }
 
     static partial void GenerateMiddlewareUsage(WebApplication app)
     {
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;
-        //var context = services.GetRequiredService<SqliteDbContext>();
-        //_ = context.Database.EnsureCreated();
-        //DbInitializer.Initialize(context);
+        var context = services.GetRequiredService<SqliteDbContext>();
+        _ = context.Database.EnsureCreated();
+        DbInitializer.Initialize(context);
     }
 }
