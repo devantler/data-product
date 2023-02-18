@@ -17,10 +17,6 @@
         "type": "record",
         "fields": [
             {
-                "name": "Id",
-                "type": "string"
-            },
-            {
                 "name": "FirstMidName",
                 "type": "string"
             },
