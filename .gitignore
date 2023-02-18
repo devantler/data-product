@@ -14,6 +14,8 @@ generated/
 
 # SQLite
 *.db
+*.db-shm
+*.db-wal
 
 # coverlet
 **/TestResults/
