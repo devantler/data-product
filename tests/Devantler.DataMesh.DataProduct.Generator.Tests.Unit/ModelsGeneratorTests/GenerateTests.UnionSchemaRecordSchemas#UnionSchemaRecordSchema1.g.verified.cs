@@ -5,4 +5,8 @@
 namespace Devantler.DataMesh.DataProduct.Models;
 public class UnionSchemaRecordSchema1
 {
+    /// <summary>
+    /// The unique identifier for the record.
+    /// </summary>
+    public Guid Id { get; set; }
 }

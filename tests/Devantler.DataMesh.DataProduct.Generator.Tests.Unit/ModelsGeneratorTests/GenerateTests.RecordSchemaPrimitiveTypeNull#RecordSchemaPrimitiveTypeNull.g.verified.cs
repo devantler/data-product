@@ -8,7 +8,7 @@ public class RecordSchemaPrimitiveTypeNull
     /// <summary>
     /// The unique identifier for the record.
     /// </summary>
-    public Guid Id { get; set; } 
+    public Guid Id { get; set; }
     #nullable enable
     public object? NullField { get; set; }
     #nullable disable

@@ -8,5 +8,5 @@ public class UnionSchemaRecordSchema2Entity
     /// <summary>
     /// The unique identifier for this entity.
     /// </summary>
-    public Guid Id { get; set; } 
+    public Guid Id { get; set; }
 }

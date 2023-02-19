@@ -5,6 +5,10 @@
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
 public class RecordSchemaPrimitiveTypeNullEntity
 {
+    /// <summary>
+    /// The unique identifier for this entity.
+    /// </summary>
+    public Guid Id { get; set; }
     #nullable enable
     public object? NullField { get; set; }
     #nullable disable

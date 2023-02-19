@@ -5,5 +5,9 @@
 namespace Devantler.DataMesh.DataProduct.Models;
 public class RecordSchemaPrimitiveTypeDouble
 {
+    /// <summary>
+    /// The unique identifier for the record.
+    /// </summary>
+    public Guid Id { get; set; }
     public double DoubleField { get; set; }
 }

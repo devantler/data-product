@@ -8,5 +8,5 @@ public class RecordSchemaNamespace
     /// <summary>
     /// The unique identifier for the record.
     /// </summary>
-    public Guid Id { get; set; } 
+    public Guid Id { get; set; }
 }
