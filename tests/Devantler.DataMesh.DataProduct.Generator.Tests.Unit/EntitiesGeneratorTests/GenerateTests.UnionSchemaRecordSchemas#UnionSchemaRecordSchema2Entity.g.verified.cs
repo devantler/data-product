@@ -5,4 +5,8 @@
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
 public class UnionSchemaRecordSchema2Entity
 {
+    /// <summary>
+    /// The unique identifier for this entity.
+    /// </summary>
+    public Guid Id { get; set; } 
 }
