@@ -5,5 +5,9 @@
 namespace Devantler.DataMesh.DataProduct.Models;
 public class RecordSchemaPrimitiveTypeBoolean
 {
+    /// <summary>
+    /// The unique identifier for the record.
+    /// </summary>
+    public Guid Id { get; set; }
     public bool BooleanField { get; set; }
 }

@@ -29,10 +29,11 @@
         <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Primitives" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.16" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.1.16" GeneratePathProperty="true" PrivateAssets="all" IncludeAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.16" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.16" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.28" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.1.28" GeneratePathProperty="true" PrivateAssets="all" IncludeAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Core" Version="0.1.28" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.28" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.28" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Scriban" Version="5.6.0" GeneratePathProperty="true" PrivateAssets="all" />
     </ItemGroup>
 
@@ -47,7 +48,8 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PKGChr_Avro_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_CodeGen_Core)\lib\netstandard2.1\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_CodeGen_CSharp)\lib\netstandard2.1\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_CodeGen_CSharp)\templates\**\*" IncludeRuntimeDependency="false" />
+            <!-- <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_CodeGen_CSharp)\templates\**\*" IncludeRuntimeDependency="false" /> -->
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_CodeGen_Mapping_Core)\lib\netstandard2.1\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_CodeGen_Mapping_Avro)\lib\netstandard2.1\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_Commons_StringHelpers)\lib\netstandard2.1\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_Extensions_Configuration_Abstractions)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />

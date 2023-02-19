@@ -5,6 +5,10 @@
 namespace Devantler.DataMesh.DataProduct.Models;
 public class RecordSchemaPrimitiveTypes
 {
+    /// <summary>
+    /// The unique identifier for the record.
+    /// </summary>
+    public Guid Id { get; set; }
     public bool BooleanField { get; set; }
     public byte[] BytesField { get; set; }
     public double DoubleField { get; set; }

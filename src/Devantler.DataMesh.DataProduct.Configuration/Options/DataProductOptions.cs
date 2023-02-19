@@ -54,4 +54,9 @@ public class DataProductOptions
     /// Options for the data store.
     /// </summary>
     public IDataStoreOptions DataStoreOptions { get; set; } = new SqliteDataStoreOptions();
+
+    /// <summary>
+    /// Options for the REST API.
+    /// </summary>
+    public RestApiOptions RestApiOptions { get; set; } = new();
 }

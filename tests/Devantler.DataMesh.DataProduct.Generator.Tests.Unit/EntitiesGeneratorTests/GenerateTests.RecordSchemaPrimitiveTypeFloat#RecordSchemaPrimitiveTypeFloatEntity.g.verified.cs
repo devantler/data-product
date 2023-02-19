@@ -5,5 +5,9 @@
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
 public class RecordSchemaPrimitiveTypeFloatEntity
 {
+    /// <summary>
+    /// The unique identifier for this entity.
+    /// </summary>
+    public Guid Id { get; set; }
     public float FloatField { get; set; }
 }

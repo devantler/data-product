@@ -1,4 +1,5 @@
 using System.Reflection;
+using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -30,10 +31,10 @@ public static partial class RestStartupExtensions
     /// Configures the web application to use REST.
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="configuration"></param>
-    public static void UseRestApi(this WebApplication app, IConfiguration configuration)
+    /// <param name="featureFlags"></param>
+    public static void UseRestApi(this WebApplication app, FeatureFlagsOptions featureFlags)
     {
-        if (configuration.IsFeatureEnabled(Constants.AuthorisationFeatureFlag))
+        if (featureFlags.EnableAuthorisation)
             _ = app.UseAuthorization();
 
         _ = app.MapControllers();

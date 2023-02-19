@@ -5,5 +5,9 @@
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
 public class RecordSchemaPrimitiveTypeBytesEntity
 {
+    /// <summary>
+    /// The unique identifier for this entity.
+    /// </summary>
+    public Guid Id { get; set; }
     public byte[] BytesField { get; set; }
 }

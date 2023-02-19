@@ -1,4 +1,6 @@
+using Devantler.DataMesh.DataProduct.Apis.GraphQL;
 using Devantler.DataMesh.DataProduct.Apis.Rest;
+using Devantler.DataMesh.DataProduct.Configuration.Options;
 
 namespace Devantler.DataMesh.DataProduct.Apis;
 
@@ -11,18 +13,16 @@ public static class ApisStartupExtensions
     /// Registers APIs to the DI container.
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="configuration"></param>
-    public static void AddApis(this IServiceCollection services, IConfiguration configuration)
+    /// <param name="options"></param>
+    public static void AddApis(this IServiceCollection services, DataProductOptions options)
     {
-        if (configuration.IsFeatureEnabled<string[]>(Constants.RestFeatureFlag,
-                Constants.RestFeatureFlagValue))
+        if (options.FeatureFlags.EnableApis.Contains(Rest.Constants.RestFeatureFlagValue))
         {
             services.AddRestApi();
         }
-        if (configuration.IsFeatureEnabled<string[]>(GraphQL.Constants.GraphQLFeatureFlag,
-                GraphQL.Constants.GraphQLFeatureFlagValue))
+        if (options.FeatureFlags.EnableApis.Contains(GraphQL.Constants.GraphQLFeatureFlagValue))
         {
-            _ = services.AddGraphQL();
+            services.AddGraphQL();
         }
     }
 
@@ -30,13 +30,12 @@ public static class ApisStartupExtensions
     /// Configures the web application to use APIs.
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="configuration"></param>
-    public static void UseApis(this WebApplication app, IConfiguration configuration)
+    /// <param name="options"></param>
+    public static void UseApis(this WebApplication app, DataProductOptions options)
     {
-        if (configuration.IsFeatureEnabled<string[]>(Constants.RestFeatureFlag,
-                Constants.RestFeatureFlagValue))
+        if (options.FeatureFlags.EnableApis.Contains(Rest.Constants.RestFeatureFlagValue))
         {
-            app.UseRestApi(configuration);
+            app.UseRestApi(options.FeatureFlags);
         }
         //if (configuration.IsFeatureEnabled<string[]>(GraphQL.Constants.GRAPHQL_FEATURE_FLAG,
         //GraphQL.Constants.GRAPHQL_FEATURE_FLAG_VALUE))

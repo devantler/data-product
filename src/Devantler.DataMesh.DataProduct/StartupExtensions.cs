@@ -1,3 +1,4 @@
+using Devantler.DataMesh.DataProduct.Apis;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.DataStore;
 namespace Devantler.DataMesh.DataProduct;
@@ -14,9 +15,8 @@ public static class FeaturesStartupExtensions
     /// <param name="options"></param>
     public static IServiceCollection AddFeatures(this IServiceCollection services, DataProductOptions options)
     {
-        if (options.FeatureFlags.EnableDataStore)
-            _ = services.AddDataStore(options.DataStoreOptions);
-        //services.AddApis(configuration);
+        _ = services.AddDataStore(options.DataStoreOptions);
+        services.AddApis(options);
         //_ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
         return services;
     }
@@ -28,9 +28,8 @@ public static class FeaturesStartupExtensions
     /// <param name="options"></param>
     public static WebApplication UseFeatures(this WebApplication app, DataProductOptions options)
     {
-        if (options.FeatureFlags.EnableDataStore)
-            _ = app.UseDataStore(options.DataStoreOptions);
-        //app.UseApis(configuration);
+        _ = app.UseDataStore(options.DataStoreOptions);
+        app.UseApis(options);
 
         return app;
     }
