@@ -1,14 +1,18 @@
 using System.Collections.Immutable;
+using System.Text;
 using Chr.Avro.Abstract;
+using Devantler.Commons.CodeGen.Core.Model;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
+using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
@@ -58,7 +62,9 @@ public class SqliteDbContextGenerator : GeneratorBase
             );
         var onModelCreatingMethod = new CSharpMethod("void", "OnModelCreating")
             .SetDocBlock(new CSharpDocBlock("A method to configure the model."))
-            .AddParameter(new CSharpParameter("ModelBuilder", "modelBuilder"));
+            .AddParameter(new CSharpParameter("ModelBuilder", "modelBuilder"))
+            .SetVisibility(Visibility.Protected)
+            .SetIsOverride(true);
 
         foreach (var schema in rootSchema.Flatten())
         {
@@ -78,6 +84,7 @@ public class SqliteDbContextGenerator : GeneratorBase
 
         _ = codeCompilation.AddType(@class);
 
-        context.AddSource("SqliteDbContext.cs", codeCompilation.Compile().First().Value);
+        string sourceText = codeCompilation.Compile().First().Value.AddMetadata(GetType());
+        context.AddSource("SqliteDbContext.g.cs", SourceText.From(sourceText, Encoding.UTF8));
     }
 }
