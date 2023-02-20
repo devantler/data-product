@@ -26,7 +26,7 @@ public class EntitiesGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        if (!(options.FeatureFlags.EnableDataStore && options.DataStoreOptions.Type == DataStoreType.Relational))
+        if (options.DataStoreOptions.Type != DataStoreType.Relational)
             return;
 
         var schemaRegistryService = options.GetSchemaRegistryService();

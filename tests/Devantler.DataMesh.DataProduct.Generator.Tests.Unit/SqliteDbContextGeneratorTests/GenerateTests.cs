@@ -11,6 +11,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<SqliteDbContextGenera
     {
         //Arrange
         var additionalText = CreateAppSettings(
+            /*lang=json,strict*/
             $$"""
             {
                 "DataProduct": {
@@ -32,5 +33,39 @@ public class GenerateTests : IncrementalGeneratorTestsBase<SqliteDbContextGenera
 
         //Assert
         return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
+    }
+
+    [Theory]
+    [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
+    public Task GivenOtherDataStore_DoesNothing(string subject)
+    {
+        //Arrange
+        var additionalText = CreateAppSettings(
+            /*lang=json,strict*/
+            $$"""
+            {
+                "DataProduct": {
+                    "DataStore": {
+                        "Type": "DocumentBased",
+                        "Provider": "MongoDb"
+                    },
+                    "Schema": {
+                        "Subject": "{{subject}}",
+                        "Version": 1
+                    },
+                    "SchemaRegistry": {
+                        "Type": "Local",
+                        "Path": "Schemas"
+                    }
+                }
+            }
+            """
+        );
+
+        //Act
+        var driver = RunGenerator(additionalText);
+
+        //Assert
+        return Verify(driver);
     }
 }

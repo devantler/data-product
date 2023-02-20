@@ -14,8 +14,7 @@ public static class RelationalDataStoreStartupExtensions
     /// <param name="services"></param>
     /// <param name="options"></param>
     /// <exception cref="NotImplementedException">Thrown when the relational data store is not implemented yet.</exception>
-    public static IServiceCollection AddRelationalDataStore(this IServiceCollection services,
-        RelationalDataStoreOptionsBase? options)
+    public static IServiceCollection AddRelationalDataStore(this IServiceCollection services, RelationalDataStoreOptionsBase? options)
     {
         _ = options?.Provider switch
         {

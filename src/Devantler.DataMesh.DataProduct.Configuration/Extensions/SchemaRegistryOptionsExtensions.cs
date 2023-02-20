@@ -16,9 +16,11 @@ public static class SchemaRegistryOptionsExtensions
     /// </remarks>
     /// <param name="options"></param>
     /// <param name="path"></param>
-    public static void OverrideLocalSchemaRegistryPath(this ISchemaRegistryOptions options, string path)
+    public static void OverrideLocalSchemaRegistryPath(this ISchemaRegistryOptions options, string? path)
     {
-        if (options is LocalSchemaRegistryOptions localSchemaRegistryOptions && string.IsNullOrEmpty(localSchemaRegistryOptions.Path))
-            localSchemaRegistryOptions.Path = path;
+        if (options is not LocalSchemaRegistryOptions localSchemaRegistryOptions || localSchemaRegistryOptions.Path.StartsWith("/") || string.IsNullOrEmpty(path))
+            return;
+
+        localSchemaRegistryOptions.Path = path;
     }
 }

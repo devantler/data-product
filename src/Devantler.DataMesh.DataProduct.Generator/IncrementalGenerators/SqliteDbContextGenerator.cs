@@ -36,9 +36,8 @@ public class SqliteDbContextGenerator : GeneratorBase
         DataProductOptions options
     )
     {
-        if (!(options.FeatureFlags.EnableDataStore
-            && options.DataStoreOptions.Type == DataStoreType.Relational
-            && options.DataStoreOptions is RelationalDataStoreOptionsBase { Provider: RelationalDataStoreProvider.SQLite }))
+        if (options.DataStoreOptions.Type != DataStoreType.Relational
+            && options.DataStoreOptions is not RelationalDataStoreOptionsBase { Provider: RelationalDataStoreProvider.SQLite })
         {
             return;
         }
