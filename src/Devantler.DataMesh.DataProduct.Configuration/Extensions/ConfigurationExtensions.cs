@@ -1,5 +1,6 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.DocumentBased;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
@@ -23,7 +24,8 @@ public static class ConfigurationExtensions
         var dataProductOptions = configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
             ?? throw new InvalidOperationException($"The configuration section '{DataProductOptions.Key}' is missing.");
 
-        dataProductOptions.DataStoreOptions.SetDataStoreOptions(configuration);
+        if (configuration.GetSection(DataStoreOptionsBase.Key).Exists())
+            dataProductOptions.DataStoreOptions = SetDataStoreOptions(configuration);
         dataProductOptions.SchemaRegistryOptions.SetSchemaRegistryOptions(configuration);
 
         return dataProductOptions;
@@ -32,24 +34,24 @@ public static class ConfigurationExtensions
     /// <summary>
     /// Gets the data store options from the configuration.
     /// </summary>
-    /// <param name="dataStoreOptions"></param>
     /// <param name="configuration"></param>
-    public static void SetDataStoreOptions(this IDataStoreOptions dataStoreOptions, IConfiguration configuration)
+    public static IDataStoreOptions SetDataStoreOptions(IConfiguration configuration)
     {
-        if (!configuration.GetSection(DataStoreOptionsBase.Key).Exists())
-            return;
-
         var dataStoreType = configuration.GetSection(DataStoreOptionsBase.Key).GetValue<DataStoreType>("Type");
-        var dataStoreProvider = dataStoreType switch
+
+        string dataStoreProvider = dataStoreType switch
         {
-            DataStoreType.Relational => configuration.GetSection(DataStoreOptionsBase.Key).GetValue<RelationalDataStoreProvider>("Provider"),
+            DataStoreType.Relational => configuration.GetSection(DataStoreOptionsBase.Key).GetValue<RelationalDataStoreProvider>("Provider").ToString(),
+            DataStoreType.DocumentBased => configuration.GetSection(DataStoreOptionsBase.Key).GetValue<DocumentBasedDataStoreProvider>("Provider").ToString(),
             _ => throw new NotImplementedException($"The data store type '{dataStoreType}' is not implemented yet.")
         };
 
-        dataStoreOptions = (dataStoreType, dataStoreProvider) switch
+        return (dataStoreType, dataStoreProvider) switch
         {
-            (DataStoreType.Relational, RelationalDataStoreProvider.SQLite) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>()
+            (DataStoreType.Relational, nameof(RelationalDataStoreProvider.SQLite)) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>()
                 ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(SqliteDataStoreOptions)}' to the configuration section '{DataStoreOptionsBase.Key}"),
+            (DataStoreType.DocumentBased, nameof(DocumentBasedDataStoreProvider.MongoDb)) => configuration.GetSection(DataStoreOptionsBase.Key).Get<MongoDbDataStoreOptions>()
+                ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(MongoDbDataStoreOptions)}' to the configuration section '{DataStoreOptionsBase.Key}"),
             _ => throw new NotImplementedException($"The combination of the data store type '{dataStoreType}' and the data store provider '{dataStoreProvider}' is not implemented yet.")
         };
     }
