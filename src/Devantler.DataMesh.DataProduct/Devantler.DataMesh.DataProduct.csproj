@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Devantler.Commons.StringHelpers">
-      <HintPath>..\..\..\..\..\..\..\..\.nuget\packages\devantler.commons.stringhelpers\0.1.28\lib\netstandard2.1\Devantler.Commons.StringHelpers.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\.nuget\packages\devantler.commons.stringhelpers\0.1.29\lib\netstandard2.1\Devantler.Commons.StringHelpers.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
