@@ -1,3 +1,4 @@
+using System.Reflection;
 using Devantler.DataMesh.DataProduct.Apis;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.DataStore;
@@ -17,7 +18,7 @@ public static class FeaturesStartupExtensions
     {
         _ = services.AddDataStore(options.DataStoreOptions);
         services.AddApis(options);
-        //_ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
         return services;
     }
 

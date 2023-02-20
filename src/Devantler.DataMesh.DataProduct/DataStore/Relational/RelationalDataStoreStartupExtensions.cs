@@ -1,4 +1,6 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
+using Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
+using Devantler.DataMesh.DataProduct.DataStore.Relational.Repositories;
 using Devantler.DataMesh.DataProduct.DataStore.Relational.Sqlite;
 
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational;
@@ -6,7 +8,7 @@ namespace Devantler.DataMesh.DataProduct.DataStore.Relational;
 /// <summary>
 /// Extensions to register a relation data store and configuring the web application to use it.
 /// </summary>
-public static class RelationalDataStoreStartupExtensions
+public static partial class RelationalDataStoreStartupExtensions
 {
     /// <summary>
     /// Registers a relational data store to the DI container.
@@ -16,6 +18,8 @@ public static class RelationalDataStoreStartupExtensions
     /// <exception cref="NotImplementedException">Thrown when the relational data store is not implemented yet.</exception>
     public static IServiceCollection AddRelationalDataStore(this IServiceCollection services, RelationalDataStoreOptionsBase? options)
     {
+        services.AddGeneratedServiceRegistrations();
+        _ = services.AddScoped<EntityFrameworkRepository<StudentEntity>, StudentRepository>();
         _ = options?.Provider switch
         {
             RelationalDataStoreProvider.SQLite => services.AddSqlite(options as SqliteDataStoreOptions),
@@ -54,4 +58,13 @@ public static class RelationalDataStoreStartupExtensions
         };
         return app;
     }
+
+    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services);
+}
+
+//TODO: Generate with RelationalDataStoreStartupExtensionsGenerator
+public static partial class RelationalDataStoreStartupExtensions
+{
+    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services)
+        => _ = services.AddScoped<EntityFrameworkRepository<StudentEntity>, StudentRepository>();
 }

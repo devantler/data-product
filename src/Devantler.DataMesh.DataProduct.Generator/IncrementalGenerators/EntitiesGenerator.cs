@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
+using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Mappers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
@@ -36,8 +37,18 @@ public class EntitiesGenerator : GeneratorBase
 
         var codeCompilation = mapper.Map(rootSchema, Language.CSharp);
 
+        foreach (var type in codeCompilation.Types)
+        {
+            if (type is not CSharpClass @class)
+                continue;
+
+            @class.Implementations.Add(new CSharpInterface("IEntity"));
+        }
+
         var generator = new CSharpCodeGenerator();
-        foreach (var codeItem in generator.Generate(codeCompilation, options => options.NamespaceToUse = "Devantler.DataMesh.DataProduct.DataStore.Relational.Entities"))
+        foreach (var codeItem in generator.Generate(codeCompilation,
+                     codeGenerationOptions => codeGenerationOptions.NamespaceToUse =
+                         "Devantler.DataMesh.DataProduct.DataStore.Relational.Entities"))
         {
             string sourceText = codeItem.Value.AddMetadata(GetType());
             context.AddSource(codeItem.Key, SourceText.From(sourceText, Encoding.UTF8));

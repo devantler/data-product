@@ -8,26 +8,31 @@ namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 /// <typeparam name="T"></typeparam>
 public interface IController<T>
 {
-    // Task<ActionResult<Response<T>>> Query(string query, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// Abstract method for reading an entity.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<T>> Read(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Abstract method for reading one or more entities.
+    /// Abstract method for creating an entity.
     /// </summary>
-    /// <param name="ids"></param>
-    /// <param name="page"></param>
-    /// <param name="pageSize"></param>
+    /// <param name="model"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<T>>> Read(IEnumerable<Guid> ids, int page = 1, int pageSize = 10,
-        CancellationToken cancellationToken = default);
+    Task<ActionResult<T>> Create(T model, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Abstract method for creating one or more entities.
+    /// Abstract method for updating an entity.
     /// </summary>
-    /// <param name="models"></param>
+    /// <param name="model"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<Guid>>> Create(IEnumerable<T> models, CancellationToken cancellationToken = default);
+    Task<ActionResult<T>> Update(T model, CancellationToken cancellationToken = default);
 
-    // Task<ActionResult> Update(Request<T> request, CancellationToken cancellationToken = default);
-
-    // Task<ActionResult> Delete(Request<Guid> request, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// Abstract method for deleting an entity.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<T>> Delete(Guid id, CancellationToken cancellationToken = default);
 }

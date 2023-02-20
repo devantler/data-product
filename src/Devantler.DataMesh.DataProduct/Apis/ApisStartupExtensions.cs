@@ -18,7 +18,7 @@ public static class ApisStartupExtensions
     {
         if (options.FeatureFlags.EnableApis.Contains(Rest.Constants.RestFeatureFlagValue))
         {
-            services.AddRestApi();
+            services.AddRestApi(options);
         }
         if (options.FeatureFlags.EnableApis.Contains(GraphQL.Constants.GraphQLFeatureFlagValue))
         {

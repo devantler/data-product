@@ -1,27 +1,49 @@
 using System.Reflection;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.OpenApi.Models;
 
 namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 
 /// <summary>
 /// Extensions for registering REST to the DI container and configure the web application to use it.
 /// </summary>
-public static partial class RestStartupExtensions
+public static class RestStartupExtensions
 {
     /// <summary>
     /// Registers REST to the DI container.
     /// </summary>
     /// <param name="services"></param>
-    public static void AddRestApi(this IServiceCollection services)
+    /// <param name="dataProductOptions"></param>
+    public static void AddRestApi(this IServiceCollection services, DataProductOptions dataProductOptions)
     {
         _ = services.AddControllers(options =>
-                options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
-        _ = services.AddSwaggerGen(options =>
+            options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
+        _ = services.AddSwaggerGen(swaggerOptions =>
         {
-            GenerateSwaggerDoc(options);
-            options.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory,
+            swaggerOptions.SwaggerDoc(
+                "v1",
+                new OpenApiInfo
+                {
+                    Version = dataProductOptions.Version,
+                    Title = dataProductOptions.Name,
+                    Description = dataProductOptions.Description,
+                    // TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = dataProductOptions.Owner?.Name,
+                        Email = dataProductOptions.Owner?.Email,
+                        Url = !string.IsNullOrEmpty(dataProductOptions.Owner?.Website)
+                            ? new Uri(dataProductOptions.Owner.Website)
+                            : null
+                    }
+                    // License = new OpenApiLicense
+                    // {
+                    //     Name = "Example License",
+                    //     Url = new Uri("https://example.com/license")
+                    // }
+                });
+            swaggerOptions.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory,
                 $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
         });
         _ = services.AddEndpointsApiExplorer();
@@ -40,6 +62,4 @@ public static partial class RestStartupExtensions
         _ = app.MapControllers();
         _ = app.UseSwagger().UseSwaggerUI();
     }
-
-    static partial void GenerateSwaggerDoc(SwaggerGenOptions options);
 }
