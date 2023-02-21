@@ -28,11 +28,7 @@ public class RestApiController<TModel, TEntity> : ControllerBase, IController<TM
         _mapper = mapper;
     }
 
-    /// <summary>
-    /// Reads an entity by id.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc />
     [HttpGet("{id}")]
     public async Task<ActionResult<TModel>> ReadAsync(Guid id, CancellationToken cancellationToken = default)
     {
@@ -41,11 +37,7 @@ public class RestApiController<TModel, TEntity> : ControllerBase, IController<TM
         return Ok(result);
     }
 
-    /// <summary>
-    /// Reads one or more entities by id.
-    /// </summary>
-    /// <param name="ids"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc />
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TModel>>> ReadManyAsync([FromQuery] List<Guid> ids,
         CancellationToken cancellationToken = default)
@@ -55,26 +47,26 @@ public class RestApiController<TModel, TEntity> : ControllerBase, IController<TM
         return Ok(result);
     }
 
-    /// <summary>
-    /// Reads entities through pagination.
-    /// </summary>
-    /// <param name="pages"></param>
-    /// <param name="pageSize"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc />
     [HttpGet("paged")]
-    public async Task<ActionResult<IEnumerable<TModel>>> ReadPagedAsync([FromQuery] int pages = 1, [FromQuery] int pageSize = 10,
+    public async Task<ActionResult<IEnumerable<TModel>>> ReadPagedAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 10,
         CancellationToken cancellationToken = default)
     {
-        var entities = await _repository.ReadPagedAsync(pages, pageSize, cancellationToken);
+        var entities = await _repository.ReadPagedAsync(page, pageSize, cancellationToken);
         var result = _mapper.Map<IEnumerable<TEntity>, IEnumerable<TModel>>(entities);
         return Ok(result);
     }
 
-    /// <summary>
-    /// Creates an entity.
-    /// </summary>
-    /// <param name="model"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc />
+    [HttpGet("list")]
+    public async Task<ActionResult<IEnumerable<TModel>>> ReadListAsync([FromQuery] int limit = 20, [FromQuery] int offset = 0, CancellationToken cancellationToken = default)
+    {
+        var entities = await _repository.ReadListAsync(limit, offset, cancellationToken);
+        var result = _mapper.Map<IEnumerable<TEntity>, IEnumerable<TModel>>(entities);
+        return Ok(result);
+    }
+
+    /// <inheritdoc />
     [HttpPost]
     public async Task<ActionResult<TModel>> CreateAsync([FromBody] TModel model, CancellationToken cancellationToken = default)
     {
@@ -84,11 +76,7 @@ public class RestApiController<TModel, TEntity> : ControllerBase, IController<TM
         return Ok(result);
     }
 
-    /// <summary>
-    /// Creates one or more entities.
-    /// </summary>
-    /// <param name="models"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc />
     [HttpPost("many")]
     public async Task<ActionResult<int>> CreateManyAsync([FromBody] IEnumerable<TModel> models,
         CancellationToken cancellationToken = default)
@@ -98,11 +86,7 @@ public class RestApiController<TModel, TEntity> : ControllerBase, IController<TM
         return Ok(result);
     }
 
-    /// <summary>
-    /// Updates an entity.
-    /// </summary>
-    /// <param name="model"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc />
     [HttpPut("{id}")]
     public async Task<ActionResult<TModel>> UpdateAsync(TModel model, CancellationToken cancellationToken = default)
     {
@@ -112,11 +96,7 @@ public class RestApiController<TModel, TEntity> : ControllerBase, IController<TM
         return Ok(result);
     }
 
-    /// <summary>
-    /// Updates one or more entities.
-    /// </summary>
-    /// <param name="models"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc />
     [HttpPut]
     public async Task<ActionResult<int>> UpdateManyAsync(IEnumerable<TModel> models,
         CancellationToken cancellationToken = default)
@@ -126,11 +106,7 @@ public class RestApiController<TModel, TEntity> : ControllerBase, IController<TM
         return Ok(result);
     }
 
-    /// <summary>
-    /// Deletes an entity.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc />
     [HttpDelete("{id}")]
     public async Task<ActionResult<TModel>> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
@@ -139,11 +115,7 @@ public class RestApiController<TModel, TEntity> : ControllerBase, IController<TM
         return Ok(result);
     }
 
-    /// <summary>
-    /// Deletes one or more entities.
-    /// </summary>
-    /// <param name="ids"></param>
-    /// <param name="cancellationToken"></param>
+    /// <inheritdoc />
     [HttpDelete]
     public async Task<ActionResult<IEnumerable<TModel>>> DeleteManyAsync([FromQuery] List<Guid> ids,
         CancellationToken cancellationToken = default)

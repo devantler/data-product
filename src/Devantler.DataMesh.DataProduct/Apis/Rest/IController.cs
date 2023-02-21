@@ -25,10 +25,19 @@ public interface IController<T>
     /// <summary>
     /// Reads multiple entities with pagination.
     /// </summary>
-    /// <param name="pages"></param>
+    /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<T>>> ReadPagedAsync(int pages = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<T>>> ReadPagedAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Reads multiple entities with limit and offset.
+    /// </summary>
+    /// <remarks>
+    /// <param name="limit">20 by default</param>
+    /// <param name="offset">0 by default</param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<IEnumerable<T>>> ReadListAsync(int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates an entity.

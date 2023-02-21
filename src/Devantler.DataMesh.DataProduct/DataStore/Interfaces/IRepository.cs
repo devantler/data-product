@@ -35,12 +35,20 @@ public interface IRepository<T> where T : IEntity
     Task<IEnumerable<T>> ReadManyAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Abstract method to read paged entities from a relational database.
+    /// Reads paged entities from a relational database.
     /// </summary>
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
     Task<IEnumerable<T>> ReadPagedAsync(int page, int pageSize, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Reads entities from a relational database with a limit and an offset.
+    /// </summary>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <param name="cancellationToken"></param>
+    Task<IEnumerable<T>> ReadListAsync(int limit, int offset, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates a single entity in a data store.
