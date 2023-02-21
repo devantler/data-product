@@ -1,7 +1,4 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
-using Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
-using Devantler.DataMesh.DataProduct.DataStore.Relational.Repositories;
-using Devantler.DataMesh.DataProduct.DataStore.Relational.Sqlite;
 
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational;
 
@@ -16,16 +13,10 @@ public static partial class RelationalDataStoreStartupExtensions
     /// <param name="services"></param>
     /// <param name="options"></param>
     /// <exception cref="NotImplementedException">Thrown when the relational data store is not implemented yet.</exception>
-    public static IServiceCollection AddRelationalDataStore(this IServiceCollection services, RelationalDataStoreOptionsBase? options)
+    public static IServiceCollection AddRelationalDataStore(this IServiceCollection services,
+        RelationalDataStoreOptionsBase? options)
     {
-        services.AddGeneratedServiceRegistrations();
-        _ = services.AddScoped<EntityFrameworkRepository<StudentEntity>, StudentRepository>();
-        _ = options?.Provider switch
-        {
-            RelationalDataStoreProvider.SQLite => services.AddSqlite(options as SqliteDataStoreOptions),
-            _ => throw new NotImplementedException(
-                $"The {options?.Provider} relational DataStore is not implemented yet."),
-        };
+        services.AddGeneratedServiceRegistrations(options);
         _ = services.AddDatabaseDeveloperPageExceptionFilter();
         return services;
     }
@@ -50,21 +41,13 @@ public static partial class RelationalDataStoreStartupExtensions
             _ = app.UseMigrationsEndPoint();
         }
 
-        _ = options?.Provider switch
-        {
-            RelationalDataStoreProvider.SQLite => app.UseSqlite(),
-            _ => throw new NotImplementedException(
-                $"The {options?.Provider} relational DataStore is not implemented yet."),
-        };
+        app.UseGeneratedServiceRegistrations(options);
+
         return app;
     }
 
-    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services);
-}
+    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services,
+        RelationalDataStoreOptionsBase? options);
 
-//TODO: Generate with RelationalDataStoreStartupExtensionsGenerator
-public static partial class RelationalDataStoreStartupExtensions
-{
-    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services)
-        => _ = services.AddScoped<EntityFrameworkRepository<StudentEntity>, StudentRepository>();
+    static partial void UseGeneratedServiceRegistrations(this WebApplication app, RelationalDataStoreOptionsBase? options);
 }

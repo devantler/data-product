@@ -1,16 +1,13 @@
 using System.Collections.Immutable;
-using System.Text;
 using Chr.Avro.Abstract;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
@@ -20,8 +17,7 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 [Generator]
 public class AutoMapperProfileGenerator : GeneratorBase
 {
-    public override void Generate(
-        SourceProductionContext context,
+    public override Dictionary<string, string> Generate(
         Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options
@@ -43,8 +39,7 @@ public class AutoMapperProfileGenerator : GeneratorBase
 
         if (options.DataStoreOptions.Type == DataStoreType.Relational)
         {
-            _ = @class.AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.DataStore.Relational.Entities"));
-
+            _ = @class.AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.DataStore.Relational"));
             foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
             {
                 string schemaName = schema.Name.ToPascalCase();
@@ -55,7 +50,6 @@ public class AutoMapperProfileGenerator : GeneratorBase
         _ = @class.AddConstructor(constructor);
         _ = codeCompilation.AddType(@class);
 
-        string sourceText = codeCompilation.Compile().First().Value.AddMetadata(GetType());
-        context.AddSource("AutoMapperProfile.g.cs", SourceText.From(sourceText, Encoding.UTF8));
+        return codeCompilation.Compile();
     }
 }

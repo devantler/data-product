@@ -21,14 +21,13 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 public class EntitiesGenerator : GeneratorBase
 {
     /// <inheritdoc/>
-    public override void Generate(
-        SourceProductionContext context,
+    public override Dictionary<string, string> Generate(
         Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
         if (options.DataStoreOptions.Type != DataStoreType.Relational)
-            return;
+            return new Dictionary<string, string>();
 
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
@@ -42,16 +41,17 @@ public class EntitiesGenerator : GeneratorBase
             if (type is not CSharpClass @class)
                 continue;
 
-            @class.Implementations.Add(new CSharpInterface("IEntity"));
+            _ = @class.AddImport(
+                    new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
+                .AddImplementation(new CSharpInterface("IEntity"));
         }
 
         var generator = new CSharpCodeGenerator();
-        foreach (var codeItem in generator.Generate(codeCompilation,
-                     codeGenerationOptions => codeGenerationOptions.NamespaceToUse =
-                         "Devantler.DataMesh.DataProduct.DataStore.Relational.Entities"))
-        {
-            string sourceText = codeItem.Value.AddMetadata(GetType());
-            context.AddSource(codeItem.Key, SourceText.From(sourceText, Encoding.UTF8));
-        }
+        var generatedCode = generator.Generate(codeCompilation, codeGenerationOptions =>
+            codeGenerationOptions.NamespaceToUse =
+                NamespaceResolver.ResolveForType(compilation.GlobalNamespace,
+                    "RelationalDataStoreStartupExtensions"));
+
+        return generatedCode;
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Text;
 using Chr.Avro.Abstract;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
@@ -7,11 +6,9 @@ using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
@@ -24,12 +21,10 @@ public class RestApiControllerGenerator : GeneratorBase
     /// <summary>
     /// Generates REST API controllers in the data product.
     /// </summary>
-    /// <param name="context"></param>
     /// <param name="compilation"></param>
     /// <param name="additionalFiles"></param>
     /// <param name="options"></param>
-    public override void Generate(
-        SourceProductionContext context,
+    public override Dictionary<string, string> Generate(
         Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
@@ -45,11 +40,10 @@ public class RestApiControllerGenerator : GeneratorBase
             var @class = new CSharpClass($"{schemaName}Controller")
                 .AddImport(new CSharpUsing("AutoMapper"))
                 .AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.Models"))
-                .SetNamespace("Devantler.DataMesh.DataProduct.Apis.Rest")
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestApiController"))
                 .SetDocBlock(new CSharpDocBlock(
                     $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> model."""))
                 .SetBaseClass(new CSharpClass($"RestApiController<{schemaName}, {schemaName}Entity>"));
-
 
             var constructor = new CSharpConstructor(@class.Name)
                 .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of <see cref="{{@class.Name}}" />"""));
@@ -64,8 +58,7 @@ public class RestApiControllerGenerator : GeneratorBase
                 _ = constructor.AddParameter(repositoryConstructorParameter)
                     .AddParameter(mapperParameter);
 
-                _ = @class.AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.DataStore.Relational.Entities"))
-                    .AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.DataStore.Relational.Repositories"));
+                _ = @class.AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.DataStore.Relational"));
             }
 
             _ = @class.AddConstructor(constructor);
@@ -73,10 +66,6 @@ public class RestApiControllerGenerator : GeneratorBase
         }
 
         var generator = new CSharpCodeGenerator();
-        foreach (var codeItem in generator.Generate(codeCompilation))
-        {
-            string sourceText = codeItem.Value.AddMetadata(GetType());
-            context.AddSource(codeItem.Key, SourceText.From(sourceText, Encoding.UTF8));
-        }
+        return generator.Generate(codeCompilation);
     }
 }

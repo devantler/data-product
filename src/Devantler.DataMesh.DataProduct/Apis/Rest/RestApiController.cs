@@ -1,6 +1,6 @@
 using AutoMapper;
-using Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
-using Devantler.DataMesh.DataProduct.DataStore.Relational.Repositories;
+using Devantler.DataMesh.DataProduct.DataStore.Interfaces;
+using Devantler.DataMesh.DataProduct.DataStore.Relational;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Devantler.DataMesh.DataProduct.Apis.Rest;

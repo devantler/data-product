@@ -1,7 +1,7 @@
-using Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
+using Devantler.DataMesh.DataProduct.DataStore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Repositories;
+namespace Devantler.DataMesh.DataProduct.DataStore.Relational;
 
 /// <summary>
 /// Generic repository to interact with Entity Framework relational database contexts.
@@ -75,7 +75,7 @@ public abstract class EntityFrameworkRepository<T> : IRepository<T> where T : cl
     public async Task<T> UpdateAsync(T entity, CancellationToken cancellationToken = default)
     {
         var result = _context.Set<T>().Update(entity);
-        _ = _context.SaveChangesAsync(cancellationToken);
+        _ = await _context.SaveChangesAsync(cancellationToken);
         return result.Entity;
     }
 
