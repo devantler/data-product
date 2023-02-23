@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+using Devantler.Commons.StringHelpers;
 
 namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 
@@ -12,14 +12,5 @@ public class SlugifyParameterTransformer : IOutboundParameterTransformer
     /// </summary>
     /// <param name="value"></param>
     public string? TransformOutbound(object? value)
-    {
-        return value == null ? null :
-            Regex.Replace(
-                value.ToString()!,
-                "([a-z])([A-Z])",
-                "$1-$2",
-                RegexOptions.CultureInvariant,
-                TimeSpan.FromMilliseconds(100)
-            ).ToLower(System.Globalization.CultureInfo.CurrentCulture);
-    }
+        => (value?.ToString() ?? string.Empty).ToKebabCase();
 }
