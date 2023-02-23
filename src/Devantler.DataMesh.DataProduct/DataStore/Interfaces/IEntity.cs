@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.DataStore.Relational.Entities;
+namespace Devantler.DataMesh.DataProduct.DataStore.Interfaces;
 
 /// <summary>
 /// An interface for entities.

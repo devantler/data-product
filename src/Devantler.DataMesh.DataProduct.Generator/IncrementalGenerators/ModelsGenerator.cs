@@ -19,8 +19,7 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 public class ModelsGenerator : GeneratorBase
 {
     /// <inheritdoc/>
-    public override void Generate(
-        SourceProductionContext context,
+    public override Dictionary<string, string> Generate(
         Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
@@ -33,10 +32,6 @@ public class ModelsGenerator : GeneratorBase
         var codeCompilation = mapper.Map(rootSchema, Language.CSharp);
 
         var generator = new CSharpCodeGenerator();
-        foreach (var codeItem in generator.Generate(codeCompilation, options => options.NamespaceToUse = "Devantler.DataMesh.DataProduct.Models"))
-        {
-            string sourceText = codeItem.Value.AddMetadata(GetType());
-            context.AddSource(codeItem.Key, SourceText.From(sourceText, Encoding.UTF8));
-        }
+        return generator.Generate(codeCompilation, options => options.NamespaceToUse = "Devantler.DataMesh.DataProduct.Models");
     }
 }

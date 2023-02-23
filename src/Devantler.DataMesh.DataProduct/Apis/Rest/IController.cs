@@ -8,26 +8,76 @@ namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 /// <typeparam name="T"></typeparam>
 public interface IController<T>
 {
-    // Task<ActionResult<Response<T>>> Query(string query, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// Read an entity by id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<T>> ReadAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Abstract method for reading one or more entities.
+    /// Reads multiple entities by id.
     /// </summary>
     /// <param name="ids"></param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<IEnumerable<T>>> ReadManyAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Reads multiple entities with pagination.
+    /// </summary>
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<T>>> Read(IEnumerable<Guid> ids, int page = 1, int pageSize = 10,
-        CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<T>>> ReadPagedAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Abstract method for creating one or more entities.
+    /// Reads multiple entities with limit and offset.
+    /// </summary>
+    /// <remarks>
+    /// <param name="limit">20 by default</param>
+    /// <param name="offset">0 by default</param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<IEnumerable<T>>> ReadListAsync(int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Creates an entity.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<T>> CreateAsync(T model, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Creates multiple entities.
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<Guid>>> Create(IEnumerable<T> models, CancellationToken cancellationToken = default);
+    Task<ActionResult<int>> CreateManyAsync(IEnumerable<T> models, CancellationToken cancellationToken = default);
 
-    // Task<ActionResult> Update(Request<T> request, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// Updates an entity.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<T>> UpdateAsync(T model, CancellationToken cancellationToken = default);
 
-    // Task<ActionResult> Delete(Request<Guid> request, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// Updates multiple entities.
+    /// </summary>
+    /// <param name="models"></param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<int>> UpdateManyAsync(IEnumerable<T> models, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Deletes an entity.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<T>> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Deletes multiple entities.
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<IEnumerable<T>>> DeleteManyAsync(List<Guid> ids, CancellationToken cancellationToken = default);
 }

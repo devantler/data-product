@@ -13,8 +13,8 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Dapr.AspNetCore" Version="1.9.0" />
-    <PackageReference Include="FluentValidation" Version="11.5.0" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.2" />
+    <PackageReference Include="FluentValidation" Version="11.5.1" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3" PrivateAssets="All" />
@@ -38,5 +38,10 @@
   <ItemGroup>
     <AdditionalFiles Include="appsettings*.json" />
     <AdditionalFiles Include="Schemas/*.avsc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Devantler.Commons.StringHelpers">
+      <HintPath>..\..\..\..\..\..\..\..\.nuget\packages\devantler.commons.stringhelpers\0.1.32\lib\netstandard2.1\Devantler.Commons.StringHelpers.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

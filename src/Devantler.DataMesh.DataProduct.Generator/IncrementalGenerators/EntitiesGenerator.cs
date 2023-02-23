@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
+using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Mappers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
@@ -20,14 +21,13 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 public class EntitiesGenerator : GeneratorBase
 {
     /// <inheritdoc/>
-    public override void Generate(
-        SourceProductionContext context,
+    public override Dictionary<string, string> Generate(
         Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
         if (options.DataStoreOptions.Type != DataStoreType.Relational)
-            return;
+            return new Dictionary<string, string>();
 
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
@@ -36,11 +36,22 @@ public class EntitiesGenerator : GeneratorBase
 
         var codeCompilation = mapper.Map(rootSchema, Language.CSharp);
 
-        var generator = new CSharpCodeGenerator();
-        foreach (var codeItem in generator.Generate(codeCompilation, options => options.NamespaceToUse = "Devantler.DataMesh.DataProduct.DataStore.Relational.Entities"))
+        foreach (var type in codeCompilation.Types)
         {
-            string sourceText = codeItem.Value.AddMetadata(GetType());
-            context.AddSource(codeItem.Key, SourceText.From(sourceText, Encoding.UTF8));
+            if (type is not CSharpClass @class)
+                continue;
+
+            _ = @class.AddImport(
+                    new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
+                .AddImplementation(new CSharpInterface("IEntity"));
         }
+
+        var generator = new CSharpCodeGenerator();
+        var generatedCode = generator.Generate(codeCompilation, codeGenerationOptions =>
+            codeGenerationOptions.NamespaceToUse =
+                NamespaceResolver.ResolveForType(compilation.GlobalNamespace,
+                    "RelationalDataStoreStartupExtensions"));
+
+        return generatedCode;
     }
 }

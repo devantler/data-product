@@ -1,12 +1,11 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
-using Devantler.DataMesh.DataProduct.DataStore.Relational.Sqlite;
 
 namespace Devantler.DataMesh.DataProduct.DataStore.Relational;
 
 /// <summary>
 /// Extensions to register a relation data store and configuring the web application to use it.
 /// </summary>
-public static class RelationalDataStoreStartupExtensions
+public static partial class RelationalDataStoreStartupExtensions
 {
     /// <summary>
     /// Registers a relational data store to the DI container.
@@ -14,14 +13,10 @@ public static class RelationalDataStoreStartupExtensions
     /// <param name="services"></param>
     /// <param name="options"></param>
     /// <exception cref="NotImplementedException">Thrown when the relational data store is not implemented yet.</exception>
-    public static IServiceCollection AddRelationalDataStore(this IServiceCollection services, RelationalDataStoreOptionsBase? options)
+    public static IServiceCollection AddRelationalDataStore(this IServiceCollection services,
+        RelationalDataStoreOptionsBase? options)
     {
-        _ = options?.Provider switch
-        {
-            RelationalDataStoreProvider.SQLite => services.AddSqlite(options as SqliteDataStoreOptions),
-            _ => throw new NotImplementedException(
-                $"The {options?.Provider} relational DataStore is not implemented yet."),
-        };
+        services.AddGeneratedServiceRegistrations(options);
         _ = services.AddDatabaseDeveloperPageExceptionFilter();
         return services;
     }
@@ -46,12 +41,13 @@ public static class RelationalDataStoreStartupExtensions
             _ = app.UseMigrationsEndPoint();
         }
 
-        _ = options?.Provider switch
-        {
-            RelationalDataStoreProvider.SQLite => app.UseSqlite(),
-            _ => throw new NotImplementedException(
-                $"The {options?.Provider} relational DataStore is not implemented yet."),
-        };
+        app.UseGeneratedServiceRegistrations(options);
+
         return app;
     }
+
+    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services,
+        RelationalDataStoreOptionsBase? options);
+
+    static partial void UseGeneratedServiceRegistrations(this WebApplication app, RelationalDataStoreOptionsBase? options);
 }

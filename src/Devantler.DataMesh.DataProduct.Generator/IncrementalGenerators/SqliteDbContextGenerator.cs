@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Text;
 using Chr.Avro.Abstract;
 using Devantler.Commons.CodeGen.Core.Model;
+using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
 using Devantler.Commons.StringHelpers;
@@ -25,21 +26,23 @@ public class SqliteDbContextGenerator : GeneratorBase
     /// <summary>
     /// A method to generate a Sqlite database context.
     /// </summary>
-    /// <param name="context"></param>
     /// <param name="compilation"></param>
     /// <param name="additionalFiles"></param>
     /// <param name="options"></param>
-    public override void Generate(
-        SourceProductionContext context,
+    public override Dictionary<string, string> Generate(
         Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options
     )
     {
+        var sources = new Dictionary<string, string>();
         if (options.DataStoreOptions.Type != DataStoreType.Relational
-            && options.DataStoreOptions is not RelationalDataStoreOptionsBase { Provider: RelationalDataStoreProvider.SQLite })
+            && options.DataStoreOptions is not RelationalDataStoreOptionsBase
+            {
+                Provider: RelationalDataStoreProvider.SQLite
+            })
         {
-            return;
+            return sources;
         }
 
         var schemaRegistryService = options.GetSchemaRegistryService();
@@ -48,9 +51,9 @@ public class SqliteDbContextGenerator : GeneratorBase
         var codeCompilation = new CSharpCompilation();
 
         var @class = new CSharpClass("SqliteDbContext")
-            .AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.DataStore.Relational.Entities"))
             .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
-            .SetNamespace("Devantler.DataMesh.DataProduct.DataStore.Relational.Sqlite")
+            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace,
+                "RelationalDataStoreStartupExtensions"))
             .SetDocBlock(new CSharpDocBlock("A Sqlite database context."))
             .SetBaseClass(new CSharpClass("DbContext"))
             .AddConstructor(new CSharpConstructor("SqliteDbContext")
@@ -59,7 +62,7 @@ public class SqliteDbContextGenerator : GeneratorBase
                     .SetIsBaseParameter(true)
                 )
             );
-        var onModelCreatingMethod = new CSharpMethod("void", "OnModelCreating")
+        var onModelCreatingMethod = new CSharpMethod("OnModelCreating")
             .SetDocBlock(new CSharpDocBlock("A method to configure the model."))
             .AddParameter(new CSharpParameter("ModelBuilder", "modelBuilder"))
             .SetVisibility(Visibility.Protected)
@@ -76,14 +79,15 @@ public class SqliteDbContextGenerator : GeneratorBase
                 .SetValue($"Set<{schemaName}Entity>()")
                 .SetIsExpressionBodiedMember(true)
             );
-            _ = onModelCreatingMethod.AddStatement($"_ = modelBuilder.Entity<{schemaName}Entity>().ToTable(\"{schemaName}\");");
+            _ = onModelCreatingMethod.AddStatement(
+                $"_ = modelBuilder.Entity<{schemaName}Entity>().ToTable(\"{schemaName}\");");
         }
 
         _ = @class.AddMethod(onModelCreatingMethod);
 
         _ = codeCompilation.AddType(@class);
 
-        string sourceText = codeCompilation.Compile().First().Value.AddMetadata(GetType());
-        context.AddSource("SqliteDbContext.g.cs", SourceText.From(sourceText, Encoding.UTF8));
+        var codeGenerator = new CSharpCodeGenerator();
+        return codeGenerator.Generate(codeCompilation);
     }
 }
