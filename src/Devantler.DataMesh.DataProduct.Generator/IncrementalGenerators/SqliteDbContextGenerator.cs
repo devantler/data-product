@@ -74,7 +74,7 @@ public class SqliteDbContextGenerator : GeneratorBase
                 continue;
 
             string schemaName = recordSchema.Name.ToPascalCase();
-            _ = @class.AddProperty(new CSharpProperty($"DbSet<{schemaName}Entity>", $"{schemaName.ToPlural()}")
+            _ = @class.AddProperty(new CSharpProperty($"DbSet<{schemaName}Entity>", schemaName.ToPlural())
                 .SetDocBlock(new CSharpDocBlock($"A property to access the {schemaName.ToKebabCase()} table."))
                 .SetValue($"Set<{schemaName}Entity>()")
                 .SetIsExpressionBodiedMember(true)
