@@ -8,5 +8,5 @@ public enum RelationalDataStoreProvider
     /// <summary>
     /// Sqlite a relational data store provider.
     /// </summary>
-    SQLite = 1
+    Sqlite = 1
 }

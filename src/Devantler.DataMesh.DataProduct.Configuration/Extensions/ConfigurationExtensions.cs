@@ -48,7 +48,7 @@ public static class ConfigurationExtensions
 
         return (dataStoreType, dataStoreProvider) switch
         {
-            (DataStoreType.Relational, nameof(RelationalDataStoreProvider.SQLite)) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>()
+            (DataStoreType.Relational, nameof(RelationalDataStoreProvider.Sqlite)) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>()
                 ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(SqliteDataStoreOptions)}' to the configuration section '{DataStoreOptionsBase.Key}"),
             (DataStoreType.DocumentBased, nameof(DocumentBasedDataStoreProvider.MongoDb)) => configuration.GetSection(DataStoreOptionsBase.Key).Get<MongoDbDataStoreOptions>()
                 ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(MongoDbDataStoreOptions)}' to the configuration section '{DataStoreOptionsBase.Key}"),
