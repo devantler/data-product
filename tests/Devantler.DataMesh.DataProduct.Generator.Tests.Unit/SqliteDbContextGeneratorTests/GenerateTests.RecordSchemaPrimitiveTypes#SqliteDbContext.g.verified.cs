@@ -18,7 +18,7 @@ public class SqliteDbContext : DbContext
     /// <summary>
     /// A property to access the record-schema-primitive-types table.
     /// </summary>
-    public DbSet<RecordSchemaPrimitiveTypesEntity> RecordSchemaPrimitiveTypeses => Set<RecordSchemaPrimitiveTypesEntity>();
+    public DbSet<RecordSchemaPrimitiveTypesEntity> RecordSchemaPrimitiveTypes => Set<RecordSchemaPrimitiveTypesEntity>();
     /// <summary>
     /// A method to configure the model.
     /// </summary>
