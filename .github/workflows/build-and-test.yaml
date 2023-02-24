@@ -13,7 +13,7 @@ env:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest # TODO: fix build on ubuntu-latest.
+    runs-on: macos-latest # TODO: fix build on ubuntu-latest.
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
