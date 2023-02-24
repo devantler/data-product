@@ -35,7 +35,8 @@ public class AutoMapperProfileGenerator : GeneratorBase
             .SetDocBlock(new CSharpDocBlock("AutoMapper profile for mapping between models and entities."))
             .SetBaseClass(new CSharpClass("Profile"));
 
-        var constructor = new CSharpConstructor("AutoMapperProfile");
+        var constructor = new CSharpConstructor("AutoMapperProfile")
+            .SetDocBlock(new CSharpDocBlock("Creates a new instance of <see cref=\"AutoMapperProfile\"/>."));
 
         if (options.DataStoreOptions.Type == DataStoreType.Relational)
         {

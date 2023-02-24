@@ -36,9 +36,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
             dataProductOptions.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles
                 .FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath);
 
-            var sources = Generate(compilationAndFiles.Left, compilationAndFiles.Right, dataProductOptions);
-
-            foreach (var source in sources)
+            foreach (var source in Generate(compilationAndFiles.Left, compilationAndFiles.Right, dataProductOptions))
             {
                 sourceProductionContext.AddSource(source.Key,
                     SourceText.From(source.Value.AddMetadata(GetType()), Encoding.UTF8));
@@ -50,11 +48,11 @@ public abstract class GeneratorBase : IIncrementalGenerator
         IncrementalGeneratorInitializationContext context)
     {
         return context.AdditionalTextsProvider
-            .Select((additionalFile, _) => new AdditionalFile(
-                Path.GetFileName(additionalFile.Path),
-                additionalFile.Path,
-                Path.GetDirectoryName(additionalFile.Path) ?? string.Empty,
-                additionalFile.GetText())
+            .Select((additionalText, _) => new AdditionalFile(
+                Path.GetFileName(additionalText.Path),
+                additionalText.Path,
+                Path.GetDirectoryName(additionalText.Path) ?? string.Empty,
+                additionalText.GetText())
             )
             .Collect();
     }

@@ -10,6 +10,13 @@
 
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+
+        <PackageId>Devantler.DataMesh.DataProduct.Generator</PackageId>
+        <Version>0.1.35</Version>
+        <Authors>devantler</Authors>
+        <Company>Devantler Software</Company>
+        <PackageDescription>A source generator to generate source code for the Devantler.DataMesh.DataProduct project</PackageDescription>
+        <RepositoryUrl>https://github.com/devantler/data-mesh</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,17 +36,14 @@
         <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Extensions.Primitives" Version="7.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.34" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.1.34" GeneratePathProperty="true" PrivateAssets="all" IncludeAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Core" Version="0.1.34" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.34" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.34" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.35" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.1.35" GeneratePathProperty="true" PrivateAssets="all" IncludeAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Core" Version="0.1.35" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.35" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.35" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.DataMesh.DataProduct.Configuration" version="0.1.35" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.DataMesh.SchemaRegistry" version="0.1.35" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Scriban" Version="5.6.0" GeneratePathProperty="true" PrivateAssets="all" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Devantler.DataMesh.DataProduct.Configuration\Devantler.DataMesh.DataProduct.Configuration.csproj" />
-        <ProjectReference Include="..\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj" />
     </ItemGroup>
 
     <Target Name="GetDependencyTargetPaths">
@@ -64,8 +68,8 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PKGNewtonsoft_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGScriban)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <!-- <TargetPathWithTargetPlatformMoniker Include="$(PKGSystem_CodeDom)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" /> -->
-            <!-- <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_DataMesh_DataProduct_Configuration)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_DataMesh_SchemaRegistry)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" /> -->
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_DataMesh_DataProduct_Configuration)\lib\netstandard2.1\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PKGDevantler_DataMesh_SchemaRegistry)\lib\netstandard2.1\*.dll" IncludeRuntimeDependency="false" />
         </ItemGroup>
     </Target>
 

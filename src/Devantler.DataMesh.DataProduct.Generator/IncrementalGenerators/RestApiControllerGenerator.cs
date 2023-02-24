@@ -5,7 +5,6 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
@@ -40,6 +39,7 @@ public class RestApiControllerGenerator : GeneratorBase
             var @class = new CSharpClass($"{schemaName}Controller")
                 .AddImport(new CSharpUsing("AutoMapper"))
                 .AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.Models"))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestApiController"))
                 .SetDocBlock(new CSharpDocBlock(
                     $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> model."""))
@@ -48,18 +48,11 @@ public class RestApiControllerGenerator : GeneratorBase
             var constructor = new CSharpConstructor(@class.Name)
                 .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of <see cref="{{@class.Name}}" />"""));
 
-            if (options.DataStoreOptions.Type == DataStoreType.Relational)
-            {
-                var repositoryConstructorParameter =
-                    new CSharpConstructorParameter($"EntityFrameworkRepository<{schemaName}Entity>", "repository")
-                        .SetIsBaseParameter(true);
-                var mapperParameter = new CSharpConstructorParameter("IMapper", "mapper").SetIsBaseParameter(true);
+            var repositoryConstructorParameter =
+                new CSharpConstructorParameter($"DataStoreService<{schemaName}, {schemaName}Entity>", "repository")
+                    .SetIsBaseParameter(true);
 
-                _ = constructor.AddParameter(repositoryConstructorParameter)
-                    .AddParameter(mapperParameter);
-
-                _ = @class.AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.DataStore.Relational"));
-            }
+            _ = constructor.AddParameter(repositoryConstructorParameter);
 
             _ = @class.AddConstructor(constructor);
             _ = codeCompilation.AddType(@class);
