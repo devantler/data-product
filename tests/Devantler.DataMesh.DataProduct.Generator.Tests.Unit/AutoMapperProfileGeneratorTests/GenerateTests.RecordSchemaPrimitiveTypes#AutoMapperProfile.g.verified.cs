@@ -4,13 +4,16 @@
 // Any changes made to this file will be overwritten.
 using AutoMapper;
 using Devantler.DataMesh.DataProduct.Models;
-using Devantler.DataMesh.DataProduct.DataStore.Relational;
+using Devantler.DataMesh.DataProduct.DataStore.Entities;
 namespace Devantler.DataMesh.DataProduct;
 /// <summary>
 /// AutoMapper profile for mapping between models and entities.
 /// </summary>
 public class AutoMapperProfile : Profile
 {
+    /// <summary>
+    /// Creates a new instance of <see cref="AutoMapperProfile"/>.
+    /// </summary>
     public AutoMapperProfile()
     {
         _ = CreateMap<RecordSchemaPrimitiveTypes, RecordSchemaPrimitiveTypesEntity>().ReverseMap();

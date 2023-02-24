@@ -1,9 +1,9 @@
 using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.RelationalDataStoreStartupExtensionsGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.DataStoreStartupExtensionsGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : IncrementalGeneratorTestsBase<RelationalDataStoreStartupExtensionsGenerator>
+public class GenerateTests : IncrementalGeneratorTestsBase<DataStoreStartupExtensionsGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]

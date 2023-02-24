@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.SqliteDbContextGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.DataStoreStartupExtensionsGeneratorTests;
 
 public static class TestCases
 {

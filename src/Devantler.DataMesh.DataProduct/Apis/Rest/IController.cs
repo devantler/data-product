@@ -33,7 +33,6 @@ public interface IController<T>
     /// <summary>
     /// Reads multiple entities with limit and offset.
     /// </summary>
-    /// <remarks>
     /// <param name="limit">20 by default</param>
     /// <param name="offset">0 by default</param>
     /// <param name="cancellationToken"></param>

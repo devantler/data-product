@@ -4,7 +4,8 @@
 // Any changes made to this file will be overwritten.
 using AutoMapper;
 using Devantler.DataMesh.DataProduct.Models;
-using Devantler.DataMesh.DataProduct.DataStore.Relational;
+using Devantler.DataMesh.DataProduct.DataStore.Entities;
+using Devantler.DataMesh.DataProduct.DataStore.Services;
 namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 /// <summary>
 /// A controller to handle REST API requests for a the <see cref="RecordSchemaPrimitiveTypes" /> model.
@@ -14,7 +15,7 @@ public class RecordSchemaPrimitiveTypesController : RestApiController<RecordSche
     /// <summary>
     /// Creates a new instance of <see cref="RecordSchemaPrimitiveTypesController" />
     /// </summary>
-    public RecordSchemaPrimitiveTypesController(EntityFrameworkRepository<RecordSchemaPrimitiveTypesEntity> repository, IMapper mapper) : base(repository, mapper)
+    public RecordSchemaPrimitiveTypesController(DataStoreService<RecordSchemaPrimitiveTypes, RecordSchemaPrimitiveTypesEntity> dataStoreService) : base(dataStoreService)
     {
     }
 }

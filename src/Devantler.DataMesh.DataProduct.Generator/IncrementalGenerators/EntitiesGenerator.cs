@@ -26,9 +26,6 @@ public class EntitiesGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        if (options.DataStoreOptions.Type != DataStoreType.Relational)
-            return new Dictionary<string, string>();
-
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
 
@@ -41,17 +38,14 @@ public class EntitiesGenerator : GeneratorBase
             if (type is not CSharpClass @class)
                 continue;
 
-            _ = @class.AddImport(
-                    new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
-                .AddImplementation(new CSharpInterface("IEntity"));
+            _ = @class.AddImplementation(new CSharpInterface("IEntity"));
         }
 
         var generator = new CSharpCodeGenerator();
-        var generatedCode = generator.Generate(codeCompilation, codeGenerationOptions =>
-            codeGenerationOptions.NamespaceToUse =
-                NamespaceResolver.ResolveForType(compilation.GlobalNamespace,
-                    "RelationalDataStoreStartupExtensions"));
-
-        return generatedCode;
+        return generator.Generate(
+            codeCompilation,
+            options
+                => options.NamespaceToUse = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")
+        );
     }
 }

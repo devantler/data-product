@@ -15,10 +15,10 @@ using Microsoft.CodeAnalysis;
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
 [Generator]
-public class RelationalDataStoreStartupExtensionsGenerator : GeneratorBase
+public class DataStoreStartupExtensionsGenerator : GeneratorBase
 {
     /// <summary>
-    /// Generates service registrations and usages for a relational data store.
+    /// Generates service registrations and usages for a data store.
     /// </summary>
     /// <param name="compilation"></param>
     /// <param name="additionalFiles"></param>
@@ -33,16 +33,18 @@ public class RelationalDataStoreStartupExtensionsGenerator : GeneratorBase
 
         var codeCompilation = new CSharpCompilation();
 
-        string codeNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RelationalDataStoreStartupExtensions");
-        var @class = new CSharpClass("RelationalDataStoreStartupExtensions")
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RelationalDataStoreOptionsBase")))
+        string codeNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions");
+        var @class = new CSharpClass("DataStoreStartupExtensions")
+            .AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions"))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
             .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
             .SetNamespace(codeNamespace)
             .SetIsStatic(true)
             .SetIsPartial(true);
 
         var servicesParameter = new CSharpParameter("IServiceCollection", "services");
-        var optionsParameter = new CSharpParameter("RelationalDataStoreOptionsBase", "options")
+        var optionsParameter = new CSharpParameter("IDataStoreOptions", "options")
             .SetIsNullable(true);
         var addGeneratedServiceRegistrationsMethod = new CSharpMethod("AddGeneratedServiceRegistrations")
             .SetIsStatic(true)
@@ -64,29 +66,19 @@ public class RelationalDataStoreStartupExtensionsGenerator : GeneratorBase
         switch (options.DataStoreOptions.Type)
         {
             case DataStoreType.Relational:
-                if (options.DataStoreOptions is not RelationalDataStoreOptionsBase relationalDataStoreOptions)
+                if (options.DataStoreOptions is not RelationalDataStoreOptionsBase dataStoreOptions)
                     throw new InvalidOperationException("Relational data store options are not set.");
-                switch (relationalDataStoreOptions.Provider)
+                _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddDbContext<{dataStoreOptions.Provider}DbContext>(dbOptions => dbOptions.Use{dataStoreOptions.Provider}(options?.ConnectionString));");
+                foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
                 {
-                    case RelationalDataStoreProvider.SQLite:
-                        _ = addGeneratedServiceRegistrationsMethod
-                            .AddStatement("_ = services.AddDbContext<SqliteDbContext>(dbOptions => dbOptions.UseSqlite(options?.ConnectionString));");
-
-                        foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
-                        {
-                            string schemaName = schema.Name.ToPascalCase();
-                            _ = addGeneratedServiceRegistrationsMethod
-                                .AddStatement($"_ = services.AddScoped<EntityFrameworkRepository<{schemaName}Entity>, {schemaName}Repository>();");
-                        }
-                        _ = useGeneratedServiceRegistrations
-                            .AddStatement("using var scope = app.Services.CreateScope();")
-                            .AddStatement("var services = scope.ServiceProvider;")
-                            .AddStatement("var context = services.GetRequiredService<SqliteDbContext>();")
-                            .AddStatement("_ = context.Database.EnsureCreated();");
-                        break;
-                    default:
-                        throw new NotSupportedException($"Relational data store provider '{relationalDataStoreOptions.Provider}' is not supported.");
+                    string schemaName = schema.Name.ToPascalCase();
+                    _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddScoped<EntityFrameworkRepository<{schemaName}Entity>, {schemaName}Repository>();");
                 }
+                _ = useGeneratedServiceRegistrations
+                    .AddStatement("using var scope = app.Services.CreateScope();")
+                    .AddStatement("var services = scope.ServiceProvider;")
+                    .AddStatement("var context = services.GetRequiredService<SqliteDbContext>();")
+                    .AddStatement("_ = context.Database.EnsureCreated();");
                 break;
             case DataStoreType.DocumentBased:
                 throw new NotSupportedException("Document based data stores are not supported yet.");

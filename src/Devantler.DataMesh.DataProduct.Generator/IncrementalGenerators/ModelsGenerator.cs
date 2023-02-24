@@ -1,14 +1,12 @@
 using System.Collections.Immutable;
-using System.Text;
 using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
+using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Mappers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
@@ -31,7 +29,19 @@ public class ModelsGenerator : GeneratorBase
 
         var codeCompilation = mapper.Map(rootSchema, Language.CSharp);
 
+        foreach (var type in codeCompilation.Types)
+        {
+            if (type is not CSharpClass @class)
+                continue;
+
+            _ = @class.AddImplementation(new CSharpInterface("IModel"));
+        }
+
         var generator = new CSharpCodeGenerator();
-        return generator.Generate(codeCompilation, options => options.NamespaceToUse = "Devantler.DataMesh.DataProduct.Models");
+        return generator.Generate(
+            codeCompilation,
+            options
+                => options.NamespaceToUse = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")
+        );
     }
 }

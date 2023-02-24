@@ -7,7 +7,7 @@ namespace Devantler.DataMesh.DataProduct;
 /// <summary>
 /// Extensions for registering features and configuring the web application to use them.
 /// </summary>
-public static class FeaturesStartupExtensions
+public static class StartupExtensions
 {
     /// <summary>
     /// Registers features to the DI container.

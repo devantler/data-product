@@ -1,12 +1,11 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
-using Devantler.DataMesh.DataProduct.DataStore.Relational;
+
 namespace Devantler.DataMesh.DataProduct.DataStore;
 
 /// <summary>
 /// Extensions to registers a data store to the DI container and configure the web application to use it.
 /// </summary>
-public static class DataStoreStartupExtensions
+public static partial class DataStoreStartupExtensions
 {
     /// <summary>
     /// Registers a data store to the DI container.
@@ -16,12 +15,16 @@ public static class DataStoreStartupExtensions
     /// <exception cref="NotImplementedException">Thrown when a data store is not implemented.</exception>
     public static IServiceCollection AddDataStore(this IServiceCollection services, IDataStoreOptions options)
     {
-        return options.Type switch
+        services.AddGeneratedServiceRegistrations(options);
+        switch (options.Type)
         {
-            DataStoreType.Relational => services.AddRelationalDataStore(options as RelationalDataStoreOptionsBase),
-            _ => throw new NotImplementedException(
-                $"The relational DataStore type {options.Type} is not implemented yet."),
-        };
+            case DataStoreType.Relational:
+                _ = services.AddDatabaseDeveloperPageExceptionFilter();
+                break;
+            default:
+                throw new NotImplementedException($"The relational DataStore type {options.Type} is not implemented yet.");
+        }
+        return services;
     }
 
     /// <summary>
@@ -32,11 +35,31 @@ public static class DataStoreStartupExtensions
     /// <exception cref="NotImplementedException">Thrown when a data store is not implemented.</exception>
     public static WebApplication UseDataStore(this WebApplication app, IDataStoreOptions options)
     {
-        return options.Type switch
+        if (!app.Environment.IsDevelopment())
         {
-            DataStoreType.Relational => app.UseRelationalDataStore(options as RelationalDataStoreOptionsBase),
-            _ => throw new NotImplementedException(
-                $"The relational DataStore type {options.Type} is not implemented yet."),
-        };
+            _ = app.UseExceptionHandler("/Error");
+            _ = app.UseHsts();
+        }
+        else
+        {
+            _ = app.UseDeveloperExceptionPage();
+
+        }
+        switch (options.Type)
+        {
+            case DataStoreType.Relational:
+                if (app.Environment.IsDevelopment())
+                    _ = app.UseMigrationsEndPoint();
+                break;
+            default:
+                throw new NotImplementedException($"The relational DataStore type {options.Type} is not implemented yet.");
+        }
+        app.UseGeneratedServiceRegistrations(options);
+
+        return app;
     }
+
+    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, IDataStoreOptions options);
+
+    static partial void UseGeneratedServiceRegistrations(this WebApplication app, IDataStoreOptions options);
 }

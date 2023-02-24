@@ -38,8 +38,9 @@ public class RestApiControllerGenerator : GeneratorBase
             string schemaName = schema.Name.ToPascalCase();
             var @class = new CSharpClass($"{schemaName}Controller")
                 .AddImport(new CSharpUsing("AutoMapper"))
-                .AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.Models"))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreService")))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestApiController"))
                 .SetDocBlock(new CSharpDocBlock(
                     $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> model."""))
@@ -49,7 +50,7 @@ public class RestApiControllerGenerator : GeneratorBase
                 .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of <see cref="{{@class.Name}}" />"""));
 
             var repositoryConstructorParameter =
-                new CSharpConstructorParameter($"DataStoreService<{schemaName}, {schemaName}Entity>", "repository")
+                new CSharpConstructorParameter($"DataStoreService<{schemaName}, {schemaName}Entity>", "dataStoreService")
                     .SetIsBaseParameter(true);
 
             _ = constructor.AddParameter(repositoryConstructorParameter);

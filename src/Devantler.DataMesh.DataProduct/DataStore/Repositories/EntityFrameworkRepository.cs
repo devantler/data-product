@@ -1,7 +1,8 @@
-using Devantler.DataMesh.DataProduct.DataStore.Interfaces;
+using Devantler.DataMesh.DataProduct.DataStore.Entities;
+using Devantler.DataMesh.DataProduct.DataStore.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Devantler.DataMesh.DataProduct.DataStore.Relational;
+namespace Devantler.DataMesh.DataProduct.DataStore.Repositories;
 
 /// <summary>
 /// Generic repository to interact with Entity Framework relational database contexts.

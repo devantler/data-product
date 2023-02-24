@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Text;
 using Chr.Avro.Abstract;
 using Devantler.Commons.CodeGen.Core.Model;
 using Devantler.Commons.CodeGen.CSharp;
@@ -9,11 +8,9 @@ using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
-using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
@@ -21,7 +18,7 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 /// A generator that generates a Sqlite database context.
 /// </summary>
 [Generator]
-public class SqliteDbContextGenerator : GeneratorBase
+public class DbContextGenerator : GeneratorBase
 {
     /// <summary>
     /// A method to generate a Sqlite database context.
@@ -35,33 +32,28 @@ public class SqliteDbContextGenerator : GeneratorBase
         DataProductOptions options
     )
     {
-        var sources = new Dictionary<string, string>();
-        if (options.DataStoreOptions.Type != DataStoreType.Relational
-            && options.DataStoreOptions is not RelationalDataStoreOptionsBase
-            {
-                Provider: RelationalDataStoreProvider.SQLite
-            })
-        {
-            return sources;
-        }
+        if (options.DataStoreOptions.Type != DataStoreType.Relational)
+            return new Dictionary<string, string>();
+
+        var dataStoreOptions = options.DataStoreOptions as RelationalDataStoreOptionsBase;
 
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
-        var @class = new CSharpClass("SqliteDbContext")
+        var @class = new CSharpClass($"{dataStoreOptions?.Provider}DbContext")
             .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
-            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace,
-                "RelationalDataStoreStartupExtensions"))
-            .SetDocBlock(new CSharpDocBlock("A Sqlite database context."))
-            .SetBaseClass(new CSharpClass("DbContext"))
-            .AddConstructor(new CSharpConstructor("SqliteDbContext")
-                .SetDocBlock(new CSharpDocBlock("A constructor to construct a Sqlite database context."))
-                .AddParameter(new CSharpConstructorParameter("DbContextOptions<SqliteDbContext>", "options")
-                    .SetIsBaseParameter(true)
-                )
-            );
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
+            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions"))
+            .SetDocBlock(new CSharpDocBlock($"A {dataStoreOptions?.Provider} database context."))
+            .SetBaseClass(new CSharpClass("DbContext"));
+
+        var constructor = new CSharpConstructor(@class.Name)
+            .SetDocBlock(new CSharpDocBlock($"A constructor to construct a {dataStoreOptions?.Provider} database context."))
+            .AddParameter(new CSharpConstructorParameter($"DbContextOptions<{@class.Name}>", "options")
+                .SetIsBaseParameter(true));
+
         var onModelCreatingMethod = new CSharpMethod("OnModelCreating")
             .SetDocBlock(new CSharpDocBlock("A method to configure the model."))
             .AddParameter(new CSharpParameter("ModelBuilder", "modelBuilder"))
@@ -83,6 +75,7 @@ public class SqliteDbContextGenerator : GeneratorBase
                 $"_ = modelBuilder.Entity<{schemaName}Entity>().ToTable(\"{schemaName}\");");
         }
 
+        _ = @class.AddConstructor(constructor);
         _ = @class.AddMethod(onModelCreatingMethod);
 
         _ = codeCompilation.AddType(@class);

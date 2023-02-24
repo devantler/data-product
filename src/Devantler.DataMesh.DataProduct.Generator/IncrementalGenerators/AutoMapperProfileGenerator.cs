@@ -30,23 +30,21 @@ public class AutoMapperProfileGenerator : GeneratorBase
 
         var @class = new CSharpClass("AutoMapperProfile")
             .AddImport(new CSharpUsing("AutoMapper"))
-            .AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.Models"))
-            .SetNamespace("Devantler.DataMesh.DataProduct")
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
+            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "StartupExtensions"))
             .SetDocBlock(new CSharpDocBlock("AutoMapper profile for mapping between models and entities."))
             .SetBaseClass(new CSharpClass("Profile"));
 
         var constructor = new CSharpConstructor("AutoMapperProfile")
             .SetDocBlock(new CSharpDocBlock("Creates a new instance of <see cref=\"AutoMapperProfile\"/>."));
 
-        if (options.DataStoreOptions.Type == DataStoreType.Relational)
+        _ = @class.AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")));
+        foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {
-            _ = @class.AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.DataStore.Relational"));
-            foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
-            {
-                string schemaName = schema.Name.ToPascalCase();
-                _ = constructor.AddStatement($"_ = CreateMap<{schemaName}, {schemaName}Entity>().ReverseMap();");
-            }
+            string schemaName = schema.Name.ToPascalCase();
+            _ = constructor.AddStatement($"_ = CreateMap<{schemaName}, {schemaName}Entity>().ReverseMap();");
         }
+
 
         _ = @class.AddConstructor(constructor);
         _ = codeCompilation.AddType(@class);

@@ -1,15 +1,21 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
+using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
+/// <summary>
+/// A generator to create repositories to interact with data stores.
+/// </summary>
 [Generator]
 public class RepositoryGenerator : GeneratorBase
 {
@@ -27,21 +33,40 @@ public class RepositoryGenerator : GeneratorBase
         {
             string schemaName = schema.Name.ToPascalCase();
 
-            var repositoryClass = new CSharpClass($"{schemaName}Repository")
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace,
-                    "RelationalDataStoreStartupExtensions"))
-                .SetDocBlock(new CSharpDocBlock(
-                    $$"""A repository to interact with entities of type <see cref="{{schemaName}}Entity"/>"""))
-                .SetBaseClass(new CSharpClass($"EntityFrameworkRepository<{schemaName}Entity>"));
+            var baseClass = options.DataStoreOptions.Type switch
+            {
+                DataStoreType.Relational => new CSharpClass($"EntityFrameworkRepository<{schemaName}Entity>"),
+                DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
+                DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
+                _ => throw new NotSupportedException($"The data store type {options.DataStoreOptions.Type} is not supported.")
+            };
 
-            var constructor = new CSharpConstructor(repositoryClass.Name)
-                .AddParameter(new CSharpConstructorParameter("SqliteDbContext", "context")
-                    .SetIsBaseParameter(true));
+            var repositoryClass = new CSharpClass($"{schemaName}Repository")
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository"))
+                .SetDocBlock(new CSharpDocBlock($$"""A repository to interact with entities of type <see cref="{{schemaName}}Entity"/>"""))
+                .SetBaseClass(baseClass);
+
+            var constructor = options.DataStoreOptions.Type switch
+            {
+                DataStoreType.Relational
+                    => new CSharpConstructor(repositoryClass.Name)
+                        .AddParameter(
+                            new CSharpConstructorParameter(
+                                $"{(options.DataStoreOptions as RelationalDataStoreOptionsBase
+                            )?.Provider}DbContext", "context")
+                        .SetIsBaseParameter(true)),
+                DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
+                DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
+                _ => throw new NotSupportedException($"The data store type {options.DataStoreOptions.Type} is not supported.")
+            };
 
             _ = repositoryClass.AddConstructor(constructor);
             _ = codeCompilation.AddType(repositoryClass);
         }
 
-        return codeCompilation.Compile();
+        var codeGenerator = new CSharpCodeGenerator();
+        return codeGenerator.Generate(codeCompilation);
     }
 }
