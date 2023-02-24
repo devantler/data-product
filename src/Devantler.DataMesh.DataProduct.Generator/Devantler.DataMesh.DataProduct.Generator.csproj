@@ -11,12 +11,7 @@
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
 
-        <PackageId>Devantler.DataMesh.DataProduct.Generator</PackageId>
-        <Version>0.1.35</Version>
-        <Authors>devantler</Authors>
-        <Company>Devantler Software</Company>
-        <PackageDescription>A source generator to generate source code for the Devantler.DataMesh.DataProduct project</PackageDescription>
-        <RepositoryUrl>https://github.com/devantler/data-mesh</RepositoryUrl>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
