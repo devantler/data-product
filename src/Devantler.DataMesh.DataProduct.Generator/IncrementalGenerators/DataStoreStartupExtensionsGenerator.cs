@@ -14,6 +14,9 @@ using Microsoft.CodeAnalysis;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
+/// <summary>
+/// A generator for service registrations and usages for a data store.
+/// </summary>
 [Generator]
 public class DataStoreStartupExtensionsGenerator : GeneratorBase
 {

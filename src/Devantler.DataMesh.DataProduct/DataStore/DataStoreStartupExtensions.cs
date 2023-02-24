@@ -16,14 +16,13 @@ public static partial class DataStoreStartupExtensions
     public static IServiceCollection AddDataStore(this IServiceCollection services, IDataStoreOptions options)
     {
         services.AddGeneratedServiceRegistrations(options);
-        switch (options.Type)
+        _ = options.Type switch
         {
-            case DataStoreType.Relational:
-                _ = services.AddDatabaseDeveloperPageExceptionFilter();
-                break;
-            default:
-                throw new NotImplementedException($"The relational DataStore type {options.Type} is not implemented yet.");
-        }
+            DataStoreType.Relational => _ = services.AddDatabaseDeveloperPageExceptionFilter(),
+            DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
+            DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
+            _ => throw new NotSupportedException($"The data store type {options.Type} is not supported."),
+        };
         return services;
     }
 
@@ -43,7 +42,6 @@ public static partial class DataStoreStartupExtensions
         else
         {
             _ = app.UseDeveloperExceptionPage();
-
         }
         switch (options.Type)
         {
@@ -51,8 +49,12 @@ public static partial class DataStoreStartupExtensions
                 if (app.Environment.IsDevelopment())
                     _ = app.UseMigrationsEndPoint();
                 break;
+            case DataStoreType.DocumentBased:
+                throw new NotSupportedException("Document based data stores are not supported yet.");
+            case DataStoreType.GraphBased:
+                throw new NotSupportedException("Graph based data stores are not supported yet.");
             default:
-                throw new NotImplementedException($"The relational DataStore type {options.Type} is not implemented yet.");
+                throw new NotSupportedException($"The data store type {options.Type} is not supported.");
         }
         app.UseGeneratedServiceRegistrations(options);
 

@@ -19,6 +19,12 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 [Generator]
 public class RepositoryGenerator : GeneratorBase
 {
+    /// <summary>
+    /// Generates repositories.
+    /// </summary>
+    /// <param name="compilation"></param>
+    /// <param name="additionalFiles"></param>
+    /// <param name="options"></param>
     public override Dictionary<string, string> Generate(
         Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles,

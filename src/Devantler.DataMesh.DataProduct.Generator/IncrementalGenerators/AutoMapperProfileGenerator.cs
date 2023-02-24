@@ -1,10 +1,10 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
+using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
@@ -17,6 +17,12 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 [Generator]
 public class AutoMapperProfileGenerator : GeneratorBase
 {
+    /// <summary>
+    /// Generates AutoMapper profiles.
+    /// </summary>
+    /// <param name="compilation"></param>
+    /// <param name="additionalFiles"></param>
+    /// <param name="options"></param>
     public override Dictionary<string, string> Generate(
         Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles,
@@ -45,10 +51,10 @@ public class AutoMapperProfileGenerator : GeneratorBase
             _ = constructor.AddStatement($"_ = CreateMap<{schemaName}, {schemaName}Entity>().ReverseMap();");
         }
 
-
         _ = @class.AddConstructor(constructor);
         _ = codeCompilation.AddType(@class);
 
-        return codeCompilation.Compile();
+        var codeGenerator = new CSharpCodeGenerator();
+        return codeGenerator.Generate(codeCompilation);
     }
 }

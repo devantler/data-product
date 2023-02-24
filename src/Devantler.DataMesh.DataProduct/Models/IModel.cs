@@ -1,9 +1,12 @@
-using System;
+namespace Devantler.DataMesh.DataProduct.Models;
 
-namespace Devantler.DataMesh.DataProduct.Models
+/// <summary>
+/// An interface for models.
+/// </summary>
+public interface IModel
 {
-    public interface IModel
-    {
-        public Guid Id { get; set; }
-    }
+    /// <summary>
+    /// The unique identifier of the model.
+    /// </summary>
+    public Guid Id { get; set; }
 }

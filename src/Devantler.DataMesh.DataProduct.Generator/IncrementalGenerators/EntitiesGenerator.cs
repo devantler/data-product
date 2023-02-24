@@ -1,16 +1,12 @@
 using System.Collections.Immutable;
-using System.Text;
 using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Mappers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 

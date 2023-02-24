@@ -2,7 +2,6 @@ using AutoMapper;
 using Devantler.DataMesh.DataProduct.DataStore.Entities;
 using Devantler.DataMesh.DataProduct.DataStore.Repositories;
 
-
 namespace Devantler.DataMesh.DataProduct.DataStore.Services;
 
 /// <summary>

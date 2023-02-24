@@ -75,7 +75,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
     }
 
     /// <summary>
-    /// Abstract method to generate code in the data product.
+    /// Generates code to the data product.
     /// </summary>
     /// <param name="compilation"></param>
     /// <param name="additionalFiles"></param>
