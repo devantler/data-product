@@ -11,7 +11,6 @@ The data product is built to support most cloud providers and provisioning tools
 ## Prerequisites
 
 - .NET 6.0+
-- Docker (for local development)
 
 Optionally external services/clusters for:
 - Kafka
