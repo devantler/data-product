@@ -17,13 +17,13 @@
         <PackageReference Include="Chr.Avro.Json" Version="9.4.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Chr.Avro" Version="9.4.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Confluent.SchemaRegistry" Version="2.0.2" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.36" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.1.36" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.36" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Core" Version="0.1.36" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.36" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.DataMesh.DataProduct.Configuration" version="0.1.36" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.DataMesh.SchemaRegistry" version="0.1.36" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.39" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.1.39" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.39" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Core" Version="0.1.39" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.39" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.DataMesh.DataProduct.Configuration" version="0.1.39" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.DataMesh.SchemaRegistry" version="0.1.39" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.4.0" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" PrivateAssets="all" />

@@ -12,21 +12,19 @@ using Microsoft.CodeAnalysis;
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
 /// <summary>
-/// A generator that generates REST API controllers in the data product.
+/// A generator that generates a data store service for a given schema.
 /// </summary>
 [Generator]
-public class RestApiControllerGenerator : GeneratorBase
+public class DataStoreServiceGenerator : GeneratorBase
 {
     /// <summary>
-    /// Generates REST API controllers in the data product.
+    /// Generates a data store service for a given schema.
     /// </summary>
     /// <param name="compilation"></param>
     /// <param name="additionalFiles"></param>
     /// <param name="options"></param>
-    public override Dictionary<string, string> Generate(
-        Compilation compilation,
-        ImmutableArray<AdditionalFile> additionalFiles,
-        DataProductOptions options)
+    public override Dictionary<string, string> Generate(Compilation compilation,
+        ImmutableArray<AdditionalFile> additionalFiles, DataProductOptions options)
     {
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
@@ -36,30 +34,29 @@ public class RestApiControllerGenerator : GeneratorBase
         foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {
             string schemaName = schema.Name.ToPascalCase();
-            var @class = new CSharpClass($"{schemaName.ToPlural()}Controller")
-                .AddImport(new CSharpUsing("AutoMapper"))
+
+            var baseClass = new CSharpClass($"DataStoreService<{schemaName}, {schemaName}Entity>");
+
+            var @class = new CSharpClass($"{schemaName}DataStoreService")
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
-                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreService")))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestApiController"))
-                .SetDocBlock(new CSharpDocBlock(
-                    $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> model."""))
-                .SetBaseClass(new CSharpClass($"RestApiController<{schemaName}>"));
+                .AddImport(
+                    new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
+                .AddImport(new CSharpUsing("AutoMapper"))
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService"))
+                .SetBaseClass(baseClass);
 
             var constructor = new CSharpConstructor(@class.Name)
-                .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of <see cref="{{@class.Name}}" />"""));
-
-            var repositoryConstructorParameter =
-                new CSharpConstructorParameter($"IDataStoreService<{schemaName}>", "dataStoreService")
-                    .SetIsBaseParameter(true);
-
-            _ = constructor.AddParameter(repositoryConstructorParameter);
+                .AddParameter(new CSharpConstructorParameter($"IRepository<{schemaName}Entity>", "repository")
+                    .SetIsBaseParameter(true))
+                .AddParameter(new CSharpConstructorParameter("IMapper", "mapper")
+                    .SetIsBaseParameter(true));
 
             _ = @class.AddConstructor(constructor);
             _ = codeCompilation.AddType(@class);
         }
 
-        var generator = new CSharpCodeGenerator();
-        return generator.Generate(codeCompilation);
+        var codeGenerator = new CSharpCodeGenerator();
+        return codeGenerator.Generate(codeCompilation);
     }
 }

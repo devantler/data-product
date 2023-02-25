@@ -13,14 +13,14 @@ public interface IController<T>
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<T>> ReadAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ActionResult<T>> GetSingleAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities by id.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<T>>> ReadManyAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IQueryable<T>>> GetMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities with pagination.
@@ -28,7 +28,7 @@ public interface IController<T>
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<T>>> ReadPagedAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+    Task<ActionResult<IQueryable<T>>> GetMultipleWithPaginationAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities with limit and offset.
@@ -36,47 +36,47 @@ public interface IController<T>
     /// <param name="limit">20 by default</param>
     /// <param name="offset">0 by default</param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<T>>> ReadListAsync(int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
+    Task<ActionResult<IQueryable<T>>> GetMultipleWithLimitAsync(int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates an entity.
     /// </summary>
     /// <param name="model"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<T>> CreateAsync(T model, CancellationToken cancellationToken = default);
+    Task<ActionResult<T>> PostSingleAsync(T model, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates multiple entities.
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<int>> CreateManyAsync(IEnumerable<T> models, CancellationToken cancellationToken = default);
+    Task<ActionResult<int>> PostMultipleAsync(IQueryable<T> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates an entity.
     /// </summary>
     /// <param name="model"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<T>> UpdateAsync(T model, CancellationToken cancellationToken = default);
+    Task<ActionResult<T>> PutSingleAsync(T model, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates multiple entities.
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<int>> UpdateManyAsync(IEnumerable<T> models, CancellationToken cancellationToken = default);
+    Task<ActionResult<int>> PutMultipleAsync(IQueryable<T> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes an entity.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<T>> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ActionResult<T>> DeleteSingleAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple entities.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<T>>> DeleteManyAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IQueryable<T>>> DeleteMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
 }

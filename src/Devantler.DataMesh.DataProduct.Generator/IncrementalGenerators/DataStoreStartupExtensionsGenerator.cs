@@ -39,8 +39,10 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
         string codeNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions");
         var @class = new CSharpClass("DataStoreStartupExtensions")
             .AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions"))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
             .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
             .SetNamespace(codeNamespace)
             .SetIsStatic(true)
@@ -75,7 +77,9 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
                 foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
                 {
                     string schemaName = schema.Name.ToPascalCase();
-                    _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddScoped<EntityFrameworkRepository<{schemaName}Entity>, {schemaName}Repository>();");
+                    _ = addGeneratedServiceRegistrationsMethod
+                        .AddStatement($"_ = services.AddScoped<IRepository<{schemaName}Entity>, {schemaName}Repository>();")
+                        .AddStatement($"_ = services.AddScoped<IDataStoreService<{schemaName}>, {schemaName}DataStoreService>();");
                 }
                 _ = useGeneratedServiceRegistrations
                     .AddStatement("using var scope = app.Services.CreateScope();")

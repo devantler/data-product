@@ -60,12 +60,9 @@ public class DbContextGenerator : GeneratorBase
             .SetVisibility(Visibility.Protected)
             .SetIsOverride(true);
 
-        foreach (var schema in rootSchema.Flatten())
+        foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {
-            if (schema is not RecordSchema recordSchema)
-                continue;
-
-            string schemaName = recordSchema.Name.ToPascalCase();
+            string schemaName = schema.Name.ToPascalCase();
             _ = @class.AddProperty(new CSharpProperty($"DbSet<{schemaName}Entity>", schemaName.ToPlural())
                 .SetDocBlock(new CSharpDocBlock($"A property to access the {schemaName.ToKebabCase()} table."))
                 .SetValue($"Set<{schemaName}Entity>()")
