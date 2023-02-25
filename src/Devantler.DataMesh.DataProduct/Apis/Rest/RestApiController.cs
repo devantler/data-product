@@ -32,7 +32,7 @@ public class RestApiController<TModel> : ControllerBase, IController<TModel>
 
     /// <inheritdoc />
     [HttpGet]
-    public async Task<ActionResult<IQueryable<TModel>>> GetMultipleAsync([FromQuery] List<Guid> ids,
+    public async Task<ActionResult<IEnumerable<TModel>>> GetMultipleAsync([FromQuery] List<Guid> ids,
         CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleAsync(ids, cancellationToken);
@@ -41,7 +41,7 @@ public class RestApiController<TModel> : ControllerBase, IController<TModel>
 
     /// <inheritdoc />
     [HttpGet("paged")]
-    public async Task<ActionResult<IQueryable<TModel>>> GetMultipleWithPaginationAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 10,
+    public async Task<ActionResult<IEnumerable<TModel>>> GetMultipleWithPaginationAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 10,
         CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleWithPaginationAsync(page, pageSize, cancellationToken);
@@ -50,7 +50,7 @@ public class RestApiController<TModel> : ControllerBase, IController<TModel>
 
     /// <inheritdoc />
     [HttpGet("limited")]
-    public async Task<ActionResult<IQueryable<TModel>>> GetMultipleWithLimitAsync([FromQuery] int limit = 20, [FromQuery] int offset = 0, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IEnumerable<TModel>>> GetMultipleWithLimitAsync([FromQuery] int limit = 20, [FromQuery] int offset = 0, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleWithLimitAsync(limit, offset, cancellationToken);
         return Ok(result);
@@ -66,7 +66,7 @@ public class RestApiController<TModel> : ControllerBase, IController<TModel>
 
     /// <inheritdoc />
     [HttpPost]
-    public async Task<ActionResult<int>> PostMultipleAsync([FromBody] IQueryable<TModel> models,
+    public async Task<ActionResult<int>> PostMultipleAsync([FromBody] IEnumerable<TModel> models,
         CancellationToken cancellationToken = default)
     {
         int result = await _dataStoreService.CreateMultipleAsync(models, cancellationToken);
@@ -74,7 +74,7 @@ public class RestApiController<TModel> : ControllerBase, IController<TModel>
     }
 
     /// <inheritdoc />
-    [HttpPut("{id}")]
+    [HttpPut("single")]
     public async Task<ActionResult<TModel>> PutSingleAsync(TModel model, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.UpdateSingleAsync(model, cancellationToken);
@@ -83,7 +83,7 @@ public class RestApiController<TModel> : ControllerBase, IController<TModel>
 
     /// <inheritdoc />
     [HttpPut]
-    public async Task<ActionResult<int>> PutMultipleAsync(IQueryable<TModel> models,
+    public async Task<ActionResult<int>> PutMultipleAsync(IEnumerable<TModel> models,
         CancellationToken cancellationToken = default)
     {
         int result = await _dataStoreService.UpdateMultipleAsync(models, cancellationToken);
@@ -100,7 +100,7 @@ public class RestApiController<TModel> : ControllerBase, IController<TModel>
 
     /// <inheritdoc />
     [HttpDelete]
-    public async Task<ActionResult<IQueryable<TModel>>> DeleteMultipleAsync([FromQuery] List<Guid> ids,
+    public async Task<ActionResult<IEnumerable<TModel>>> DeleteMultipleAsync([FromQuery] List<Guid> ids,
         CancellationToken cancellationToken = default)
     {
         int result = await _dataStoreService.DeleteMultipleAsync(ids, cancellationToken);

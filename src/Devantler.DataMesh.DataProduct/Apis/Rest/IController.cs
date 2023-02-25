@@ -20,7 +20,7 @@ public interface IController<T>
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IQueryable<T>>> GetMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<T>>> GetMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities with pagination.
@@ -28,7 +28,7 @@ public interface IController<T>
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IQueryable<T>>> GetMultipleWithPaginationAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<T>>> GetMultipleWithPaginationAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities with limit and offset.
@@ -36,7 +36,7 @@ public interface IController<T>
     /// <param name="limit">20 by default</param>
     /// <param name="offset">0 by default</param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IQueryable<T>>> GetMultipleWithLimitAsync(int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<T>>> GetMultipleWithLimitAsync(int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates an entity.
@@ -50,7 +50,7 @@ public interface IController<T>
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<int>> PostMultipleAsync(IQueryable<T> models, CancellationToken cancellationToken = default);
+    Task<ActionResult<int>> PostMultipleAsync(IEnumerable<T> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates an entity.
@@ -64,7 +64,7 @@ public interface IController<T>
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<int>> PutMultipleAsync(IQueryable<T> models, CancellationToken cancellationToken = default);
+    Task<ActionResult<int>> PutMultipleAsync(IEnumerable<T> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes an entity.
@@ -78,5 +78,5 @@ public interface IController<T>
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IQueryable<T>>> DeleteMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<T>>> DeleteMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
 }

@@ -11,6 +11,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
+[Generator]
 public class GraphQLQueryGenerator : GeneratorBase
 {
     public override Dictionary<string, string> Generate(Compilation compilation,
@@ -28,24 +29,24 @@ public class GraphQLQueryGenerator : GeneratorBase
 
         foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {
-            var schemaName = schema.Name.ToPascalCase();
+            string schemaName = schema.Name.ToPascalCase();
             var method = new CSharpMethod($"Get{schemaName.ToPlural()}")
                 .AddAttribute("UseProjection")
                 .AddAttribute("UseFiltering")
                 .AddAttribute("UseSorting")
-                .SetIsAsync(true)
+                .SetIsAsynchronous(true)
                 .SetReturnType($"Task<IEnumerable<{schemaName}>>")
                 .AddParameter(new CSharpParameter($"[Service] IDataStoreService<{schemaName}>", "dataStoreService"))
                 .AddParameter(new CSharpParameter("CancellationToken", "cancellationToken"))
                 .AddStatement("await dataStoreService.GetAllAsync(cancellationToken);")
-                .SetIsExpressionBodiedMethod(true);
+                .SetIsExpressionBodied(true);
+
+            _ = @class.AddMethod(method);
         }
 
-
-
-
+        _ = codeCompilation.AddType(@class);
 
         var codeGenerator = new CSharpCodeGenerator();
-        codeGenerator.Generate(codeCompilation);
+        return codeGenerator.Generate(codeCompilation);
     }
 }
