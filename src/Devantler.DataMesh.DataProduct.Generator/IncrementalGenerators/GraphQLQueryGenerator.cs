@@ -45,10 +45,10 @@ public class GraphQLQueryGenerator : GeneratorBase
                 .AddAttribute("UseFiltering")
                 .AddAttribute("UseSorting")
                 .SetIsAsynchronous(true)
-                .SetReturnType($"Task<IEnumerable<{schemaName}>>")
+                .SetReturnType($"Task<IQueryable<{schemaName}>>")
                 .AddParameter(new CSharpParameter($"[Service] IDataStoreService<{schemaName}>", "dataStoreService"))
                 .AddParameter(new CSharpParameter("CancellationToken", "cancellationToken"))
-                .AddStatement("await dataStoreService.GetAllAsync(cancellationToken);")
+                .AddStatement("await dataStoreService.GetAllAsQueryableAsync(cancellationToken);")
                 .SetIsExpressionBodied(true);
 
             _ = @class.AddMethod(method);

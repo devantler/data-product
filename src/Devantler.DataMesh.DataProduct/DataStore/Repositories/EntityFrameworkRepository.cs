@@ -40,7 +40,7 @@ public abstract class EntityFrameworkRepository<T> : IRepository<T> where T : cl
 
     ///<inheritdoc />
     public async Task<IQueryable<T>> ReadAllAsQueryableAsync(CancellationToken cancellationToken = default)
-        => await Task.FromResult(_context.Set<T>().AsQueryable());
+        => await Task.FromResult(_context.Set<T>());
 
     /// <inheritdoc />
     public async Task<IEnumerable<T>> ReadMultipleAsync(IEnumerable<Guid> ids,

@@ -1,4 +1,5 @@
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Devantler.DataMesh.DataProduct.DataStore.Entities;
 using Devantler.DataMesh.DataProduct.DataStore.Repositories;
 
@@ -72,7 +73,7 @@ public abstract class DataStoreService<TModel, TEntity> : IDataStoreService<TMod
     public async Task<IQueryable<TModel>> GetAllAsQueryableAsync(CancellationToken cancellationToken = default)
     {
         return await _repository.ReadAllAsQueryableAsync(cancellationToken)
-            .ContinueWith(task => _mapper.Map<IQueryable<TModel>>(task.Result), cancellationToken);
+            .ContinueWith(task => task.Result.ProjectTo<TModel>(_mapper.ConfigurationProvider), cancellationToken);
     }
 
     /// <inheritdoc/>

@@ -31,14 +31,12 @@ public interface IDataStoreService<TModel> where TModel : class
     /// Get all <typeparamref name="TModel"/>'s from a data store.
     /// </summary>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     Task<IEnumerable<TModel>> GetAllAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets all <typeparamref name="TModel"/>'s from a data store as queryable objects.
     /// </summary>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     Task<IQueryable<TModel>> GetAllAsQueryableAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
