@@ -11,7 +11,7 @@ public class Query
     [UseProjection]
     [UseFiltering]
     [UseSorting]
-    public async Task<IEnumerable<RecordSchemaPrimitiveTypes>> GetRecordSchemaPrimitiveTypes([Service] IDataStoreService<RecordSchemaPrimitiveTypes> dataStoreService, CancellationToken cancellationToken)
-        => await dataStoreService.GetAllAsync(cancellationToken);
+    public async Task<IQueryable<RecordSchemaPrimitiveTypes>> GetRecordSchemaPrimitiveTypes([Service] IDataStoreService<RecordSchemaPrimitiveTypes> dataStoreService, CancellationToken cancellationToken)
+        => await dataStoreService.GetAllAsQueryableAsync(cancellationToken);
 
 }
