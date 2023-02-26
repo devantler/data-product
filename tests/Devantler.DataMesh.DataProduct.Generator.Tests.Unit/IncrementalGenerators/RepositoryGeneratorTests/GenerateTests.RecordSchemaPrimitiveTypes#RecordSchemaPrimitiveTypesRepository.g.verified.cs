@@ -9,6 +9,9 @@ namespace Devantler.DataMesh.DataProduct.DataStore.Repositories;
 /// </summary>
 public class RecordSchemaPrimitiveTypesRepository : EntityFrameworkRepository<RecordSchemaPrimitiveTypesEntity>
 {
+    /// <summary>
+    /// Creates a new instance of the <see cref="RecordSchemaPrimitiveTypesRepository"/> class.
+    /// </summary>
     public RecordSchemaPrimitiveTypesRepository(SqliteDbContext context) : base(context)
     {
     }

@@ -48,6 +48,7 @@ public class DataStoreServiceGenerator : GeneratorBase
                 .SetBaseClass(baseClass);
 
             var constructor = new CSharpConstructor(@class.Name)
+                .SetDocBlock(new CSharpDocBlock($"""Creates a new instance of <see cref="{@class.Name}" />"""))
                 .AddParameter(new CSharpConstructorParameter($"IRepository<{schemaName}Entity>", "repository")
                     .SetIsBaseParameter(true))
                 .AddParameter(new CSharpConstructorParameter("IMapper", "mapper")
