@@ -49,6 +49,7 @@ public class RepositoryGenerator : GeneratorBase
 
             var repositoryClass = new CSharpClass($"{schemaName}Repository")
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
+                .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository"))
                 .SetDocBlock(new CSharpDocBlock($$"""A repository to interact with entities of type <see cref="{{schemaName}}Entity"/>"""))
                 .SetBaseClass(baseClass);
@@ -59,9 +60,8 @@ public class RepositoryGenerator : GeneratorBase
                     => new CSharpConstructor(repositoryClass.Name)
                         .AddParameter(
                             new CSharpConstructorParameter(
-                                $"{(options.DataStoreOptions as RelationalDataStoreOptionsBase
-                            )?.Provider}DbContext", "context")
-                        .SetIsBaseParameter(true)),
+                                $"IDbContextFactory<{(options.DataStoreOptions as RelationalDataStoreOptionsBase)?.Provider}DbContext>", "dbContextFactory")
+                        .SetIsBaseParameter(true, "dbContextFactory.CreateDbContext()")),
                 DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
                 DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
                 _ => throw new NotSupportedException($"The data store type {options.DataStoreOptions.Type} is not supported.")

@@ -73,7 +73,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             case DataStoreType.Relational:
                 if (options.DataStoreOptions is not RelationalDataStoreOptionsBase dataStoreOptions)
                     throw new InvalidOperationException("Relational data store options are not set.");
-                _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddDbContext<{dataStoreOptions.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{dataStoreOptions.Provider}(options?.ConnectionString));");
+                _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{dataStoreOptions.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{dataStoreOptions.Provider}(options?.ConnectionString));");
                 foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
                 {
                     string schemaName = schema.Name.ToPascalCase();
@@ -82,10 +82,15 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
                         .AddStatement($"_ = services.AddScoped<IDataStoreService<{schemaName}>, {schemaName}DataStoreService>();");
                 }
                 _ = useGeneratedServiceRegistrations
-                    .AddStatement("using var scope = app.Services.CreateScope();")
-                    .AddStatement("var services = scope.ServiceProvider;")
-                    .AddStatement("var context = services.GetRequiredService<SqliteDbContext>();")
-                    .AddStatement("_ = context.Database.EnsureCreated();");
+                    .AddStatement(
+                        /*lang=csharp,strict*/
+                        $$"""
+                        using var scope = app.Services.CreateScope();
+                        var services = scope.ServiceProvider;
+                        var dbContextFactory = services.GetRequiredService<IDbContextFactory<{{dataStoreOptions.Provider}}DbContext>>();
+                        using var context = dbContextFactory.CreateDbContext();
+                        _ = context.Database.EnsureCreated();
+                        """);
                 break;
             case DataStoreType.DocumentBased:
                 throw new NotSupportedException("Document based data stores are not supported yet.");
