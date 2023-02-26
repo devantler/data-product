@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.AutoMapperProfileGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.AutoMapperProfileGeneratorTests;
 
 public static class TestCases
 {

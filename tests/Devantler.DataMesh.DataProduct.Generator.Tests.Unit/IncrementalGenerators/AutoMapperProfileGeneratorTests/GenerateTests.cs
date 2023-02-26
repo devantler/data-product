@@ -1,6 +1,6 @@
 using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.AutoMapperProfileGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.AutoMapperProfileGeneratorTests;
 
 [UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<AutoMapperProfileGenerator>

@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.RestApiControllerGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.DataStoreStartupExtensionsGeneratorTests;
 
 public static class TestCases
 {

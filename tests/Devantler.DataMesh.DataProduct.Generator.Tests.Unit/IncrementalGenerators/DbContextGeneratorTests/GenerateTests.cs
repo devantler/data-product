@@ -1,6 +1,6 @@
 using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.DbContextGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.DbContextGeneratorTests;
 
 [UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>

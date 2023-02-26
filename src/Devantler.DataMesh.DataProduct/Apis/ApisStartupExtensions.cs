@@ -14,7 +14,8 @@ public static class ApisStartupExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="options"></param>
-    public static void AddApis(this IServiceCollection services, DataProductOptions options)
+    /// <param name="environment"></param>
+    public static void AddApis(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
     {
         if (options.FeatureFlags.EnableApis.Contains(Rest.Constants.RestFeatureFlagValue))
         {
@@ -22,7 +23,7 @@ public static class ApisStartupExtensions
         }
         if (options.FeatureFlags.EnableApis.Contains(GraphQL.Constants.GraphQLFeatureFlagValue))
         {
-            services.AddGraphQL();
+            services.AddGraphQL(environment);
         }
     }
 
@@ -37,8 +38,7 @@ public static class ApisStartupExtensions
         {
             app.UseRestApi(options.FeatureFlags);
         }
-        //if (configuration.IsFeatureEnabled<string[]>(GraphQL.Constants.GRAPHQL_FEATURE_FLAG,
-        //GraphQL.Constants.GRAPHQL_FEATURE_FLAG_VALUE))
-        //app.UseGraphQL();
+        if (options.FeatureFlags.EnableApis.Contains(GraphQL.Constants.GraphQLFeatureFlagValue))
+            app.UseGraphQL();
     }
 }

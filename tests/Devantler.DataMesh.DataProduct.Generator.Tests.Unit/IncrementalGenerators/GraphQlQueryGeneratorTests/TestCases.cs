@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.DbContextGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.GraphQlQueryGeneratorTests;
 
 public static class TestCases
 {

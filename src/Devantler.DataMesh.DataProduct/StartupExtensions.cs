@@ -14,11 +14,12 @@ public static class StartupExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="options"></param>
-    public static IServiceCollection AddFeatures(this IServiceCollection services, DataProductOptions options)
+    /// <param name="environment"></param>
+    public static IServiceCollection AddFeatures(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
     {
-        _ = services.AddDataStore(options.DataStoreOptions);
-        services.AddApis(options);
         _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        _ = services.AddDataStore(options.DataStoreOptions);
+        services.AddApis(options, environment);
         return services;
     }
 

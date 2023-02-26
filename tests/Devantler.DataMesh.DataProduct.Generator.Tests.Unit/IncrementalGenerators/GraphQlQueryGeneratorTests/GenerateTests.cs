@@ -1,9 +1,9 @@
 using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.RestApiControllerGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.GraphQlQueryGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : IncrementalGeneratorTestsBase<RestApiControllerGenerator>
+public class GenerateTests : IncrementalGeneratorTestsBase<GraphQLQueryGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
@@ -11,17 +11,12 @@ public class GenerateTests : IncrementalGeneratorTestsBase<RestApiControllerGene
     {
         //Arrange
         var additionalText = CreateAppSettings(
-            /*lang=json,strict*/
             $$"""
             {
                 "DataProduct": {
                     "Schema": {
                         "Subject": "{{subject}}",
                         "Version": 1
-                    },
-                    "SchemaRegistry": {
-                        "Type": "Local",
-                        "Path": "Schemas"
                     }
                 }
             }

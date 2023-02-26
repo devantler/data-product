@@ -28,68 +28,90 @@ public class DataStoreService<TModel, TEntity> : IDataStoreService<TModel>
     }
 
     /// <inheritdoc/>
-    public async Task<TModel> CreateAsync(TModel model, CancellationToken cancellationToken = default)
+    public async Task<TModel> CreateSingleAsync(TModel model, CancellationToken cancellationToken = default)
     {
         var entity = _mapper.Map<TEntity>(model);
-        return await _repository.CreateAsync(entity, cancellationToken)
+        return await _repository.CreateSingleAsync(entity, cancellationToken)
             .ContinueWith(task => _mapper.Map<TModel>(task.Result), cancellationToken);
     }
+
     /// <inheritdoc/>
-    public async Task<int> CreateManyAsync(IEnumerable<TModel> models, CancellationToken cancellationToken = default)
+    public async Task<int> CreateMultipleAsync(IEnumerable<TModel> models,
+        CancellationToken cancellationToken = default)
     {
         var entities = _mapper.Map<IEnumerable<TEntity>>(models);
-        return await _repository.CreateManyAsync(entities, cancellationToken);
+        return await _repository.CreateMultipleAsync(entities, cancellationToken);
     }
+
     /// <inheritdoc/>
-    public async Task<TModel> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<TModel> DeleteSingleAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _repository.DeleteAsync(id, cancellationToken)
+        return await _repository.DeleteSingleAsync(id, cancellationToken)
             .ContinueWith(task => _mapper.Map<TModel>(task.Result), cancellationToken);
     }
+
     /// <inheritdoc/>
-    public async Task<int> DeleteManyAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
-        => await _repository.DeleteManyAsync(ids, cancellationToken);
+    public async Task<int> DeleteMultipleAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+        => await _repository.DeleteMultipleAsync(ids, cancellationToken);
+
     /// <inheritdoc/>
-    public async Task<IEnumerable<TModel>> QueryAsync(string query, CancellationToken cancellationToken = default)
+    public async Task<TModel> GetSingleAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        return await _repository.QueryAsync(query, cancellationToken)
-            .ContinueWith(task => _mapper.Map<IEnumerable<TModel>>(task.Result), cancellationToken);
-    }
-    /// <inheritdoc/>
-    public async Task<TModel> ReadAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        return await _repository.ReadAsync(id, cancellationToken)
+        return await _repository.ReadSingleAsync(id, cancellationToken)
             .ContinueWith(task => _mapper.Map<TModel>(task.Result), cancellationToken);
     }
-    /// <inheritdoc/>
-    public async Task<IEnumerable<TModel>> ReadListAsync(int limit, int offset, CancellationToken cancellationToken = default)
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<TModel>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await _repository.ReadListAsync(limit, offset, cancellationToken)
+        return await _repository.ReadAllAsync(cancellationToken)
             .ContinueWith(task => _mapper.Map<IEnumerable<TModel>>(task.Result), cancellationToken);
     }
-    /// <inheritdoc/>
-    public async Task<IEnumerable<TModel>> ReadManyAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+
+    /// <inheritdoc />
+    public async Task<IQueryable<TModel>> GetAllAsQueryableAsync(CancellationToken cancellationToken = default)
     {
-        return await _repository.ReadManyAsync(ids, cancellationToken)
+        return await _repository.ReadAllAsQueryableAsync(cancellationToken)
+            .ContinueWith(task => _mapper.Map<IQueryable<TModel>>(task.Result), cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<IEnumerable<TModel>> GetMultipleWithLimitAsync(int limit, int offset,
+        CancellationToken cancellationToken = default)
+    {
+        return await _repository.ReadMultipleWithLimitAsync(limit, offset, cancellationToken)
             .ContinueWith(task => _mapper.Map<IEnumerable<TModel>>(task.Result), cancellationToken);
     }
+
     /// <inheritdoc/>
-    public async Task<IEnumerable<TModel>> ReadPagedAsync(int page, int pageSize, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TModel>> GetMultipleAsync(IEnumerable<Guid> ids,
+        CancellationToken cancellationToken = default)
     {
-        return await _repository.ReadPagedAsync(page, pageSize, cancellationToken)
+        return await _repository.ReadMultipleAsync(ids, cancellationToken)
             .ContinueWith(task => _mapper.Map<IEnumerable<TModel>>(task.Result), cancellationToken);
     }
+
     /// <inheritdoc/>
-    public async Task<TModel> UpdateAsync(TModel model, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TModel>> GetMultipleWithPaginationAsync(int page, int pageSize,
+        CancellationToken cancellationToken = default)
+    {
+        return await _repository.ReadMultipleWithPaginationAsync(page, pageSize, cancellationToken)
+            .ContinueWith(task => _mapper.Map<IEnumerable<TModel>>(task.Result), cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<TModel> UpdateSingleAsync(TModel model, CancellationToken cancellationToken = default)
     {
         var entity = _mapper.Map<TEntity>(model);
-        return await _repository.UpdateAsync(entity, cancellationToken)
+        return await _repository.UpdateSingleAsync(entity, cancellationToken)
             .ContinueWith(task => _mapper.Map<TModel>(task.Result), cancellationToken);
     }
+
     /// <inheritdoc/>
-    public async Task<int> UpdateManyAsync(IEnumerable<TModel> models, CancellationToken cancellationToken = default)
+    public async Task<int> UpdateMultipleAsync(IEnumerable<TModel> models,
+        CancellationToken cancellationToken = default)
     {
         var entities = _mapper.Map<IEnumerable<TEntity>>(models);
-        return await _repository.UpdateManyAsync(entities, cancellationToken);
+        return await _repository.UpdateMultipleAsync(entities, cancellationToken);
     }
 }
