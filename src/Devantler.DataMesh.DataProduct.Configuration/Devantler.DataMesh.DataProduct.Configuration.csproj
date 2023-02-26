@@ -8,7 +8,7 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageId>Devantler.DataMesh.DataProduct.Configuration</PackageId>
-        <Version>0.1.39</Version>
+        <Version>0.1.40</Version>
         <Authors>devantler</Authors>
         <Company>Devantler Software</Company>
         <PackageDescription>Models and classes to get configuration for a data product.</PackageDescription>
@@ -17,7 +17,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
     </ItemGroup>
 
 </Project>

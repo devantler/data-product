@@ -4,16 +4,20 @@
 
 <!-- TODO: Update the README to describe the DataProduct. Trigger -->
 
-This repo contains a Data Mesh Provisiong API that can provision data products. A Data Product is an IaaS unit (small k8s cluster) with dedicated data storage, data processing, data discovery-, and data governance- tooling for a specific domain model. A domain model is a single data model that covers a concrete domain, e.g. Accounts, Books, Authors etc.
+This repo contains a a Data Product as defined by Zhamak Dehghani in the Book [Data Mesh](https://www.oreilly.com/library/view/data-mesh/9781492092384/). A data product is an IaaS unit with dedicated data storage, data processing, data discovery-, and data governance- tooling for a specific domain model. A domain model is a single data model that covers a concrete domain, e.g. Accounts, Books, Authors etc.
 
-The Data Mesh is built to support most cloud providers and provisioning tools by being built for Kubernetes. For local development, the platform uses [kind](https://kind.sigs.k8s.io/).
+The data product is built to support most cloud providers and provisioning tools by being built as a container.
 
 ## Prerequisites
 
 - .NET 6.0+
-- Docker (for local development)
-- Go (for local development)
-- Kind (for local development)
+
+Optionally external services/clusters for:
+- Kafka
+- Kafka Schema Registry
+- LinkedIn DataHub
+- PostgreSQL
+- MongoDB
 
 ## Getting started
 
