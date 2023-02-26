@@ -67,6 +67,8 @@ public class RepositoryGenerator : GeneratorBase
                 _ => throw new NotSupportedException($"The data store type {options.DataStoreOptions.Type} is not supported.")
             };
 
+            _ = constructor.SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of the <see cref="{{repositoryClass.Name}}"/> class."""));
+
             _ = repositoryClass.AddConstructor(constructor);
             _ = codeCompilation.AddType(repositoryClass);
         }
