@@ -9,7 +9,7 @@ namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 /// <typeparam name="TModel"></typeparam>
 [ApiController]
 [Route("[controller]")]
-public class RestApiController<TModel> : ControllerBase, IController<TModel>
+public abstract class RestApiController<TModel> : ControllerBase, IController<TModel>
     where TModel : class
 {
     readonly IDataStoreService<TModel> _dataStoreService;
@@ -18,7 +18,7 @@ public class RestApiController<TModel> : ControllerBase, IController<TModel>
     /// Constructs a new instance of <see cref="RestApiController{TModel}"/> and injects the required services.
     /// </summary>
     /// <param name="dataStoreService"></param>
-    public RestApiController(IDataStoreService<TModel> dataStoreService)
+    protected RestApiController(IDataStoreService<TModel> dataStoreService)
         => _dataStoreService = dataStoreService;
 
     /// <inheritdoc />
