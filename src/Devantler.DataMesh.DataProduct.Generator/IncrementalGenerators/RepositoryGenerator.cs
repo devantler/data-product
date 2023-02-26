@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
-using Devantler.Commons.CodeGen.Core.Model;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
@@ -49,7 +48,6 @@ public class RepositoryGenerator : GeneratorBase
             };
 
             var repositoryClass = new CSharpClass($"{schemaName}Repository")
-                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository"))
                 .SetDocBlock(new CSharpDocBlock($$"""A repository to interact with entities of type <see cref="{{schemaName}}Entity"/>"""))

@@ -1,6 +1,5 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
-using Devantler.Commons.CodeGen.Core.Model;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
