@@ -7,7 +7,6 @@ namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 /// A controller to handle REST API requests for a model.
 /// </summary>
 /// <typeparam name="TModel"></typeparam>
-/// <typeparam name="TEntity"></typeparam>
 [ApiController]
 [Route("[controller]")]
 public class RestApiController<TModel> : ControllerBase, IController<TModel>

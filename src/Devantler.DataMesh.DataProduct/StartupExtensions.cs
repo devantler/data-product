@@ -14,6 +14,7 @@ public static class StartupExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="options"></param>
+    /// <param name="environment"></param>
     public static IServiceCollection AddFeatures(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
     {
         _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());

@@ -11,9 +11,18 @@ using Microsoft.CodeAnalysis;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
+/// <summary>
+/// A generator that generates a GraphQL query in the data product.
+/// </summary>
 [Generator]
 public class GraphQLQueryGenerator : GeneratorBase
 {
+    /// <summary>
+    /// Generates a GraphQL query.
+    /// </summary>
+    /// <param name="compilation"></param>
+    /// <param name="additionalFiles"></param>
+    /// <param name="options"></param>
     public override Dictionary<string, string> Generate(Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles, DataProductOptions options)
     {

@@ -5,7 +5,6 @@ using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
-using Devantler.Commons.CodeGen.Mapping.Avro.Mappers;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Generator.Models;
@@ -38,18 +37,23 @@ public class EntitiesGenerator : GeneratorBase
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity"))
                 .AddImplementation(new CSharpInterface("IEntity"));
 
-            var idProperty = new CSharpProperty("Guid", "Id");
+            var idProperty = new CSharpProperty("Guid", "Id")
+                .SetDocBlock(new CSharpDocBlock("The unique identifier for this entity."));
             _ = @class.AddProperty(idProperty);
 
             foreach (var field in schema.Fields.Where(f => !string.Equals(f.Name, "id", StringComparison.OrdinalIgnoreCase)))
             {
                 string propertyName = field.Name.ToPascalCase();
                 string propertyType = AvroSchemaTypeParser.Parse(field, field.Type, Language.CSharp, Target.Entity);
-                var property = field.Type switch
+                bool isVirtual = field.Type switch
                 {
-                    RecordSchema => new CSharpProperty($"virtual {propertyType}", propertyName),
-                    _ => new CSharpProperty(propertyType, propertyName)
+                    RecordSchema => true,
+                    _ => false
                 };
+                var property = new CSharpProperty($"{(isVirtual ? "virtual " : string.Empty)}{propertyType}", propertyName);
+
+                if (field.Documentation is not null)
+                    _ = property.SetDocBlock(new CSharpDocBlock(field.Documentation));
 
                 _ = @class.AddProperty(property);
             }
