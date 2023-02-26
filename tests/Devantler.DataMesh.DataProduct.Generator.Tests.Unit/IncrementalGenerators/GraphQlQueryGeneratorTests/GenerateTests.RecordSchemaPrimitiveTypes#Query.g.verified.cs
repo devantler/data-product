@@ -7,6 +7,7 @@ using Devantler.DataMesh.DataProduct.Models;
 namespace Devantler.DataMesh.DataProduct.Apis.GraphQL;
 public class Query
 {
+    [UsePaging]
     [UseProjection]
     [UseFiltering]
     [UseSorting]

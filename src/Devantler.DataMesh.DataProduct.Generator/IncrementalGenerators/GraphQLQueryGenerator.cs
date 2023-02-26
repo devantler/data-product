@@ -40,6 +40,7 @@ public class GraphQLQueryGenerator : GeneratorBase
         {
             string schemaName = schema.Name.ToPascalCase();
             var method = new CSharpMethod($"Get{schemaName.ToPlural()}")
+                .AddAttribute("UsePaging")
                 .AddAttribute("UseProjection")
                 .AddAttribute("UseFiltering")
                 .AddAttribute("UseSorting")
