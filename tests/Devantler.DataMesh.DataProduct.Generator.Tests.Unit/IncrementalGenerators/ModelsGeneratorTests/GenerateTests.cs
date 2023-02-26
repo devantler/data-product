@@ -1,9 +1,9 @@
 using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.RepositoryGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.ModelsGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : IncrementalGeneratorTestsBase<RepositoryGenerator>
+public class GenerateTests : IncrementalGeneratorTestsBase<ModelsGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
@@ -11,17 +11,12 @@ public class GenerateTests : IncrementalGeneratorTestsBase<RepositoryGenerator>
     {
         //Arrange
         var additionalText = CreateAppSettings(
-            /*lang=json,strict*/
             $$"""
             {
                 "DataProduct": {
                     "Schema": {
                         "Subject": "{{subject}}",
                         "Version": 1
-                    },
-                    "SchemaRegistry": {
-                        "Type": "Local",
-                        "Path": "Schemas"
                     }
                 }
             }

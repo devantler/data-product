@@ -1,10 +1,9 @@
 using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
-using Devantler.DataMesh.DataProduct.Generator.Tests.Unit.GraphQlQueryGeneratorTests;
 
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.DataStoreServiceGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.RestApiControllerGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : IncrementalGeneratorTestsBase<DataStoreServiceGenerator>
+public class GenerateTests : IncrementalGeneratorTestsBase<RestApiControllerGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]

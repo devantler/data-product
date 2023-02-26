@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators;
 
 public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, new()
 {
