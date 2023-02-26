@@ -44,9 +44,11 @@ public class DataStoreServiceGenerator : GeneratorBase
                     new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
                 .AddImport(new CSharpUsing("AutoMapper"))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService"))
+                .SetDocBlock(new CSharpDocBlock($"""A data store service for the <see cref="{schemaName}" /> model."""))
                 .SetBaseClass(baseClass);
 
             var constructor = new CSharpConstructor(@class.Name)
+                .SetDocBlock(new CSharpDocBlock($"""Creates a new instance of <see cref="{@class.Name}" />"""))
                 .AddParameter(new CSharpConstructorParameter($"IRepository<{schemaName}Entity>", "repository")
                     .SetIsBaseParameter(true))
                 .AddParameter(new CSharpConstructorParameter("IMapper", "mapper")

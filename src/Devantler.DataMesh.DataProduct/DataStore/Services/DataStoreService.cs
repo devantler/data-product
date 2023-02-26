@@ -9,7 +9,7 @@ namespace Devantler.DataMesh.DataProduct.DataStore.Services;
 /// </summary>
 /// <typeparam name="TModel"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
-public class DataStoreService<TModel, TEntity> : IDataStoreService<TModel>
+public abstract class DataStoreService<TModel, TEntity> : IDataStoreService<TModel>
     where TModel : class
     where TEntity : class, IEntity
 {
@@ -21,7 +21,7 @@ public class DataStoreService<TModel, TEntity> : IDataStoreService<TModel>
     /// </summary>
     /// <param name="repository"></param>
     /// <param name="mapper"></param>
-    public DataStoreService(IRepository<TEntity> repository, IMapper mapper)
+    protected DataStoreService(IRepository<TEntity> repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
