@@ -10,7 +10,7 @@ The data product is built to support most cloud providers and provisioning tools
 
 ## Prerequisites
 
-- .NET 6.0+
+- .NET 7.0+
 
 Optionally external services/clusters for:
 - Kafka
