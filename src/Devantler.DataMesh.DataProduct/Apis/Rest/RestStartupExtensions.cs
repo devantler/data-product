@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
@@ -17,8 +18,11 @@ public static class RestStartupExtensions
     /// <param name="dataProductOptions"></param>
     public static void AddRestApi(this IServiceCollection services, DataProductOptions dataProductOptions)
     {
-        _ = services.AddControllers(options =>
-            options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
+        _ = services
+                .AddControllers(
+                    options => options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())))
+                .AddJsonOptions(
+                    options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         _ = services.AddSwaggerGen(swaggerOptions =>
         {
             swaggerOptions.SwaggerDoc(
@@ -28,7 +32,9 @@ public static class RestStartupExtensions
                     Version = dataProductOptions.Version,
                     Title = dataProductOptions.Name,
                     Description = dataProductOptions.Description,
-                    // TermsOfService = new Uri("https://example.com/terms"),
+                    TermsOfService = !string.IsNullOrEmpty(dataProductOptions.Owner?.Website)
+                            ? new Uri(dataProductOptions.Owner.Website)
+                            : null,
                     Contact = new OpenApiContact
                     {
                         Name = dataProductOptions.Owner?.Name,
@@ -36,12 +42,12 @@ public static class RestStartupExtensions
                         Url = !string.IsNullOrEmpty(dataProductOptions.Owner?.Website)
                             ? new Uri(dataProductOptions.Owner.Website)
                             : null
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "The MIT License",
+                        Url = new Uri("https://opensource.org/license/mit/")
                     }
-                    // License = new OpenApiLicense
-                    // {
-                    //     Name = "Example License",
-                    //     Url = new Uri("https://example.com/license")
-                    // }
                 });
             swaggerOptions.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory,
                 $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
