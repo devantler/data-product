@@ -17,7 +17,7 @@ public abstract class EntityFrameworkRepository<T> : IRepository<T> where T : cl
     /// <inheritdoc />
     public async Task<T> CreateSingleAsync(T entity, CancellationToken cancellationToken = default)
     {
-        var result = _context.Set<T>().Update(entity);
+        var result = _context.Set<T>().Add(entity);
         _ = await _context.SaveChangesAsync(cancellationToken);
         return result.Entity;
     }

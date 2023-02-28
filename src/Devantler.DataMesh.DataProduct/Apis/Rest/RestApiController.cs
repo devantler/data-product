@@ -1,4 +1,5 @@
 using Devantler.DataMesh.DataProduct.DataStore.Services;
+using Devantler.DataMesh.DataProduct.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Devantler.DataMesh.DataProduct.Apis.Rest;
@@ -9,8 +10,7 @@ namespace Devantler.DataMesh.DataProduct.Apis.Rest;
 /// <typeparam name="TModel"></typeparam>
 [ApiController]
 [Route("[controller]")]
-public abstract class RestApiController<TModel> : ControllerBase, IController<TModel>
-    where TModel : class
+public abstract class RestApiController<TModel> : ControllerBase, IController<TModel> where TModel : class, IModel
 {
     readonly IDataStoreService<TModel> _dataStoreService;
 

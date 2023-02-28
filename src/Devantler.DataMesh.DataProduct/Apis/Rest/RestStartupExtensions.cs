@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
@@ -17,8 +18,11 @@ public static class RestStartupExtensions
     /// <param name="dataProductOptions"></param>
     public static void AddRestApi(this IServiceCollection services, DataProductOptions dataProductOptions)
     {
-        _ = services.AddControllers(options =>
-            options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())));
+        _ = services
+                .AddControllers(
+                    options => options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())))
+                .AddJsonOptions(
+                    options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
         _ = services.AddSwaggerGen(swaggerOptions =>
         {
             swaggerOptions.SwaggerDoc(

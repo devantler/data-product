@@ -34,6 +34,7 @@ public class EntitiesGenerator : GeneratorBase
         {
             string schemaName = schema.Name.ToPascalCase();
             var @class = new CSharpClass($"{schemaName}Entity")
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity"))
                 .AddImplementation(new CSharpInterface("IEntity"));
 
@@ -48,6 +49,8 @@ public class EntitiesGenerator : GeneratorBase
                 bool isVirtual = field.Type switch
                 {
                     RecordSchema => true,
+                    ArraySchema => true,
+                    MapSchema => true,
                     _ => false
                 };
                 var property = new CSharpProperty($"{(isVirtual ? "virtual " : string.Empty)}{propertyType}", propertyName);

@@ -1,7 +1,6 @@
 [
     {
         "name": "Grade",
-        "namespace": "Devantler.DataMesh.DataProduct.Models",
         "type": "enum",
         "symbols": [
             "A",
@@ -13,7 +12,6 @@
     },
     {
         "name": "Student",
-        "namespace": "Devantler.DataMesh.DataProduct.Models",
         "type": "record",
         "fields": [
             {
@@ -23,22 +21,57 @@
             {
                 "name": "LastName",
                 "type": "string"
-            }
-        ]
-    },
-    {
-        "name": "Enrollment",
-        "namespace": "Devantler.DataMesh.DataProduct.Models",
-        "type": "record",
-        "fields": [
+            },
             {
-                "name": "Id",
+                "name": "EnrollmentDate",
                 "type": "string"
             },
             {
-                "name": "Student",
-                "type": "Devantler.DataMesh.DataProduct.Models.Student"
+                "name": "Enrollments",
+                "type": {
+                    "type": "array",
+                    "items": {
+                        "name": "Enrollment",
+                        "type": "record",
+                        "fields": [
+                            {
+                                "name": "Grade",
+                                "type": "Grade"
+                            },
+                            {
+                                "name": "Course",
+                                "type": {
+                                    "name": "Course",
+                                    "type": "record",
+                                    "fields": [
+                                        {
+                                            "name": "Title",
+                                            "type": "string"
+                                        },
+                                        {
+                                            "name": "Credits",
+                                            "type": "int"
+                                        },
+                                        {
+                                            "name": "Enrollments",
+                                            "type": {
+                                                "type": "array",
+                                                "items": "Enrollment"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "Student",
+                                "type": "Student"
+                            }
+                        ]
+                    }
+                }
             }
         ]
-    }
+    },
+    "Enrollment",
+    "Course"
 ]
