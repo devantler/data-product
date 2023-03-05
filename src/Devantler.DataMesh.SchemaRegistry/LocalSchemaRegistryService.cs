@@ -20,26 +20,22 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
 
     /// <inheritdoc/>
     public async Task<Schema> GetSchemaAsync(string subject, int version)
-    {
-        string schemaFileName = $"{subject}-v{version}.avsc";
-
-        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName).FirstOrDefault();
-
-        string schemaString = await File.ReadAllTextAsync(schemaFile);
-
-        var schemaReader = new JsonSchemaReader();
-
-        return schemaReader.Read(schemaString);
-    }
+        => await GetSchemaImplementation(subject, version);
 
     /// <inheritdoc/>
     public Schema GetSchema(string subject, int version)
+        => GetSchemaImplementation(subject, version).Result;
+
+    private async Task<Schema> GetSchemaImplementation(string subject, int version)
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
         string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName).FirstOrDefault();
 
-        string schemaString = File.ReadAllText(schemaFile);
+        if (schemaFile == null)
+            throw new FileNotFoundException($"Schema file {schemaFileName} not found.");
+
+        string schemaString = await File.ReadAllTextAsync(schemaFile);
 
         var schemaReader = new JsonSchemaReader();
 
