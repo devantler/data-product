@@ -32,6 +32,7 @@ public class GraphQLQueryGenerator : GeneratorBase
         var codeCompilation = new CSharpCompilation();
 
         var @class = new CSharpClass("Query")
+            .SetIsPartial(true)
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
             .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "GraphQlStartupExtensions"));

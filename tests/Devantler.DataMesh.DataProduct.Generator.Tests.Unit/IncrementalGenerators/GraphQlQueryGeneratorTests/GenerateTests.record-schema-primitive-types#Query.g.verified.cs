@@ -5,7 +5,7 @@
 using Devantler.DataMesh.DataProduct.DataStore.Services;
 using Devantler.DataMesh.DataProduct.Models;
 namespace Devantler.DataMesh.DataProduct.Apis.GraphQL;
-public class Query
+public partial class Query
 {
     [UsePaging]
     [UseProjection]
