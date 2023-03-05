@@ -21,7 +21,7 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     /// <inheritdoc/>
     public async Task<Schema> GetSchemaAsync(string subject, int version)
     {
-        string schemaFileName = $"{subject.ToKebabCase()}-v{version}.avsc";
+        string schemaFileName = $"{subject}-v{version}.avsc";
 
         string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName).FirstOrDefault();
 
@@ -35,7 +35,7 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     /// <inheritdoc/>
     public Schema GetSchema(string subject, int version)
     {
-        string schemaFileName = $"{subject.ToKebabCase()}-v{version}.avsc";
+        string schemaFileName = $"{subject}-v{version}.avsc";
 
         string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName).FirstOrDefault();
 

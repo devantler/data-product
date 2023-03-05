@@ -32,7 +32,8 @@ public abstract class GeneratorBase : IIncrementalGenerator
             var configuration = BuildConfiguration(additionalFiles);
             var dataProductOptions = configuration.GetDataProductOptions();
 
-            //Hack: Sets the schema registry path when the Generator run as an Analyzer. Analyzers do not support IO, so we have to get the path to the Avro Schemas through AdditionalFiles instead.
+            // Hack: Sets the schema registry path when the Generator run as an Analyzer. 
+            // Analyzers do not support IO well (more specifically relative paths), so the path to the Avro Schemas is retrieved from AdditionalFiles instead.
             dataProductOptions.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles
                 .FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath);
 

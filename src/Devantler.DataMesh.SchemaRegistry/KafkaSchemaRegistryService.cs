@@ -19,23 +19,19 @@ public class KafkaSchemaRegistryService : ISchemaRegistryService
 
     /// <inheritdoc/>
     public Chr.Avro.Abstract.Schema GetSchema(string subject, int version)
-    {
-        CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _schemaRegistryOptions?.Url });
-        List<RegisteredSchema> registeredSchemas = new()
-        {
-            cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version).Result
-        };
-        var schemaReader = new JsonSchemaReader();
-        return schemaReader.Read(registeredSchemas[0].SchemaString);
-    }
+        => GetSchemaImplementation(subject, version).Result;
 
     /// <inheritdoc/>
     public async Task<Chr.Avro.Abstract.Schema> GetSchemaAsync(string subject, int version)
+        => await GetSchemaImplementation(subject, version);
+
+
+    private async Task<Chr.Avro.Abstract.Schema> GetSchemaImplementation(string subject, int version)
     {
         CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _schemaRegistryOptions?.Url });
         List<RegisteredSchema> registeredSchemas = new()
         {
-            await cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version)
+            await cachedSchemaRegistryClient.GetRegisteredSchemaAsync($"{subject}-value", version)
         };
         var schemaReader = new JsonSchemaReader();
         return schemaReader.Read(registeredSchemas[0].SchemaString);

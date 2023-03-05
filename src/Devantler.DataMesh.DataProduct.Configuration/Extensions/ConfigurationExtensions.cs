@@ -26,7 +26,9 @@ public static class ConfigurationExtensions
 
         if (configuration.GetSection(DataStoreOptionsBase.Key).Exists())
             dataProductOptions.DataStoreOptions = SetDataStoreOptions(configuration);
-        dataProductOptions.SchemaRegistryOptions.SetSchemaRegistryOptions(configuration);
+
+        if (configuration.GetSection(SchemaRegistryOptionsBase.Key).Exists())
+            dataProductOptions.SchemaRegistryOptions = SetSchemaRegistryOptions(configuration);
 
         return dataProductOptions;
     }
@@ -59,16 +61,12 @@ public static class ConfigurationExtensions
     /// <summary>
     /// Gets the schema registry options from the configuration.
     /// </summary>
-    /// <param name="schemaRegistryOptions"></param>
     /// <param name="configuration"></param>
-    public static void SetSchemaRegistryOptions(this ISchemaRegistryOptions schemaRegistryOptions, IConfiguration configuration)
+    public static ISchemaRegistryOptions SetSchemaRegistryOptions(IConfiguration configuration)
     {
-        if (!configuration.GetSection(SchemaRegistryOptionsBase.Key).Exists())
-            return;
-
         var schemaRegistryType = configuration.GetSection(SchemaRegistryOptionsBase.Key).GetValue<SchemaRegistryType>("Type");
 
-        schemaRegistryOptions = schemaRegistryType switch
+        return schemaRegistryType switch
         {
             SchemaRegistryType.Local => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<LocalSchemaRegistryOptions>()
                 ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(LocalSchemaRegistryOptions)}' to the configuration section '{SchemaRegistryOptionsBase.Key}"),
