@@ -3,7 +3,7 @@ using Chr.Avro.Abstract;
 using Devantler.Commons.CodeGen.Core.Model;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
-using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
+using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;

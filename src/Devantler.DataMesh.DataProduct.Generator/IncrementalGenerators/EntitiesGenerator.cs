@@ -4,7 +4,6 @@ using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
-using Devantler.Commons.CodeGen.Mapping.Avro.Extensions;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Generator.Models;
@@ -30,6 +29,8 @@ public class EntitiesGenerator : GeneratorBase
 
         var codeCompilation = new CSharpCompilation();
 
+        var avroSchemaParser = new AvroSchemaParser();
+
         foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {
             string schemaName = schema.Name.ToPascalCase();
@@ -45,7 +46,7 @@ public class EntitiesGenerator : GeneratorBase
             foreach (var field in schema.Fields.Where(f => !string.Equals(f.Name, "id", StringComparison.OrdinalIgnoreCase)))
             {
                 string propertyName = field.Name.ToPascalCase();
-                string propertyType = AvroSchemaTypeParser.Parse(field, field.Type, Language.CSharp, Target.Entity);
+                string propertyType = avroSchemaParser.Parse(field.Type, Language.CSharp, action => action.RecordSuffix = "Entity");
                 bool isVirtual = field.Type switch
                 {
                     RecordSchema => true,

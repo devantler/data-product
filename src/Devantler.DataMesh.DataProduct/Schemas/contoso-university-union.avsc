@@ -1,16 +1,5 @@
 [
     {
-        "name": "Grade",
-        "type": "enum",
-        "symbols": [
-            "A",
-            "B",
-            "C",
-            "D",
-            "F"
-        ]
-    },
-    {
         "name": "Student",
         "type": "record",
         "fields": [
@@ -36,7 +25,17 @@
                         "fields": [
                             {
                                 "name": "Grade",
-                                "type": "Grade"
+                                "type": {
+                                    "type": "enum",
+                                    "name": "Grade",
+                                    "symbols": [
+                                        "A",
+                                        "B",
+                                        "C",
+                                        "D",
+                                        "F"
+                                    ]
+                                }
                             },
                             {
                                 "name": "Course",
@@ -51,20 +50,9 @@
                                         {
                                             "name": "Credits",
                                             "type": "int"
-                                        },
-                                        {
-                                            "name": "Enrollments",
-                                            "type": {
-                                                "type": "array",
-                                                "items": "Enrollment"
-                                            }
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                "name": "Student",
-                                "type": "Student"
                             }
                         ]
                     }
