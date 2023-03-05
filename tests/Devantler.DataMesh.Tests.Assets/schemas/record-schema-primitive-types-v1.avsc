@@ -28,7 +28,10 @@
         },
         {
             "name": "NullField",
-            "type": "null"
+            "type": [
+                "null",
+                "string"
+            ]
         },
         {
             "name": "StringField",

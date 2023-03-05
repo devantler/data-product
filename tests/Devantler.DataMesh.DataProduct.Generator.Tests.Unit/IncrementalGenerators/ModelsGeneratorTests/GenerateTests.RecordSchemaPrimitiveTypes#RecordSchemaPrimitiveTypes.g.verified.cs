@@ -16,7 +16,7 @@ public class RecordSchemaPrimitiveTypes : IModel
     public int IntField { get; set; }
     public long LongField { get; set; }
     #nullable enable
-    public object? NullField { get; set; }
+    public string? NullField { get; set; }
     #nullable disable
     public string StringField { get; set; }
 }

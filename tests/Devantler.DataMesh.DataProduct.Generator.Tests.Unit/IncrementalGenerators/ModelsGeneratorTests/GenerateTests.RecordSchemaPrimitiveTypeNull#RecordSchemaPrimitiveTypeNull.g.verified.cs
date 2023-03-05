@@ -10,6 +10,6 @@ public class RecordSchemaPrimitiveTypeNull : IModel
     /// </summary>
     public Guid Id { get; set; }
     #nullable enable
-    public object? NullField { get; set; }
+    public string? NullField { get; set; }
     #nullable disable
 }
