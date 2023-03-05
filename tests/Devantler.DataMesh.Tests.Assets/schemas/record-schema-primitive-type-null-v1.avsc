@@ -4,7 +4,10 @@
     "fields": [
         {
             "name": "NullField",
-            "type": "null"
+            "type": [
+                "null",
+                "string"
+            ]
         }
     ]
 }
