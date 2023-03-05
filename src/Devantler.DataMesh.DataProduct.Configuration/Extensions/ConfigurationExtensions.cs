@@ -25,10 +25,10 @@ public static class ConfigurationExtensions
             ?? throw new InvalidOperationException($"The configuration section '{DataProductOptions.Key}' is missing.");
 
         if (configuration.GetSection(DataStoreOptionsBase.Key).Exists())
-            dataProductOptions.DataStoreOptions = SetDataStoreOptions(configuration);
+            dataProductOptions.DataStore = SetDataStoreOptions(configuration);
 
         if (configuration.GetSection(SchemaRegistryOptionsBase.Key).Exists())
-            dataProductOptions.SchemaRegistryOptions = SetSchemaRegistryOptions(configuration);
+            dataProductOptions.SchemaRegistry = SetSchemaRegistryOptions(configuration);
 
         return dataProductOptions;
     }

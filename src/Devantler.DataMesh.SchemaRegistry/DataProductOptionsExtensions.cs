@@ -15,12 +15,12 @@ public static class DataProductOptionsExtensions
     /// <param name="options"></param>
     public static ISchemaRegistryService GetSchemaRegistryService(this DataProductOptions options)
     {
-        var schemaRegistryType = options.SchemaRegistryOptions.Type;
+        var schemaRegistryType = options.SchemaRegistry.Type;
 
         return schemaRegistryType switch
         {
-            SchemaRegistryType.Local => new LocalSchemaRegistryService(options.SchemaRegistryOptions as LocalSchemaRegistryOptions),
-            SchemaRegistryType.Kafka => new KafkaSchemaRegistryService(options.SchemaRegistryOptions as KafkaSchemaRegistryOptions),
+            SchemaRegistryType.Local => new LocalSchemaRegistryService(options.SchemaRegistry as LocalSchemaRegistryOptions),
+            SchemaRegistryType.Kafka => new KafkaSchemaRegistryService(options.SchemaRegistry as KafkaSchemaRegistryOptions),
             _ => throw new NotImplementedException($"The schema registry type '{schemaRegistryType}' is not implemented yet")
         };
     }

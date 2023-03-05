@@ -48,15 +48,20 @@ public class DataProductOptions
     /// <summary>
     /// Options for the schema registry used by the data product.
     /// </summary>
-    public ISchemaRegistryOptions SchemaRegistryOptions { get; set; } = new LocalSchemaRegistryOptions();
+    public ISchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
 
     /// <summary>
     /// Options for the data store.
     /// </summary>
-    public IDataStoreOptions DataStoreOptions { get; set; } = new SqliteDataStoreOptions();
+    public IDataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
+
+    /// <summary>
+    /// Options for the data sources.
+    /// </summary>
+    public IList<IDataSourceOptions> DataSources { get; set; } = new List<IDataSourceOptions>();
 
     /// <summary>
     /// Options for the REST API.
     /// </summary>
-    public RestApiOptions RestApiOptions { get; set; } = new();
+    public RestApiOptions RestApi { get; set; } = new();
 }

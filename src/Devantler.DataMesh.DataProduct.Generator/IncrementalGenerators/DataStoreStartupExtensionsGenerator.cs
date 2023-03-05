@@ -68,10 +68,10 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             .AddParameter(appParameter)
             .AddParameter(optionsParameter);
 
-        switch (options.DataStoreOptions.Type)
+        switch (options.DataStore.Type)
         {
             case DataStoreType.Relational:
-                if (options.DataStoreOptions is not RelationalDataStoreOptionsBase dataStoreOptions)
+                if (options.DataStore is not RelationalDataStoreOptionsBase dataStoreOptions)
                     throw new InvalidOperationException("Relational data store options are not set.");
                 _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{dataStoreOptions.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{dataStoreOptions.Provider}(options?.ConnectionString));");
                 foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
@@ -97,7 +97,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             case DataStoreType.GraphBased:
                 throw new NotSupportedException("Graph based data stores are not supported yet.");
             default:
-                throw new NotSupportedException($"Data store type '{options.DataStoreOptions.Type}' is not supported.");
+                throw new NotSupportedException($"Data store type '{options.DataStore.Type}' is not supported.");
         }
 
         _ = @class.AddMethod(addGeneratedServiceRegistrationsMethod);

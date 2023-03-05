@@ -39,12 +39,12 @@ public class RepositoryGenerator : GeneratorBase
         {
             string schemaName = schema.Name.ToPascalCase();
 
-            var baseClass = options.DataStoreOptions.Type switch
+            var baseClass = options.DataStore.Type switch
             {
                 DataStoreType.Relational => new CSharpClass($"EntityFrameworkRepository<{schemaName}Entity>"),
                 DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
                 DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
-                _ => throw new NotSupportedException($"The data store type {options.DataStoreOptions.Type} is not supported.")
+                _ => throw new NotSupportedException($"The data store type {options.DataStore.Type} is not supported.")
             };
 
             var repositoryClass = new CSharpClass($"{schemaName}Repository")
@@ -54,17 +54,17 @@ public class RepositoryGenerator : GeneratorBase
                 .SetDocBlock(new CSharpDocBlock($$"""A repository to interact with entities of type <see cref="{{schemaName}}Entity"/>"""))
                 .SetBaseClass(baseClass);
 
-            var constructor = options.DataStoreOptions.Type switch
+            var constructor = options.DataStore.Type switch
             {
                 DataStoreType.Relational
                     => new CSharpConstructor(repositoryClass.Name)
                         .AddParameter(
                             new CSharpConstructorParameter(
-                                $"IDbContextFactory<{(options.DataStoreOptions as RelationalDataStoreOptionsBase)?.Provider}DbContext>", "dbContextFactory")
+                                $"IDbContextFactory<{(options.DataStore as RelationalDataStoreOptionsBase)?.Provider}DbContext>", "dbContextFactory")
                         .SetIsBaseParameter(true, "dbContextFactory.CreateDbContext()")),
                 DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
                 DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
-                _ => throw new NotSupportedException($"The data store type {options.DataStoreOptions.Type} is not supported.")
+                _ => throw new NotSupportedException($"The data store type {options.DataStore.Type} is not supported.")
             };
 
             _ = constructor.SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of the <see cref="{{repositoryClass.Name}}"/> class."""));

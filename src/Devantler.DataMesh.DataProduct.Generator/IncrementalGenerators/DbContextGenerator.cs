@@ -32,10 +32,10 @@ public class DbContextGenerator : GeneratorBase
         DataProductOptions options
     )
     {
-        if (options.DataStoreOptions.Type != DataStoreType.Relational)
+        if (options.DataStore.Type != DataStoreType.Relational)
             return new Dictionary<string, string>();
 
-        var dataStoreOptions = options.DataStoreOptions as RelationalDataStoreOptionsBase;
+        var dataStoreOptions = options.DataStore as RelationalDataStoreOptionsBase;
 
         var schemaRegistryService = options.GetSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
