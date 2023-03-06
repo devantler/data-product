@@ -30,10 +30,10 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration Development --no-restore
+        run: dotnet build --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test --collect:"XPlat Code Coverage" --configuration Development --no-build
+        run: dotnet test --collect:"XPlat Code Coverage" --configuration Release --no-build
 
       - name: Upload Code Coverage to CodeCov
         uses: codecov/codecov-action@v3
