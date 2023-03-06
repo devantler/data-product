@@ -45,6 +45,7 @@ public class GraphQLQueryGenerator : GeneratorBase
                 .AddAttribute("UseProjection")
                 .AddAttribute("UseFiltering")
                 .AddAttribute("UseSorting")
+                .SetDocBlock(new CSharpDocBlock($"Queries {schemaName.ToPlural()} from the data store."))
                 .SetIsAsynchronous(true)
                 .SetReturnType($"Task<IQueryable<{schemaName}>>")
                 .AddParameter(new CSharpParameter($"[Service] IDataStoreService<{schemaName}>", "dataStoreService"))
