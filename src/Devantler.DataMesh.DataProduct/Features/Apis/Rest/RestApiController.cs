@@ -1,8 +1,8 @@
-using Devantler.DataMesh.DataProduct.DataStore.Services;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 using Devantler.DataMesh.DataProduct.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Devantler.DataMesh.DataProduct.Apis.Rest;
+namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 
 /// <summary>
 /// A controller to handle REST API requests for a model.

@@ -1,5 +1,3 @@
-using Devantler.DataMesh.DataProduct.Apis.GraphQL;
-
 namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 
 /// <summary>

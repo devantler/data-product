@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Apis.GraphQL;
+namespace Devantler.DataMesh.DataProduct.Features.Apis.GraphQL;
 
 /// <summary>
 /// A GraphQL query.

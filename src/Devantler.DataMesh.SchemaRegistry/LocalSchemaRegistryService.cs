@@ -43,17 +43,15 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     /// <param name="subject"></param>
     /// <param name="version"></param>
     /// <returns></returns>
-    private string GetSchemaString(string subject, int version)
+    string GetSchemaString(string subject, int version)
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
         string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "schemas", schemaFileName).FirstOrDefault();
 
-        if (string.IsNullOrEmpty(schemaFile))
-            throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.");
-
-        return File.ReadAllText(schemaFile);
-
+        return string.IsNullOrEmpty(schemaFile)
+            ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.")
+            : File.ReadAllText(schemaFile);
     }
 
     /// <summary>
@@ -63,15 +61,14 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     /// <param name="version"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    private async Task<string> GetSchemaStringAsync(string subject, int version, CancellationToken cancellationToken)
+    async Task<string> GetSchemaStringAsync(string subject, int version, CancellationToken cancellationToken)
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
         string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "schemas", schemaFileName).FirstOrDefault();
 
-        if (string.IsNullOrEmpty(schemaFile))
-            throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.");
-
-        return await File.ReadAllTextAsync(schemaFile, cancellationToken);
+        return string.IsNullOrEmpty(schemaFile)
+            ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.")
+            : await File.ReadAllTextAsync(schemaFile, cancellationToken);
     }
 }

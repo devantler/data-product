@@ -1,6 +1,6 @@
 using Devantler.Commons.StringHelpers;
 
-namespace Devantler.DataMesh.DataProduct.Apis.Rest;
+namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 
 /// <summary>
 /// An outbound parameter transformer that converts PascalCase to kebab-case.

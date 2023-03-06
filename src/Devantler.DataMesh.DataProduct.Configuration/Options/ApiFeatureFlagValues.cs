@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Apis.GraphQL;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 
 /// <summary>
 /// A list of feature flag values for the APIs feature flag.

@@ -1,8 +1,8 @@
-using Devantler.DataMesh.DataProduct.Apis.GraphQL;
-using Devantler.DataMesh.DataProduct.Apis.Rest;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Features.Apis.GraphQL;
+using Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 
-namespace Devantler.DataMesh.DataProduct.Apis;
+namespace Devantler.DataMesh.DataProduct.Features.Apis;
 
 /// <summary>
 /// Extensions to registers APIs to the DI container and configure the web application to use them.
@@ -17,12 +17,11 @@ public static class ApisStartupExtensions
     /// <param name="environment"></param>
     public static IServiceCollection AddApis(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
     {
-        if (!options.FeatureFlags.EnableApis.Any())
-            return services;
-
-        return services
-            .AddRestApi(options)
-            .AddGraphQL(options, environment);
+        return options.FeatureFlags.EnableApis.Any()
+            ? services
+                .AddRestApi(options)
+                .AddGraphQL(environment)
+            : services;
     }
 
     /// <summary>
@@ -32,11 +31,10 @@ public static class ApisStartupExtensions
     /// <param name="options"></param>
     public static WebApplication UseApis(this WebApplication app, DataProductOptions options)
     {
-        if (!options.FeatureFlags.EnableApis.Any())
-            return app;
-
-        return app
-            .UseRestApi(options)
-            .UseGraphQL(options);
+        return options.FeatureFlags.EnableApis.Any()
+            ? app
+                .UseRestApi(options)
+                .UseGraphQL()
+            : app;
     }
 }

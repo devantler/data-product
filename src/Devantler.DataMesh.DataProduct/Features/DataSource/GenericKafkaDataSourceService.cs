@@ -1,9 +1,9 @@
 using Confluent.Kafka;
 using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataSourceOptions;
-using Devantler.DataMesh.DataProduct.DataStore.Services;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 using Devantler.DataMesh.DataProduct.Models;
 
-namespace Devantler.DataMesh.DataProduct.DataSource;
+namespace Devantler.DataMesh.DataProduct.Features.DataSource;
 
 /// <summary>
 /// A data source service that ingests data from a Kafka topic.

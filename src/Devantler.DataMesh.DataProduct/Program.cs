@@ -1,8 +1,11 @@
+#pragma warning disable IDE0210
+
 using Devantler.DataMesh.DataProduct.Features;
+
 
 namespace Devantler.DataMesh.DataProduct;
 
-class Program
+sealed class Program
 {
     static void Main(string[] args)
     {
@@ -14,3 +17,4 @@ class Program
         app.Run();
     }
 }
+#pragma warning restore IDE0210

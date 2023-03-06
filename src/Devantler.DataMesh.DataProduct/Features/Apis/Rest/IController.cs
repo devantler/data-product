@@ -1,7 +1,7 @@
 using Devantler.DataMesh.DataProduct.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Devantler.DataMesh.DataProduct.Apis.Rest;
+namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 
 /// <summary>
 /// Generic interface for REST Controllers.

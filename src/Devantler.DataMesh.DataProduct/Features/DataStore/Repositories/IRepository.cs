@@ -1,6 +1,6 @@
-using Devantler.DataMesh.DataProduct.DataStore.Entities;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 
-namespace Devantler.DataMesh.DataProduct.DataStore.Repositories;
+namespace Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 
 /// <summary>
 /// Generic interface for repositories, with common functionality needed to interact with databases.

@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.DataStore.Services;
+namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 
 /// <summary>
 /// Generic interface for services that interact with datastores.

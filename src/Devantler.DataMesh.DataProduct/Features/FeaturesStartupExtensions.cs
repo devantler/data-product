@@ -2,9 +2,9 @@ using System.Reflection;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Microsoft.FeatureManagement;
 using Devantler.DataMesh.DataProduct.Configuration.Extensions;
-using Devantler.DataMesh.DataProduct.DataStore;
-using Devantler.DataMesh.DataProduct.Apis;
-using Devantler.DataMesh.DataProduct.DataSource;
+using Devantler.DataMesh.DataProduct.Features.DataSource;
+using Devantler.DataMesh.DataProduct.Features.Apis;
+using Devantler.DataMesh.DataProduct.Features.DataStore;
 
 namespace Devantler.DataMesh.DataProduct.Features;
 
@@ -35,7 +35,7 @@ public static class FeaturesStartupExtensions
     public static void UseFeatures(this WebApplication app)
     {
         var options = app.Configuration.GetDataProductOptions();
-        app.UseDataStore(options)
+        _ = app.UseDataStore(options)
             .UseApis(options)
             .UseDataSources(options);
     }

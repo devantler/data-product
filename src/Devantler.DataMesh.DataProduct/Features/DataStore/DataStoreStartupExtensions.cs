@@ -1,7 +1,7 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
 
-namespace Devantler.DataMesh.DataProduct.DataStore;
+namespace Devantler.DataMesh.DataProduct.Features.DataStore;
 
 /// <summary>
 /// Extensions to registers a data store to the DI container and configure the web application to use it.

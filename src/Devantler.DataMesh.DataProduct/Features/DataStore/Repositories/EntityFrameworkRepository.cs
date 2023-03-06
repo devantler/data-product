@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Devantler.DataMesh.DataProduct.DataStore.Entities;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Devantler.DataMesh.DataProduct.DataStore.Repositories;
+namespace Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 
 /// <summary>
 /// Generic repository to interact with Entity Framework relational database contexts.

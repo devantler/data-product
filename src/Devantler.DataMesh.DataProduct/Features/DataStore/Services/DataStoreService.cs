@@ -1,9 +1,9 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Devantler.DataMesh.DataProduct.DataStore.Entities;
-using Devantler.DataMesh.DataProduct.DataStore.Repositories;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 
-namespace Devantler.DataMesh.DataProduct.DataStore.Services;
+namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 
 /// <summary>
 /// Generic interface for data store services.

@@ -1,11 +1,10 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.ApiOptions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
 
-namespace Devantler.DataMesh.DataProduct.Apis.Rest;
+namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 
 /// <summary>
 /// Extensions for registering REST to the DI container and configure the web application to use it.
