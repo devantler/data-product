@@ -23,7 +23,7 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
 
     /// <inheritdoc/>
     public Schema GetSchema(string subject, int version)
-        => GetSchemaImplementation(subject, version).Result;
+        => GetSchemaImplementation(subject, version).GetAwaiter().GetResult();
 
     async Task<Schema> GetSchemaImplementation(string subject, int version)
     {

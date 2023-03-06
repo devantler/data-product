@@ -19,7 +19,7 @@ public class KafkaSchemaRegistryService : ISchemaRegistryService
 
     /// <inheritdoc/>
     public Chr.Avro.Abstract.Schema GetSchema(string subject, int version)
-        => GetSchemaImplementation(subject, version).Result;
+        => GetSchemaImplementation(subject, version).GetAwaiter().GetResult();
 
     /// <inheritdoc/>
     public async Task<Chr.Avro.Abstract.Schema> GetSchemaAsync(string subject, int version)
