@@ -4,9 +4,9 @@
 // Any changes made to this file will be overwritten.
 using AutoMapper;
 using Devantler.DataMesh.DataProduct.Models;
-using Devantler.DataMesh.DataProduct.DataStore.Entities;
-using Devantler.DataMesh.DataProduct.DataStore.Services;
-namespace Devantler.DataMesh.DataProduct.Apis.Rest;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
+namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 /// <summary>
 /// A controller to handle REST API requests for a the <see cref="RecordSchemaPrimitiveTypes" /> model.
 /// </summary>

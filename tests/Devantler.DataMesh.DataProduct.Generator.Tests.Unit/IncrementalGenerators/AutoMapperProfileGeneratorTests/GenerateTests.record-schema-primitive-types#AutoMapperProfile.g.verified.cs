@@ -4,7 +4,7 @@
 // Any changes made to this file will be overwritten.
 using AutoMapper;
 using Devantler.DataMesh.DataProduct.Models;
-using Devantler.DataMesh.DataProduct.DataStore.Entities;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 namespace Devantler.DataMesh.DataProduct;
 /// <summary>
 /// AutoMapper profile for mapping between models and entities.
