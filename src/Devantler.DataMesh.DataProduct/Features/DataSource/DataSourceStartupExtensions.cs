@@ -13,7 +13,6 @@ public static class DataSourceStartupExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="options"></param>
-    /// <param name="environment"></param>
     public static IServiceCollection AddDataSources(this IServiceCollection services, DataProductOptions options)
     {
         if (!options.FeatureFlags.EnableDataSources || !options.Services.DataSources.Any())
