@@ -9,15 +9,24 @@ using Devantler.DataMesh.DataProduct.DataStore.Entities;
 using Devantler.DataMesh.DataProduct.Models;
 using Microsoft.EntityFrameworkCore;
 namespace Devantler.DataMesh.DataProduct.DataStore;
+/// <summary>
+/// A class that contains extension methods for service registrations and usages for a data store.
+/// </summary>
 public static partial class DataStoreStartupExtensions
 {
-    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, IDataStoreOptions? options)
+    /// <summary>
+    /// Adds generated service registrations for a data store.
+    /// </summary>
+    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, IDataStoreOptions options)
     {
         _ = services.AddPooledDbContextFactory<SqliteDbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().UseSqlite(options?.ConnectionString));
         _ = services.AddScoped<IRepository<RecordSchemaPrimitiveTypesEntity>, RecordSchemaPrimitiveTypesRepository>();
         _ = services.AddScoped<IDataStoreService<RecordSchemaPrimitiveTypes>, RecordSchemaPrimitiveTypesDataStoreService>();
     }
-    static partial void UseGeneratedServiceRegistrations(this WebApplication app, IDataStoreOptions? options)
+    /// <summary>
+    /// Uses generated service registrations for a data store.
+    /// </summary>
+    static partial void UseGeneratedServiceRegistrations(this WebApplication app, IDataStoreOptions options)
     {
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;

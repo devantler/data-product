@@ -4,11 +4,17 @@
 // Any changes made to this file will be overwritten.
 using Devantler.DataMesh.DataProduct.Models;
 namespace Devantler.DataMesh.DataProduct.DataStore.Entities;
+/// <summary>
+/// An entity class for the RecordSchemaPrimitiveTypeBytes record.
+/// </summary>
 public class RecordSchemaPrimitiveTypeBytesEntity : IEntity
 {
     /// <summary>
     /// The unique identifier for this entity.
     /// </summary>
     public Guid Id { get; set; }
+    /// <summary>
+    /// The BytesField property.
+    /// </summary>
     public byte[] BytesField { get; set; }
 }

@@ -4,6 +4,9 @@
 // Any changes made to this file will be overwritten.
 using Devantler.DataMesh.DataProduct.Models;
 namespace Devantler.DataMesh.DataProduct.DataStore.Entities;
+/// <summary>
+/// An entity class for the RecordSchemaPrimitiveTypeNull record.
+/// </summary>
 public class RecordSchemaPrimitiveTypeNullEntity : IEntity
 {
     /// <summary>
@@ -11,6 +14,9 @@ public class RecordSchemaPrimitiveTypeNullEntity : IEntity
     /// </summary>
     public Guid Id { get; set; }
     #nullable enable
+    /// <summary>
+    /// The NullField property.
+    /// </summary>
     public string? NullField { get; set; }
     #nullable disable
 }

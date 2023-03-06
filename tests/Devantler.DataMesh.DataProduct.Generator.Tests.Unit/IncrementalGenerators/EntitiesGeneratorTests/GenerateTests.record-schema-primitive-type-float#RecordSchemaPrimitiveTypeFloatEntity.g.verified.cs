@@ -4,11 +4,17 @@
 // Any changes made to this file will be overwritten.
 using Devantler.DataMesh.DataProduct.Models;
 namespace Devantler.DataMesh.DataProduct.DataStore.Entities;
+/// <summary>
+/// An entity class for the RecordSchemaPrimitiveTypeFloat record.
+/// </summary>
 public class RecordSchemaPrimitiveTypeFloatEntity : IEntity
 {
     /// <summary>
     /// The unique identifier for this entity.
     /// </summary>
     public Guid Id { get; set; }
+    /// <summary>
+    /// The FloatField property.
+    /// </summary>
     public float FloatField { get; set; }
 }

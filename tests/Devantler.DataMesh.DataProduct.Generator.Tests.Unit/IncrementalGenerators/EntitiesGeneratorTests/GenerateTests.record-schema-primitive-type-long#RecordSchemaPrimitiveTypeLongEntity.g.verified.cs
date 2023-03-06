@@ -4,11 +4,17 @@
 // Any changes made to this file will be overwritten.
 using Devantler.DataMesh.DataProduct.Models;
 namespace Devantler.DataMesh.DataProduct.DataStore.Entities;
+/// <summary>
+/// An entity class for the RecordSchemaPrimitiveTypeLong record.
+/// </summary>
 public class RecordSchemaPrimitiveTypeLongEntity : IEntity
 {
     /// <summary>
     /// The unique identifier for this entity.
     /// </summary>
     public Guid Id { get; set; }
+    /// <summary>
+    /// The LongField property.
+    /// </summary>
     public long LongField { get; set; }
 }

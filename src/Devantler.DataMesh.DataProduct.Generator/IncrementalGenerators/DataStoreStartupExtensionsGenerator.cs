@@ -37,8 +37,9 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
         var codeCompilation = new CSharpCompilation();
 
         string codeNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions");
+        var dataStoreOptionsNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreOptions");
         var @class = new CSharpClass("DataStoreStartupExtensions")
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreOptions")))
+            .AddImport(new CSharpUsing(string.IsNullOrEmpty(dataStoreOptionsNamespace) ? "Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions" : dataStoreOptionsNamespace))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))

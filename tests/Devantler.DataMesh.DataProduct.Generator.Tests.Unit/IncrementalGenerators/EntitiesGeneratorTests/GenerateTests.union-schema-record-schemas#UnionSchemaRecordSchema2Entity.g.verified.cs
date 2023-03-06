@@ -4,6 +4,9 @@
 // Any changes made to this file will be overwritten.
 using Devantler.DataMesh.DataProduct.Models;
 namespace Devantler.DataMesh.DataProduct.DataStore.Entities;
+/// <summary>
+/// An entity class for the UnionSchemaRecordSchema2 record.
+/// </summary>
 public class UnionSchemaRecordSchema2Entity : IEntity
 {
     /// <summary>

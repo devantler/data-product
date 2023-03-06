@@ -15,12 +15,14 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
             $$"""
             {
                 "DataProduct": {
-                    "SchemaRegistry": {
-                        "Type": "Local",
-                        "Path": "Schemas",
-                        "Schema": {
-                            "Subject": "{{subject}}",
-                            "Version": 1
+                    "Services": {
+                        "SchemaRegistry": {
+                            "Type": "Local",
+                            "Path": "Schemas",
+                            "Schema": {
+                                "Subject": "{{subject}}",
+                                "Version": 1
+                            }
                         }
                     }
                 }
@@ -45,17 +47,19 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
             $$"""
             {
                 "DataProduct": {
-                    "DataStore": {
-                        "Type": "DocumentBased",
-                        "Provider": "MongoDb",
-                        "ConnectionString": "mongodb://localhost:27017"
-                    },
-                    "SchemaRegistry": {
-                        "Type": "Local",
-                        "Path": "Schemas",
-                        "Schema": {
-                            "Subject": "{{subject}}",
-                            "Version": 1
+                    "Services": {
+                        "DataStore": {
+                            "Type": "DocumentBased",
+                            "Provider": "MongoDb",
+                            "ConnectionString": "mongodb://localhost:27017"
+                        },
+                        "SchemaRegistry": {
+                            "Type": "Local",
+                            "Path": "Schemas",
+                            "Schema": {
+                                "Subject": "{{subject}}",
+                                "Version": 1
+                            }
                         }
                     }
                 }

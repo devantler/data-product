@@ -15,12 +15,14 @@ public class GenerateTests : IncrementalGeneratorTestsBase<RepositoryGenerator>
             $$"""
             {
                 "DataProduct": {
-                    "SchemaRegistry": {
-                        "Type": "Local",
-                        "Path": "Schemas",
-                        "Schema": {
-                            "Subject": "{{subject}}",
-                            "Version": 1
+                    "Services": {
+                        "SchemaRegistry": {
+                            "Type": "Local",
+                            "Path": "Schemas",
+                            "Schema": {
+                                "Subject": "{{subject}}",
+                                "Version": 1
+                            }
                         }
                     }
                 }
