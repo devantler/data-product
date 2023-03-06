@@ -24,8 +24,8 @@ public class EntitiesGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        var schemaRegistryService = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
@@ -35,6 +35,7 @@ public class EntitiesGenerator : GeneratorBase
         {
             string schemaName = schema.Name.ToPascalCase();
             var @class = new CSharpClass($"{schemaName}Entity")
+                .SetDocBlock(new CSharpDocBlock($"An entity class for the {schemaName} record."))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity"))
                 .AddImplementation(new CSharpInterface("IEntity"));
@@ -56,8 +57,9 @@ public class EntitiesGenerator : GeneratorBase
                 };
                 var property = new CSharpProperty($"{(isVirtual ? "virtual " : string.Empty)}{propertyType}", propertyName);
 
-                if (field.Documentation is not null)
-                    _ = property.SetDocBlock(new CSharpDocBlock(field.Documentation));
+                _ = field.Documentation is not null
+                    ? property.SetDocBlock(new CSharpDocBlock(field.Documentation))
+                    : property.SetDocBlock(new CSharpDocBlock($"The {propertyName} property."));
 
                 _ = @class.AddProperty(property);
             }

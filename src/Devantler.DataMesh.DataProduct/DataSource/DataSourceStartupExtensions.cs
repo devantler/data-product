@@ -1,5 +1,5 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-namespace Devantler.DataMesh.DataProduct;
+namespace Devantler.DataMesh.DataProduct.DataSource;
 
 /// <summary>
 /// Extensions for registering data sources and configuring the web application to use them.
@@ -13,9 +13,7 @@ public static class DataSourceStartupExtensions
     /// <param name="options"></param>
     /// <param name="environment"></param>
     public static IServiceCollection AddDataSources(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
-    {
-        return services;
-    }
+            => services;
 
     /// <summary>
     /// Configures the web application to use enabled data sources.
@@ -23,7 +21,5 @@ public static class DataSourceStartupExtensions
     /// <param name="app"></param>
     /// <param name="options"></param>
     public static WebApplication UseDataSources(this WebApplication app, DataProductOptions options)
-    {
-        return app;
-    }
+        => app;
 }

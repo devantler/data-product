@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.SchemaRegistryOptions;
 
 /// <summary>
 /// Options to configure a schema registry used by the data product.
@@ -12,4 +12,6 @@ public abstract class SchemaRegistryOptionsBase : ISchemaRegistryOptions
 
     /// <inheritdoc/>
     public abstract SchemaRegistryType Type { get; set; }
+    /// <inheritdoc/>
+    public SchemaOptions Schema { get; set; } = new();
 }

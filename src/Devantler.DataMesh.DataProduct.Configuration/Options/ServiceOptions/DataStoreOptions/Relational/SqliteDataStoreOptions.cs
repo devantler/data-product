@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions.Relational;
 
 /// <summary>
 /// Options to configure a Sqlite data store.
@@ -6,7 +6,8 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.
 public class SqliteDataStoreOptions : RelationalDataStoreOptionsBase
 {
     /// <inheritdoc/>
-    public override RelationalDataStoreProvider Provider { get; set; } = RelationalDataStoreProvider.Sqlite;
-    /// <inheritdoc/>
     public override string ConnectionString { get; set; } = "Data Source=sqlite.db";
+
+    /// <inheritdoc/>
+    public override string Provider { get; set; } = RelationalDataStoreProvider.Sqlite;
 }

@@ -1,6 +1,6 @@
 using Chr.Avro.Representation;
 using Confluent.SchemaRegistry;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.SchemaRegistryOptions.Providers;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 
@@ -26,7 +26,7 @@ public class KafkaSchemaRegistryService : ISchemaRegistryService
         => await GetSchemaImplementation(subject, version);
 
 
-    private async Task<Chr.Avro.Abstract.Schema> GetSchemaImplementation(string subject, int version)
+    async Task<Chr.Avro.Abstract.Schema> GetSchemaImplementation(string subject, int version)
     {
         CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _schemaRegistryOptions?.Url });
         List<RegisteredSchema> registeredSchemas = new()

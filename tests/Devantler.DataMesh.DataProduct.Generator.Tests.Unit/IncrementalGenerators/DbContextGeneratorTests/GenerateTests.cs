@@ -15,13 +15,13 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
             $$"""
             {
                 "DataProduct": {
-                    "Schema": {
-                        "Subject": "{{subject}}",
-                        "Version": 1
-                    },
                     "SchemaRegistry": {
                         "Type": "Local",
-                        "Path": "Schemas"
+                        "Path": "Schemas",
+                        "Schema": {
+                            "Subject": "{{subject}}",
+                            "Version": 1
+                        }
                     }
                 }
             }
@@ -47,15 +47,16 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
                 "DataProduct": {
                     "DataStore": {
                         "Type": "DocumentBased",
-                        "Provider": "MongoDb"
-                    },
-                    "Schema": {
-                        "Subject": "{{subject}}",
-                        "Version": 1
+                        "Provider": "MongoDb",
+                        "ConnectionString": "mongodb://localhost:27017"
                     },
                     "SchemaRegistry": {
                         "Type": "Local",
-                        "Path": "Schemas"
+                        "Path": "Schemas",
+                        "Schema": {
+                            "Subject": "{{subject}}",
+                            "Version": 1
+                        }
                     }
                 }
             }

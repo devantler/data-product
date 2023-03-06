@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.DocumentBased;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions.DocumentBased;
 
 /// <summary>
 /// Options to configure a MongoDb data store.
@@ -6,7 +6,8 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.
 public class MongoDbDataStoreOptions : DocumentBasedDataStoreOptionsBase
 {
     /// <inheritdoc/>
-    public override DocumentBasedDataStoreProvider Provider { get; set; } = DocumentBasedDataStoreProvider.MongoDb;
+    public override string Provider { get; set; } = DocumentBasedDataStoreProvider.MongoDb;
+
     /// <inheritdoc/>
     public override string ConnectionString { get; set; } = string.Empty;
 }

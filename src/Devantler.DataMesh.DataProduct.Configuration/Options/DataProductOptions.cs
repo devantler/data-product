@@ -1,7 +1,4 @@
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 
@@ -41,27 +38,7 @@ public class DataProductOptions
     public FeatureFlagsOptions FeatureFlags { get; set; } = new();
 
     /// <summary>
-    /// Options for the schema used by the data product.
+    /// Options for the services used by or provided by the data product.
     /// </summary>
-    public SchemaOptions Schema { get; set; } = new();
-
-    /// <summary>
-    /// Options for the schema registry used by the data product.
-    /// </summary>
-    public ISchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
-
-    /// <summary>
-    /// Options for the data store.
-    /// </summary>
-    public IDataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
-
-    /// <summary>
-    /// Options for the data sources.
-    /// </summary>
-    public IList<IDataSourceOptions> DataSources { get; set; } = new List<IDataSourceOptions>();
-
-    /// <summary>
-    /// Options for the REST API.
-    /// </summary>
-    public RestApiOptions RestApi { get; set; } = new();
+    public ServicesOptions Services { get; set; } = new();
 }

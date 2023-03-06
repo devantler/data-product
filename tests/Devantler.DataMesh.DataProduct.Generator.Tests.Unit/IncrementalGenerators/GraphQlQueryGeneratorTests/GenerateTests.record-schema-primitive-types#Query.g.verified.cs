@@ -7,6 +7,9 @@ using Devantler.DataMesh.DataProduct.Models;
 namespace Devantler.DataMesh.DataProduct.Apis.GraphQL;
 public partial class Query
 {
+    /// <summary>
+    /// Queries RecordSchemaPrimitiveTypes from the data store.
+    /// </summary>
     [UsePaging]
     [UseProjection]
     [UseFiltering]

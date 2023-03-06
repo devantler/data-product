@@ -26,8 +26,8 @@ public class GraphQLQueryGenerator : GeneratorBase
     public override Dictionary<string, string> Generate(Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles, DataProductOptions options)
     {
-        var schemaRegistry = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistry.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistry = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistry.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 

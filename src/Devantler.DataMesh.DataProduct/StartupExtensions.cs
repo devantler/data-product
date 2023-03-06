@@ -18,7 +18,7 @@ public static class StartupExtensions
     public static IServiceCollection AddFeatures(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
     {
         _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        _ = services.AddDataStore(options.DataStore);
+        _ = services.AddDataStore(options.Services.DataStore);
         services.AddApis(options, environment);
         return services;
     }
@@ -30,7 +30,7 @@ public static class StartupExtensions
     /// <param name="options"></param>
     public static WebApplication UseFeatures(this WebApplication app, DataProductOptions options)
     {
-        _ = app.UseDataStore(options.DataStore);
+        _ = app.UseDataStore(options.Services.DataStore);
         app.UseApis(options);
 
         return app;

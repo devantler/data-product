@@ -14,13 +14,13 @@ public class GenerateTests : IncrementalGeneratorTestsBase<ModelsGenerator>
             $$"""
             {
                 "DataProduct": {
-                    "Schema": {
-                        "Subject": "{{subject}}",
-                        "Version": 1
-                    },
                     "SchemaRegistry": {
                         "Type": "Local",
-                        "Path": "Schemas"
+                        "Path": "Schemas",
+                        "Schema": {
+                            "Subject": "{{subject}}",
+                            "Version": 1
+                        }
                     }
                 }
             }

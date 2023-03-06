@@ -28,8 +28,8 @@ public class RestApiControllerGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        var schemaRegistryService = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 

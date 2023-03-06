@@ -1,3 +1,4 @@
+#pragma warning disable CA1852
 using Devantler.DataMesh.DataProduct;
 using Devantler.DataMesh.DataProduct.Configuration.Extensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
@@ -11,3 +12,4 @@ builder.Services.AddFeatures(dataProductOptions, builder.Environment);
 var app = builder.Build();
 app.UseFeatures(dataProductOptions);
 app.Run();
+#pragma warning restore CA1852

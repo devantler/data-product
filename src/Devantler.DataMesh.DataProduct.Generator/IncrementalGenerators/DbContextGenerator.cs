@@ -6,8 +6,8 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions.Relational;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
@@ -32,13 +32,13 @@ public class DbContextGenerator : GeneratorBase
         DataProductOptions options
     )
     {
-        if (options.DataStore.Type != DataStoreType.Relational)
+        if (options.Services.DataStore.Type != DataStoreType.Relational)
             return new Dictionary<string, string>();
 
-        var dataStoreOptions = options.DataStore as RelationalDataStoreOptionsBase;
+        var dataStoreOptions = options.Services.DataStore as RelationalDataStoreOptionsBase;
 
-        var schemaRegistryService = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 

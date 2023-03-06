@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions;
 
 /// <summary>
 /// Options for the REST API.

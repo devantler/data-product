@@ -1,7 +1,6 @@
 using Chr.Avro.Abstract;
 using Chr.Avro.Representation;
-using Devantler.Commons.StringHelpers;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.SchemaRegistryOptions.Providers;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 
@@ -26,13 +25,13 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     public Schema GetSchema(string subject, int version)
         => GetSchemaImplementation(subject, version).Result;
 
-    private async Task<Schema> GetSchemaImplementation(string subject, int version)
+    async Task<Schema> GetSchemaImplementation(string subject, int version)
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
         string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName).FirstOrDefault();
 
-        if (schemaFile == null)
+        if (string.IsNullOrEmpty(schemaFile))
             throw new FileNotFoundException($"Schema file {schemaFileName} not found.");
 
         string schemaString = await File.ReadAllTextAsync(schemaFile);

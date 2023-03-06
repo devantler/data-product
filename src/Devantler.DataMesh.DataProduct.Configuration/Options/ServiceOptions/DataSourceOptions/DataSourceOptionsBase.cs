@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataSourceOptions;
 
 /// <summary>
 /// Options to configure a data source used by the data product.

@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
 
 /// <summary>
 /// Supported data store types.

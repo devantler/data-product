@@ -1,4 +1,4 @@
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
 
 namespace Devantler.DataMesh.DataProduct.DataStore;
 

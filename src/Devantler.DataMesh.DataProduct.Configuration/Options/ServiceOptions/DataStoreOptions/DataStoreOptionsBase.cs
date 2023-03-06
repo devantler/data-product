@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
 
 /// <summary>
 /// Options to configure a data store.
@@ -12,6 +12,9 @@ public abstract class DataStoreOptionsBase : IDataStoreOptions
 
     /// <inheritdoc/>
     public abstract DataStoreType Type { get; set; }
+
+    /// <inheritdoc/>
+    public abstract string Provider { get; set; }
 
     /// <inheritdoc/>
     public abstract string ConnectionString { get; set; }

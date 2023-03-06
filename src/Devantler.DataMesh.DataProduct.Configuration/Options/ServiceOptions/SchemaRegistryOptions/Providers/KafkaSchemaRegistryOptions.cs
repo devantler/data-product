@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.SchemaRegistryOptions.Providers;
 
 /// <summary>
 /// Options to configure a Kafka schema registry used by the data product.

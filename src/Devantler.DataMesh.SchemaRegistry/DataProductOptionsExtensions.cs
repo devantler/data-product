@@ -1,6 +1,5 @@
-using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.SchemaRegistryOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.SchemaRegistryOptions.Providers;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 
@@ -13,14 +12,14 @@ public static class DataProductOptionsExtensions
     /// Gets the requested schema registry type.
     /// </summary>
     /// <param name="options"></param>
-    public static ISchemaRegistryService GetSchemaRegistryService(this DataProductOptions options)
+    public static ISchemaRegistryService CreateSchemaRegistryService(this ISchemaRegistryOptions options)
     {
-        var schemaRegistryType = options.SchemaRegistry.Type;
+        var schemaRegistryType = options.Type;
 
         return schemaRegistryType switch
         {
-            SchemaRegistryType.Local => new LocalSchemaRegistryService(options.SchemaRegistry as LocalSchemaRegistryOptions),
-            SchemaRegistryType.Kafka => new KafkaSchemaRegistryService(options.SchemaRegistry as KafkaSchemaRegistryOptions),
+            SchemaRegistryType.Local => new LocalSchemaRegistryService(options as LocalSchemaRegistryOptions),
+            SchemaRegistryType.Kafka => new KafkaSchemaRegistryService(options as KafkaSchemaRegistryOptions),
             _ => throw new NotImplementedException($"The schema registry type '{schemaRegistryType}' is not implemented yet")
         };
     }

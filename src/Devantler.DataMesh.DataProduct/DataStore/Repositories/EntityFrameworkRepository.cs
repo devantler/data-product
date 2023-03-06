@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Devantler.DataMesh.DataProduct.DataStore.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,11 +8,14 @@ namespace Devantler.DataMesh.DataProduct.DataStore.Repositories;
 /// Generic repository to interact with Entity Framework relational database contexts.
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public abstract class EntityFrameworkRepository<T> : IRepository<T> where T : class, IEntity
+public abstract class EntityFrameworkRepository<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.All)] T> : IRepository<T> where T : class, IEntity
 {
     readonly DbContext _context;
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Creates a new instance of <see cref="EntityFrameworkRepository{T}"/>.
+    /// </summary>
+    /// <param name="context"></param>
     protected EntityFrameworkRepository(DbContext context) => _context = context;
 
     /// <inheritdoc />

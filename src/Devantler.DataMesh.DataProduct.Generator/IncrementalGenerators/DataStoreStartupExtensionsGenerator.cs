@@ -6,8 +6,8 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions.Relational;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
@@ -31,30 +31,31 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        var schemaRegistryService = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
         string codeNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions");
         var @class = new CSharpClass("DataStoreStartupExtensions")
-            .AddImport(new CSharpUsing("Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions"))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreOptions")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
             .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
+            .SetDocBlock(new CSharpDocBlock("A class that contains extension methods for service registrations and usages for a data store."))
             .SetNamespace(codeNamespace)
             .SetIsStatic(true)
             .SetIsPartial(true);
 
         var servicesParameter = new CSharpParameter("IServiceCollection", "services");
-        var optionsParameter = new CSharpParameter("IDataStoreOptions", "options")
-            .SetIsNullable(true);
+        var optionsParameter = new CSharpParameter("IDataStoreOptions", "options");
         var addGeneratedServiceRegistrationsMethod = new CSharpMethod("AddGeneratedServiceRegistrations")
             .SetIsStatic(true)
             .SetIsPartial(true)
             .SetIsExtensionMethod(true)
+            .SetDocBlock(new CSharpDocBlock("Adds generated service registrations for a data store."))
             .SetVisibility(Visibility.Private)
             .AddParameter(servicesParameter)
             .AddParameter(optionsParameter);
@@ -64,14 +65,15 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             .SetIsStatic(true)
             .SetIsPartial(true)
             .SetIsExtensionMethod(true)
+            .SetDocBlock(new CSharpDocBlock("Uses generated service registrations for a data store."))
             .SetVisibility(Visibility.Private)
             .AddParameter(appParameter)
             .AddParameter(optionsParameter);
 
-        switch (options.DataStore.Type)
+        switch (options.Services.DataStore.Type)
         {
             case DataStoreType.Relational:
-                if (options.DataStore is not RelationalDataStoreOptionsBase dataStoreOptions)
+                if (options.Services.DataStore is not RelationalDataStoreOptionsBase dataStoreOptions)
                     throw new InvalidOperationException("Relational data store options are not set.");
                 _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{dataStoreOptions.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{dataStoreOptions.Provider}(options?.ConnectionString));");
                 foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
@@ -97,7 +99,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             case DataStoreType.GraphBased:
                 throw new NotSupportedException("Graph based data stores are not supported yet.");
             default:
-                throw new NotSupportedException($"Data store type '{options.DataStore.Type}' is not supported.");
+                throw new NotSupportedException($"Data store type '{options.Services.DataStore.Type}' is not supported.");
         }
 
         _ = @class.AddMethod(addGeneratedServiceRegistrationsMethod);
