@@ -8,7 +8,7 @@ public abstract class DataSourceOptionsBase : IDataSourceOptions
     /// <summary>
     /// A key to indicate the section in the configuration file that contains the data sources options.
     /// </summary>
-    public const string Key = "DataProduct:DataSources";
+    public const string Key = "DataProduct:Services:DataSources";
 
     /// <inheritdoc/>
     public abstract DataSourceType Type { get; set; }
