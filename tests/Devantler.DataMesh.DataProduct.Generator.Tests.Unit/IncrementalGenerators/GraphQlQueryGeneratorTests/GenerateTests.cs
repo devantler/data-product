@@ -11,6 +11,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<GraphQLQueryGenerator
     {
         //Arrange
         var additionalText = CreateAppSettings(
+            /*lang=json,strict*/
             $$"""
             {
                 "DataProduct": {
