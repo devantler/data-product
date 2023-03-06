@@ -32,7 +32,7 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
         string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName).FirstOrDefault();
 
         if (string.IsNullOrEmpty(schemaFile))
-            throw new FileNotFoundException($"Schema file {schemaFileName} not found.");
+            throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "Schemas"} not found.");
 
         string schemaString = await File.ReadAllTextAsync(schemaFile);
 
