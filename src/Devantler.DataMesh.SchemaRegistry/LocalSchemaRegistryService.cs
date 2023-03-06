@@ -29,10 +29,10 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
-        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName).FirstOrDefault();
+        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "schemas", schemaFileName).FirstOrDefault();
 
         if (string.IsNullOrEmpty(schemaFile))
-            throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "Schemas"} not found.");
+            throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.");
 
         string schemaString = await File.ReadAllTextAsync(schemaFile);
 

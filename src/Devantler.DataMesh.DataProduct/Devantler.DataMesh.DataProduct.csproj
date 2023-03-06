@@ -35,10 +35,10 @@
         <Compile Remove="generated/**/*.g.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="Schemas/**/*.avsc" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="schemas/**/*.avsc" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
     <ItemGroup>
         <AdditionalFiles Include="appsettings*.json" />
-        <AdditionalFiles Include="Schemas/*.avsc" />
+        <AdditionalFiles Include="schemas/*.avsc" />
     </ItemGroup>
 </Project>

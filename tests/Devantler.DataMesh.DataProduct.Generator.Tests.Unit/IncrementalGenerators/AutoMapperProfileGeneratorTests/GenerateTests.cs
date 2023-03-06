@@ -18,7 +18,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<AutoMapperProfileGene
                     "Services": {
                         "SchemaRegistry": {
                             "Type": "Local",
-                            "Path": "Schemas",
+                            "Path": "schemas",
                             "Schema": {
                                 "Subject": "{{subject}}",
                                 "Version": 1

@@ -17,7 +17,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<ModelsGenerator>
                     "Services": {
                         "SchemaRegistry": {
                             "Type": "Local",
-                            "Path": "Schemas",
+                            "Path": "schemas",
                             "Schema": {
                                 "Subject": "{{subject}}",
                                 "Version": 1

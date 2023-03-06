@@ -18,7 +18,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<RestApiControllerGene
                     "Services": {
                         "SchemaRegistry": {
                             "Type": "Local",
-                            "Path": "Schemas",
+                            "Path": "schemas",
                             "Schema": {
                                 "Subject": "{{subject}}",
                                 "Version": 1

@@ -18,7 +18,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
                     "Services": {
                         "SchemaRegistry": {
                             "Type": "Local",
-                            "Path": "Schemas",
+                            "Path": "schemas",
                             "Schema": {
                                 "Subject": "{{subject}}",
                                 "Version": 1
@@ -55,7 +55,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
                         },
                         "SchemaRegistry": {
                             "Type": "Local",
-                            "Path": "Schemas",
+                            "Path": "schemas",
                             "Schema": {
                                 "Subject": "{{subject}}",
                                 "Version": 1
