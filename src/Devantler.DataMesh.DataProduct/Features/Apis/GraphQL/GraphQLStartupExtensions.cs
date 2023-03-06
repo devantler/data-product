@@ -1,3 +1,5 @@
+using Devantler.DataMesh.DataProduct.Configuration.Options;
+
 namespace Devantler.DataMesh.DataProduct.Apis.GraphQL;
 
 /// <summary>
@@ -9,19 +11,28 @@ public static class GraphQlStartupExtensions
     /// Registers GraphQL to the DI container.
     /// </summary>
     /// <param name="services"></param>
+    /// <param name="options"></param>
     /// <param name="environment"></param>
-    public static void AddGraphQL(this IServiceCollection services, IWebHostEnvironment environment) =>
-        services.AddGraphQLServer()
+    public static IServiceCollection AddGraphQL(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
+    {
+        return services
+            .AddGraphQLServer()
             .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = environment.IsDevelopment())
             .AddQueryType<Query>()
             .AddProjections()
             .AddFiltering()
-            .AddSorting();
+            .AddSorting()
+            .Services;
+    }
 
     /// <summary>
     /// Configures the web application to use GraphQL.
     /// </summary>
     /// <param name="app"></param>
-    public static void UseGraphQL(this WebApplication app) =>
+    /// <param name="options"></param>
+    public static WebApplication UseGraphQL(this WebApplication app, DataProductOptions options)
+    {
         app.MapGraphQL();
+        return app;
+    }
 }

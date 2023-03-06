@@ -1,3 +1,4 @@
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.ApiOptions;
 using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataSourceOptions;
 using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
 using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions.Relational;
@@ -26,8 +27,8 @@ public class ServicesOptions
     public IList<IDataSourceOptions> DataSources { get; set; } = new List<IDataSourceOptions>();
 
     /// <summary>
-    /// Options for the REST API.
+    /// Options for the APIs.
     /// </summary>
-    public RestApiOptions RestApi { get; set; } = new();
+    public ApisOptions Apis { get; set; } = new();
 }
 

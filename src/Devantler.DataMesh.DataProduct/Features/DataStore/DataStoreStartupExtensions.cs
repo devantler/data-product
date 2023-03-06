@@ -1,3 +1,4 @@
+using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
 
 namespace Devantler.DataMesh.DataProduct.DataStore;
@@ -13,15 +14,15 @@ public static partial class DataStoreStartupExtensions
     /// <param name="services"></param>
     /// <param name="options"></param>
     /// <exception cref="NotImplementedException">Thrown when a data store is not implemented.</exception>
-    public static IServiceCollection AddDataStore(this IServiceCollection services, IDataStoreOptions options)
+    public static IServiceCollection AddDataStore(this IServiceCollection services, DataProductOptions options)
     {
-        services.AddGeneratedServiceRegistrations(options);
-        _ = options.Type switch
+        services.AddGeneratedServiceRegistrations(options.Services.DataStore);
+        _ = options.Services.DataStore.Type switch
         {
             DataStoreType.Relational => _ = services.AddDatabaseDeveloperPageExceptionFilter(),
             DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
             DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
-            _ => throw new NotSupportedException($"The data store type {options.Type} is not supported."),
+            _ => throw new NotSupportedException($"The data store type {options.Services.DataStore} is not supported."),
         };
         return services;
     }
@@ -32,7 +33,7 @@ public static partial class DataStoreStartupExtensions
     /// <param name="app"></param>
     /// <param name="options"></param>
     /// <exception cref="NotImplementedException">Thrown when a data store is not implemented.</exception>
-    public static WebApplication UseDataStore(this WebApplication app, IDataStoreOptions options)
+    public static WebApplication UseDataStore(this WebApplication app, DataProductOptions options)
     {
         if (!app.Environment.IsDevelopment())
         {
@@ -43,7 +44,7 @@ public static partial class DataStoreStartupExtensions
         {
             _ = app.UseDeveloperExceptionPage();
         }
-        switch (options.Type)
+        switch (options.Services.DataStore.Type)
         {
             case DataStoreType.Relational:
                 if (app.Environment.IsDevelopment())
@@ -54,9 +55,9 @@ public static partial class DataStoreStartupExtensions
             case DataStoreType.GraphBased:
                 throw new NotSupportedException("Graph based data stores are not supported yet.");
             default:
-                throw new NotSupportedException($"The data store type {options.Type} is not supported.");
+                throw new NotSupportedException($"The data store type {options.Services.DataStore.Type} is not supported.");
         }
-        app.UseGeneratedServiceRegistrations(options);
+        app.UseGeneratedServiceRegistrations(options.Services.DataStore);
 
         return app;
     }

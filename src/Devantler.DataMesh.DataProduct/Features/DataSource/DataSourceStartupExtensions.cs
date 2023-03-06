@@ -1,4 +1,6 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Models;
+
 namespace Devantler.DataMesh.DataProduct.DataSource;
 
 /// <summary>
@@ -12,8 +14,15 @@ public static class DataSourceStartupExtensions
     /// <param name="services"></param>
     /// <param name="options"></param>
     /// <param name="environment"></param>
-    public static IServiceCollection AddDataSources(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
-            => services;
+    public static IServiceCollection AddDataSources(this IServiceCollection services, DataProductOptions options)
+    {
+        if (!options.FeatureFlags.EnableDataSources || !options.Services.DataSources.Any())
+            return services;
+
+        return services
+            .AddHostedService<ContosoUniversityDataSourceService>();
+    }
+
 
     /// <summary>
     /// Configures the web application to use enabled data sources.
@@ -21,5 +30,12 @@ public static class DataSourceStartupExtensions
     /// <param name="app"></param>
     /// <param name="options"></param>
     public static WebApplication UseDataSources(this WebApplication app, DataProductOptions options)
-        => app;
+    {
+        if (!options.FeatureFlags.EnableDataSources || !options.Services.DataSources.Any())
+            return app;
+
+        var contosoUniversityDataSourceService = app.Services.GetRequiredService<ContosoUniversityDataSourceService>();
+        contosoUniversityDataSourceService.StartAsync(CancellationToken.None);
+        return app;
+    }
 }

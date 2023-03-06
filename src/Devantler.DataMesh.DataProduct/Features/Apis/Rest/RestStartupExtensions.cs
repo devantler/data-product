@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.ApiOptions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
 
@@ -15,8 +16,8 @@ public static class RestStartupExtensions
     /// Registers REST to the DI container.
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="dataProductOptions"></param>
-    public static void AddRestApi(this IServiceCollection services, DataProductOptions dataProductOptions)
+    /// <param name="options"></param>
+    public static IServiceCollection AddRestApi(this IServiceCollection services, DataProductOptions options)
     {
         _ = services
                 .AddControllers(
@@ -29,18 +30,18 @@ public static class RestStartupExtensions
                 "v1",
                 new OpenApiInfo
                 {
-                    Version = dataProductOptions.Version,
-                    Title = dataProductOptions.Name,
-                    Description = dataProductOptions.Description,
-                    TermsOfService = !string.IsNullOrEmpty(dataProductOptions.Owner?.Website)
-                            ? new Uri(dataProductOptions.Owner.Website)
+                    Version = options.Version,
+                    Title = options.Name,
+                    Description = options.Description,
+                    TermsOfService = !string.IsNullOrEmpty(options.Owner?.Website)
+                            ? new Uri(options.Owner.Website)
                             : null,
                     Contact = new OpenApiContact
                     {
-                        Name = dataProductOptions.Owner?.Name,
-                        Email = dataProductOptions.Owner?.Email,
-                        Url = !string.IsNullOrEmpty(dataProductOptions.Owner?.Website)
-                            ? new Uri(dataProductOptions.Owner.Website)
+                        Name = options.Owner?.Name,
+                        Email = options.Owner?.Email,
+                        Url = !string.IsNullOrEmpty(options.Owner?.Website)
+                            ? new Uri(options.Owner.Website)
                             : null
                     },
                     License = new OpenApiLicense
@@ -53,19 +54,21 @@ public static class RestStartupExtensions
                 $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
         });
         _ = services.AddEndpointsApiExplorer();
+        return services;
     }
 
     /// <summary>
     /// Configures the web application to use REST.
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="featureFlags"></param>
-    public static void UseRestApi(this WebApplication app, FeatureFlagsOptions featureFlags)
+    /// <param name="options"></param>
+    public static WebApplication UseRestApi(this WebApplication app, DataProductOptions options)
     {
-        if (featureFlags.EnableAuthorisation)
+        if (options.Services.Apis.RestApi.EnableAuthentication)
             _ = app.UseAuthorization();
 
         _ = app.MapControllers();
         _ = app.UseSwagger().UseSwaggerUI();
+        return app;
     }
 }

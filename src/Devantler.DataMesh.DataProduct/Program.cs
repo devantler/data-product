@@ -1,15 +1,16 @@
-#pragma warning disable CA1852
-using Devantler.DataMesh.DataProduct;
-using Devantler.DataMesh.DataProduct.Configuration.Extensions;
-using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Microsoft.FeatureManagement;
+using Devantler.DataMesh.DataProduct.Features;
 
-var builder = WebApplication.CreateBuilder(args);
-_ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
-var dataProductOptions = builder.Configuration.GetDataProductOptions();
-builder.Services.AddFeatures(dataProductOptions, builder.Environment);
+namespace Devantler.DataMesh.DataProduct;
 
-var app = builder.Build();
-app.UseFeatures(dataProductOptions);
-app.Run();
-#pragma warning restore CA1852
+class Program
+{
+    static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        builder.AddFeatures();
+
+        var app = builder.Build();
+        app.UseFeatures();
+        app.Run();
+    }
+}

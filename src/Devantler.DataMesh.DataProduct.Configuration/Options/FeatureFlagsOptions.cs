@@ -1,3 +1,5 @@
+using Devantler.DataMesh.DataProduct.Apis.GraphQL;
+
 namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 
 /// <summary>
@@ -13,55 +15,10 @@ public class FeatureFlagsOptions
     /// <summary>
     /// A list of APIs that should be enabled for the data product.
     /// </summary>
-    public List<string> EnableApis { get; set; } = new();
+    public List<ApiFeatureFlagValues> EnableApis { get; set; } = new();
 
     /// <summary>
-    /// Whether a client-side cache should be enabled for the data product.
+    /// A flag to indicate if data sources should be enabled for the data product.
     /// </summary>
-    public bool EnableCaching { get; set; }
-
-    /// <summary>
-    /// Whether metadata should be collected and made observable from a metadata platform.
-    /// </summary>
-    public bool EnableMetadataPlatform { get; set; }
-
-    /// <summary>
-    /// Whether authentication is required to access the data product.
-    /// </summary>
-    public bool EnableAuthentication { get; set; }
-
-    /// <summary>
-    /// Whether authorisation is required to access the data product.
-    /// </summary>
-    public bool EnableAuthorisation { get; set; }
-
-    /// <summary>
-    /// Whether metrics should be collected and made observable from a metrics platform.
-    /// </summary>
-    public bool EnableMetrics { get; set; }
-
-    /// <summary>
-    /// Whether tracing should be collected and made observable from a tracing platform.
-    /// </summary>
-    public bool EnableTracing { get; set; }
-
-    /// <summary>
-    /// Whether logging should be enabled and made observable from a logging platform.
-    /// </summary>
-    public bool EnableLogging { get; set; }
-
-    /// <summary>
-    /// Whether health data should be collected and made observable from a liveability platform.
-    /// </summary>
-    public bool EnableHealthChecks { get; set; }
-
-    /// <summary>
-    /// Whether the data product should be able to publish and subscribe to events.
-    /// </summary>
-    public bool EnablePubSub { get; set; }
-
-    /// <summary>
-    /// Whether the data product should be made triggerable by bindings.
-    /// </summary>
-    public bool EnableBindings { get; set; }
+    public bool EnableDataSources { get; set; }
 }
