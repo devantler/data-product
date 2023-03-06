@@ -19,13 +19,31 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
 
     /// <inheritdoc/>
     public async Task<Schema> GetSchemaAsync(string subject, int version)
-        => await GetSchemaImplementation(subject, version);
+    {
+        string schemaString = await GetSchemaStringAsync(subject, version);
+
+        var schemaReader = new JsonSchemaReader();
+
+        return schemaReader.Read(schemaString);
+    }
 
     /// <inheritdoc/>
     public Schema GetSchema(string subject, int version)
-        => GetSchemaImplementation(subject, version).GetAwaiter().GetResult();
+    {
+        string schemaString = GetSchemaString(subject, version);
 
-    async Task<Schema> GetSchemaImplementation(string subject, int version)
+        var schemaReader = new JsonSchemaReader();
+
+        return schemaReader.Read(schemaString);
+    }
+
+    /// <summary>
+    /// Gets the schema as a string from the file system.
+    /// </summary>
+    /// <param name="subject"></param>
+    /// <param name="version"></param>
+    /// <returns></returns>
+    private string GetSchemaString(string subject, int version)
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
@@ -34,10 +52,25 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
         if (string.IsNullOrEmpty(schemaFile))
             throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.");
 
-        string schemaString = await File.ReadAllTextAsync(schemaFile);
+        return File.ReadAllText(schemaFile);
 
-        var schemaReader = new JsonSchemaReader();
+    }
 
-        return schemaReader.Read(schemaString);
+    /// <summary>
+    /// Gets the schema as a string from the file system asynchronously.
+    /// </summary>
+    /// <param name="subject"></param>
+    /// <param name="version"></param>
+    /// <returns></returns>
+    private async Task<string> GetSchemaStringAsync(string subject, int version)
+    {
+        string schemaFileName = $"{subject}-v{version}.avsc";
+
+        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "schemas", schemaFileName).FirstOrDefault();
+
+        if (string.IsNullOrEmpty(schemaFile))
+            throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.");
+
+        return await File.ReadAllTextAsync(schemaFile);
     }
 }
