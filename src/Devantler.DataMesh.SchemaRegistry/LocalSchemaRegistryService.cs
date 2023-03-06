@@ -18,9 +18,9 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     public LocalSchemaRegistryService(LocalSchemaRegistryOptions? schemaRegistryOptions) => _schemaRegistryOptions = schemaRegistryOptions;
 
     /// <inheritdoc/>
-    public async Task<Schema> GetSchemaAsync(string subject, int version)
+    public async Task<Schema> GetSchemaAsync(string subject, int version, CancellationToken cancellationToken = default)
     {
-        string schemaString = await GetSchemaStringAsync(subject, version);
+        string schemaString = await GetSchemaStringAsync(subject, version, cancellationToken);
 
         var schemaReader = new JsonSchemaReader();
 
@@ -61,8 +61,9 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     /// </summary>
     /// <param name="subject"></param>
     /// <param name="version"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    private async Task<string> GetSchemaStringAsync(string subject, int version)
+    private async Task<string> GetSchemaStringAsync(string subject, int version, CancellationToken cancellationToken)
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
@@ -71,6 +72,6 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
         if (string.IsNullOrEmpty(schemaFile))
             throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.");
 
-        return await File.ReadAllTextAsync(schemaFile);
+        return await File.ReadAllTextAsync(schemaFile, cancellationToken);
     }
 }
