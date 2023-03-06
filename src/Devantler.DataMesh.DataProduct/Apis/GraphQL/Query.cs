@@ -1,7 +1,7 @@
 namespace Devantler.DataMesh.DataProduct.Apis.GraphQL;
 
 /// <summary>
-/// GraphQL query type.
+/// A GraphQL query.
 /// </summary>
 public partial class Query
 {
