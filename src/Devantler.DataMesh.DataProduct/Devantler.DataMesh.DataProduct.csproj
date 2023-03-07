@@ -38,7 +38,7 @@
         <Content Include="schemas/**/*.avsc" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
     <ItemGroup>
-        <AdditionalFiles Include="appsettings.y*ml" />
+        <AdditionalFiles Include="data-product-config.y*ml" />
         <AdditionalFiles Include="appsettings*.json" />
         <AdditionalFiles Include="assets/**/*" />
     </ItemGroup>

@@ -82,9 +82,13 @@ public abstract class GeneratorBase : IIncrementalGenerator
         if (appsettingsProduction is not null)
             configurationBuilder.AddJsonFile(appsettingsProduction.FilePath, optional: true);
 #endif
-        var appsettingsYaml = files.FirstOrDefault(file => new string[] { ".yaml", ".yml" }.Contains(Path.GetExtension(file.FilePath)));
-        if (appsettingsYaml is not null)
-            configurationBuilder.AddYamlFile(appsettingsYaml.FilePath, optional: true);
+        var dataProductConfig = files.FirstOrDefault(
+            file =>
+                file.FileNameWithoutExtension.Equals("data-product-config")
+                && new string[] { ".yaml", ".yml" }.Contains(Path.GetExtension(file.FilePath))
+            );
+        if (dataProductConfig is not null)
+            configurationBuilder.AddYamlFile(dataProductConfig.FilePath, optional: true);
 
         configurationBuilder.AddEnvironmentVariables();
 

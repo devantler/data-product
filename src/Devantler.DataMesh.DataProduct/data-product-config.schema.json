@@ -1,0 +1,194 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://devantler.com/product.schema.json",
+    "title": "Data Product Config",
+    "description": "Specification for a data product config",
+    "type": "object",
+    "properties": {
+        "DataProduct": {
+            "description": "The root config for a data product",
+            "type": "object",
+            "properties": {
+                "Name": {
+                    "description": "The name of the data product",
+                    "type": "string"
+                },
+                "Description": {
+                    "description": "A description of the data product.",
+                    "type": "string"
+                },
+                "Version": {
+                    "description": "The version of the data product.",
+                    "type": "string"
+                },
+                "Owner": {
+                    "description": "The owner of the data product.",
+                    "type": "object",
+                    "properties": {
+                        "Name": {
+                            "description": "The name of the owner.",
+                            "type": "string"
+                        },
+                        "Email": {
+                            "description": "The email of the owner.",
+                            "type": "string"
+                        },
+                        "Organisation": {
+                            "description": "The organisation of the owner.",
+                            "type": "string"
+                        },
+                        "Phone": {
+                            "description": "The phone number of the owner.",
+                            "type": "string"
+                        },
+                        "Website": {
+                            "description": "The website of the owner.",
+                            "type": "string"
+                        }
+                    }
+                },
+                "FeatureFlags": {
+                    "description": "The feature flags for the data product.",
+                    "type": "object",
+                    "properties": {
+                        "EnableApis": {
+                            "description": "Whether to enable specific APIs for the data product.",
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "GraphQl",
+                                    "Rest"
+                                ]
+                            }
+                        },
+                        "EnableDataIngestion": {
+                            "description": "Whether to enable data ingestion for the data product. Data Ingestion Source must be configured for this feature to take effect.",
+                            "type": "boolean"
+                        },
+                        "EnableDataPublication": {
+                            "description": "Whether to enable data publication for the data product. Data Publication Target must be configured for this feature to take effect.",
+                            "type": "boolean"
+                        },
+                        "EnableMetadataPublication": {
+                            "description": "Whether to enable metadata publication for the data product. Metadata Publication Target must be configured for this feature to take effect.",
+                            "type": "boolean"
+                        },
+                        "EnableTracing": {
+                            "description": "Whether to enable tracing for the data product. A tracing provider must be configured for this feature to take effect.",
+                            "type": "boolean"
+                        },
+                        "EnableMetrics": {
+                            "description": "Whether to enable metrics for the data product. A metrics provider must be configured for this feature to take effect.",
+                            "type": "boolean"
+                        },
+                        "EnableCaching": {
+                            "description": "Whether to enable caching for the data product. A cache store must be configured for this feature to take effect.",
+                            "type": "boolean"
+                        },
+                        "EnableAuthentication": {
+                            "description": "Whether to enable authentication for the data product. An authentication provider must be configured for this feature to take effect.",
+                            "type": "boolean"
+                        },
+                        "EnableAuthorisation": {
+                            "description": "Whether to enable authorisation for the data product. Policies must be configured for this feature to take effect.",
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "Services": {
+                    "description": "The services used by the data product.",
+                    "type": "object",
+                    "properties": {
+                        "DataStore": {
+                            "description": "The data store used by the data product.",
+                            "type": "object",
+                            "properties": {
+                                "Type": {
+                                    "description": "The type of data store.",
+                                    "type": "string",
+                                    "enum": [
+                                        "SQL",
+                                        "NoSQL"
+                                    ]
+                                },
+                                "Provider": {
+                                    "description": "The provider for the data store type.",
+                                    "type": "string",
+                                    "enum": [
+                                        "SqLite"
+                                    ]
+                                },
+                                "ConnectionString": {
+                                    "description": "The connection string for the data store.",
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "Apis": {
+                            "description": "The APIs used by the data product.",
+                            "type": "object",
+                            "properties": {
+                                "GraphQl": {
+                                    "description": "The GraphQl API used by the data product.",
+                                    "type": "object",
+                                    "properties": {}
+                                },
+                                "Rest": {
+                                    "description": "The Rest API used by the data product.",
+                                    "type": "object",
+                                    "properties": {}
+                                }
+                            }
+                        },
+                        "SchemaRegistry": {
+                            "description": "The schema registry used by the data product.",
+                            "type": "object",
+                            "properties": {
+                                "Type": {
+                                    "description": "The type of schema registry.",
+                                    "type": "string",
+                                    "enum": [
+                                        "Kafka",
+                                        "Local"
+                                    ]
+                                },
+                                "Schema": {
+                                    "description": "The schema for the schema registry.",
+                                    "type": "string",
+                                    "properties": {
+                                        "Subject": {
+                                            "description": "The subject of the schema.",
+                                            "type": "string"
+                                        },
+                                        "Version": {
+                                            "description": "The version of the schema.",
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "DataIngestionSources": {
+                            "description": "The data ingestion sources used by the data product.",
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "Type": {
+                                        "description": "The type of data ingestion source.",
+                                        "type": "string",
+                                        "enum": [
+                                            "Kafka",
+                                            "Local"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

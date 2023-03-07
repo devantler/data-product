@@ -10,8 +10,8 @@ DataProduct:
     Website: https://www.datamesh-architecture.com/data-product-canvas
   FeatureFlags:
     EnableApis:
-      - rest
-      - graphql
+      - Rest
+      - GraphQl
     EnableDataIngestion: false # TODO: #144 Enable feature gated data ingestion with configured pub/sub
     EnableDataPublication: false # TODO: #143 Enable feature gated data publication with configured pub/sub
     EnableMetadataPublication: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
@@ -25,10 +25,6 @@ DataProduct:
       Type: Relational
       Provider: Sqlite
       ConnectionString: Data Source=sqlite.db
-    Apis:
-      RestApi:
-        EnableAuthentication: false
-        EnableAuthorisation: false
     SchemaRegistry:
       Type: Local
       Schema:
