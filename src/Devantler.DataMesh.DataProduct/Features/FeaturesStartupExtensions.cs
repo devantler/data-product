@@ -1,8 +1,6 @@
 using System.Reflection;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Microsoft.FeatureManagement;
-using Devantler.DataMesh.DataProduct.Configuration.Extensions;
-using Devantler.DataMesh.DataProduct.Features.DataSource;
 using Devantler.DataMesh.DataProduct.Features.Apis;
 using Devantler.DataMesh.DataProduct.Features.DataStore;
 
@@ -19,13 +17,23 @@ public static class FeaturesStartupExtensions
     /// <param name="builder"></param>
     public static void AddFeatures(this WebApplicationBuilder builder)
     {
-        var options = builder.Configuration.GetDataProductOptions();
+        var options = builder.Configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
+            ?? throw new InvalidOperationException(
+                $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
+            );
+
         _ = builder.Services
-            .AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key)).Services
+            .AddOptions<DataProductOptions>()
+                .Configure(o => o = options);
+
+        _ = builder.Services
+            .AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
+
+        _ = builder.Services
             .AddAutoMapper(Assembly.GetExecutingAssembly())
             .AddDataStore(options)
-            .AddApis(options, builder.Environment)
-            .AddDataSources(options);
+            .AddApis(options, builder.Environment);
+        //.AddDataIngestionSources(options);
     }
 
     /// <summary>
@@ -34,9 +42,9 @@ public static class FeaturesStartupExtensions
     /// <param name="app"></param>
     public static void UseFeatures(this WebApplication app)
     {
-        var options = app.Configuration.GetDataProductOptions();
+        var options = app.Services.GetRequiredService<DataProductOptions>();
         _ = app.UseDataStore(options)
-            .UseApis(options)
-            .UseDataSources(options);
+            .UseApis(options);
+        //.UseDataIngestionSources(options);
     }
 }

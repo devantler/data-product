@@ -1,4 +1,4 @@
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 
@@ -30,7 +30,7 @@ public class DataProductOptions
     /// <summary>
     /// Options for the owner of the data product.
     /// </summary>
-    public OwnerOptions? Owner { get; set; }
+    public OwnerOptions? Owner { get; set; } = new();
 
     /// <summary>
     /// Options for the features in the data product.

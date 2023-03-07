@@ -8,21 +8,7 @@ namespace Devantler.DataMesh.DataProduct.Generator.Models;
 public class AdditionalFile
 {
     /// <summary>
-    /// Creates a new additional file.
-    /// </summary>
-    /// <param name="fileName"></param>
-    /// <param name="filePath"></param>
-    /// <param name="fileDirectoryPath"></param>
-    /// <param name="contents"></param>
-    public AdditionalFile(string fileName, string filePath, string fileDirectoryPath, SourceText? contents)
-    {
-        FileName = fileName;
-        FilePath = filePath;
-        FileDirectoryPath = fileDirectoryPath;
-        Contents = contents;
-    }
-    /// <summary>
-    /// The name of the file (without the file extension).
+    /// The name of the file.
     /// </summary>
     public string FileName { get; set; } = string.Empty;
 
@@ -36,6 +22,10 @@ public class AdditionalFile
     /// </summary>
     public string FileDirectoryPath { get; set; } = string.Empty;
 
+    /// <summary>
+    /// The name of the file without the file extension.
+    /// </summary>
+    public string FileNameWithoutExtension { get; set; } = string.Empty;
     /// <summary>
     /// The contents of the file.
     /// </summary>

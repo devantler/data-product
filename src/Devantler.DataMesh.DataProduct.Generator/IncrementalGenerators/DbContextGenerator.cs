@@ -6,8 +6,7 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions.Relational;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
@@ -35,7 +34,7 @@ public class DbContextGenerator : GeneratorBase
         if (options.Services.DataStore.Type != DataStoreType.Relational)
             return new Dictionary<string, string>();
 
-        var dataStoreOptions = options.Services.DataStore as RelationalDataStoreOptionsBase;
+        var dataStoreOptions = options.Services.DataStore;
 
         var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
         var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);

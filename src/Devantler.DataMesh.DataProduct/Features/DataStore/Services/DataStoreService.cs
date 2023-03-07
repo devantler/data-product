@@ -10,7 +10,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 /// </summary>
 /// <typeparam name="TModel"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
-public abstract class DataStoreService<TModel, TEntity> : IDataStoreService<TModel>
+public class DataStoreService<TModel, TEntity> : IDataStoreService<TModel>
     where TModel : class
     where TEntity : class, IEntity
 {

@@ -1,6 +1,6 @@
 using Chr.Avro.Representation;
 using Confluent.SchemaRegistry;
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.SchemaRegistryOptions.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 

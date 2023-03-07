@@ -16,7 +16,42 @@ public class FeatureFlagsOptions
     public List<ApiFeatureFlagValues> EnableApis { get; set; } = new();
 
     /// <summary>
-    /// A flag to indicate if data sources should be enabled for the data product.
+    /// A flag to indicate if data ingestion should be enabled for the data product.
     /// </summary>
-    public bool EnableDataSources { get; set; }
+    public bool EnableDataIngestion { get; set; }
+
+    /// <summary>
+    /// A flag to indicate if data publication should be enabled for the data product.
+    /// </summary>
+    public bool EnableDataPublication { get; set; }
+
+    /// <summary>
+    /// A flag to indicate if metadata publication should be enabled for the data product.
+    /// </summary>
+    public bool EnableMetadataPublication { get; set; }
+
+    /// <summary>
+    /// A flag to indicate if tracing should be enabled for the data product.
+    /// </summary>
+    public bool EnableTracing { get; set; }
+
+    /// <summary>
+    /// A flag to indicate if metrics should be enabled for the data product.
+    /// </summary>
+    public bool EnableMetrics { get; set; }
+
+    /// <summary>
+    /// A flag to indicate if caching should be enabled for the data product.
+    /// </summary>
+    public bool EnableCaching { get; set; }
+
+    /// <summary>
+    /// A flag to indicate if authentication should be enabled for the data product.
+    /// </summary>
+    public bool EnableAuthentication { get; set; }
+
+    /// <summary>
+    /// A flag to indicate if authorization should be enabled for the data product.
+    /// </summary>
+    public bool EnableAuthorization { get; set; }
 }

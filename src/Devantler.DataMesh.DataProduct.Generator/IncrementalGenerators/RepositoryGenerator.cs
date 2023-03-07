@@ -5,8 +5,7 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions.Relational;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
@@ -62,7 +61,7 @@ public class RepositoryGenerator : GeneratorBase
                         .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of the <see cref="{{repositoryClass.Name}}"/> class."""))
                         .AddParameter(
                             new CSharpConstructorParameter(
-                                $"IDbContextFactory<{(options.Services.DataStore as RelationalDataStoreOptionsBase)?.Provider}DbContext>", "dbContextFactory")
+                                $"IDbContextFactory<{options.Services.DataStore.Provider}DbContext>", "dbContextFactory")
                         .SetIsBaseParameter(true, "dbContextFactory.CreateDbContext()")),
                 DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
                 DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),

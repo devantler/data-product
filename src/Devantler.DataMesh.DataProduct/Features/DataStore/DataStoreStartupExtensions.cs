@@ -1,5 +1,5 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
 
 namespace Devantler.DataMesh.DataProduct.Features.DataStore;
 

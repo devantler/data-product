@@ -6,8 +6,7 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.ServiceOptions.DataStoreOptions.Relational;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
@@ -74,9 +73,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
         switch (options.Services.DataStore.Type)
         {
             case DataStoreType.Relational:
-                if (options.Services.DataStore is not RelationalDataStoreOptionsBase dataStoreOptions)
-                    throw new InvalidOperationException("Relational data store options are not set.");
-                _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{dataStoreOptions.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{dataStoreOptions.Provider}(options?.ConnectionString));");
+                _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{options.Services.DataStore.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{options.Services.DataStore.Provider}(options?.ConnectionString));");
                 foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
                 {
                     string schemaName = schema.Name.ToPascalCase();
@@ -90,7 +87,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
                         $$"""
                         using var scope = app.Services.CreateScope();
                         var services = scope.ServiceProvider;
-                        var dbContextFactory = services.GetRequiredService<IDbContextFactory<{{dataStoreOptions.Provider}}DbContext>>();
+                        var dbContextFactory = services.GetRequiredService<IDbContextFactory<{{options.Services.DataStore.Provider}}DbContext>>();
                         using var context = dbContextFactory.CreateDbContext();
                         _ = context.Database.EnsureCreated();
                         """);

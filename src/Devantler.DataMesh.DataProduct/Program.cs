@@ -2,7 +2,6 @@
 
 using Devantler.DataMesh.DataProduct.Features;
 
-
 namespace Devantler.DataMesh.DataProduct;
 
 sealed class Program
@@ -10,6 +9,16 @@ sealed class Program
     static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        string fileExtension = File.Exists("appsettings.yaml") ? "yaml" : "yml";
+
+        _ = builder.Configuration
+            .AddJsonFile("appsettings.json", optional: false)
+            .AddYamlFile($"appsettings.{fileExtension}", optional: true)
+            .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+            .AddEnvironmentVariables()
+            .AddCommandLine(args);
+
         builder.AddFeatures();
 
         var app = builder.Build();

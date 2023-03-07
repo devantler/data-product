@@ -6,11 +6,6 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 public class OwnerOptions
 {
     /// <summary>
-    /// A key to indicate the section in the configuration file that contains the owner options.
-    /// </summary>
-    public const string Key = "DataProduct:Owner";
-
-    /// <summary>
     /// The name of the owner.
     /// </summary>
     public string Name { get; set; } = string.Empty;

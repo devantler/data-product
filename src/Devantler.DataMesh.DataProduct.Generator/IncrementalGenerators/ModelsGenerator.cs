@@ -44,8 +44,7 @@ public class ModelsGenerator : GeneratorBase
                 .SetDocBlock(new CSharpDocBlock("The unique identifier for this model."));
             _ = @class.AddProperty(idProperty);
 
-            foreach (var field in schema.Fields.Where(f =>
-                         !string.Equals(f.Name, "id", StringComparison.OrdinalIgnoreCase)))
+            foreach (var field in schema.Fields.Where(f => !string.Equals(f.Name, "id", StringComparison.OrdinalIgnoreCase)))
             {
                 string propertyName = field.Name.ToPascalCase();
                 string propertyType = avroSchemaParser.Parse(field.Type, Language.CSharp);
@@ -73,8 +72,7 @@ public class ModelsGenerator : GeneratorBase
             {
                 _ = @enum.AddValue(
                     new CSharpEnumSymbol(symbol)
-                        .SetDocBlock(new CSharpDocBlock($"The {symbol} value.")
-                        )
+                        .SetDocBlock(new CSharpDocBlock($"The {symbol} value."))
                 );
             }
 
