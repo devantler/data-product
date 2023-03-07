@@ -8,10 +8,10 @@ public class ApisOptions
     /// <summary>
     /// Options for the REST API
     /// </summary>
-    public RestApiOptions RestApi { get; set; } = new();
+    public RestApiOptions Rest { get; set; } = new();
 
     /// <summary>
     /// Options for the GraphQL API
     /// </summary>
-    public GraphQlApiOptions GraphQlApi { get; set; } = new();
+    public GraphQLApiOptions GraphQL { get; set; } = new();
 }

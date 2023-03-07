@@ -35,7 +35,7 @@ public class GraphQLQueryGenerator : GeneratorBase
             .SetIsPartial(true)
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
-            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "GraphQlStartupExtensions"));
+            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "GraphQLStartupExtensions"));
 
         foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {

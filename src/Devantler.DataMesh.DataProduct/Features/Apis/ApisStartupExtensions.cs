@@ -19,7 +19,7 @@ public static class ApisStartupExtensions
     {
         return options.FeatureFlags.EnableApis.Any()
             ? services
-                .AddRestApi(options)
+                .AddRest(options)
                 .AddGraphQL(environment)
             : services;
     }
@@ -33,7 +33,7 @@ public static class ApisStartupExtensions
     {
         return options.FeatureFlags.EnableApis.Any()
             ? app
-                .UseRestApi(options)
+                .UseRest(options)
                 .UseGraphQL()
             : app;
     }

@@ -6,16 +6,16 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStor
 public enum DataStoreType
 {
     /// <summary>
-    /// A relational data store.
+    /// A SQL data store.
     /// </summary>
-    Relational = 0,
+    SQL,
 
     /// <summary>
-    /// A document-based data store.
+    /// A NoSQL data store.
     /// </summary>
-    DocumentBased = 1,
+    NoSQL,
     /// <summary>
     /// A graph-based data store.
     /// </summary>
-    GraphBased = 2
+    Graph = 2
 }

@@ -11,7 +11,7 @@ DataProduct:
   FeatureFlags:
     EnableApis:
       - Rest
-      - GraphQl
+      - GraphQL
     EnableDataIngestion: false # TODO: #144 Enable feature gated data ingestion with configured pub/sub
     EnableDataPublication: false # TODO: #143 Enable feature gated data publication with configured pub/sub
     EnableMetadataPublication: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
@@ -23,7 +23,7 @@ DataProduct:
   Services:
     DataStore:
       Type: SQL
-      Provider: SQLite
+      Provider: Sqlite
       ConnectionString: Data Source=sqlite.db
     SchemaRegistry:
       Type: Local

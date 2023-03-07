@@ -31,7 +31,7 @@ public class DbContextGenerator : GeneratorBase
         DataProductOptions options
     )
     {
-        if (options.Services.DataStore.Type != DataStoreType.Relational)
+        if (options.Services.DataStore.Type != DataStoreType.SQL)
             return new Dictionary<string, string>();
 
         var dataStoreOptions = options.Services.DataStore;

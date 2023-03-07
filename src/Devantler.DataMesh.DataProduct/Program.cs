@@ -10,12 +10,12 @@ sealed class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        string fileExtension = File.Exists("data-product-config.yaml") ? "yaml" : "yml";
+        string dataProductConfigFile = File.Exists("data-product-config.yaml") ? "data-product-config.yaml" : "data-product-config.yml";
 
         _ = builder.Configuration
             .AddJsonFile("appsettings.json", optional: false)
-            .AddYamlFile($"data-product-config.{fileExtension}", optional: true)
             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+            .AddYamlFile(dataProductConfigFile, optional: true)
             .AddEnvironmentVariables()
             .AddCommandLine(args);
 

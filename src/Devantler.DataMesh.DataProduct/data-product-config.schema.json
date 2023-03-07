@@ -57,7 +57,7 @@
                             "items": {
                                 "type": "string",
                                 "enum": [
-                                    "GraphQl",
+                                    "GraphQL",
                                     "Rest"
                                 ]
                             }
@@ -116,7 +116,7 @@
                                     "description": "The provider for the data store type.",
                                     "type": "string",
                                     "enum": [
-                                        "SQLite"
+                                        "Sqlite"
                                     ]
                                 },
                                 "ConnectionString": {
@@ -129,8 +129,8 @@
                             "description": "The APIs used by the data product.",
                             "type": "object",
                             "properties": {
-                                "GraphQl": {
-                                    "description": "The GraphQl API used by the data product.",
+                                "GraphQL": {
+                                    "description": "The GraphQL API used by the data product.",
                                     "type": "object",
                                     "properties": {}
                                 },

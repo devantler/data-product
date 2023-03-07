@@ -72,7 +72,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
 
         switch (options.Services.DataStore.Type)
         {
-            case DataStoreType.Relational:
+            case DataStoreType.SQL:
                 _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{options.Services.DataStore.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{options.Services.DataStore.Provider}(options?.ConnectionString));");
                 foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
                 {
@@ -92,9 +92,9 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
                         _ = context.Database.EnsureCreated();
                         """);
                 break;
-            case DataStoreType.DocumentBased:
+            case DataStoreType.NoSQL:
                 throw new NotSupportedException("Document based data stores are not supported yet.");
-            case DataStoreType.GraphBased:
+            case DataStoreType.Graph:
                 throw new NotSupportedException("Graph based data stores are not supported yet.");
             default:
                 throw new NotSupportedException($"Data store type '{options.Services.DataStore.Type}' is not supported.");

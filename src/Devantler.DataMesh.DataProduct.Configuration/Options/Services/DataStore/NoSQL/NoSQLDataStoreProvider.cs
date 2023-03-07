@@ -1,9 +1,9 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore.DocumentBased;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore.NoSQL;
 
 /// <summary>
-/// The document based data store provider to use.
+/// The NoSQL data store provider to use.
 /// </summary>
-public class DocumentBasedDataStoreProvider : IProvider
+public class NoSQLDataStoreProvider : IProvider
 {
     /// <summary>
     /// The MongoDb data store provider. Not supported yet.

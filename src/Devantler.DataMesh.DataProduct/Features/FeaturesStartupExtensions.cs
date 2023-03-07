@@ -3,6 +3,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Microsoft.FeatureManagement;
 using Devantler.DataMesh.DataProduct.Features.Apis;
 using Devantler.DataMesh.DataProduct.Features.DataStore;
+using Microsoft.Extensions.Options;
 
 namespace Devantler.DataMesh.DataProduct.Features;
 
@@ -23,8 +24,7 @@ public static class FeaturesStartupExtensions
             );
 
         _ = builder.Services
-            .AddOptions<DataProductOptions>()
-                .Configure(o => o = options);
+            .AddOptions<DataProductOptions>().Bind(builder.Configuration.GetSection(DataProductOptions.Key));
 
         _ = builder.Services
             .AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
@@ -42,7 +42,14 @@ public static class FeaturesStartupExtensions
     /// <param name="app"></param>
     public static void UseFeatures(this WebApplication app)
     {
-        var options = app.Services.GetRequiredService<DataProductOptions>();
+        var options = app.Services.GetRequiredService<IOptions<DataProductOptions>>().Value;
+
+        if (options.FeatureFlags.EnableAuthentication)
+            _ = app.UseAuthentication();
+
+        if (options.FeatureFlags.EnableAuthorization)
+            _ = app.UseAuthorization();
+
         _ = app.UseDataStore(options)
             .UseApis(options);
         //.UseDataIngestionSources(options);

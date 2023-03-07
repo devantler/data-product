@@ -19,9 +19,9 @@ public static partial class DataStoreStartupExtensions
         services.AddGeneratedServiceRegistrations(options.Services.DataStore);
         _ = options.Services.DataStore.Type switch
         {
-            DataStoreType.Relational => _ = services.AddDatabaseDeveloperPageExceptionFilter(),
-            DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
-            DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
+            DataStoreType.SQL => _ = services.AddDatabaseDeveloperPageExceptionFilter(),
+            DataStoreType.NoSQL => throw new NotSupportedException("Document based data stores are not supported yet."),
+            DataStoreType.Graph => throw new NotSupportedException("Graph based data stores are not supported yet."),
             _ => throw new NotSupportedException($"The data store type {options.Services.DataStore} is not supported."),
         };
         return services;
@@ -46,13 +46,13 @@ public static partial class DataStoreStartupExtensions
         }
         switch (options.Services.DataStore.Type)
         {
-            case DataStoreType.Relational:
+            case DataStoreType.SQL:
                 if (app.Environment.IsDevelopment())
                     _ = app.UseMigrationsEndPoint();
                 break;
-            case DataStoreType.DocumentBased:
+            case DataStoreType.NoSQL:
                 throw new NotSupportedException("Document based data stores are not supported yet.");
-            case DataStoreType.GraphBased:
+            case DataStoreType.Graph:
                 throw new NotSupportedException("Graph based data stores are not supported yet.");
             default:
                 throw new NotSupportedException($"The data store type {options.Services.DataStore.Type} is not supported.");

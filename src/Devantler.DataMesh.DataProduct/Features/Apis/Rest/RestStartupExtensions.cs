@@ -16,7 +16,7 @@ public static class RestStartupExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="options"></param>
-    public static IServiceCollection AddRestApi(this IServiceCollection services, DataProductOptions options)
+    public static IServiceCollection AddRest(this IServiceCollection services, DataProductOptions options)
     {
         _ = services
                 .AddControllers(
@@ -61,11 +61,8 @@ public static class RestStartupExtensions
     /// </summary>
     /// <param name="app"></param>
     /// <param name="options"></param>
-    public static WebApplication UseRestApi(this WebApplication app, DataProductOptions options)
+    public static WebApplication UseRest(this WebApplication app, DataProductOptions options)
     {
-        if (options.Services.Apis.RestApi.EnableAuthentication)
-            _ = app.UseAuthorization();
-
         _ = app.MapControllers();
         _ = app.UseSwagger().UseSwaggerUI();
         return app;

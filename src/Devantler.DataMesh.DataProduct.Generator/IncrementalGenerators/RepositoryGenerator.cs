@@ -40,10 +40,10 @@ public class RepositoryGenerator : GeneratorBase
 
             var baseClass = options.Services.DataStore.Type switch
             {
-                DataStoreType.Relational => new CSharpClass($"EntityFrameworkRepository<{schemaName}Entity>")
+                DataStoreType.SQL => new CSharpClass($"EntityFrameworkRepository<{schemaName}Entity>")
                     .SetDocBlock(new CSharpDocBlock($$"""A repository to interact with entities of type <see cref="{{schemaName}}Entity"/>""")),
-                DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
-                DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
+                DataStoreType.NoSQL => throw new NotSupportedException("Document based data stores are not supported yet."),
+                DataStoreType.Graph => throw new NotSupportedException("Graph based data stores are not supported yet."),
                 _ => throw new NotSupportedException($"The data store type {options.Services.DataStore.Type} is not supported.")
             };
 
@@ -56,15 +56,15 @@ public class RepositoryGenerator : GeneratorBase
 
             var constructor = options.Services.DataStore.Type switch
             {
-                DataStoreType.Relational
+                DataStoreType.SQL
                     => new CSharpConstructor(repositoryClass.Name)
                         .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of the <see cref="{{repositoryClass.Name}}"/> class."""))
                         .AddParameter(
                             new CSharpConstructorParameter(
                                 $"IDbContextFactory<{options.Services.DataStore.Provider}DbContext>", "dbContextFactory")
                         .SetIsBaseParameter(true, "dbContextFactory.CreateDbContext()")),
-                DataStoreType.DocumentBased => throw new NotSupportedException("Document based data stores are not supported yet."),
-                DataStoreType.GraphBased => throw new NotSupportedException("Graph based data stores are not supported yet."),
+                DataStoreType.NoSQL => throw new NotSupportedException("Document based data stores are not supported yet."),
+                DataStoreType.Graph => throw new NotSupportedException("Graph based data stores are not supported yet."),
                 _ => throw new NotSupportedException($"The data store type {options.Services.DataStore.Type} is not supported.")
             };
 

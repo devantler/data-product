@@ -3,6 +3,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 using Devantler.DataMesh.DataProduct.Models;
+using Microsoft.Extensions.Options;
 
 namespace Devantler.DataMesh.DataProduct.Features.DataIngestionSources.Services;
 
@@ -20,11 +21,11 @@ public class LocalDataIngestionSourceService<TModel> : IDataIngestionSourceServi
     /// </summary>
     public LocalDataIngestionSourceService(
         IDataStoreService<TModel> dataStoreService,
-        DataProductOptions options
+        IOptions<DataProductOptions> options
     )
     {
         _dataStoreService = dataStoreService;
-        _options = options;
+        _options = options.Value;
     }
 
     /// <inheritdoc/>

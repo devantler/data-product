@@ -3,7 +3,7 @@ namespace Devantler.DataMesh.DataProduct.Features.Apis.GraphQL;
 /// <summary>
 /// Extensions for registering GraphQL to the DI container and configuring the web application to use it.
 /// </summary>
-public static class GraphQlStartupExtensions
+public static class GraphQLStartupExtensions
 {
     /// <summary>
     /// Registers GraphQL to the DI container.
