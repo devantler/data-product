@@ -22,8 +22,8 @@ DataProduct:
     EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
   Services:
     DataStore:
-      Type: Relational
-      Provider: Sqlite
+      Type: SQL
+      Provider: SQLite
       ConnectionString: Data Source=sqlite.db
     SchemaRegistry:
       Type: Local

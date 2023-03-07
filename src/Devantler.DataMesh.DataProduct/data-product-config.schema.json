@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://devantler.com/product.schema.json",
+    "$id": "https://raw.githubusercontent.com/devantler/data-mesh/data-sources/src/Devantler.DataMesh.DataProduct/data-product-config.schema.json",
     "title": "Data Product Config",
     "description": "Specification for a data product config",
     "type": "object",
@@ -116,7 +116,7 @@
                                     "description": "The provider for the data store type.",
                                     "type": "string",
                                     "enum": [
-                                        "SqLite"
+                                        "SQLite"
                                     ]
                                 },
                                 "ConnectionString": {
@@ -155,7 +155,7 @@
                                 },
                                 "Schema": {
                                     "description": "The schema for the schema registry.",
-                                    "type": "string",
+                                    "type": "object",
                                     "properties": {
                                         "Subject": {
                                             "description": "The subject of the schema.",
@@ -163,7 +163,7 @@
                                         },
                                         "Version": {
                                             "description": "The version of the schema.",
-                                            "type": "string"
+                                            "type": "int"
                                         }
                                     }
                                 }
