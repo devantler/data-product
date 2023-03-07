@@ -163,7 +163,7 @@
                                         },
                                         "Version": {
                                             "description": "The version of the schema.",
-                                            "type": "int"
+                                            "type": "number"
                                         }
                                     }
                                 }
