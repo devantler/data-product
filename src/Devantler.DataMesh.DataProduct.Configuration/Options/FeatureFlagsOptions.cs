@@ -23,12 +23,12 @@ public class FeatureFlagsOptions
     /// <summary>
     /// A flag to indicate if data publication should be enabled for the data product.
     /// </summary>
-    public bool EnableDataPublication { get; set; }
+    public bool EnableDataEgestion { get; set; }
 
     /// <summary>
     /// A flag to indicate if metadata publication should be enabled for the data product.
     /// </summary>
-    public bool EnableMetadataPublication { get; set; }
+    public bool EnableMetadataEgestion { get; set; }
 
     /// <summary>
     /// A flag to indicate if tracing should be enabled for the data product.

@@ -23,17 +23,23 @@ public static class FeaturesStartupExtensions
                 $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
             );
 
-        _ = builder.Services
-            .AddOptions<DataProductOptions>().Bind(builder.Configuration.GetSection(DataProductOptions.Key));
+        _ = builder.Services.AddOptions<DataProductOptions>().Bind(builder.Configuration.GetSection(DataProductOptions.Key));
+        _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
+        _ = builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        
+        _ = builder.Services.AddAuthentication();
+        _ = builder.Services.AddAuthorization();
 
-        _ = builder.Services
-            .AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
+        _ = builder.Services.AddDataStore(options);
+        _ = builder.Services.AddCacheStore(options);
 
-        _ = builder.Services
-            .AddAutoMapper(Assembly.GetExecutingAssembly())
-            .AddDataStore(options)
-            .AddApis(options, builder.Environment);
-        //.AddDataIngestionSources(options);
+        _ = builder.Services.AddApis(options, builder.Environment);
+
+        _ = builder.Services.AddDataIngestionSources(options);
+        _ = builder.Services.AddDataEgestionTargets(options);
+        _ = builder.Services.AddMetadataEgestionTargets(options);
+        _ = builder.Services.AddTracingEgestionTargets(options);
+        _ = builder.Services.AddMetricsEgestionTargets(options);
     }
 
     /// <summary>
@@ -44,11 +50,13 @@ public static class FeaturesStartupExtensions
     {
         var options = app.Services.GetRequiredService<IOptions<DataProductOptions>>().Value;
 
-        if (options.FeatureFlags.EnableAuthentication)
-            _ = app.UseAuthentication();
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableAuthentication),
+            a => a.UseAuthentication()
+        );
 
-        if (options.FeatureFlags.EnableAuthorization)
-            _ = app.UseAuthorization();
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableAuthorization),
+            a => a.UseAuthorization()
+        );
 
         _ = app.UseDataStore(options)
             .UseApis(options);

@@ -8,18 +8,19 @@ public static class GraphQLStartupExtensions
     /// <summary>
     /// Registers GraphQL to the DI container.
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="builder"></param>
     /// <param name="environment"></param>
-    public static IServiceCollection AddGraphQL(this IServiceCollection services, IWebHostEnvironment environment)
+    public static WebApplicationBuilder AddGraphQL(this WebApplicationBuilder builder, IWebHostEnvironment environment)
     {
-        return services
+        _ = builder.Services
             .AddGraphQLServer()
             .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = environment.IsDevelopment())
             .AddQueryType<Query>()
             .AddProjections() // TODO: Gate this behind a setting in the options.Services.Apis.GraphQL.EnableProjections
             .AddFiltering() // TODO: Gate this behind a setting in the options.Services.Apis.GraphQL.EnableFiltering
-            .AddSorting() // TODO: Gate this behind a setting in the options.Services.Apis.GraphQL.EnableSorting
-            .Services;
+            .AddSorting(); // TODO: Gate this behind a setting in the options.Services.Apis.GraphQL.EnableSorting
+
+        return builder;
     }
 
     /// <summary>
@@ -29,6 +30,7 @@ public static class GraphQLStartupExtensions
     public static WebApplication UseGraphQL(this WebApplication app)
     {
         _ = app.MapGraphQL();
+
         return app;
     }
 }

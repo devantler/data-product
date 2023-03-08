@@ -1,6 +1,7 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Features.Apis.GraphQL;
 using Devantler.DataMesh.DataProduct.Features.Apis.Rest;
+using Microsoft.FeatureManagement;
 
 namespace Devantler.DataMesh.DataProduct.Features.Apis;
 
@@ -12,16 +13,20 @@ public static class ApisStartupExtensions
     /// <summary>
     /// Registers APIs to the DI container.
     /// </summary>
-    /// <param name="services"></param>
+    /// <param name="builder"></param>
     /// <param name="options"></param>
     /// <param name="environment"></param>
-    public static IServiceCollection AddApis(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
+    public static WebApplicationBuilder AddApis(this WebApplicationBuilder builder, DataProductOptions options, IWebHostEnvironment environment)
     {
-        return options.FeatureFlags.EnableApis.Any()
-            ? services
-                .AddRest(options)
-                .AddGraphQL(environment)
-            : services;
+        _ = builder.AddForFeature(nameof(FeatureFlagsOptions.EnableApis), ApiFeatureFlagValues.Rest.ToString(),
+            b => b.AddRest(options)
+        );
+
+        _ = builder.AddForFeature(nameof(FeatureFlagsOptions.EnableApis), ApiFeatureFlagValues.GraphQL.ToString(),
+            b => b.AddGraphQL(environment)
+        );
+
+        return builder;
     }
 
     /// <summary>
@@ -31,10 +36,14 @@ public static class ApisStartupExtensions
     /// <param name="options"></param>
     public static WebApplication UseApis(this WebApplication app, DataProductOptions options)
     {
-        return options.FeatureFlags.EnableApis.Any()
-            ? app
-                .UseRest(options)
-                .UseGraphQL()
-            : app;
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableApis), ApiFeatureFlagValues.Rest.ToString(),
+            a => a.UseRest(options)
+        );
+
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableApis), ApiFeatureFlagValues.GraphQL.ToString(),
+            a => a.UseGraphQL()
+        );
+
+        return app;
     }
 }

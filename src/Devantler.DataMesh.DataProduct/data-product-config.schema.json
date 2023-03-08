@@ -66,11 +66,11 @@
                             "description": "Whether to enable data ingestion for the data product. Data Ingestion Source must be configured for this feature to take effect.",
                             "type": "boolean"
                         },
-                        "EnableDataPublication": {
+                        "EnableDataEgestion": {
                             "description": "Whether to enable data publication for the data product. Data Publication Target must be configured for this feature to take effect.",
                             "type": "boolean"
                         },
-                        "EnableMetadataPublication": {
+                        "EnableMetadataEgestion": {
                             "description": "Whether to enable metadata publication for the data product. Metadata Publication Target must be configured for this feature to take effect.",
                             "type": "boolean"
                         },
