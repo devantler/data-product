@@ -38,13 +38,13 @@ public class DataStoreServiceGenerator : GeneratorBase
             var baseClass = new CSharpClass($"DataStoreService<{schemaName}, {schemaName}Entity>");
 
             var @class = new CSharpClass($"{schemaName}DataStoreService")
-                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .AddImport(
                     new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
                 .AddImport(new CSharpUsing("AutoMapper"))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService"))
-                .SetDocBlock(new CSharpDocBlock($"""A data store service for the <see cref="{schemaName}" /> model."""))
+                .SetDocBlock(new CSharpDocBlock($"""A data store service for the <see cref="{schemaName}" /> schema."""))
                 .SetBaseClass(baseClass);
 
             var constructor = new CSharpConstructor(@class.Name)

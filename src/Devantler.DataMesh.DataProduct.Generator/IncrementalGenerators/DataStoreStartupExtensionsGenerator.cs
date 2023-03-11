@@ -42,7 +42,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
             .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
             .SetDocBlock(new CSharpDocBlock("A class that contains extension methods for service registrations and usages for a data store."))
             .SetNamespace(codeNamespace)

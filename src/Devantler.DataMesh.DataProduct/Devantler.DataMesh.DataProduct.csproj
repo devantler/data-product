@@ -35,7 +35,7 @@
         <Compile Remove="generated/**/*.g.cs" />
     </ItemGroup>
     <ItemGroup>
-        <Content Include="schemas/**/*.avsc" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="assets/schemas/**/*.avsc" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
     <ItemGroup>
         <AdditionalFiles Include="data-product-config.y*ml" />

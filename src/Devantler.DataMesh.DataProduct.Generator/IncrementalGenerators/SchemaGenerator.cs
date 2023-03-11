@@ -13,10 +13,10 @@ using Microsoft.CodeAnalysis;
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
 /// <summary>
-/// A generator that generates Model classes in the data product.
+/// A generator that generates Schema classes in the data product.
 /// </summary>
 [Generator]
-public class ModelsGenerator : GeneratorBase
+public class SchemaGenerator : GeneratorBase
 {
     /// <inheritdoc/>
     public override Dictionary<string, string> Generate(
@@ -36,12 +36,12 @@ public class ModelsGenerator : GeneratorBase
         {
             string schemaName = schema.Name.ToPascalCase();
             var @class = new CSharpClass(schemaName)
-                .SetDocBlock(new CSharpDocBlock($"An model class for the {schemaName} record."))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel"))
-                .AddImplementation(new CSharpInterface("IModel"));
+                .SetDocBlock(new CSharpDocBlock($"An schema class for the {schemaName} record."))
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"))
+                .AddImplementation(new CSharpInterface("ISchema"));
 
             var idProperty = new CSharpProperty("Guid", "Id")
-                .SetDocBlock(new CSharpDocBlock("The unique identifier for this model."));
+                .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."));
             _ = @class.AddProperty(idProperty);
 
             foreach (var field in schema.Fields.Where(f => !string.Equals(f.Name, "id", StringComparison.OrdinalIgnoreCase)))
@@ -66,7 +66,7 @@ public class ModelsGenerator : GeneratorBase
             string schemaName = schema.Name.ToPascalCase();
             var @enum = new CSharpEnum(schemaName)
                 .SetDocBlock(new CSharpDocBlock($"An enum class for the {schemaName} record."))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel"));
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"));
 
             foreach (string symbol in schema.Symbols)
             {

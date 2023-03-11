@@ -38,12 +38,12 @@ public class RestApiControllerGenerator : GeneratorBase
             string schemaName = schema.Name.ToPascalCase();
             var @class = new CSharpClass($"{schemaName.ToPlural()}Controller")
                 .AddImport(new CSharpUsing("AutoMapper"))
-                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreService")))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestApiController"))
                 .SetDocBlock(new CSharpDocBlock(
-                    $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> model."""))
+                    $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
                 .SetBaseClass(new CSharpClass($"RestApiController<{schemaName}>"));
 
             var constructor = new CSharpConstructor(@class.Name)

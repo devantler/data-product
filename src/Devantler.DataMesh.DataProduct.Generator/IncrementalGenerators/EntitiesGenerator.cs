@@ -36,7 +36,7 @@ public class EntitiesGenerator : GeneratorBase
             string schemaName = schema.Name.ToPascalCase();
             var @class = new CSharpClass($"{schemaName}Entity")
                 .SetDocBlock(new CSharpDocBlock($"An entity class for the {schemaName} record."))
-                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity"))
                 .AddImplementation(new CSharpInterface("IEntity"));
 

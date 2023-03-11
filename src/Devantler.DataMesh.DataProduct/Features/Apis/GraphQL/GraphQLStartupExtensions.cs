@@ -8,11 +8,11 @@ public static class GraphQLStartupExtensions
     /// <summary>
     /// Registers GraphQL to the DI container.
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="services"></param>
     /// <param name="environment"></param>
-    public static WebApplicationBuilder AddGraphQL(this WebApplicationBuilder builder, IWebHostEnvironment environment)
+    public static IServiceCollection AddGraphQL(this IServiceCollection services, IWebHostEnvironment environment)
     {
-        _ = builder.Services
+        _ = services
             .AddGraphQLServer()
             .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = environment.IsDevelopment())
             .AddQueryType<Query>()
@@ -20,7 +20,7 @@ public static class GraphQLStartupExtensions
             .AddFiltering() // TODO: Gate this behind a setting in the options.Services.Apis.GraphQL.EnableFiltering
             .AddSorting(); // TODO: Gate this behind a setting in the options.Services.Apis.GraphQL.EnableSorting
 
-        return builder;
+        return services;
     }
 
     /// <summary>

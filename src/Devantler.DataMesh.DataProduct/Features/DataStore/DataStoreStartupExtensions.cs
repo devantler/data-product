@@ -11,20 +11,20 @@ public static partial class DataStoreStartupExtensions
     /// <summary>
     /// Registers a data store to the DI container.
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="services"></param>
     /// <param name="options"></param>
     /// <exception cref="NotImplementedException">Thrown when a data store is not implemented.</exception>
-    public static WebApplicationBuilder AddDataStore(this WebApplicationBuilder builder, DataProductOptions options)
+    public static IServiceCollection AddDataStore(this IServiceCollection services, DataProductOptions options)
     {
-        builder.Services.AddGeneratedServiceRegistrations(options.Services.DataStore);
+        services.AddGeneratedServiceRegistrations(options.Services.DataStore);
         _ = options.Services.DataStore.Type switch
         {
-            DataStoreType.SQL => _ = builder.Services.AddDatabaseDeveloperPageExceptionFilter(),
+            DataStoreType.SQL => _ = services.AddDatabaseDeveloperPageExceptionFilter(),
             DataStoreType.NoSQL => throw new NotSupportedException("Document based data stores are not supported yet."),
             DataStoreType.Graph => throw new NotSupportedException("Graph based data stores are not supported yet."),
             _ => throw new NotSupportedException($"The data store type {options.Services.DataStore} is not supported."),
         };
-        return builder;
+        return services;
     }
 
     /// <summary>

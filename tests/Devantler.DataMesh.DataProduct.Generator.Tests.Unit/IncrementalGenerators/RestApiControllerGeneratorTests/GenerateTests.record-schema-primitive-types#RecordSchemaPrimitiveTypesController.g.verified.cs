@@ -8,7 +8,7 @@ using Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 /// <summary>
-/// A controller to handle REST API requests for a the <see cref="RecordSchemaPrimitiveTypes" /> model.
+/// A controller to handle REST API requests for a the <see cref="RecordSchemaPrimitiveTypes" /> schema.
 /// </summary>
 public class RecordSchemaPrimitiveTypesController : RestApiController<RecordSchemaPrimitiveTypes>
 {

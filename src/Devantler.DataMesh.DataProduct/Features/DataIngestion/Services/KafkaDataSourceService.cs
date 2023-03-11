@@ -1,24 +1,23 @@
 using Confluent.Kafka;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
-using Devantler.DataMesh.DataProduct.Models;
 
-namespace Devantler.DataMesh.DataProduct.Features.DataIngestionSources.Services;
+namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 
 /// <summary>
 /// A data ingestion source service that ingests data from a Kafka topic.
 /// </summary>
-public abstract class KafkaDataIngestionSourceService<TModel> : IDataIngestionSourceService
-    where TModel : class, IModel
+public abstract class KafkaDataIngestionSourceService<TSchema> : IDataIngestionSourceService
+    where TSchema : class, Devantler.DataMesh.DataProduct.Schemas.ISchema
 {
-    readonly IDataStoreService<TModel> _dataStoreService;
+    readonly IDataStoreService<TSchema> _dataStoreService;
     readonly string _topic;
-    readonly IConsumer<Guid, TModel> _consumer;
+    readonly IConsumer<Guid, TSchema> _consumer;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="KafkaDataIngestionSourceService{TModel}"/> class.
+    /// Initializes a new instance of the <see cref="KafkaDataIngestionSourceService{TSchema}"/> class.
     /// </summary>
-    protected KafkaDataIngestionSourceService(IDataStoreService<TModel> dataStoreService, KafkaDataIngestionSourceOptions options)
+    protected KafkaDataIngestionSourceService(IDataStoreService<TSchema> dataStoreService, KafkaDataIngestionSourceOptions options)
     {
         _dataStoreService = dataStoreService;
         var consumerConfig = new ConsumerConfig
@@ -27,7 +26,7 @@ public abstract class KafkaDataIngestionSourceService<TModel> : IDataIngestionSo
             GroupId = options.GroupId
         };
         _topic = options.Topic;
-        _consumer = new ConsumerBuilder<Guid, TModel>(consumerConfig).Build();
+        _consumer = new ConsumerBuilder<Guid, TSchema>(consumerConfig).Build();
     }
 
     /// <summary>
@@ -42,9 +41,9 @@ public abstract class KafkaDataIngestionSourceService<TModel> : IDataIngestionSo
         while (!cancellationToken.IsCancellationRequested)
         {
             var consumeResult = _consumer.Consume(cancellationToken);
-            var model = consumeResult.Message.Value;
-            model.Id = consumeResult.Message.Key;
-            _ = _dataStoreService.CreateSingleAsync(model, cancellationToken);
+            var schema = consumeResult.Message.Value;
+            schema.Id = consumeResult.Message.Key;
+            _ = _dataStoreService.CreateSingleAsync(schema, cancellationToken);
         }
 
         return Task.CompletedTask;

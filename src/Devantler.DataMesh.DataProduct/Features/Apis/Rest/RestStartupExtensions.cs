@@ -14,16 +14,16 @@ public static class RestStartupExtensions
     /// <summary>
     /// Registers REST to the DI container.
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="services"></param>
     /// <param name="options"></param>
-    public static WebApplicationBuilder AddRest(this WebApplicationBuilder builder, DataProductOptions options)
+    public static IServiceCollection AddRest(this IServiceCollection services, DataProductOptions options)
     {
-        _ = builder.Services
+        _ = services
                 .AddControllers(
                     options => options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())))
                 .AddJsonOptions(
                     options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-        _ = builder.Services.AddSwaggerGen(swaggerOptions =>
+        _ = services.AddSwaggerGen(swaggerOptions =>
         {
             swaggerOptions.SwaggerDoc(
                 "v1",
@@ -52,8 +52,8 @@ public static class RestStartupExtensions
             swaggerOptions.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory,
                 $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
         });
-        _ = builder.Services.AddEndpointsApiExplorer();
-        return builder;
+        _ = services.AddEndpointsApiExplorer();
+        return services;
     }
 
     /// <summary>

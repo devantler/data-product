@@ -36,7 +36,7 @@ public class AutoMapperProfileGenerator : GeneratorBase
 
         var @class = new CSharpClass("AutoMapperProfile")
             .AddImport(new CSharpUsing("AutoMapper"))
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
             .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "Program"))
             .SetDocBlock(new CSharpDocBlock("AutoMapper profile for mapping between models and entities."))
             .SetBaseClass(new CSharpClass("Profile"));

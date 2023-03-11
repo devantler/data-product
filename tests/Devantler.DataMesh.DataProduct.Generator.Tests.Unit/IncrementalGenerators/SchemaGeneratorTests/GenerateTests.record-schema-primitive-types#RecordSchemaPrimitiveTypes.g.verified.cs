@@ -4,12 +4,12 @@
 // Any changes made to this file will be overwritten.
 namespace Devantler.DataMesh.DataProduct.Models;
 /// <summary>
-/// An model class for the RecordSchemaPrimitiveTypes record.
+/// An schema class for the RecordSchemaPrimitiveTypes record.
 /// </summary>
-public class RecordSchemaPrimitiveTypes : IModel
+public class RecordSchemaPrimitiveTypes : ISchema
 {
     /// <summary>
-    /// The unique identifier for this model.
+    /// The unique identifier for this schema.
     /// </summary>
     public Guid Id { get; set; }
     /// <summary>

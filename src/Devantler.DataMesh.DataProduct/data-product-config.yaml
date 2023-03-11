@@ -14,7 +14,7 @@ DataProduct:
       - GraphQL
     EnableDataIngestion: false # TODO: #144 Enable feature gated data ingestion with configured pub/sub
     EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
-    EnableMetadataEgestion: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
+    EnableMetadata: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
     EnableTracing: false # TODO: #141 Enable feature gated tracing with OpenTelemetry and Jaeger
     EnableMetrics: false # TODO: #140 Enable feature gated metrics with Prometheus and Grafana
     EnableCaching: false # TODO: #139 Enable feature gated caching with Redis

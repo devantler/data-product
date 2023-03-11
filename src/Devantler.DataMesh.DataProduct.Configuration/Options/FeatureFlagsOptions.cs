@@ -26,9 +26,9 @@ public class FeatureFlagsOptions
     public bool EnableDataEgestion { get; set; }
 
     /// <summary>
-    /// A flag to indicate if metadata publication should be enabled for the data product.
+    /// A flag to indicate if metadata should be enabled for the data product.
     /// </summary>
-    public bool EnableMetadataEgestion { get; set; }
+    public bool EnableMetadata { get; set; }
 
     /// <summary>
     /// A flag to indicate if tracing should be enabled for the data product.
@@ -51,7 +51,7 @@ public class FeatureFlagsOptions
     public bool EnableAuthentication { get; set; }
 
     /// <summary>
-    /// A flag to indicate if authorization should be enabled for the data product.
+    /// A flag to indicate if authorisation should be enabled for the data product.
     /// </summary>
-    public bool EnableAuthorization { get; set; }
+    public bool EnableAuthorisation { get; set; }
 }

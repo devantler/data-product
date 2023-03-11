@@ -1,7 +1,6 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Features.Apis.GraphQL;
 using Devantler.DataMesh.DataProduct.Features.Apis.Rest;
-using Microsoft.FeatureManagement;
 
 namespace Devantler.DataMesh.DataProduct.Features.Apis;
 
@@ -13,20 +12,15 @@ public static class ApisStartupExtensions
     /// <summary>
     /// Registers APIs to the DI container.
     /// </summary>
-    /// <param name="builder"></param>
+    /// <param name="services"></param>
     /// <param name="options"></param>
     /// <param name="environment"></param>
-    public static WebApplicationBuilder AddApis(this WebApplicationBuilder builder, DataProductOptions options, IWebHostEnvironment environment)
+    public static IServiceCollection AddApis(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
     {
-        _ = builder.AddForFeature(nameof(FeatureFlagsOptions.EnableApis), ApiFeatureFlagValues.Rest.ToString(),
-            b => b.AddRest(options)
-        );
+        _ = services.AddRest(options);
+        _ = services.AddGraphQL(environment);
 
-        _ = builder.AddForFeature(nameof(FeatureFlagsOptions.EnableApis), ApiFeatureFlagValues.GraphQL.ToString(),
-            b => b.AddGraphQL(environment)
-        );
-
-        return builder;
+        return services;
     }
 
     /// <summary>

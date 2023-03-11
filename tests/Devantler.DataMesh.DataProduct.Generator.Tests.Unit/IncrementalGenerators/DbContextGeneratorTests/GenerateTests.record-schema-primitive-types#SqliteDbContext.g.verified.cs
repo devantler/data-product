@@ -21,7 +21,7 @@ public class SqliteDbContext : DbContext
     /// </summary>
     public DbSet<RecordSchemaPrimitiveTypesEntity> RecordSchemaPrimitiveTypes => Set<RecordSchemaPrimitiveTypesEntity>();
     /// <summary>
-    /// A method to configure the model.
+    /// A method to configure the schema.
     /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

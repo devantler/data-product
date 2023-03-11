@@ -1,4 +1,3 @@
-using Devantler.DataMesh.DataProduct.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
@@ -6,22 +5,22 @@ namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 /// <summary>
 /// Generic interface for REST Controllers.
 /// </summary>
-/// <typeparam name="TModel"></typeparam>
-public interface IController<TModel> where TModel : class, IModel
+/// <typeparam name="TSchema"></typeparam>
+public interface IController<TSchema> where TSchema : class, Schemas.ISchema
 {
     /// <summary>
     /// Read an entity by id.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TModel>> GetSingleAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ActionResult<TSchema>> GetSingleAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities by id.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TModel>>> GetMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities with pagination.
@@ -29,7 +28,7 @@ public interface IController<TModel> where TModel : class, IModel
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TModel>>> GetMultipleWithPaginationAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> GetMultipleWithPaginationAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities with limit and offset.
@@ -37,47 +36,47 @@ public interface IController<TModel> where TModel : class, IModel
     /// <param name="limit">20 by default</param>
     /// <param name="offset">0 by default</param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TModel>>> GetMultipleWithLimitAsync(int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> GetMultipleWithLimitAsync(int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates an entity.
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="schema"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TModel>> PostSingleAsync(TModel model, CancellationToken cancellationToken = default);
+    Task<ActionResult<TSchema>> PostSingleAsync(TSchema schema, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates multiple entities.
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<int>> PostMultipleAsync(IEnumerable<TModel> models, CancellationToken cancellationToken = default);
+    Task<ActionResult<int>> PostMultipleAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates an entity.
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="schema"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TModel>> PutSingleAsync(TModel model, CancellationToken cancellationToken = default);
+    Task<ActionResult<TSchema>> PutSingleAsync(TSchema schema, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates multiple entities.
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<int>> PutMultipleAsync(IEnumerable<TModel> models, CancellationToken cancellationToken = default);
+    Task<ActionResult<int>> PutMultipleAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes an entity.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TModel>> DeleteSingleAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ActionResult<TSchema>> DeleteSingleAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple entities.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TModel>>> DeleteMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
 }

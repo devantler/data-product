@@ -54,7 +54,7 @@ public class DbContextGenerator : GeneratorBase
                 .SetIsBaseParameter(true));
 
         var onModelCreatingMethod = new CSharpMethod("OnModelCreating")
-            .SetDocBlock(new CSharpDocBlock("A method to configure the model."))
+            .SetDocBlock(new CSharpDocBlock("A method to configure the schema."))
             .AddParameter(new CSharpParameter("ModelBuilder", "modelBuilder"))
             .SetVisibility(Visibility.Protected)
             .SetIsOverride(true);

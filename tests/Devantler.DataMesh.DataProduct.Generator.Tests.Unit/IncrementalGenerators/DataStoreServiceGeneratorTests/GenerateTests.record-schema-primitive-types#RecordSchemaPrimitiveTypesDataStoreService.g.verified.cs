@@ -8,7 +8,7 @@ using Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 using AutoMapper;
 namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 /// <summary>
-/// A data store service for the <see cref="RecordSchemaPrimitiveTypes" /> model.
+/// A data store service for the <see cref="RecordSchemaPrimitiveTypes" /> schema.
 /// </summary>
 public class RecordSchemaPrimitiveTypesDataStoreService : DataStoreService<RecordSchemaPrimitiveTypes, RecordSchemaPrimitiveTypesEntity>
 {

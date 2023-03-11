@@ -4,6 +4,12 @@ using Microsoft.FeatureManagement;
 using Devantler.DataMesh.DataProduct.Features.Apis;
 using Devantler.DataMesh.DataProduct.Features.DataStore;
 using Microsoft.Extensions.Options;
+using Devantler.DataMesh.DataProduct.Features.DataIngestion;
+using Devantler.DataMesh.DataProduct.Features.DataEgestion;
+using Devantler.DataMesh.DataProduct.Features.Tracing;
+using Devantler.DataMesh.DataProduct.Features.Metadata;
+using Devantler.DataMesh.DataProduct.Features.Metrics;
+using Devantler.DataMesh.DataProduct.Features.Caching;
 
 namespace Devantler.DataMesh.DataProduct.Features;
 
@@ -26,20 +32,21 @@ public static class FeaturesStartupExtensions
         _ = builder.Services.AddOptions<DataProductOptions>().Bind(builder.Configuration.GetSection(DataProductOptions.Key));
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
         _ = builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        
+
         _ = builder.Services.AddAuthentication();
         _ = builder.Services.AddAuthorization();
 
         _ = builder.Services.AddDataStore(options);
-        _ = builder.Services.AddCacheStore(options);
+        _ = builder.Services.AddCaching(options);
+
+        _ = builder.Services.AddDataIngestion(options);
+        _ = builder.Services.AddDataEgestion(options);
+
+        _ = builder.Services.AddMetadata(options);
+        _ = builder.Services.AddMetrics(options);
+        _ = builder.Services.AddTracing(options);
 
         _ = builder.Services.AddApis(options, builder.Environment);
-
-        _ = builder.Services.AddDataIngestionSources(options);
-        _ = builder.Services.AddDataEgestionTargets(options);
-        _ = builder.Services.AddMetadataEgestionTargets(options);
-        _ = builder.Services.AddTracingEgestionTargets(options);
-        _ = builder.Services.AddMetricsEgestionTargets(options);
     }
 
     /// <summary>
@@ -54,12 +61,36 @@ public static class FeaturesStartupExtensions
             a => a.UseAuthentication()
         );
 
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableAuthorization),
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableAuthorisation),
             a => a.UseAuthorization()
         );
 
-        _ = app.UseDataStore(options)
-            .UseApis(options);
-        //.UseDataIngestionSources(options);
+        _ = app.UseDataStore(options);
+
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableCaching),
+            a => a.UseCaching(options)
+        );
+
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableDataIngestion),
+            a => a.UseDataIngestion(options)
+        );
+
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableDataEgestion),
+            a => a.UseDataEgestion(options)
+        );
+
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableMetadata),
+            a => a.UseMetadata(options)
+        );
+
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableMetrics),
+            a => a.UseMetrics(options)
+        );
+
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableTracing),
+            a => a.UseTracing(options)
+        );
+
+        _ = app.UseApis(options);
     }
 }
