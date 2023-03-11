@@ -61,12 +61,11 @@ public static class RestStartupExtensions
     /// </summary>
     /// <param name="app"></param>
     /// <param name="options"></param>
-    public static IApplicationBuilder UseRest(this IApplicationBuilder app, DataProductOptions options)
+    public static WebApplication UseRest(this WebApplication app, DataProductOptions options)
     {
         _ = app.UseSwagger();
         _ = app.UseSwaggerUI();
-        _ = app.UseEndpoints(endpoints
-            => _ = endpoints.MapControllers());
+        _ = app.MapControllers();
 
         return app;
     }

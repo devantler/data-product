@@ -27,10 +27,9 @@ public static class GraphQLStartupExtensions
     /// Configures the web application to use GraphQL.
     /// </summary>
     /// <param name="app"></param>
-    public static IApplicationBuilder UseGraphQL(this IApplicationBuilder app)
+    public static WebApplication UseGraphQL(this WebApplication app)
     {
-        _ = app.UseEndpoints(endpoints
-            => _ = endpoints.MapGraphQL());
+        _ = app.MapGraphQL();
 
         return app;
     }
