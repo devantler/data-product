@@ -30,11 +30,13 @@ public static class ApisStartupExtensions
     /// <param name="options"></param>
     public static WebApplication UseApis(this WebApplication app, DataProductOptions options)
     {
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableApis), ApiFeatureFlagValues.Rest.ToString(),
+        _ = app.UseRouting();
+
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableApis), nameof(ApiFeatureFlagValues.Rest),
             a => a.UseRest(options)
         );
 
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableApis), ApiFeatureFlagValues.GraphQL.ToString(),
+        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableApis), nameof(ApiFeatureFlagValues.GraphQL),
             a => a.UseGraphQL()
         );
 

@@ -49,7 +49,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
                 "DataProduct": {
                     "Services": {
                         "DataStore": {
-                            "Type": "DocumentBased",
+                            "Type": "NoSQL",
                             "Provider": "MongoDb",
                             "ConnectionString": "mongodb://localhost:27017"
                         },
