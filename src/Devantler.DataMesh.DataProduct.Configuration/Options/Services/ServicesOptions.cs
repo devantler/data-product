@@ -12,6 +12,11 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services;
 public class ServicesOptions
 {
     /// <summary>
+    /// The key for the services options.
+    /// </summary>
+    public static string Key { get; set; } = "DataProduct:Services";
+
+    /// <summary>
     /// Options for the schema registry used by the data product.
     /// </summary>
     public ISchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
@@ -24,7 +29,7 @@ public class ServicesOptions
     /// <summary>
     /// Options for the data ingestion sources.
     /// </summary>
-    public IList<IDataIngestionSourceOptions> DataIngestionSources { get; set; } = new List<IDataIngestionSourceOptions>();
+    public List<IDataIngestionSourceOptions> DataIngestionSources { get; set; } = new();
 
     /// <summary>
     /// Options for the APIs.

@@ -1,25 +1,11 @@
 DataProduct:
   Name: Students Data Product
-  Description: A data product to query and manage students and courses at SDU.
   Version: v0.0.1
-  Owner:
-    Name: Test User
-    Email: test@email.com
-    Organisation: Devantler Corp
-    Phone: +45 41240202
-    Website: https://www.datamesh-architecture.com/data-product-canvas
   FeatureFlags:
     EnableApis:
       - Rest
       - GraphQL
-    EnableDataIngestion: false # TODO: #144 Enable feature gated data ingestion with configured pub/sub
-    EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
-    EnableMetadata: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
-    EnableTracing: false # TODO: #141 Enable feature gated tracing with OpenTelemetry and Jaeger
-    EnableMetrics: false # TODO: #140 Enable feature gated metrics with Prometheus and Grafana
-    EnableCaching: false # TODO: #139 Enable feature gated caching with Redis
-    EnableAuthentication: false # TODO: #138 Enable feature gated authentication with Duende IdentityServer and OpenID Connect
-    EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
+    EnableDataIngestion: true
   Services:
     DataStore:
       Type: SQL
@@ -32,8 +18,4 @@ DataProduct:
         Version: 1
     DataIngestionSources:
       - Type: Local
-        FilePath: data/contoso-university-single-value.json
-      - Type: Kafka
-        BootstrapServers: https://kafka.devantler.com
-        GroupId: dp-students-ingestion
-        Topic: contoso-university
+        FilePath: assets/data/contoso-university-single-value.json

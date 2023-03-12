@@ -6,10 +6,9 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataInge
 public interface IDataIngestionSourceOptions
 {
     /// <summary>
-    /// A key to indicate the section in the configuration file that contains the data ingestion sources options.
+    /// The key for the data ingestion source options.
     /// </summary>
     public const string Key = "DataProduct:Services:DataIngestionSources";
-
     /// <summary>
     /// The data ingestion source type to use.
     /// </summary>

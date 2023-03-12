@@ -10,6 +10,7 @@ using Devantler.DataMesh.DataProduct.Features.Tracing;
 using Devantler.DataMesh.DataProduct.Features.Metadata;
 using Devantler.DataMesh.DataProduct.Features.Metrics;
 using Devantler.DataMesh.DataProduct.Features.Caching;
+using Devantler.DataMesh.DataProduct.Configuration.Extensions;
 
 namespace Devantler.DataMesh.DataProduct.Features;
 
@@ -24,10 +25,7 @@ public static class FeaturesStartupExtensions
     /// <param name="builder"></param>
     public static void AddFeatures(this WebApplicationBuilder builder)
     {
-        var options = builder.Configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
-            ?? throw new InvalidOperationException(
-                $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
-            );
+        var options = builder.Configuration.GetDataProductOptions();
 
         _ = builder.Services.AddOptions<DataProductOptions>().Bind(builder.Configuration.GetSection(DataProductOptions.Key));
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));

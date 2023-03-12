@@ -1,6 +1,7 @@
 using Confluent.Kafka;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
+using Microsoft.Extensions.Options;
 
 namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 
@@ -8,7 +9,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 /// A data ingestion source service that ingests data from a Kafka topic.
 /// </summary>
 public abstract class KafkaDataIngestionSourceService<TSchema> : IDataIngestionSourceService
-    where TSchema : class, Devantler.DataMesh.DataProduct.Schemas.ISchema
+    where TSchema : class, Schemas.ISchema
 {
     readonly IDataStoreService<TSchema> _dataStoreService;
     readonly string _topic;
@@ -17,15 +18,15 @@ public abstract class KafkaDataIngestionSourceService<TSchema> : IDataIngestionS
     /// <summary>
     /// Initializes a new instance of the <see cref="KafkaDataIngestionSourceService{TSchema}"/> class.
     /// </summary>
-    protected KafkaDataIngestionSourceService(IDataStoreService<TSchema> dataStoreService, KafkaDataIngestionSourceOptions options)
+    protected KafkaDataIngestionSourceService(IDataStoreService<TSchema> dataStoreService, IOptions<KafkaDataIngestionSourceOptions> options)
     {
         _dataStoreService = dataStoreService;
         var consumerConfig = new ConsumerConfig
         {
-            BootstrapServers = options.BootstrapServers,
-            GroupId = options.GroupId
+            BootstrapServers = options.Value.BootstrapServers,
+            GroupId = options.Value.GroupId
         };
-        _topic = options.Topic;
+        _topic = options.Value.Topic;
         _consumer = new ConsumerBuilder<Guid, TSchema>(consumerConfig).Build();
     }
 
