@@ -27,7 +27,17 @@ public static class FeaturesStartupExtensions
     {
         var options = builder.Configuration.GetDataProductOptions();
 
-        _ = builder.Services.AddOptions<DataProductOptions>().Bind(builder.Configuration.GetSection(DataProductOptions.Key));
+        _ = builder.Services.AddOptions<DataProductOptions>().Configure(
+            o =>
+            {
+                o.Name = options.Name;
+                o.Description = options.Description;
+                o.Version = options.Version;
+                o.Owner = options.Owner;
+                o.FeatureFlags = options.FeatureFlags;
+                o.Services = options.Services;
+            }
+        );
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
         _ = builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
@@ -37,7 +47,9 @@ public static class FeaturesStartupExtensions
         _ = builder.Services.AddDataStore(options);
         _ = builder.Services.AddCaching(options);
 
-        _ = builder.Services.AddDataIngestion(options);
+        if (options.FeatureFlags.EnableDataIngestion)
+            _ = builder.Services.AddDataIngestion(options);
+        
         _ = builder.Services.AddDataEgestion(options);
 
         _ = builder.Services.AddMetadata(options);
@@ -67,10 +79,6 @@ public static class FeaturesStartupExtensions
 
         _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableCaching),
             a => a.UseCaching(options)
-        );
-
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableDataIngestion),
-            a => a.UseDataIngestion(options)
         );
 
         _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableDataEgestion),
