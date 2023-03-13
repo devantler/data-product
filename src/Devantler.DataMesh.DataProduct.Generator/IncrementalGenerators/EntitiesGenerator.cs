@@ -40,7 +40,7 @@ public class EntitiesGenerator : GeneratorBase
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity"))
                 .AddImplementation(new CSharpInterface("IEntity"));
 
-            var idProperty = new CSharpProperty("Guid", "Id")
+            var idProperty = new CSharpProperty("string", "Id")
                 .SetDocBlock(new CSharpDocBlock("The unique identifier for this entity."));
             _ = @class.AddProperty(idProperty);
 

@@ -3,6 +3,11 @@
     "type": "record",
     "fields": [
         {
+            "name": "Id",
+            "type": "string",
+            "logicalType": "uuid"
+        },
+        {
             "name": "FirstMidName",
             "type": "string"
         },
@@ -23,6 +28,11 @@
                     "type": "record",
                     "fields": [
                         {
+                            "name": "Id",
+                            "type": "string",
+                            "logicalType": "uuid"
+                        },
+                        {
                             "name": "Grade",
                             "type": {
                                 "type": "enum",
@@ -42,6 +52,11 @@
                                 "name": "Course",
                                 "type": "record",
                                 "fields": [
+                                    {
+                                        "name": "Id",
+                                        "type": "string",
+                                        "logicalType": "uuid"
+                                    },
                                     {
                                         "name": "Title",
                                         "type": "string"

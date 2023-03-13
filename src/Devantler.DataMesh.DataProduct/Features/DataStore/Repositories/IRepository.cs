@@ -27,7 +27,7 @@ public interface IRepository<T> where T : IEntity
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<T> ReadSingleAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<T> ReadSingleAsync(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads all entities from a data store.
@@ -48,7 +48,7 @@ public interface IRepository<T> where T : IEntity
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<T>> ReadMultipleAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
+    Task<IEnumerable<T>> ReadMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads paged entities from a relational database.
@@ -87,12 +87,12 @@ public interface IRepository<T> where T : IEntity
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<T> DeleteSingleAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<T> DeleteSingleAsync(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple entities from a data store.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<int> DeleteMultipleAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default);
+    Task<int> DeleteMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
 }

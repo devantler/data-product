@@ -1,16 +1,16 @@
 using System.Reflection;
+using Devantler.DataMesh.DataProduct.Configuration.Extensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Microsoft.FeatureManagement;
 using Devantler.DataMesh.DataProduct.Features.Apis;
-using Devantler.DataMesh.DataProduct.Features.DataStore;
-using Microsoft.Extensions.Options;
-using Devantler.DataMesh.DataProduct.Features.DataIngestion;
+using Devantler.DataMesh.DataProduct.Features.Caching;
 using Devantler.DataMesh.DataProduct.Features.DataEgestion;
-using Devantler.DataMesh.DataProduct.Features.Tracing;
+using Devantler.DataMesh.DataProduct.Features.DataIngestion;
+using Devantler.DataMesh.DataProduct.Features.DataStore;
 using Devantler.DataMesh.DataProduct.Features.Metadata;
 using Devantler.DataMesh.DataProduct.Features.Metrics;
-using Devantler.DataMesh.DataProduct.Features.Caching;
-using Devantler.DataMesh.DataProduct.Configuration.Extensions;
+using Devantler.DataMesh.DataProduct.Features.Tracing;
+using Microsoft.Extensions.Options;
+using Microsoft.FeatureManagement;
 
 namespace Devantler.DataMesh.DataProduct.Features;
 
@@ -49,7 +49,7 @@ public static class FeaturesStartupExtensions
 
         if (options.FeatureFlags.EnableDataIngestion)
             _ = builder.Services.AddDataIngestion(options);
-        
+
         _ = builder.Services.AddDataEgestion(options);
 
         _ = builder.Services.AddMetadata(options);

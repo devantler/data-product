@@ -1,11 +1,14 @@
 {
+    "Id": "11111111-1111-1111-1111-111111111111",
     "FirstMidName": "John",
     "LastName": "Doe",
     "EnrollmentDate": "2022-09-01",
     "Enrollments": [
         {
+            "Id": "11111111-1111-1111-1111-111111111111",
             "Grade": 1,
             "Course": {
+                "Id": "11111111-1111-1111-1111-111111111111",
                 "Title": "Intro to Computer Science",
                 "Credits": 4
             }

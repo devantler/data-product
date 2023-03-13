@@ -22,7 +22,7 @@ public abstract class RestApiController<TSchema> : ControllerBase, IController<T
 
     /// <inheritdoc />
     [HttpGet("{id}")]
-    public async Task<ActionResult<TSchema>> GetSingleAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<TSchema>> GetSingleAsync(string id, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetSingleAsync(id, cancellationToken);
         return Ok(result);
@@ -30,7 +30,7 @@ public abstract class RestApiController<TSchema> : ControllerBase, IController<T
 
     /// <inheritdoc />
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync([FromQuery] List<Guid> ids,
+    public async Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync([FromQuery] List<string> ids,
         CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleAsync(ids, cancellationToken);
@@ -90,7 +90,7 @@ public abstract class RestApiController<TSchema> : ControllerBase, IController<T
 
     /// <inheritdoc />
     [HttpDelete("{id}")]
-    public async Task<ActionResult<TSchema>> DeleteSingleAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<TSchema>> DeleteSingleAsync(string id, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.DeleteSingleAsync(id, cancellationToken);
         return Ok(result);
@@ -98,7 +98,7 @@ public abstract class RestApiController<TSchema> : ControllerBase, IController<T
 
     /// <inheritdoc />
     [HttpDelete]
-    public async Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync([FromQuery] List<Guid> ids,
+    public async Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync([FromQuery] List<string> ids,
         CancellationToken cancellationToken = default)
     {
         int result = await _dataStoreService.DeleteMultipleAsync(ids, cancellationToken);

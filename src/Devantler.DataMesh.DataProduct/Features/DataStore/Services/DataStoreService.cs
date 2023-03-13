@@ -45,18 +45,18 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
     }
 
     /// <inheritdoc/>
-    public async Task<TSchema> DeleteSingleAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<TSchema> DeleteSingleAsync(string id, CancellationToken cancellationToken = default)
     {
         return await _repository.DeleteSingleAsync(id, cancellationToken)
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<int> DeleteMultipleAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+    public async Task<int> DeleteMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
         => await _repository.DeleteMultipleAsync(ids, cancellationToken);
 
     /// <inheritdoc/>
-    public async Task<TSchema> GetSingleAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<TSchema> GetSingleAsync(string id, CancellationToken cancellationToken = default)
     {
         return await _repository.ReadSingleAsync(id, cancellationToken)
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
@@ -85,7 +85,7 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<TSchema>> GetMultipleAsync(IEnumerable<Guid> ids,
+    public async Task<IEnumerable<TSchema>> GetMultipleAsync(IEnumerable<string> ids,
         CancellationToken cancellationToken = default)
     {
         return await _repository.ReadMultipleAsync(ids, cancellationToken)

@@ -43,7 +43,7 @@ public abstract class KafkaDataIngestionSourceService<TSchema> : IDataIngestionS
         {
             var consumeResult = _consumer.Consume(cancellationToken);
             var schema = consumeResult.Message.Value;
-            schema.Id = consumeResult.Message.Key;
+            schema.Id = consumeResult.Message.Key.ToString();
             _ = _dataStoreService.CreateSingleAsync(schema, cancellationToken);
         }
 

@@ -13,14 +13,14 @@ public interface IController<TSchema> where TSchema : class, Schemas.ISchema
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TSchema>> GetSingleAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ActionResult<TSchema>> GetSingleAsync(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities by id.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync(List<string> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities with pagination.
@@ -71,12 +71,12 @@ public interface IController<TSchema> where TSchema : class, Schemas.ISchema
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TSchema>> DeleteSingleAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<ActionResult<TSchema>> DeleteSingleAsync(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple entities.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync(List<Guid> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync(List<string> ids, CancellationToken cancellationToken = default);
 }

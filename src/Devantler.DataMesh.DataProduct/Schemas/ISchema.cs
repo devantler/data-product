@@ -8,5 +8,5 @@ public interface ISchema
     /// <summary>
     /// The unique identifier of the schema.
     /// </summary>
-    public Guid Id { get; set; }
+    public string Id { get; set; }
 }

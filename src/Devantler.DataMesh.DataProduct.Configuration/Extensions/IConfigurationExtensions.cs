@@ -19,21 +19,21 @@ public static class IConfigurationExtensions
                 $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
             );
 
-        var dataIngestionSources = new List<IDataIngestionSourceOptions>();
+        var dataIngestors = new List<IDataIngestorOptions>();
 
-        dataIngestionSources.AddRange(
-            configuration.GetSection(IDataIngestionSourceOptions.Key)
-                .Get<List<LocalDataIngestionSourceOptions>>()
-                .Where(x => x.Type == DataIngestionSourceType.Local)
+        dataIngestors.AddRange(
+            configuration.GetSection(IDataIngestorOptions.Key)
+                .Get<List<LocalDataIngestorOptions>>()
+                .Where(x => x.Type == DataIngestorType.Local)
         );
 
-        dataIngestionSources.AddRange(
-            configuration.GetSection(IDataIngestionSourceOptions.Key)
-                .Get<List<KafkaDataIngestionSourceOptions>>()
-                .Where(x => x.Type == DataIngestionSourceType.Kafka)
+        dataIngestors.AddRange(
+            configuration.GetSection(IDataIngestorOptions.Key)
+                .Get<List<KafkaDataIngestorOptions>>()
+                .Where(x => x.Type == DataIngestorType.Kafka)
         );
 
-        dataProductOptions.Services.DataIngestionSources = dataIngestionSources;
+        dataProductOptions.Services.DataIngestors = dataIngestors;
 
         return dataProductOptions;
     }

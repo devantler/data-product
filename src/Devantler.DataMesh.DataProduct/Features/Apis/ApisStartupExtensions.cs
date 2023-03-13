@@ -1,4 +1,3 @@
-using System.Linq;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Features.Apis.GraphQL;
 using Devantler.DataMesh.DataProduct.Features.Apis.Rest;

@@ -14,8 +14,10 @@ DataProduct:
     SchemaRegistry:
       Type: Local
       Schema:
-        Subject: contoso-university-single
+        Subject: contoso-university
         Version: 1
-    DataIngestionSources:
+    DataIngestors:
       - Type: Local
-        FilePath: assets/data/contoso-university-single-value.json
+        FilePath: assets/data/contoso-university-single.json
+      - Type: Local
+        FilePath: assets/data/contoso-university-multiple.json

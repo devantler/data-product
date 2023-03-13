@@ -29,12 +29,22 @@ public abstract class EntityFrameworkRepository<[DynamicallyAccessedMembers(Dyna
     /// <inheritdoc />
     public async Task<int> CreateMultipleAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-        await _context.Set<T>().AddRangeAsync(entities, cancellationToken);
+        var filteredEntities = new List<T>();
+        foreach (var entity in entities)
+        {
+            bool exists = await _context.Set<T>().AnyAsync(e => e.Id == entity.Id, cancellationToken) 
+                || filteredEntities.Any(e => e.Id == entity.Id);
+
+            if (exists) continue;
+
+            filteredEntities.Add(entity);
+        }
+        await _context.Set<T>().AddRangeAsync(filteredEntities, cancellationToken);
         return await _context.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task<T> ReadSingleAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<T> ReadSingleAsync(string id, CancellationToken cancellationToken = default)
         => await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken)
            ?? throw new InvalidOperationException($"Entity of type {typeof(T).Name} with id {id} not found");
 
@@ -47,7 +57,7 @@ public abstract class EntityFrameworkRepository<[DynamicallyAccessedMembers(Dyna
         => await Task.FromResult(_context.Set<T>());
 
     /// <inheritdoc />
-    public async Task<IEnumerable<T>> ReadMultipleAsync(IEnumerable<Guid> ids,
+    public async Task<IEnumerable<T>> ReadMultipleAsync(IEnumerable<string> ids,
         CancellationToken cancellationToken = default)
         => await _context.Set<T>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
 
@@ -77,7 +87,7 @@ public abstract class EntityFrameworkRepository<[DynamicallyAccessedMembers(Dyna
     }
 
     /// <inheritdoc />
-    public async Task<T> DeleteSingleAsync(Guid id, CancellationToken cancellationToken = default)
+    public async Task<T> DeleteSingleAsync(string id, CancellationToken cancellationToken = default)
     {
         var entity = await _context.Set<T>().FindAsync(new object[] { id }, cancellationToken)
                      ?? throw new InvalidOperationException($"Entity of type {typeof(T).Name} with id {id} not found");
@@ -87,7 +97,7 @@ public abstract class EntityFrameworkRepository<[DynamicallyAccessedMembers(Dyna
     }
 
     /// <inheritdoc />
-    public async Task<int> DeleteMultipleAsync(IEnumerable<Guid> ids, CancellationToken cancellationToken = default)
+    public async Task<int> DeleteMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
     {
         var entities = await _context.Set<T>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
         _context.Set<T>().RemoveRange(entities);

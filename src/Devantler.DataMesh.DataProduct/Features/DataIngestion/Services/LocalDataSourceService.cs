@@ -3,24 +3,24 @@ using System.Text.Json.Serialization;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
-using Devantler.DataMesh.DataProduct.Schemas;
+using Devantler.DataMesh.DataProduct.JsonConverters;
 using Microsoft.Extensions.Options;
 
 namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 
 /// <summary>
-/// A data ingestion source service that ingests data from a local file.
+/// A data ingestor that ingests data from a local file.
 /// </summary>
-public class LocalDataIngestionSourceService<TSchema> : IDataIngestionSourceService
+public class LocalDataIngestorService<TSchema> : IDataIngestorService
     where TSchema : class, Schemas.ISchema
 {
     readonly IDataStoreService<TSchema> _dataStoreService;
     readonly DataProductOptions _options;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LocalDataIngestionSourceService{TSchema}"/> class.
+    /// Initializes a new instance of the <see cref="LocalDataIngestorService{TSchema}"/> class.
     /// </summary>
-    public LocalDataIngestionSourceService(IServiceScopeFactory scopeFactory)
+    public LocalDataIngestorService(IServiceScopeFactory scopeFactory)
     {
         var scope = scopeFactory.CreateScope();
         _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TSchema>>();
@@ -35,6 +35,8 @@ public class LocalDataIngestionSourceService<TSchema> : IDataIngestionSourceServ
             .Cast<LocalDataIngestionSourceOptions>()
             .ToList();
 
+        var schemas = new List<TSchema>();
+
         foreach (var dataIngestionSource in localDataIngestionSources)
         {
             string filePath = dataIngestionSource.FilePath;
@@ -44,40 +46,36 @@ public class LocalDataIngestionSourceService<TSchema> : IDataIngestionSourceServ
 
             string data = await File.ReadAllTextAsync(filePath, cancellationToken);
 
-            var models = file.Extension switch
+            switch (file.Extension)
             {
-                ".json" => DeserializeJson(data),
-                _ => throw new NotSupportedException($"File extension {file.Extension} is not supported.")
-            };
+                case ".json":
+                    var options = new JsonSerializerOptions
+                    {
+                        NumberHandling = JsonNumberHandling.AllowReadingFromString,
+                        Converters = { new NumberToStringConverter() }
+                    };
 
-            _ = await _dataStoreService.UpdateMultipleAsync(models, cancellationToken);
+                    var json = JsonDocument.Parse(data);
+                    var deserializedSchemas = json.RootElement.ValueKind switch
+                    {
+                        JsonValueKind.Array => json.Deserialize<List<TSchema>>(options)
+                            ?? throw new InvalidOperationException($"Failed to deserialize JSON as {typeof(List<TSchema>).Name}."),
+                        JsonValueKind.Object => new List<TSchema> { json.Deserialize<TSchema>(options)
+                            ?? throw new InvalidOperationException($"Failed to deserialize JSON as {typeof(TSchema).Name}.")
+                        },
+                        _ => throw new NotSupportedException($"JSON value kind {json.RootElement.ValueKind} is not supported."),
+                    };
+                    schemas.AddRange(deserializedSchemas);
+                    break;
+                default:
+                    throw new NotSupportedException($"File extension {file.Extension} is not supported.");
+            }
+
         }
+        _ = await _dataStoreService.CreateMultipleAsync(schemas, cancellationToken);
     }
 
     /// <inheritdoc/>
     public Task StopAsync(CancellationToken cancellationToken)
         => Task.CompletedTask;
-
-    /// <summary>
-    /// Deserializes JSON data into a list of <typeparamref name="TSchema"/> models.
-    /// </summary>
-    static List<TSchema> DeserializeJson(string data)
-    {
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        var json = JsonDocument.Parse(data);
-        if (json.RootElement.ValueKind == JsonValueKind.Array)
-        {
-            return json.Deserialize<List<TSchema>>(options)
-                ?? throw new InvalidOperationException($"Failed to deserialize JSON as {typeof(List<TSchema>).Name}.");
-        }
-        else
-        {
-            var model = json.Deserialize<TSchema>(options)
-                ?? throw new InvalidOperationException($"Failed to deserialize JSON as {typeof(TSchema).Name}.");
-            return new List<TSchema> { model };
-        }
-    }
 }

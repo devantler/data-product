@@ -1,12 +1,12 @@
 namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
 
 /// <summary>
-/// Options to configure a Kafka data ingestion source used by the data product.
+/// Options to configure a Kafka data ingestor for the data product.
 /// </summary>
-public class KafkaDataIngestionSourceOptions : IDataIngestionSourceOptions
+public class KafkaDataIngestorOptions : IDataIngestorOptions
 {
     /// <inheritdoc/>
-    public DataIngestionSourceType Type { get; set; } = DataIngestionSourceType.Kafka;
+    public DataIngestorType Type { get; set; } = DataIngestorType.Kafka;
     /// <summary>
     /// The BootstrapServers to connect to.
     /// </summary>

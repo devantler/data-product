@@ -1,13 +1,12 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
-using Devantler.DataMesh.DataProduct.Schemas;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
 
 namespace Devantler.DataMesh.DataProduct.Features.DataIngestion;
 
 /// <summary>
 /// Extensions for registering data ingestion sources and configuring the web application to use them.
 /// </summary>
-public static class DataIngestionStartupExtensions
+public static partial class DataIngestionStartupExtensions
 {
     /// <summary>
     /// Registers data ingestion sources to the DI container.
@@ -19,16 +18,11 @@ public static class DataIngestionStartupExtensions
         if (!options.Services.DataIngestionSources.Any())
             return services;
 
-        //TODO: Move this code to a DataIngestionStartupExtensionsGenerator class.
-        // foreach (var dataIngestionSource in options.Services.DataIngestionSources)
-        // {
-        // _ = dataIngestionSource.Type switch
-        // {
+        services.AddGeneratedServiceRegistrations(options.Services.DataIngestionSources);
         _ = services.AddHostedService<LocalDataIngestionSourceService<Student>>();
-        // _ => throw new NotSupportedException($"Data ingestion source '{dataIngestionSource}' is not supported."),
-        // };
-        // }
 
         return services;
     }
+
+    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, List<IDataIngestionSourceOptions> dataIngestionSources);
 }

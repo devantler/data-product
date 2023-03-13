@@ -1,11 +1,11 @@
 namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
 /// <summary>
-/// Options to configure a local data ingestion source used by the data product.
+/// Options to configure a local data ingestor for the data product.
 /// </summary>
-public class LocalDataIngestionSourceOptions : IDataIngestionSourceOptions
+public class LocalDataIngestorOptions : IDataIngestorOptions
 {
     /// <inheritdoc/>
-    public DataIngestionSourceType Type { get; set; } = DataIngestionSourceType.Local;
+    public DataIngestorType Type { get; set; } = DataIngestorType.Local;
     /// <summary>
     /// The path to the file to read from.
     /// </summary>

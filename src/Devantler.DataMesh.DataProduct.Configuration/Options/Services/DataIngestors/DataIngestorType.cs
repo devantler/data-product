@@ -1,8 +1,8 @@
 namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
 /// <summary>
-/// The type of data ingestion source to use.
+/// Different data ingestor types.
 /// </summary>
-public enum DataIngestionSourceType
+public enum DataIngestorType
 {
     /// <summary>
     /// A local file data ingestion source.

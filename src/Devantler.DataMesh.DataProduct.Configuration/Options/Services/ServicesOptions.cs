@@ -27,9 +27,9 @@ public class ServicesOptions
     public IDataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
 
     /// <summary>
-    /// Options for the data ingestion sources.
+    /// Options for the data ingestors.
     /// </summary>
-    public List<IDataIngestionSourceOptions> DataIngestionSources { get; set; } = new();
+    public List<IDataIngestorOptions> DataIngestors { get; set; } = new();
 
     /// <summary>
     /// Options for the APIs.
