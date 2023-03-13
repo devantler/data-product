@@ -17,7 +17,7 @@
         <PackageReference Include="Chr.Avro.Json" Version="9.4.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Chr.Avro" Version="9.4.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Confluent.SchemaRegistry" Version="2.0.2" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.54" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.58" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.1.54" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.54" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Core" Version="0.1.54" GeneratePathProperty="true" PrivateAssets="all" />
