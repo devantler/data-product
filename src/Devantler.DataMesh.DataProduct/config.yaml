@@ -9,7 +9,7 @@ DataProduct:
     Name: Test User
     Email: test@email.com
     Organisation: Test Org
-    Phone: "+45 12345678"
+    Phone: "+4512345678"
     Website: https://test-site.com
   FeatureFlags:
     EnableApis:
