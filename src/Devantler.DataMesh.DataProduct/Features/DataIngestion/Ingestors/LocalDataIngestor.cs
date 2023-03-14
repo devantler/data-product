@@ -57,11 +57,13 @@ public class LocalDataIngestor<TSchema> : BackgroundService, IDataIngestor
                     var json = JsonDocument.Parse(data);
                     var deserializedSchemas = json.RootElement.ValueKind switch
                     {
+#pragma warning disable IL2026 // As the schema types are generated, and thus persisted at runtime, the trimmer is able to detect the types and serialize them.
                         JsonValueKind.Array => json.Deserialize<List<TSchema>>(options)
                             ?? throw new InvalidOperationException($"Failed to deserialize JSON as {typeof(List<TSchema>).Name}."),
                         JsonValueKind.Object => new List<TSchema> { json.Deserialize<TSchema>(options)
                             ?? throw new InvalidOperationException($"Failed to deserialize JSON as {typeof(TSchema).Name}.")
                         },
+#pragma warning restore IL2026
                         _ => throw new NotSupportedException($"JSON value kind {json.RootElement.ValueKind} is not supported."),
                     };
                     schemas.AddRange(deserializedSchemas);
