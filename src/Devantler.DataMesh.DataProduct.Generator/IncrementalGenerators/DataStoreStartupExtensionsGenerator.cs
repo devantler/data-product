@@ -10,6 +10,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore.SQL;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
@@ -73,7 +74,13 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
         switch (options.Services.DataStore.Type)
         {
             case DataStoreType.SQL:
-                _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{options.Services.DataStore.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{options.Services.DataStore.Provider}(options?.ConnectionString));");
+                string providerName = options.Services.DataStore.Provider switch
+                {
+                    SQLDataStoreProvider.Sqlite => "Sqlite",
+                    SQLDataStoreProvider.PostgreSQL => "Npgsql",
+                    _ => throw new NotSupportedException($"The data store provider '{options.Services.DataStore.Provider}' is not supported.")
+                };
+                _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{options.Services.DataStore.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{providerName}(options?.ConnectionString));");
                 foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
                 {
                     string schemaName = schema.Name.ToPascalCase();

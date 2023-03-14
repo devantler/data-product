@@ -25,6 +25,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.3" />
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
         <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.0.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
         <PackageReference Include="SonarAnalyzer.CSharp" Version="8.54.0.64047">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>

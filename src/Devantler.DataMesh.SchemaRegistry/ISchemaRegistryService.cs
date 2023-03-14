@@ -8,7 +8,7 @@ namespace Devantler.DataMesh.SchemaRegistry;
 public interface ISchemaRegistryService
 {
     /// <summary>
-    /// Abstract method to retrieve a schema from a schema registry.
+    /// Retrieves a schema from a schema registry.
     /// </summary>
     /// <param name="subject"></param>
     /// <param name="version"></param>
@@ -16,7 +16,7 @@ public interface ISchemaRegistryService
     public Task<Schema> GetSchemaAsync(string subject, int version, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Abstract method to retrieve a schema from a schema registry.
+    /// Retrieves a schema from a schema registry.
     /// </summary>
     /// <param name="subject"></param>
     /// <param name="version"></param>

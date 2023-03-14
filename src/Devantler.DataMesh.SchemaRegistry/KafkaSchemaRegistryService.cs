@@ -23,7 +23,7 @@ public class KafkaSchemaRegistryService : ISchemaRegistryService
         CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _schemaRegistryOptions?.Url });
         List<RegisteredSchema> registeredSchemas = new()
         {
-            cachedSchemaRegistryClient.GetRegisteredSchemaAsync($"{subject}-value", version).Result
+            cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version).Result
         };
         var schemaReader = new JsonSchemaReader();
         return schemaReader.Read(registeredSchemas[0].SchemaString);
@@ -35,7 +35,7 @@ public class KafkaSchemaRegistryService : ISchemaRegistryService
         CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _schemaRegistryOptions?.Url });
         List<RegisteredSchema> registeredSchemas = new()
         {
-            await cachedSchemaRegistryClient.GetRegisteredSchemaAsync($"{subject}-value", version)
+            await cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version)
         };
         var schemaReader = new JsonSchemaReader();
         return schemaReader.Read(registeredSchemas[0].SchemaString);

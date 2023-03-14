@@ -1,3 +1,4 @@
+using System.Collections;
 using Chr.Avro.Confluent;
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
@@ -67,9 +68,69 @@ public class KafkaDataIngestor<TSchema> : BackgroundService, IDataIngestor
             {
                 var consumeResult = consumer.Consume(token);
                 var schema = consumeResult.Message.Value;
-                schema.Id = consumeResult.Message.Key;
+
+                SetIdsRecursively(schema, consumeResult.Message.Key);
+
                 _ = await _dataStoreService.CreateSingleAsync(schema, token);
             }
         });
+    }
+
+    /// <summary>
+    /// Sets all Id properties in the given object.
+    /// </summary>
+    /// <remarks>
+    /// The Id property on the root object is set to the give key. 
+    /// The rest of the Id properties are set to an empty string, so the datastore can generate a new Id without conflict.
+    /// </remarks>
+    /// <param name="obj">The object to set the Id properties on.</param>
+    /// <param name="key">The key to set the Id property to.</param>
+    public void SetIdsRecursively(object obj, string key)
+    {
+        if (obj == null) return;
+
+        var type = obj.GetType();
+
+        // If the type is a dictionary, set the Id value for each key-value pair
+        if (typeof(IDictionary).IsAssignableFrom(type))
+        {
+            foreach (object? dictKey in ((IDictionary)obj).Keys)
+            {
+                if (dictKey.ToString() == "Id")
+                {
+                    if (((IDictionary)obj)[dictKey] == null)
+                    {
+                        ((IDictionary)obj)[dictKey] = string.Empty;
+                    }
+                }
+                else
+                {
+                    SetIdsRecursively(((IDictionary)obj)[dictKey] ?? null!, string.Empty);
+                }
+            }
+        }
+        // If the type is an array, set the Id value for each element
+        else if (typeof(IEnumerable).IsAssignableFrom(type))
+        {
+            foreach (object? item in (IEnumerable)obj)
+            {
+                SetIdsRecursively(item, string.Empty);
+            }
+        }
+        // Otherwise, set the Id value for each property
+        else
+        {
+            foreach (var prop in type.GetProperties())
+            {
+                if (prop.Name == "Id" && prop.GetValue(obj) == null)
+                {
+                    prop.SetValue(obj, key);
+                }
+                else
+                {
+                    SetIdsRecursively(prop.GetValue(obj) ?? null!, string.Empty);
+                }
+            }
+        }
     }
 }

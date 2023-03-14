@@ -29,16 +29,9 @@ public abstract class EntityFrameworkRepository<[DynamicallyAccessedMembers(Dyna
     /// <inheritdoc />
     public async Task<int> CreateMultipleAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
     {
-        var filteredEntities = new List<T>();
-        foreach (var entity in entities)
-        {
-            bool exists = await _context.Set<T>().AnyAsync(e => e.Id == entity.Id, cancellationToken)
-                || filteredEntities.Any(e => e.Id == entity.Id);
+        var distinctEntities = entities.GroupBy(e => e.Id).Select(e => e.First());
+        var filteredEntities = distinctEntities.Where(e1 => !_context.Set<T>().Any(e2 => e1.Id == e2.Id));
 
-            if (exists) continue;
-
-            filteredEntities.Add(entity);
-        }
         await _context.Set<T>().AddRangeAsync(filteredEntities, cancellationToken);
         return await _context.SaveChangesAsync(cancellationToken);
     }

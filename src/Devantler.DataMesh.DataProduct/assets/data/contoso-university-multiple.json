@@ -1,158 +1,5 @@
 [
     {
-        "Id": "11111111-1111-1111-1111-111111111111",
-        "FirstMidName": "John",
-        "LastName": "Doe",
-        "EnrollmentDate": "2022-09-01",
-        "Enrollments": [
-            {
-                "Id": "11111111-1111-1111-1111-111111111111",
-                "Grade": 1,
-                "Course": {
-                    "Id": "11111111-1111-1111-1111-111111111111",
-                    "Title": "Intro to Computer Science",
-                    "Credits": 4
-                }
-            }
-        ]
-    },
-    {
-        "Id": "22222222-2222-2222-2222-222222222222",
-        "FirstMidName": "Brittany",
-        "LastName": "Doe",
-        "EnrollmentDate": "2022-09-01",
-        "Enrollments": [
-            {
-                "Id": "22222222-2222-2222-2222-222222222222",
-                "Grade": 1,
-                "Course": {
-                    "Id": "22222222-2222-2222-2222-222222222222",
-                    "Title": "Intro to Computer Science",
-                    "Credits": 4
-                }
-            }
-        ]
-    },
-    {
-        "Id": "33333333-3333-3333-3333-333333333333",
-        "FirstMidName": "John",
-        "LastName": "Doe",
-        "EnrollmentDate": "2022-09-01",
-        "Enrollments": [
-            {
-                "Id": "33333333-3333-3333-3333-333333333333",
-                "Grade": 1,
-                "Course": {
-                    "Id": "33333333-3333-3333-3333-333333333333",
-                    "Title": "Intro to Computer Science",
-                    "Credits": 4
-                }
-            }
-        ]
-    },
-    {
-        "Id": "44444444-4444-4444-4444-444444444444",
-        "FirstMidName": "John",
-        "LastName": "Doe",
-        "EnrollmentDate": "2022-09-01",
-        "Enrollments": [
-            {
-                "Id": "44444444-4444-4444-4444-444444444444",
-                "Grade": 1,
-                "Course": {
-                    "Id": "44444444-4444-4444-4444-444444444444",
-                    "Title": "Intro to Computer Science",
-                    "Credits": 4
-                }
-            }
-        ]
-    },
-    {
-        "Id": "55555555-5555-5555-5555-555555555555",
-        "FirstMidName": "John",
-        "LastName": "Doe",
-        "EnrollmentDate": "2022-09-01",
-        "Enrollments": [
-            {
-                "Id": "55555555-5555-5555-5555-555555555555",
-                "Grade": 1,
-                "Course": {
-                    "Id": "55555555-5555-5555-5555-555555555555",
-                    "Title": "Intro to Computer Science",
-                    "Credits": 4
-                }
-            }
-        ]
-    },
-    {
-        "Id": "66666666-6666-6666-6666-666666666666",
-        "FirstMidName": "John",
-        "LastName": "Doe",
-        "EnrollmentDate": "2022-09-01",
-        "Enrollments": [
-            {
-                "Id": "66666666-6666-6666-6666-666666666666",
-                "Grade": 1,
-                "Course": {
-                    "Id": "66666666-6666-6666-6666-666666666666",
-                    "Title": "Intro to Computer Science",
-                    "Credits": 4
-                }
-            }
-        ]
-    },
-    {
-        "Id": "77777777-7777-7777-7777-777777777777",
-        "FirstMidName": "John",
-        "LastName": "Doe",
-        "EnrollmentDate": "2022-09-01",
-        "Enrollments": [
-            {
-                "Id": "77777777-7777-7777-7777-777777777777",
-                "Grade": 1,
-                "Course": {
-                    "Id": "77777777-7777-7777-7777-777777777777",
-                    "Title": "Intro to Computer Science",
-                    "Credits": 4
-                }
-            }
-        ]
-    },
-    {
-        "Id": "88888888-8888-8888-8888-888888888888",
-        "FirstMidName": "John",
-        "LastName": "Doe",
-        "EnrollmentDate": "2022-09-01",
-        "Enrollments": [
-            {
-                "Id": "88888888-8888-8888-8888-888888888888",
-                "Grade": 1,
-                "Course": {
-                    "Id": "88888888-8888-8888-8888-888888888888",
-                    "Title": "Intro to Computer Science",
-                    "Credits": 4
-                }
-            }
-        ]
-    },
-    {
-        "Id": "99999999-9999-9999-9999-999999999999",
-        "FirstMidName": "John",
-        "LastName": "Doe",
-        "EnrollmentDate": "2022-09-01",
-        "Enrollments": [
-            {
-                "Id": "99999999-9999-9999-9999-999999999999",
-                "Grade": 1,
-                "Course": {
-                    "Id": "99999999-9999-9999-9999-999999999999",
-                    "Title": "Intro to Computer Science",
-                    "Credits": 4
-                }
-            }
-        ]
-    },
-    {
         "Id": 1,
         "FirstMidName": "John",
         "LastName": "Doe",
@@ -160,10 +7,163 @@
         "Enrollments": [
             {
                 "Id": 1,
-                "Grade": 1,
+                "Grade": 0,
                 "Course": {
                     "Id": 1,
-                    "Title": "Intro to Computer Science",
+                    "Title": "Computer Science 101",
+                    "Credits": 4
+                }
+            }
+        ]
+    },
+    {
+        "Id": 2,
+        "FirstMidName": "Jessica",
+        "LastName": "Miller",
+        "EnrollmentDate": "2022-09-01",
+        "Enrollments": [
+            {
+                "Id": 2,
+                "Grade": 1,
+                "Course": {
+                    "Id": 2,
+                    "Title": "Java Programming",
+                    "Credits": 4
+                }
+            }
+        ]
+    },
+    {
+        "Id": 3,
+        "FirstMidName": "Emily",
+        "LastName": "Smith",
+        "EnrollmentDate": "2022-09-01",
+        "Enrollments": [
+            {
+                "Id": 3,
+                "Grade": 2,
+                "Course": {
+                    "Id": 3,
+                    "Title": "Python Basics",
+                    "Credits": 4
+                }
+            }
+        ]
+    },
+    {
+        "Id": 4,
+        "FirstMidName": "Maggie",
+        "LastName": "Jones",
+        "EnrollmentDate": "2022-09-01",
+        "Enrollments": [
+            {
+                "Id": 4,
+                "Grade": 3,
+                "Course": {
+                    "Id": 4,
+                    "Title": "Data Structures and Algorithms",
+                    "Credits": 4
+                }
+            }
+        ]
+    },
+    {
+        "Id": 5,
+        "FirstMidName": "Nathan",
+        "LastName": "Roberts",
+        "EnrollmentDate": "2022-09-01",
+        "Enrollments": [
+            {
+                "Id": 5,
+                "Grade": 4,
+                "Course": {
+                    "Id": 5,
+                    "Title": "Web Development with HTML/CSS/JS",
+                    "Credits": 4
+                }
+            }
+        ]
+    },
+    {
+        "Id": 6,
+        "FirstMidName": "Liam",
+        "LastName": "Davis",
+        "EnrollmentDate": "2022-09-01",
+        "Enrollments": [
+            {
+                "Id": 6,
+                "Grade": 0,
+                "Course": {
+                    "Id": 6,
+                    "Title": "Database Design and Management",
+                    "Credits": 4
+                }
+            }
+        ]
+    },
+    {
+        "Id": 7,
+        "FirstMidName": "Aria",
+        "LastName": "Thompson",
+        "EnrollmentDate": "2022-09-01",
+        "Enrollments": [
+            {
+                "Id": 7,
+                "Grade": 1,
+                "Course": {
+                    "Id": 7,
+                    "Title": "Agile Software Development",
+                    "Credits": 4
+                }
+            }
+        ]
+    },
+    {
+        "Id": 8,
+        "FirstMidName": "Ella",
+        "LastName": "Wood",
+        "EnrollmentDate": "2022-09-01",
+        "Enrollments": [
+            {
+                "Id": 8,
+                "Grade": 2,
+                "Course": {
+                    "Id": 8,
+                    "Title": "Software Testing and Automation",
+                    "Credits": 4
+                }
+            }
+        ]
+    },
+    {
+        "Id": 9,
+        "FirstMidName": "Oliver",
+        "LastName": "Brown",
+        "EnrollmentDate": "2022-09-01",
+        "Enrollments": [
+            {
+                "Id": 9,
+                "Grade": 3,
+                "Course": {
+                    "Id": 9,
+                    "Title": "Computer Networking Basics",
+                    "Credits": 4
+                }
+            }
+        ]
+    },
+    {
+        "Id": 10,
+        "FirstMidName": "Harry",
+        "LastName": "Taylor",
+        "EnrollmentDate": "2022-09-01",
+        "Enrollments": [
+            {
+                "Id": 10,
+                "Grade": 4,
+                "Course": {
+                    "Id": 10,
+                    "Title": "Cybersecurity Fundamentals",
                     "Credits": 4
                 }
             }
