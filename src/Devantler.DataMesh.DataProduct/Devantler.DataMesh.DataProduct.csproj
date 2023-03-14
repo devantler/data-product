@@ -43,8 +43,8 @@
         <Content Include="assets/schemas/**/*.avsc" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
     <ItemGroup>
-        <AdditionalFiles Include="dp-config.*" />
+        <AdditionalFiles Include="config.*" />
         <AdditionalFiles Include="assets/**/*" />
-        <AdditionalFiles Remove="dp-config.schema.json" />
+        <AdditionalFiles Remove="config.schema.json" />
     </ItemGroup>
 </Project>

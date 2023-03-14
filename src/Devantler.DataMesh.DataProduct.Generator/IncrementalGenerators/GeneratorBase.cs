@@ -67,15 +67,15 @@ public abstract class GeneratorBase : IIncrementalGenerator
     {
         var configurationBuilder = new ConfigurationBuilder();
 
-        string ymlOrJsonFileExtension = files.Any(file => file.FileName.Equals("dp-config.yml")) ? "yml" : "json";
-        string fileExtension = files.Any(file => file.FileName.Equals("dp-config.yaml")) ? "yaml" : ymlOrJsonFileExtension;
+        string ymlOrJsonFileExtension = files.Any(file => file.FileName.Equals("config.yml")) ? "yml" : "json";
+        string fileExtension = files.Any(file => file.FileName.Equals("config.yaml")) ? "yaml" : ymlOrJsonFileExtension;
 
-        var configFile = files.FirstOrDefault(file => file.FileName.Equals($"dp-config.{fileExtension}"))
-            ?? throw new InvalidOperationException($"Failed to find required 'dp-config.{fileExtension}'.");
+        var configFile = files.FirstOrDefault(file => file.FileName.Equals($"config.{fileExtension}"))
+            ?? throw new InvalidOperationException($"Failed to find required 'config.{fileExtension}'.");
 #if DEBUG
-        var developmentConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"dp-config.Development.{fileExtension}"));
+        var developmentConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"config.Development.{fileExtension}"));
 #elif RELEASE
-        var productionConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"dp-config.Production.{fileExtension}"));
+        var productionConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"config.Production.{fileExtension}"));
 #endif
         if (fileExtension.Equals("json"))
         {

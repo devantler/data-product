@@ -42,7 +42,7 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
     }
 
     protected static CustomAdditionalText CreateDataProductConfig(string config) =>
-        new("dp-config.json", config);
+        new("config.json", config);
 }
 
 public class CustomAdditionalText : AdditionalText

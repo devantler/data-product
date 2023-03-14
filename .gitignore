@@ -12,10 +12,5 @@ generated/
 # Visual Studio
 .vs/
 
-# SQLite
-*.db
-*.db-shm
-*.db-wal
-
 # coverlet
 **/TestResults/

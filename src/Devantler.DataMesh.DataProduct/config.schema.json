@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/devantler/data-mesh/data-sources/src/Devantler.DataMesh.DataProduct/data-product-config.schema.json",
+    "$id": "https://raw.githubusercontent.com/devantler/data-mesh/data-sources/src/Devantler.DataMesh.DataProduct/config.schema.json",
     "title": "Data Product Config",
     "description": "Specification for a data product config",
     "type": "object",
