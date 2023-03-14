@@ -12,7 +12,8 @@ public interface ISchemaRegistryService
     /// </summary>
     /// <param name="subject"></param>
     /// <param name="version"></param>
-    public Task<Schema> GetSchemaAsync(string subject, int version);
+    /// <param name="cancellationToken"></param>
+    public Task<Schema> GetSchemaAsync(string subject, int version, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Abstract method to retrieve a schema from a schema registry.

@@ -7,21 +7,23 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-    public Task GivenValidAppSettings_GeneratesValidCode(string subject)
+    public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettings(
+        var additionalText = CreateDataProductConfig(
             /*lang=json,strict*/
             $$"""
             {
                 "DataProduct": {
-                    "Schema": {
-                        "Subject": "{{subject}}",
-                        "Version": 1
-                    },
-                    "SchemaRegistry": {
-                        "Type": "Local",
-                        "Path": "Schemas"
+                    "Services": {
+                        "SchemaRegistry": {
+                            "Type": "Local",
+                            "Path": "schemas",
+                            "Schema": {
+                                "Subject": "{{subject}}",
+                                "Version": 1
+                            }
+                        }
                     }
                 }
             }
@@ -40,22 +42,25 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
     public Task GivenOtherDataStore_DoesNothing(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettings(
+        var additionalText = CreateDataProductConfig(
             /*lang=json,strict*/
             $$"""
             {
                 "DataProduct": {
-                    "DataStore": {
-                        "Type": "DocumentBased",
-                        "Provider": "MongoDb"
-                    },
-                    "Schema": {
-                        "Subject": "{{subject}}",
-                        "Version": 1
-                    },
-                    "SchemaRegistry": {
-                        "Type": "Local",
-                        "Path": "Schemas"
+                    "Services": {
+                        "DataStore": {
+                            "Type": "NoSQL",
+                            "Provider": "MongoDb",
+                            "ConnectionString": "mongodb://localhost:27017"
+                        },
+                        "SchemaRegistry": {
+                            "Type": "Local",
+                            "Path": "schemas",
+                            "Schema": {
+                                "Subject": "{{subject}}",
+                                "Version": 1
+                            }
+                        }
                     }
                 }
             }

@@ -30,14 +30,17 @@ public abstract class GeneratorBase : IIncrementalGenerator
         {
             var additionalFiles = compilationAndFiles.Right;
             var configuration = BuildConfiguration(additionalFiles);
-            var dataProductOptions = configuration.GetDataProductOptions();
+            var options = configuration.GetDataProductOptions()
+                ?? throw new InvalidOperationException(
+                    $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
+                );
 
             // Hack: Sets the schema registry path when the Generator run as an Analyzer. 
             // Analyzers do not support IO well (more specifically relative paths), so the path to the Avro Schemas is retrieved from AdditionalFiles instead.
-            dataProductOptions.SchemaRegistryOptions.OverrideLocalSchemaRegistryPath(additionalFiles
+            options.Services.SchemaRegistry.OverrideLocalSchemaRegistryPath(additionalFiles
                 .FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath);
 
-            foreach (var source in Generate(compilationAndFiles.Left, compilationAndFiles.Right, dataProductOptions))
+            foreach (var source in Generate(compilationAndFiles.Left, compilationAndFiles.Right, options))
             {
                 sourceProductionContext.AddSource(source.Key,
                     SourceText.From(source.Value.AddMetadata(GetType()), Encoding.UTF8));
@@ -49,28 +52,56 @@ public abstract class GeneratorBase : IIncrementalGenerator
         IncrementalGeneratorInitializationContext context)
     {
         return context.AdditionalTextsProvider
-            .Select((additionalText, _) => new AdditionalFile(
-                Path.GetFileName(additionalText.Path),
-                additionalText.Path,
-                Path.GetDirectoryName(additionalText.Path) ?? string.Empty,
-                additionalText.GetText())
-            )
+            .Select((additionalText, _) => new AdditionalFile
+            {
+                FileName = Path.GetFileName(additionalText.Path),
+                FileNameWithoutExtension = Path.GetFileNameWithoutExtension(additionalText.Path),
+                FilePath = additionalText.Path,
+                FileDirectoryPath = Path.GetDirectoryName(additionalText.Path) ?? "",
+                Contents = additionalText.GetText()
+            })
             .Collect();
     }
 
     static IConfigurationRoot BuildConfiguration(ImmutableArray<AdditionalFile> files)
     {
-        IConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
-        foreach (var file in files)
+        var configurationBuilder = new ConfigurationBuilder();
+
+        string ymlOrJsonFileExtension = files.Any(file => file.FileName.Equals("config.yml")) ? "yml" : "json";
+        string fileExtension = files.Any(file => file.FileName.Equals("config.yaml")) ? "yaml" : ymlOrJsonFileExtension;
+
+        var configFile = files.FirstOrDefault(file => file.FileName.Equals($"config.{fileExtension}"))
+            ?? throw new InvalidOperationException($"Failed to find required 'config.{fileExtension}'.");
+#if DEBUG
+        var developmentConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"config.Development.{fileExtension}"));
+#elif RELEASE
+        var productionConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"config.Production.{fileExtension}"));
+#endif
+        if (fileExtension.Equals("json"))
         {
-            if (file.FileName.Contains("appsettings"))
-            {
-                _ = configurationBuilder.AddJsonStream(
-                    new MemoryStream(Encoding.UTF8.GetBytes(file.Contents?.ToString() ?? string.Empty)));
-            }
+            var textStream = new MemoryStream(Encoding.UTF8.GetBytes(configFile?.Contents?.ToString()));
+            configurationBuilder.AddJsonStream(textStream);
+#if DEBUG
+            if (developmentConfigFile is not null)
+                configurationBuilder.AddJsonFile(developmentConfigFile.FilePath, optional: true);
+#elif RELEASE
+            if (productionConfigFile is not null)
+                configurationBuilder.AddJsonFile(productionConfigFile.FilePath, optional: true);
+#endif
+        }
+        else
+        {
+            configurationBuilder.AddYamlFile(configFile.FilePath, optional: false);
+#if DEBUG
+            if (developmentConfigFile is not null)
+                configurationBuilder.AddYamlFile(developmentConfigFile.FilePath, optional: true);
+#elif RELEASE
+            if (productionConfigFile is not null)
+                configurationBuilder.AddYamlFile(productionConfigFile.FilePath, optional: true);
+#endif
         }
 
-        _ = configurationBuilder.AddEnvironmentVariables();
+        configurationBuilder.AddEnvironmentVariables();
 
         return configurationBuilder.Build();
     }

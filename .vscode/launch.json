@@ -34,7 +34,8 @@
         {
             "name": "Attach: DataProduct",
             "type": "coreclr",
-            "request": "attach"
+            "request": "attach",
+            "internalConsoleOptions": "neverOpen"
         },
         {
             "name": "Docker .NET Core Launch",

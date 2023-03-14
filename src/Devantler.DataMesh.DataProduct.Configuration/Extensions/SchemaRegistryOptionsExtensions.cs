@@ -1,5 +1,5 @@
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Extensions;
 

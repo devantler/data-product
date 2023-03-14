@@ -1,7 +1,6 @@
 using Chr.Avro.Abstract;
 using Chr.Avro.Representation;
-using Devantler.Commons.StringHelpers;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 
@@ -19,26 +18,57 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     public LocalSchemaRegistryService(LocalSchemaRegistryOptions? schemaRegistryOptions) => _schemaRegistryOptions = schemaRegistryOptions;
 
     /// <inheritdoc/>
-    public async Task<Schema> GetSchemaAsync(string subject, int version)
-        => await GetSchemaImplementation(subject, version);
-
-    /// <inheritdoc/>
-    public Schema GetSchema(string subject, int version)
-        => GetSchemaImplementation(subject, version).Result;
-
-    private async Task<Schema> GetSchemaImplementation(string subject, int version)
+    public async Task<Schema> GetSchemaAsync(string subject, int version, CancellationToken cancellationToken = default)
     {
-        string schemaFileName = $"{subject}-v{version}.avsc";
-
-        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "Schemas", schemaFileName).FirstOrDefault();
-
-        if (schemaFile == null)
-            throw new FileNotFoundException($"Schema file {schemaFileName} not found.");
-
-        string schemaString = await File.ReadAllTextAsync(schemaFile);
+        string schemaString = await GetSchemaStringAsync(subject, version, cancellationToken);
 
         var schemaReader = new JsonSchemaReader();
 
         return schemaReader.Read(schemaString);
+    }
+
+    /// <inheritdoc/>
+    public Schema GetSchema(string subject, int version)
+    {
+        string schemaString = GetSchemaString(subject, version);
+
+        var schemaReader = new JsonSchemaReader();
+
+        return schemaReader.Read(schemaString);
+    }
+
+    /// <summary>
+    /// Gets the schema as a string from the file system.
+    /// </summary>
+    /// <param name="subject"></param>
+    /// <param name="version"></param>
+    /// <returns></returns>
+    string GetSchemaString(string subject, int version)
+    {
+        string schemaFileName = $"{subject}-v{version}.avsc";
+
+        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "schemas", schemaFileName).FirstOrDefault();
+
+        return string.IsNullOrEmpty(schemaFile)
+            ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.")
+            : File.ReadAllText(schemaFile);
+    }
+
+    /// <summary>
+    /// Gets the schema as a string from the file system asynchronously.
+    /// </summary>
+    /// <param name="subject"></param>
+    /// <param name="version"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    async Task<string> GetSchemaStringAsync(string subject, int version, CancellationToken cancellationToken)
+    {
+        string schemaFileName = $"{subject}-v{version}.avsc";
+
+        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "schemas", schemaFileName).FirstOrDefault();
+
+        return string.IsNullOrEmpty(schemaFile)
+            ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.")
+            : await File.ReadAllTextAsync(schemaFile, cancellationToken);
     }
 }

@@ -7,21 +7,23 @@ public class GenerateTests : IncrementalGeneratorTestsBase<RepositoryGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-    public Task GivenValidAppSettings_GeneratesValidCode(string subject)
+    public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettings(
+        var additionalText = CreateDataProductConfig(
             /*lang=json,strict*/
             $$"""
             {
                 "DataProduct": {
-                    "Schema": {
-                        "Subject": "{{subject}}",
-                        "Version": 1
-                    },
-                    "SchemaRegistry": {
-                        "Type": "Local",
-                        "Path": "Schemas"
+                    "Services": {
+                        "SchemaRegistry": {
+                            "Type": "Local",
+                            "Path": "schemas",
+                            "Schema": {
+                                "Subject": "{{subject}}",
+                                "Version": 1
+                            }
+                        }
                     }
                 }
             }

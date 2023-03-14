@@ -1,78 +1,62 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.DocumentBased;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Extensions;
 
 /// <summary>
-/// Extensions for the <see cref="IConfiguration"/> interface to get the data product options.
+/// Extension methods for <see cref="IConfiguration"/>.
 /// </summary>
 public static class ConfigurationExtensions
 {
     /// <summary>
-    /// Gets the data product options from the configuration.
+    /// Gets the data product options.
     /// </summary>
-    /// <param name="configuration"></param>
-    /// <exception cref="NotImplementedException"></exception>
-    /// <exception cref="InvalidOperationException"></exception>
     public static DataProductOptions GetDataProductOptions(this IConfiguration configuration)
     {
         var dataProductOptions = configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
-            ?? throw new InvalidOperationException($"The configuration section '{DataProductOptions.Key}' is missing.");
+                                 ?? throw new InvalidOperationException(
+                                     $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
+                                 );
 
-        if (configuration.GetSection(DataStoreOptionsBase.Key).Exists())
-            dataProductOptions.DataStoreOptions = SetDataStoreOptions(configuration);
+        dataProductOptions.Services.SchemaRegistry = dataProductOptions.Services.SchemaRegistry.Type switch
+        {
+            SchemaRegistryType.Kafka => configuration.GetSection(ISchemaRegistryOptions.Key)
+                .Get<KafkaSchemaRegistryOptions>()
+                    ?? throw new InvalidOperationException(
+                        $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(KafkaSchemaRegistryOptions).FullName}'."
+                    ),
+            SchemaRegistryType.Local => configuration.GetSection(ISchemaRegistryOptions.Key)
+                .Get<LocalSchemaRegistryOptions>()
+                    ?? throw new InvalidOperationException(
+                        $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(LocalSchemaRegistryOptions).FullName}'."
+                    ),
+            _ => throw new NotSupportedException($"Schema registry type '{dataProductOptions.Services.SchemaRegistry.Type}' is not supported.")
+        };
 
-        if (configuration.GetSection(SchemaRegistryOptionsBase.Key).Exists())
-            dataProductOptions.SchemaRegistryOptions = SetSchemaRegistryOptions(configuration);
+        var dataIngestors = new List<IDataIngestorOptions>();
+
+        if (dataProductOptions.FeatureFlags.EnableDataIngestion)
+        {
+            var localDataIngestorOptions = configuration.GetSection(IDataIngestorOptions.Key)
+                .Get<List<LocalDataIngestorOptions>>()
+                .Where(x => x.Type == DataIngestorType.Local);
+
+            dataIngestors.AddRange(
+                localDataIngestorOptions
+            );
+
+            dataIngestors.AddRange(
+                configuration.GetSection(IDataIngestorOptions.Key)
+                    .Get<List<KafkaDataIngestorOptions>>()
+                    .Where(x => x.Type == DataIngestorType.Kafka)
+            );
+        }
+
+        dataProductOptions.Services.DataIngestors = dataIngestors;
 
         return dataProductOptions;
-    }
-
-    /// <summary>
-    /// Gets the data store options from the configuration.
-    /// </summary>
-    /// <param name="configuration"></param>
-    public static IDataStoreOptions SetDataStoreOptions(IConfiguration configuration)
-    {
-        var dataStoreType = configuration.GetSection(DataStoreOptionsBase.Key).GetValue<DataStoreType>("Type");
-
-        string dataStoreProvider = dataStoreType switch
-        {
-            DataStoreType.Relational => configuration.GetSection(DataStoreOptionsBase.Key).GetValue<RelationalDataStoreProvider>("Provider").ToString(),
-            DataStoreType.DocumentBased => configuration.GetSection(DataStoreOptionsBase.Key).GetValue<DocumentBasedDataStoreProvider>("Provider").ToString(),
-            _ => throw new NotImplementedException($"The data store type '{dataStoreType}' is not implemented yet.")
-        };
-
-        return (dataStoreType, dataStoreProvider) switch
-        {
-            (DataStoreType.Relational, nameof(RelationalDataStoreProvider.Sqlite)) => configuration.GetSection(DataStoreOptionsBase.Key).Get<SqliteDataStoreOptions>()
-                ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(SqliteDataStoreOptions)}' to the configuration section '{DataStoreOptionsBase.Key}"),
-            (DataStoreType.DocumentBased, nameof(DocumentBasedDataStoreProvider.MongoDb)) => configuration.GetSection(DataStoreOptionsBase.Key).Get<MongoDbDataStoreOptions>()
-                ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(MongoDbDataStoreOptions)}' to the configuration section '{DataStoreOptionsBase.Key}"),
-            _ => throw new NotImplementedException($"The combination of the data store type '{dataStoreType}' and the data store provider '{dataStoreProvider}' is not implemented yet.")
-        };
-    }
-
-    /// <summary>
-    /// Gets the schema registry options from the configuration.
-    /// </summary>
-    /// <param name="configuration"></param>
-    public static ISchemaRegistryOptions SetSchemaRegistryOptions(IConfiguration configuration)
-    {
-        var schemaRegistryType = configuration.GetSection(SchemaRegistryOptionsBase.Key).GetValue<SchemaRegistryType>("Type");
-
-        return schemaRegistryType switch
-        {
-            SchemaRegistryType.Local => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<LocalSchemaRegistryOptions>()
-                ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(LocalSchemaRegistryOptions)}' to the configuration section '{SchemaRegistryOptionsBase.Key}"),
-            SchemaRegistryType.Kafka => configuration.GetSection(SchemaRegistryOptionsBase.Key).Get<KafkaSchemaRegistryOptions>()
-                ?? throw new InvalidOperationException($"Failed to bind the configuration instance '{nameof(KafkaSchemaRegistryOptions)}' to the configuration section '{SchemaRegistryOptionsBase.Key}"),
-            _ => throw new NotImplementedException($"The schema registry type '{schemaRegistryType}' is not implemented yet.")
-        };
     }
 }

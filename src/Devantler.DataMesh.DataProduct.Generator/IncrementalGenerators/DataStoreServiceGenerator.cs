@@ -26,8 +26,8 @@ public class DataStoreServiceGenerator : GeneratorBase
     public override Dictionary<string, string> Generate(Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles, DataProductOptions options)
     {
-        var schemaRegistryService = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
@@ -38,13 +38,13 @@ public class DataStoreServiceGenerator : GeneratorBase
             var baseClass = new CSharpClass($"DataStoreService<{schemaName}, {schemaName}Entity>");
 
             var @class = new CSharpClass($"{schemaName}DataStoreService")
-                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .AddImport(
                     new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
                 .AddImport(new CSharpUsing("AutoMapper"))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService"))
-                .SetDocBlock(new CSharpDocBlock($"""A data store service for the <see cref="{schemaName}" /> model."""))
+                .SetDocBlock(new CSharpDocBlock($"""A data store service for the <see cref="{schemaName}" /> schema."""))
                 .SetBaseClass(baseClass);
 
             var constructor = new CSharpConstructor(@class.Name)

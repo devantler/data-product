@@ -6,8 +6,7 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
@@ -32,13 +31,13 @@ public class DbContextGenerator : GeneratorBase
         DataProductOptions options
     )
     {
-        if (options.DataStoreOptions.Type != DataStoreType.Relational)
+        if (options.Services.DataStore.Type != DataStoreType.SQL)
             return new Dictionary<string, string>();
 
-        var dataStoreOptions = options.DataStoreOptions as RelationalDataStoreOptionsBase;
+        var dataStoreOptions = options.Services.DataStore;
 
-        var schemaRegistryService = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
@@ -55,7 +54,7 @@ public class DbContextGenerator : GeneratorBase
                 .SetIsBaseParameter(true));
 
         var onModelCreatingMethod = new CSharpMethod("OnModelCreating")
-            .SetDocBlock(new CSharpDocBlock("A method to configure the model."))
+            .SetDocBlock(new CSharpDocBlock("A method to configure the schema."))
             .AddParameter(new CSharpParameter("ModelBuilder", "modelBuilder"))
             .SetVisibility(Visibility.Protected)
             .SetIsOverride(true);

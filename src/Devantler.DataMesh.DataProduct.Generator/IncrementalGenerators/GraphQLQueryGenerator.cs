@@ -26,16 +26,16 @@ public class GraphQLQueryGenerator : GeneratorBase
     public override Dictionary<string, string> Generate(Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles, DataProductOptions options)
     {
-        var schemaRegistry = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistry.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
         var @class = new CSharpClass("Query")
             .SetIsPartial(true)
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
-            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "GraphQlStartupExtensions"));
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
+            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "GraphQLStartupExtensions"));
 
         foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {

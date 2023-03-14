@@ -1,0 +1,8 @@
+# Data Product Config files
+config.Development.*
+config.Production.*
+
+# SQLite
+*.db
+*.db-shm
+*.db-wal

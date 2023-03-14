@@ -1,7 +1,5 @@
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions.Relational;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistryOptions.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 
@@ -31,9 +29,14 @@ public class DataProductOptions
     public string Version { get; set; } = string.Empty;
 
     /// <summary>
+    /// Options for the license used by the data product.
+    /// </summary>
+    public LicenseOptions License { get; set; } = new();
+
+    /// <summary>
     /// Options for the owner of the data product.
     /// </summary>
-    public OwnerOptions? Owner { get; set; }
+    public OwnerOptions Owner { get; set; } = new();
 
     /// <summary>
     /// Options for the features in the data product.
@@ -41,22 +44,7 @@ public class DataProductOptions
     public FeatureFlagsOptions FeatureFlags { get; set; } = new();
 
     /// <summary>
-    /// Options for the schema used by the data product.
+    /// Options for the services used by or provided by the data product.
     /// </summary>
-    public SchemaOptions Schema { get; set; } = new();
-
-    /// <summary>
-    /// Options for the schema registry used by the data product.
-    /// </summary>
-    public ISchemaRegistryOptions SchemaRegistryOptions { get; set; } = new LocalSchemaRegistryOptions();
-
-    /// <summary>
-    /// Options for the data store.
-    /// </summary>
-    public IDataStoreOptions DataStoreOptions { get; set; } = new SqliteDataStoreOptions();
-
-    /// <summary>
-    /// Options for the REST API.
-    /// </summary>
-    public RestApiOptions RestApiOptions { get; set; } = new();
+    public ServicesOptions Services { get; set; } = new();
 }

@@ -24,8 +24,8 @@ public class EntitiesGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        var schemaRegistryService = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
@@ -35,16 +35,20 @@ public class EntitiesGenerator : GeneratorBase
         {
             string schemaName = schema.Name.ToPascalCase();
             var @class = new CSharpClass($"{schemaName}Entity")
-                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
+                .SetDocBlock(new CSharpDocBlock($"An entity class for the {schemaName} record."))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity"))
                 .AddImplementation(new CSharpInterface("IEntity"));
 
-            var idProperty = new CSharpProperty("Guid", "Id")
-                .SetDocBlock(new CSharpDocBlock("The unique identifier for this entity."));
+            var idProperty = new CSharpProperty("string", "Id")
+                .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."));
             _ = @class.AddProperty(idProperty);
 
-            foreach (var field in schema.Fields.Where(f => !string.Equals(f.Name, "id", StringComparison.OrdinalIgnoreCase)))
+            foreach (var field in schema.Fields)
             {
+                if (field.Name.Equals("id", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
                 string propertyName = field.Name.ToPascalCase();
                 string propertyType = avroSchemaParser.Parse(field.Type, Language.CSharp, action => action.RecordSuffix = "Entity");
                 bool isVirtual = field.Type switch
@@ -54,10 +58,11 @@ public class EntitiesGenerator : GeneratorBase
                     MapSchema => true,
                     _ => false
                 };
-                var property = new CSharpProperty($"{(isVirtual ? "virtual " : string.Empty)}{propertyType}", propertyName);
+                var property = new CSharpProperty((isVirtual ? "virtual " : string.Empty) + propertyType, propertyName);
 
-                if (field.Documentation is not null)
-                    _ = property.SetDocBlock(new CSharpDocBlock(field.Documentation));
+                _ = field.Documentation is not null
+                    ? property.SetDocBlock(new CSharpDocBlock(field.Documentation))
+                    : property.SetDocBlock(new CSharpDocBlock($"The {propertyName} property."));
 
                 _ = @class.AddProperty(property);
             }

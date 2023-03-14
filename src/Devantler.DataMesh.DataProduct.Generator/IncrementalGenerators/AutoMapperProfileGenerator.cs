@@ -29,15 +29,15 @@ public class AutoMapperProfileGenerator : GeneratorBase
         DataProductOptions options
     )
     {
-        var schemaRegistryService = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
         var @class = new CSharpClass("AutoMapperProfile")
             .AddImport(new CSharpUsing("AutoMapper"))
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
-            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "StartupExtensions"))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
+            .SetNamespace("Devantler.DataMesh.DataProduct")
             .SetDocBlock(new CSharpDocBlock("AutoMapper profile for mapping between models and entities."))
             .SetBaseClass(new CSharpClass("Profile"));
 

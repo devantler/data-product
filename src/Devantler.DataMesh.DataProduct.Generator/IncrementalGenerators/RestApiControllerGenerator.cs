@@ -28,8 +28,8 @@ public class RestApiControllerGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        var schemaRegistryService = options.GetSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Schema.Subject, options.Schema.Version);
+        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
@@ -38,12 +38,12 @@ public class RestApiControllerGenerator : GeneratorBase
             string schemaName = schema.Name.ToPascalCase();
             var @class = new CSharpClass($"{schemaName.ToPlural()}Controller")
                 .AddImport(new CSharpUsing("AutoMapper"))
-                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IModel")))
+                .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreService")))
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestApiController"))
                 .SetDocBlock(new CSharpDocBlock(
-                    $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> model."""))
+                    $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
                 .SetBaseClass(new CSharpClass($"RestApiController<{schemaName}>"));
 
             var constructor = new CSharpConstructor(@class.Name)
