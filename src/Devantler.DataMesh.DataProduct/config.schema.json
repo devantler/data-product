@@ -60,7 +60,7 @@
                         "Phone": {
                             "description": "The phone number of the owner.",
                             "type": "string",
-                            "pattern": "^([\\+1-9]{3,4})?(?: )([\\+\\-0-9 ]+)?"
+                            "pattern": "^([\\+1-9]{3,4})?(?: )?([-0-9 ]{4,})"
                         },
                         "Website": {
                             "description": "The website of the owner.",
