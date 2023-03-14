@@ -45,5 +45,6 @@
     <ItemGroup>
         <AdditionalFiles Include="dp-config.*" />
         <AdditionalFiles Include="assets/**/*" />
+        <AdditionalFiles Remove="dp-config.schema.json" />
     </ItemGroup>
 </Project>
