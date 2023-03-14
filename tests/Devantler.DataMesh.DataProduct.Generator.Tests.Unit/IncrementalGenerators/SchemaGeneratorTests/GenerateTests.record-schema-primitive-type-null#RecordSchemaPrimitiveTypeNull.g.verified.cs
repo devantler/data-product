@@ -11,7 +11,7 @@ public class RecordSchemaPrimitiveTypeNull : ISchema
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     #nullable enable
     /// <summary>
     /// The NullField property.

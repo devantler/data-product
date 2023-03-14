@@ -1,6 +1,6 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.Apis;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore.SQL;

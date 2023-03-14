@@ -1,6 +1,4 @@
 
-using Devantler.DataMesh.DataProduct.Configuration.Options;
-
 namespace Devantler.DataMesh.DataProduct.Features.DataEgestion;
 
 /// <summary>
@@ -12,8 +10,7 @@ public static class DataEgestionStartupExtensions
     /// Registers data egestion to the DI container.
     /// </summary>
     /// <param name="services"></param>
-    /// <param name="options"></param>
-    public static IServiceCollection AddDataEgestion(this IServiceCollection services, DataProductOptions options)
+    public static IServiceCollection AddDataEgestion(this IServiceCollection services)
         => services;
 
 
@@ -21,7 +18,6 @@ public static class DataEgestionStartupExtensions
     /// Configures the web application to use data egestion.
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="options"></param>
-    public static IApplicationBuilder UseDataEgestion(this IApplicationBuilder app, DataProductOptions options)
+    public static IApplicationBuilder UseDataEgestion(this IApplicationBuilder app)
         => app;
 }

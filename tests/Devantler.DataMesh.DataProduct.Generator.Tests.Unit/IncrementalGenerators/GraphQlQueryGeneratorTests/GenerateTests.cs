@@ -10,8 +10,8 @@ public class GenerateTests : IncrementalGeneratorTestsBase<GraphQLQueryGenerator
     public Task GivenValidAppSettings_GeneratesValidCode(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettings(
-            /*lang=json,strict*/
+        var additionalText = CreateDataProductConfig(
+            /*lang=yaml,strict*/
             $$"""
             {
                 "DataProduct": {

@@ -1,3 +1,4 @@
+using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Options;
@@ -28,9 +29,14 @@ public class DataProductOptions
     public string Version { get; set; } = string.Empty;
 
     /// <summary>
+    /// Options for the license used by the data product.
+    /// </summary>
+    public LicenseOptions License { get; set; } = new();
+
+    /// <summary>
     /// Options for the owner of the data product.
     /// </summary>
-    public OwnerOptions? Owner { get; set; } = new();
+    public OwnerOptions Owner { get; set; } = new();
 
     /// <summary>
     /// Options for the features in the data product.

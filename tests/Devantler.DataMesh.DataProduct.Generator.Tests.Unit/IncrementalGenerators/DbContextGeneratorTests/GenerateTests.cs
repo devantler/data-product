@@ -10,7 +10,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
     public Task GivenValidAppSettings_GeneratesValidCode(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettings(
+        var additionalText = CreateDataProductConfig(
             /*lang=json,strict*/
             $$"""
             {
@@ -42,7 +42,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
     public Task GivenOtherDataStore_DoesNothing(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettings(
+        var additionalText = CreateDataProductConfig(
             /*lang=json,strict*/
             $$"""
             {

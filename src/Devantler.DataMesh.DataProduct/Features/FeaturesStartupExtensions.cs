@@ -1,6 +1,7 @@
 using System.Reflection;
 using Devantler.DataMesh.DataProduct.Configuration.Extensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Features.Apis;
 using Devantler.DataMesh.DataProduct.Features.Caching;
 using Devantler.DataMesh.DataProduct.Features.DataEgestion;
@@ -34,6 +35,7 @@ public static class FeaturesStartupExtensions
                 o.Description = options.Description;
                 o.Version = options.Version;
                 o.Owner = options.Owner;
+                o.License = options.License;
                 o.FeatureFlags = options.FeatureFlags;
                 o.Services = options.Services;
             }
@@ -41,20 +43,31 @@ public static class FeaturesStartupExtensions
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
         _ = builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-        _ = builder.Services.AddAuthentication();
-        _ = builder.Services.AddAuthorization();
+        if (options.FeatureFlags.EnableAuthentication)
+            _ = builder.Services.AddAuthentication();
+
+        if (options.FeatureFlags.EnableAuthorisation)
+            _ = builder.Services.AddAuthorization();
 
         _ = builder.Services.AddDataStore(options);
-        _ = builder.Services.AddCaching(options);
+
+        if (options.FeatureFlags.EnableCaching)
+            _ = builder.Services.AddCaching();
 
         if (options.FeatureFlags.EnableDataIngestion)
             _ = builder.Services.AddDataIngestion(options);
 
-        _ = builder.Services.AddDataEgestion(options);
+        if (options.FeatureFlags.EnableDataEgestion)
+            _ = builder.Services.AddDataEgestion();
 
-        _ = builder.Services.AddMetadata(options);
-        _ = builder.Services.AddMetrics(options);
-        _ = builder.Services.AddTracing(options);
+        if (options.FeatureFlags.EnableMetadata)
+            _ = builder.Services.AddMetadata();
+
+        if (options.FeatureFlags.EnableMetrics)
+            _ = builder.Services.AddMetrics();
+
+        if (options.FeatureFlags.EnableTracing)
+            _ = builder.Services.AddTracing();
 
         _ = builder.Services.AddApis(options, builder.Environment);
     }
@@ -67,35 +80,25 @@ public static class FeaturesStartupExtensions
     {
         var options = app.Services.GetRequiredService<IOptions<DataProductOptions>>().Value;
 
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableAuthentication),
-            a => a.UseAuthentication()
-        );
+        if (options.FeatureFlags.EnableAuthentication)
+            _ = app.UseAuthentication();
 
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableAuthorisation),
-            a => a.UseAuthorization()
-        );
+        if (options.FeatureFlags.EnableAuthorisation)
+            _ = app.UseAuthorization();
 
         _ = app.UseDataStore(options);
 
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableCaching),
-            a => a.UseCaching(options)
-        );
+        if (options.FeatureFlags.EnableCaching)
+            _ = app.UseCaching();
 
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableDataEgestion),
-            a => a.UseDataEgestion(options)
-        );
+        if (options.FeatureFlags.EnableMetadata)
+            _ = app.UseMetadata();
 
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableMetadata),
-            a => a.UseMetadata(options)
-        );
+        if (options.FeatureFlags.EnableMetrics)
+            _ = app.UseMetrics();
 
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableMetrics),
-            a => a.UseMetrics(options)
-        );
-
-        _ = app.UseForFeature(nameof(FeatureFlagsOptions.EnableTracing),
-            a => a.UseTracing(options)
-        );
+        if (options.FeatureFlags.EnableTracing)
+            _ = app.UseTracing();
 
         _ = app.UseApis(options);
     }

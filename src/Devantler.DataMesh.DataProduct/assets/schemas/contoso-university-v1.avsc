@@ -4,8 +4,7 @@
     "fields": [
         {
             "name": "Id",
-            "type": "string",
-            "logicalType": "uuid"
+            "type": "int"
         },
         {
             "name": "FirstMidName",
@@ -29,8 +28,7 @@
                     "fields": [
                         {
                             "name": "Id",
-                            "type": "string",
-                            "logicalType": "uuid"
+                            "type": "int"
                         },
                         {
                             "name": "Grade",
@@ -54,8 +52,7 @@
                                 "fields": [
                                     {
                                         "name": "Id",
-                                        "type": "string",
-                                        "logicalType": "uuid"
+                                        "type": "int"
                                     },
                                     {
                                         "name": "Title",

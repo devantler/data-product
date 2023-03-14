@@ -18,11 +18,12 @@ public static class RestStartupExtensions
     /// <param name="options"></param>
     public static IServiceCollection AddRest(this IServiceCollection services, DataProductOptions options)
     {
-        _ = services
-                .AddControllers(
-                    options => options.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer())))
-                .AddJsonOptions(
-                    options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+        _ = services.AddControllers(
+                o => o.Conventions.Add(new RouteTokenTransformerConvention(new SlugifyParameterTransformer()))
+            )
+            .AddJsonOptions(
+                o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles
+            );
         _ = services.AddSwaggerGen(swaggerOptions =>
         {
             swaggerOptions.SwaggerDoc(
@@ -32,21 +33,23 @@ public static class RestStartupExtensions
                     Version = options.Version,
                     Title = options.Name,
                     Description = options.Description,
-                    TermsOfService = !string.IsNullOrEmpty(options.Owner?.Website)
-                            ? new Uri(options.Owner.Website)
-                            : null,
+                    TermsOfService = !string.IsNullOrEmpty(options.Owner.Website)
+                        ? new Uri(options.Owner.Website)
+                        : null,
                     Contact = new OpenApiContact
                     {
-                        Name = options.Owner?.Name,
-                        Email = options.Owner?.Email,
+                        Name = options.Owner.Name,
+                        Email = options.Owner.Email,
                         Url = !string.IsNullOrEmpty(options.Owner?.Website)
                             ? new Uri(options.Owner.Website)
                             : null
                     },
                     License = new OpenApiLicense
                     {
-                        Name = "The MIT License",
-                        Url = new Uri("https://opensource.org/license/mit/")
+                        Name = options.License.Name,
+                        Url = !string.IsNullOrEmpty(options.License.Url)
+                            ? new Uri(options.License.Url)
+                            : null
                     }
                 });
             swaggerOptions.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory,
@@ -60,8 +63,7 @@ public static class RestStartupExtensions
     /// Configures the web application to use REST.
     /// </summary>
     /// <param name="app"></param>
-    /// <param name="options"></param>
-    public static WebApplication UseRest(this WebApplication app, DataProductOptions options)
+    public static WebApplication UseRest(this WebApplication app)
     {
         _ = app.UseSwagger();
         _ = app.UseSwaggerUI();

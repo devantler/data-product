@@ -1,3 +1,4 @@
+#pragma warning disable S3251
 
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
@@ -20,7 +21,7 @@ public static partial class DataStoreStartupExtensions
         services.AddGeneratedServiceRegistrations(options.Services.DataStore);
         _ = options.Services.DataStore.Type switch
         {
-            DataStoreType.SQL => _ = services.AddDatabaseDeveloperPageExceptionFilter(),
+            DataStoreType.SQL => services.AddDatabaseDeveloperPageExceptionFilter(),
             DataStoreType.NoSQL => throw new NotSupportedException("Document based data stores are not supported yet."),
             DataStoreType.Graph => throw new NotSupportedException("Graph based data stores are not supported yet."),
             _ => throw new NotSupportedException($"The data store type {options.Services.DataStore} is not supported."),
@@ -67,3 +68,5 @@ public static partial class DataStoreStartupExtensions
 
     static partial void UseGeneratedServiceRegistrations(this WebApplication app, IDataStoreOptions options);
 }
+
+#pragma warning restore S3251

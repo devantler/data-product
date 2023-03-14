@@ -10,8 +10,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DataStoreStartupExten
     public Task GivenValidAppSettings_GeneratesValidCode(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettings(
-            /*lang=json,strict*/
+        var additionalText = CreateDataProductConfig(
             $$"""
             {
                 "DataProduct": {

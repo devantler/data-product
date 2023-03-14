@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 
 /// <summary>
 /// A list of feature flag values for the APIs feature flag.

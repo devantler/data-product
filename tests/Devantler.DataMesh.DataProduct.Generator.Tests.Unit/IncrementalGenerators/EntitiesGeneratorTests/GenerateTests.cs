@@ -10,7 +10,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<EntitiesGenerator>
     public Task GivenValidAppSettings_GeneratesValidCode(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettings(
+        var additionalText = CreateDataProductConfig(
             $$"""
             {
                 "DataProduct": {

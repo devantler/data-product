@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 
 /// <summary>
 /// Options to configure the features in the date product.

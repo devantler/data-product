@@ -41,11 +41,14 @@ public class EntitiesGenerator : GeneratorBase
                 .AddImplementation(new CSharpInterface("IEntity"));
 
             var idProperty = new CSharpProperty("string", "Id")
-                .SetDocBlock(new CSharpDocBlock("The unique identifier for this entity."));
+                .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."));
             _ = @class.AddProperty(idProperty);
 
-            foreach (var field in schema.Fields.Where(f => !string.Equals(f.Name, "id", StringComparison.OrdinalIgnoreCase)))
+            foreach (var field in schema.Fields)
             {
+                if (field.Name.Equals("id", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
                 string propertyName = field.Name.ToPascalCase();
                 string propertyType = avroSchemaParser.Parse(field.Type, Language.CSharp, action => action.RecordSuffix = "Entity");
                 bool isVirtual = field.Type switch
@@ -55,7 +58,7 @@ public class EntitiesGenerator : GeneratorBase
                     MapSchema => true,
                     _ => false
                 };
-                var property = new CSharpProperty($"{(isVirtual ? "virtual " : string.Empty)}{propertyType}", propertyName);
+                var property = new CSharpProperty((isVirtual ? "virtual " : string.Empty) + propertyType, propertyName);
 
                 _ = field.Documentation is not null
                     ? property.SetDocBlock(new CSharpDocBlock(field.Documentation))

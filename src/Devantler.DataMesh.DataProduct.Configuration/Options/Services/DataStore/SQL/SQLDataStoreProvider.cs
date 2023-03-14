@@ -21,7 +21,7 @@ public class SQLDataStoreProvider : IProvider
     public const string MySql = "MySql";
 
     /// <summary>
-    /// The PostgreSql data store provider. Not supported yet.
+    /// The PostgreSql data store provider.
     /// </summary>
-    public const string PostgreSql = "PostgreSql";
+    public const string PostgreSQL = "PostgreSQL";
 }

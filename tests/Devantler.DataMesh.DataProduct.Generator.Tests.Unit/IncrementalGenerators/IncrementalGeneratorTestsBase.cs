@@ -41,8 +41,8 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
             .RunGenerators(_compilation);
     }
 
-    protected static CustomAdditionalText CreateAppSettings(string appSettings) =>
-        new("appsettings.json", appSettings);
+    protected static CustomAdditionalText CreateDataProductConfig(string config) =>
+        new("dp-config.json", config);
 }
 
 public class CustomAdditionalText : AdditionalText

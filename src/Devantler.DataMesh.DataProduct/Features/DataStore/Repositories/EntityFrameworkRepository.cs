@@ -32,7 +32,7 @@ public abstract class EntityFrameworkRepository<[DynamicallyAccessedMembers(Dyna
         var filteredEntities = new List<T>();
         foreach (var entity in entities)
         {
-            bool exists = await _context.Set<T>().AnyAsync(e => e.Id == entity.Id, cancellationToken) 
+            bool exists = await _context.Set<T>().AnyAsync(e => e.Id == entity.Id, cancellationToken)
                 || filteredEntities.Any(e => e.Id == entity.Id);
 
             if (exists) continue;

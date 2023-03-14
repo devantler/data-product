@@ -1,5 +1,3 @@
-using Devantler.DataMesh.DataProduct.Configuration.Options;
-
 namespace Devantler.DataMesh.DataProduct.Features.Metrics;
 
 /// <summary>
@@ -10,12 +8,12 @@ public static class MetricsStartupExtensions
     /// <summary>
     /// Registers metrics to the DI container.
     /// </summary>
-    public static IServiceCollection AddMetrics(this IServiceCollection services, DataProductOptions options)
+    public static IServiceCollection AddMetrics(this IServiceCollection services)
         => services;
 
     /// <summary>
     /// Configures the web application to use metrics.
     /// </summary>
-    public static IApplicationBuilder UseMetrics(this IApplicationBuilder app, DataProductOptions options)
+    public static IApplicationBuilder UseMetrics(this IApplicationBuilder app)
         => app;
 }

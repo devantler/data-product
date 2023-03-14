@@ -37,7 +37,7 @@ public class AutoMapperProfileGenerator : GeneratorBase
         var @class = new CSharpClass("AutoMapperProfile")
             .AddImport(new CSharpUsing("AutoMapper"))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
-            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "Program"))
+            .SetNamespace("Devantler.DataMesh.DataProduct")
             .SetDocBlock(new CSharpDocBlock("AutoMapper profile for mapping between models and entities."))
             .SetBaseClass(new CSharpClass("Profile"));
 

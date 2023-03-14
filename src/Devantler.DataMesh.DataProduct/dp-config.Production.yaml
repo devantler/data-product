@@ -5,14 +5,14 @@ DataProduct:
   Owner:
     Name: Test User
     Email: test@email.com
-    Organisation: Devantler Corp
-    Phone: "+45 41240202"
-    Website: https://www.datamesh-architecture.com/data-product-canvas
+    Organisation: Test Org
+    Phone: "+45 12546532"
+    Website: https://test-site.com
   FeatureFlags:
     EnableApis:
       - Rest
       - GraphQL
-    EnableDataIngestion: false # TODO: #144 Enable feature gated data ingestion with configured pub/sub
+    EnableDataIngestion: true
     EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
     EnableMetadata: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
     EnableTracing: false # TODO: #141 Enable feature gated tracing with OpenTelemetry and Jaeger
@@ -23,17 +23,16 @@ DataProduct:
   Services:
     DataStore:
       Type: SQL
-      Provider: Sqlite
-      ConnectionString: Data Source=sqlite.db
+      Provider: PostgreSQL
+      ConnectionString: 10.0.0.100:5432
     SchemaRegistry:
-      Type: Local
+      Type: Kafka
+      Url: schema-registry.devantler.com
       Schema:
         Subject: contoso-university-single
         Version: 1
     DataIngestionSources:
-      - Type: Local
-        FilePath: data/contoso-university-single-value.json
       - Type: Kafka
-        BootstrapServers: https://kafka.devantler.com
+        BootstrapServers: 10.0.0.100:9092
         GroupId: dp-students-ingestion
         Topic: contoso-university

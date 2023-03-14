@@ -1,29 +1,15 @@
-#pragma warning disable IDE0210
-
+using Devantler.DataMesh.DataProduct;
 using Devantler.DataMesh.DataProduct.Features;
 
-namespace Devantler.DataMesh.DataProduct;
+#pragma warning disable CA1852
 
-sealed class Program
-{
-    static void Main(string[] args)
-    {
-        var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-        string dataProductConfigFile = File.Exists("data-product-config.yaml") ? "data-product-config.yaml" : "data-product-config.yml";
+_ = builder.Configuration.AddDataProductConfiguration(builder.Environment, args);
+builder.AddFeatures();
 
-        _ = builder.Configuration
-            .AddJsonFile("appsettings.json", optional: false)
-            .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
-            .AddYamlFile(dataProductConfigFile, optional: true)
-            .AddEnvironmentVariables()
-            .AddCommandLine(args);
+var app = builder.Build();
+app.UseFeatures();
+app.Run();
 
-        builder.AddFeatures();
-
-        var app = builder.Build();
-        app.UseFeatures();
-        app.Run();
-    }
-}
-#pragma warning restore IDE0210
+#pragma warning restore CA1852

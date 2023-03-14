@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestionSource;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
 
 /// <summary>
 /// Options to configure a data ingestor for the data product.

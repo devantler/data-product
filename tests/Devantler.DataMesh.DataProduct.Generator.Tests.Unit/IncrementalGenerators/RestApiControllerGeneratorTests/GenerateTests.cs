@@ -10,7 +10,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<RestApiControllerGene
     public Task GivenValidAppSettings_GeneratesValidCode(string subject)
     {
         //Arrange
-        var additionalText = CreateAppSettings(
+        var additionalText = CreateDataProductConfig(
             /*lang=json,strict*/
             $$"""
             {

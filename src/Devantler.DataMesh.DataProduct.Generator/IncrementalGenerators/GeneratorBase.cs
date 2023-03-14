@@ -30,7 +30,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
         {
             var additionalFiles = compilationAndFiles.Right;
             var configuration = BuildConfiguration(additionalFiles);
-            var options = configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
+            var options = configuration.GetDataProductOptions()
                 ?? throw new InvalidOperationException(
                     $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
                 );
@@ -52,12 +52,12 @@ public abstract class GeneratorBase : IIncrementalGenerator
         IncrementalGeneratorInitializationContext context)
     {
         return context.AdditionalTextsProvider
-            .Select((additionalText, _) => new AdditionalFile()
+            .Select((additionalText, _) => new AdditionalFile
             {
                 FileName = Path.GetFileName(additionalText.Path),
                 FileNameWithoutExtension = Path.GetFileNameWithoutExtension(additionalText.Path),
                 FilePath = additionalText.Path,
-                FileDirectoryPath = Path.GetDirectoryName(additionalText.Path),
+                FileDirectoryPath = Path.GetDirectoryName(additionalText.Path) ?? "",
                 Contents = additionalText.GetText()
             })
             .Collect();
@@ -67,28 +67,39 @@ public abstract class GeneratorBase : IIncrementalGenerator
     {
         var configurationBuilder = new ConfigurationBuilder();
 
-        var appsettings = files.FirstOrDefault(file => file.FileName.Equals("appsettings.json"))
-            ?? throw new InvalidOperationException("Failed to find required 'appsettings.json' file.");
-        var textStream = new MemoryStream(Encoding.UTF8.GetBytes(appsettings.Contents?.ToString()));
-        configurationBuilder.AddJsonStream(textStream);
-        configurationBuilder.AddJsonFile(appsettings.FilePath, optional: false);
+        string ymlOrJsonFileExtension = files.Any(file => file.FileName.Equals("dp-config.yml")) ? "yml" : "json";
+        string fileExtension = files.Any(file => file.FileName.Equals("dp-config.yaml")) ? "yaml" : ymlOrJsonFileExtension;
 
+        var configFile = files.FirstOrDefault(file => file.FileName.Equals($"dp-config.{fileExtension}"))
+            ?? throw new InvalidOperationException($"Failed to find required 'dp-config.{fileExtension}'.");
 #if DEBUG
-        var appsettingsDevelopment = files.FirstOrDefault(file => file.FileName.Equals("appsettings.Development.json"));
-        if (appsettingsDevelopment is not null)
-            configurationBuilder.AddJsonFile(appsettingsDevelopment.FilePath, optional: true);
+        var developmentConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"dp-config.Development.{fileExtension}"));
 #elif RELEASE
-        var appsettingsProduction = files.FirstOrDefault(file => file.FileName.Equals("appsettings.Production.json"));
-        if (appsettingsProduction is not null)
-            configurationBuilder.AddJsonFile(appsettingsProduction.FilePath, optional: true);
+        var productionConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"dp-config.Production.{fileExtension}"));
 #endif
-        var dataProductConfig = files.FirstOrDefault(
-            file =>
-                file.FileNameWithoutExtension.Equals("data-product-config")
-                && new string[] { ".yaml", ".yml" }.Contains(Path.GetExtension(file.FilePath))
-            );
-        if (dataProductConfig is not null)
-            configurationBuilder.AddYamlFile(dataProductConfig.FilePath, optional: true);
+        if (fileExtension.Equals("json"))
+        {
+            var textStream = new MemoryStream(Encoding.UTF8.GetBytes(configFile?.Contents?.ToString()));
+            configurationBuilder.AddJsonStream(textStream);
+#if DEBUG
+            if (developmentConfigFile is not null)
+                configurationBuilder.AddJsonFile(developmentConfigFile.FilePath, optional: true);
+#elif RELEASE
+            if (productionConfigFile is not null)
+                configurationBuilder.AddJsonFile(productionConfigFile.FilePath, optional: true);
+#endif
+        }
+        else
+        {
+            configurationBuilder.AddYamlFile(configFile.FilePath, optional: false);
+#if DEBUG
+            if (developmentConfigFile is not null)
+                configurationBuilder.AddYamlFile(developmentConfigFile.FilePath, optional: true);
+#elif RELEASE
+            if (productionConfigFile is not null)
+                configurationBuilder.AddYamlFile(productionConfigFile.FilePath, optional: true);
+#endif
+        }
 
         configurationBuilder.AddEnvironmentVariables();
 

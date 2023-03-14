@@ -11,7 +11,7 @@ public class RecordSchemaPrimitiveTypeBoolean : ISchema
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     /// <summary>
     /// The BooleanField property.
     /// </summary>

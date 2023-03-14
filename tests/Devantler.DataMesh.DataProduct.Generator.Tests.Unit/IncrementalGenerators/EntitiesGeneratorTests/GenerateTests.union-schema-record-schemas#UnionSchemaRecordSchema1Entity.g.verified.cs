@@ -10,7 +10,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 public class UnionSchemaRecordSchema1Entity : IEntity
 {
     /// <summary>
-    /// The unique identifier for this entity.
+    /// The unique identifier for this schema.
     /// </summary>
-    public Guid Id { get; set; }
+    public string Id { get; set; }
 }

@@ -1,3 +1,5 @@
+using Devantler.DataMesh.DataProduct.Configuration.Options;
+
 namespace Devantler.DataMesh.DataProduct.Features.Apis.GraphQL;
 
 /// <summary>
@@ -9,16 +11,20 @@ public static class GraphQLStartupExtensions
     /// Registers GraphQL to the DI container.
     /// </summary>
     /// <param name="services"></param>
+    /// <param name="options"></param>
     /// <param name="environment"></param>
-    public static IServiceCollection AddGraphQL(this IServiceCollection services, IWebHostEnvironment environment)
+    public static IServiceCollection AddGraphQL(this IServiceCollection services, DataProductOptions options,
+        IWebHostEnvironment environment)
     {
-        _ = services
-            .AddGraphQLServer()
+        var requestExecutorBuilder = services.AddGraphQLServer()
             .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = environment.IsDevelopment())
-            .AddQueryType<Query>()
-            .AddProjections() // TODO: Gate this behind a setting in the options.Services.Apis.GraphQL.EnableProjections
-            .AddFiltering() // TODO: Gate this behind a setting in the options.Services.Apis.GraphQL.EnableFiltering
-            .AddSorting(); // TODO: Gate this behind a setting in the options.Services.Apis.GraphQL.EnableSorting
+            .AddQueryType<Query>();
+        if (options.Services.Apis.GraphQL.EnableProjections)
+            _ = requestExecutorBuilder.AddProjections();
+        if (options.Services.Apis.GraphQL.EnableFiltering)
+            _ = requestExecutorBuilder.AddFiltering();
+        if (options.Services.Apis.GraphQL.EnableSorting)
+            _ = requestExecutorBuilder.AddSorting();
 
         return services;
     }

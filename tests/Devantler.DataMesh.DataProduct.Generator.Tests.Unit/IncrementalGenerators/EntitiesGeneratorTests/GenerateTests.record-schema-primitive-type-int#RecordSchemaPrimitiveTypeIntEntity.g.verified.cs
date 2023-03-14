@@ -10,9 +10,9 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 public class RecordSchemaPrimitiveTypeIntEntity : IEntity
 {
     /// <summary>
-    /// The unique identifier for this entity.
+    /// The unique identifier for this schema.
     /// </summary>
-    public Guid Id { get; set; }
+    public string Id { get; set; }
     /// <summary>
     /// The IntField property.
     /// </summary>
