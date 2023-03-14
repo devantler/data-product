@@ -17,7 +17,7 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 /// A generator for service registrations and usages for a data ingestion.
 /// </summary>
 [Generator]
-public class DataIngestionStartupExtensions : GeneratorBase
+public class DataIngestionStartupExtensionsGenerator : GeneratorBase
 {
     /// <summary>
     /// Generates service registrations and usages for a data store.
