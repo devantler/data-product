@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
+using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.Core.Model;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
@@ -7,10 +8,10 @@ using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore.SQL;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore.SQL;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
@@ -71,6 +72,8 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             .AddParameter(appParameter)
             .AddParameter(optionsParameter);
 
+        var avroSchemaParser = new AvroSchemaParser();
+
         switch (options.Services.DataStore.Type)
         {
             case DataStoreType.SQL:
@@ -84,9 +87,13 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
                 foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
                 {
                     string schemaName = schema.Name.ToPascalCase();
+                    var schemaType = schema.Fields.FirstOrDefault(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase))?.Type;
+                    string schemaIdType = schemaType is not null
+                        ? avroSchemaParser.Parse(schemaType, Language.CSharp)
+                        : "Guid";
                     _ = addGeneratedServiceRegistrationsMethod
-                        .AddStatement($"_ = services.AddScoped<IRepository<{schemaName}Entity>, {schemaName}Repository>();")
-                        .AddStatement($"_ = services.AddScoped<IDataStoreService<{schemaName}>, {schemaName}DataStoreService>();");
+                        .AddStatement($"_ = services.AddScoped<IRepository<{schemaIdType}, {schemaName}Entity>, {schemaName}Repository>();")
+                        .AddStatement($"_ = services.AddScoped<IDataStoreService<{schemaIdType}, {schemaName}>, {schemaName}DataStoreService>();");
                 }
                 _ = useGeneratedServiceRegistrations
                     .AddStatement(

@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
+using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
@@ -31,6 +32,8 @@ public class GraphQLQueryGenerator : GeneratorBase
 
         var codeCompilation = new CSharpCompilation();
 
+        var avroSchemaParser = new AvroSchemaParser();
+
         var @class = new CSharpClass("Query")
             .SetIsPartial(true)
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
@@ -40,6 +43,12 @@ public class GraphQLQueryGenerator : GeneratorBase
         foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {
             string schemaName = schema.Name.ToPascalCase();
+
+            var schemaType = schema.Fields.FirstOrDefault(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase))?.Type;
+            string schemaIdType = schemaType is not null
+                ? avroSchemaParser.Parse(schemaType, Language.CSharp)
+                : "Guid";
+
             var method = new CSharpMethod($"Get{schemaName.ToPlural()}")
                 .AddAttribute("UsePaging")
                 .AddAttribute("UseProjection")
@@ -48,7 +57,7 @@ public class GraphQLQueryGenerator : GeneratorBase
                 .SetDocBlock(new CSharpDocBlock($"Queries {schemaName.ToPlural()} from the data store."))
                 .SetIsAsynchronous(true)
                 .SetReturnType($"Task<IQueryable<{schemaName}>>")
-                .AddParameter(new CSharpParameter($"[Service] IDataStoreService<{schemaName}>", "dataStoreService"))
+                .AddParameter(new CSharpParameter($"[Service] IDataStoreService<{schemaIdType}, {schemaName}>", "dataStoreService"))
                 .AddParameter(new CSharpParameter("CancellationToken", "cancellationToken"))
                 .AddStatement("await dataStoreService.GetAllAsQueryableAsync(cancellationToken);")
                 .SetIsExpressionBodied(true);

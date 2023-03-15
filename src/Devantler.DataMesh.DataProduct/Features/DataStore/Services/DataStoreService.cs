@@ -10,19 +10,19 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 /// </summary>
 /// <typeparam name="TSchema"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
-public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
-    where TSchema : class
-    where TEntity : class, IEntity
+public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, TSchema>
+    where TSchema : class, Schemas.ISchema<TKey>
+    where TEntity : class, IEntity<TKey>
 {
-    readonly IRepository<TEntity> _repository;
+    readonly IRepository<TKey, TEntity> _repository;
     readonly IMapper _mapper;
 
     /// <summary>
-    /// Constructs a new instance of <see cref="DataStoreService{TSchema, TEntity}"/>, and injects the required dependencies.
+    /// Constructs a new instance of <see cref="DataStoreService{TKey,TSchema, TEntity}"/>, and injects the required dependencies.
     /// </summary>
     /// <param name="repository"></param>
     /// <param name="mapper"></param>
-    protected DataStoreService(IRepository<TEntity> repository, IMapper mapper)
+    protected DataStoreService(IRepository<TKey, TEntity> repository, IMapper mapper)
     {
         _repository = repository;
         _mapper = mapper;
@@ -45,18 +45,18 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
     }
 
     /// <inheritdoc/>
-    public async Task<TSchema> DeleteSingleAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<TSchema> DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default)
     {
         return await _repository.DeleteSingleAsync(id, cancellationToken)
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
     }
 
     /// <inheritdoc/>
-    public async Task<int> DeleteMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
+    public async Task<int> DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
         => await _repository.DeleteMultipleAsync(ids, cancellationToken);
 
     /// <inheritdoc/>
-    public async Task<TSchema> GetSingleAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<TSchema> GetSingleAsync(TKey id, CancellationToken cancellationToken = default)
     {
         return await _repository.ReadSingleAsync(id, cancellationToken)
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
@@ -85,7 +85,7 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<TSchema>> GetMultipleAsync(IEnumerable<string> ids,
+    public async Task<IEnumerable<TSchema>> GetMultipleAsync(IEnumerable<TKey> ids,
         CancellationToken cancellationToken = default)
     {
         return await _repository.ReadMultipleAsync(ids, cancellationToken)

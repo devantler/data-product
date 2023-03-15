@@ -11,19 +11,19 @@ namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Ingestors;
 /// <summary>
 /// A data ingestor that ingests data from a local file.
 /// </summary>
-public class LocalDataIngestor<TSchema> : BackgroundService, IDataIngestor
-    where TSchema : class, Schemas.ISchema
+public class LocalDataIngestor<TKey, TSchema> : BackgroundService, IDataIngestor
+    where TSchema : class, Schemas.ISchema<TKey>
 {
-    readonly IDataStoreService<TSchema> _dataStoreService;
+    readonly IDataStoreService<TKey, TSchema> _dataStoreService;
     readonly DataProductOptions _options;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LocalDataIngestor{TSchema}"/> class.
+    /// Initializes a new instance of the <see cref="LocalDataIngestor{TKey, TSchema}"/> class.
     /// </summary>
     public LocalDataIngestor(IServiceScopeFactory scopeFactory)
     {
         var scope = scopeFactory.CreateScope();
-        _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TSchema>>();
+        _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TKey, TSchema>>();
         _options = scope.ServiceProvider.GetRequiredService<IOptions<DataProductOptions>>().Value;
     }
 

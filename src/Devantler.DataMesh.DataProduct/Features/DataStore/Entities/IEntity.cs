@@ -3,10 +3,10 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 /// <summary>
 /// An interface for entities.
 /// </summary>
-public interface IEntity
+public interface IEntity<T>
 {
     /// <summary>
     /// A unique identifier for the entity.
     /// </summary>
-    public string Id { get; set; }
+    public T Id { get; set; }
 }

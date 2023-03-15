@@ -6,12 +6,12 @@ namespace Devantler.DataMesh.DataProduct.Schemas;
 /// <summary>
 /// An schema class for the RecordSchemaPrimitiveTypeLong record.
 /// </summary>
-public class RecordSchemaPrimitiveTypeLong : ISchema
+public class RecordSchemaPrimitiveTypeLong : ISchema<Guid>
 {
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     /// <summary>
     /// The LongField property.
     /// </summary>

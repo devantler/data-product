@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
+using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
@@ -32,10 +33,14 @@ public class RestApiControllerGenerator : GeneratorBase
         var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
-
+        var avroSchemaParser = new AvroSchemaParser();
         foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {
             string schemaName = schema.Name.ToPascalCase();
+            var schemaType = schema.Fields.FirstOrDefault(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase))?.Type;
+            string schemaIdType = schemaType is not null
+                ? avroSchemaParser.Parse(schemaType, Language.CSharp)
+                : "Guid";
             var @class = new CSharpClass($"{schemaName.ToPlural()}Controller")
                 .AddImport(new CSharpUsing("AutoMapper"))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
@@ -44,13 +49,13 @@ public class RestApiControllerGenerator : GeneratorBase
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestApiController"))
                 .SetDocBlock(new CSharpDocBlock(
                     $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
-                .SetBaseClass(new CSharpClass($"RestApiController<{schemaName}>"));
+                .SetBaseClass(new CSharpClass($"RestApiController<{schemaIdType}, {schemaName}>"));
 
             var constructor = new CSharpConstructor(@class.Name)
                 .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of <see cref="{{@class.Name}}" />"""));
 
             var repositoryConstructorParameter =
-                new CSharpConstructorParameter($"IDataStoreService<{schemaName}>", "dataStoreService")
+                new CSharpConstructorParameter($"IDataStoreService<{schemaIdType}, {schemaName}>", "dataStoreService")
                     .SetIsBaseParameter(true);
 
             _ = constructor.AddParameter(repositoryConstructorParameter);

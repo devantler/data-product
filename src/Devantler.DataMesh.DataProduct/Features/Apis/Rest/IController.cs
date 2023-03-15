@@ -6,21 +6,21 @@ namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 /// Generic interface for REST Controllers.
 /// </summary>
 /// <typeparam name="TSchema"></typeparam>
-public interface IController<TSchema> where TSchema : class, Schemas.ISchema
+public interface IController<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
 {
     /// <summary>
     /// Read an entity by id.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TSchema>> GetSingleAsync(string id, CancellationToken cancellationToken = default);
+    Task<ActionResult<TSchema>> GetSingleAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities by id.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync(List<string> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync(List<TKey> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities with pagination.
@@ -71,12 +71,12 @@ public interface IController<TSchema> where TSchema : class, Schemas.ISchema
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TSchema>> DeleteSingleAsync(string id, CancellationToken cancellationToken = default);
+    Task<ActionResult<TSchema>> DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple entities.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync(List<string> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync(List<TKey> ids, CancellationToken cancellationToken = default);
 }

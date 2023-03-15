@@ -16,6 +16,6 @@ public static partial class DataIngestionStartupExtensions
     /// </summary>
     static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, List<IDataIngestorOptions> options)
     {
-        _ = services.AddHostedService<LocalDataIngestor<RecordSchemaPrimitiveTypes>>();
+        _ = services.AddHostedService<LocalDataIngestor<Guid, RecordSchemaPrimitiveTypes>>();
     }
 }
