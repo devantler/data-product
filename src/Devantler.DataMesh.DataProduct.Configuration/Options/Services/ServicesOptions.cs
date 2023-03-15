@@ -1,9 +1,9 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.Apis;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore.SQL;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore.SQL;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Options.Services;
 /// <summary>
@@ -14,7 +14,7 @@ public class ServicesOptions
     /// <summary>
     /// The key for the services options.
     /// </summary>
-    public static string Key { get; set; } = "DataProduct:Services";
+    public const string Key = "Services";
 
     /// <summary>
     /// Options for the schema registry used by the data product.

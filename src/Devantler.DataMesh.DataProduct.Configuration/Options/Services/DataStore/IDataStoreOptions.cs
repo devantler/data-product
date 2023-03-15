@@ -8,7 +8,7 @@ public interface IDataStoreOptions
     /// <summary>
     /// A key to indicate the section in the configuration file that contains the data store options.
     /// </summary>
-    public const string Key = "DataProduct:Services:DataStore";
+    public const string Key = "Services:DataStore";
     /// <summary>
     /// The data store type to use.
     /// </summary>

@@ -37,9 +37,8 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
         var codeCompilation = new CSharpCompilation();
 
         var @class = new CSharpClass("DataIngestionStartupExtensions")
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace,
-                "IDataIngestorOptions")))
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataIngestor")))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataIngestionStartupExtensions") + ".Services"))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataIngestorOptions")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
             .SetDocBlock(new CSharpDocBlock(
                 "A class that contains extension methods for service registrations and usages for data ingestors"))
@@ -70,7 +69,7 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
                     continue;
 
                 _ = addGeneratedServiceRegistrationsMethod.AddStatement(
-                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestor<{schema.Name}>>();"
+                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestorService<{schema.Name}>>();"
                 );
             }
         }

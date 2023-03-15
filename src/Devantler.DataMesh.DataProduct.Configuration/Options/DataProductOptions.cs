@@ -9,11 +9,6 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 public class DataProductOptions
 {
     /// <summary>
-    /// A key to indicate the section in the configuration file that contains the data product options.
-    /// </summary>
-    public const string Key = "DataProduct";
-
-    /// <summary>
     /// The name of the data product.
     /// </summary>
     public string Name { get; set; } = string.Empty;

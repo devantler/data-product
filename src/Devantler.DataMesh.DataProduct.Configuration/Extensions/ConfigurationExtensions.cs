@@ -16,9 +16,9 @@ public static class ConfigurationExtensions
     /// </summary>
     public static DataProductOptions GetDataProductOptions(this IConfiguration configuration)
     {
-        var dataProductOptions = configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
+        var dataProductOptions = configuration.Get<DataProductOptions>()
                                  ?? throw new InvalidOperationException(
-                                     $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
+                                     $"Failed to bind configuration to the type '{typeof(DataProductOptions).FullName}'."
                                  );
 
         dataProductOptions.Services.SchemaRegistry = dataProductOptions.Services.SchemaRegistry.Type switch

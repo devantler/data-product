@@ -32,7 +32,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
             var configuration = BuildConfiguration(additionalFiles);
             var options = configuration.GetDataProductOptions()
                 ?? throw new InvalidOperationException(
-                    $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
+                    $"Failed to bind configuration to the type '{typeof(DataProductOptions).FullName}'."
                 );
 
             // Hack: Sets the schema registry path when the Generator run as an Analyzer. 

@@ -8,7 +8,7 @@ public interface ISchemaRegistryOptions
     /// <summary>
     /// A key to indicate the section in the configuration file that contains the schema registry options.
     /// </summary>
-    public const string Key = "DataProduct:Services:SchemaRegistry";
+    public const string Key = "Services:SchemaRegistry";
 
     /// <summary>
     /// The schema registry type to use.

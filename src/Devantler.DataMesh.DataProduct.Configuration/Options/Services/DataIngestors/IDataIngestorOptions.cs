@@ -8,7 +8,7 @@ public interface IDataIngestorOptions
     /// <summary>
     /// The key for the data ingestor options.
     /// </summary>
-    public const string Key = "DataProduct:Services:DataIngestors";
+    public const string Key = "Services:DataIngestors";
     /// <summary>
     /// The data ingestor type to use.
     /// </summary>
