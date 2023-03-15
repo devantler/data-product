@@ -28,12 +28,6 @@ public interface IDataStoreService<TSchema> where TSchema : class
     Task<TSchema> GetSingleAsync(string id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Get all <typeparamref name="TSchema"/>'s from a data store.
-    /// </summary>
-    /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TSchema>> GetAllAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Gets all <typeparamref name="TSchema"/>'s from a data store as queryable objects.
     /// </summary>
     /// <param name="cancellationToken"></param>
@@ -91,4 +85,11 @@ public interface IDataStoreService<TSchema> where TSchema : class
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
     Task<int> DeleteMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Invalidates specified cache entries and queries that are affected by data changes.
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <param name="cancellationToken"></param>
+    Task InvalidateCacheAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
 }
