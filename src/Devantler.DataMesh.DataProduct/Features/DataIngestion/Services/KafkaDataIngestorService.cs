@@ -8,12 +8,12 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegist
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;
 
-namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Ingestors;
+namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 
 /// <summary>
 /// A data ingestion source service that ingests data from a Kafka topic.
 /// </summary>
-public class KafkaDataIngestor<TSchema> : BackgroundService, IDataIngestor
+public class KafkaDataIngestorService<TSchema> : BackgroundService
     where TSchema : class, Schemas.ISchema
 {
     readonly IDataStoreService<TSchema> _dataStoreService;
@@ -22,7 +22,7 @@ public class KafkaDataIngestor<TSchema> : BackgroundService, IDataIngestor
     /// <summary>
     /// Initializes a new instance of the <see cref="KafkaDataIngestor{TSchema}"/> class.
     /// </summary>
-    public KafkaDataIngestor(IServiceScopeFactory scopeFactory)
+    public KafkaDataIngestorService(IServiceScopeFactory scopeFactory)
     {
         var scope = scopeFactory.CreateScope();
         _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TSchema>>();

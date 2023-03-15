@@ -6,12 +6,12 @@ using Devantler.DataMesh.DataProduct.Features.DataIngestion.JsonConverters;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;
 
-namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Ingestors;
+namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 
 /// <summary>
 /// A data ingestor that ingests data from a local file.
 /// </summary>
-public class LocalDataIngestor<TSchema> : BackgroundService, IDataIngestor
+public class LocalDataIngestorService<TSchema> : BackgroundService
     where TSchema : class, Schemas.ISchema
 {
     readonly IDataStoreService<TSchema> _dataStoreService;
@@ -20,7 +20,7 @@ public class LocalDataIngestor<TSchema> : BackgroundService, IDataIngestor
     /// <summary>
     /// Initializes a new instance of the <see cref="LocalDataIngestor{TSchema}"/> class.
     /// </summary>
-    public LocalDataIngestor(IServiceScopeFactory scopeFactory)
+    public LocalDataIngestorService(IServiceScopeFactory scopeFactory)
     {
         var scope = scopeFactory.CreateScope();
         _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TSchema>>();

@@ -46,7 +46,7 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
 
         if (_options.FeatureFlags.EnableCaching)
         {
-            await InvalidateCache(new[] { entity.Id }, cancellationToken);
+            await InvalidateCacheAsync(new[] { entity.Id }, cancellationToken);
         }
 
         return result;
@@ -61,7 +61,7 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
 
         if (_options.FeatureFlags.EnableCaching)
         {
-            await InvalidateCache(entities.Select(e => e.Id), cancellationToken);
+            await InvalidateCacheAsync(entities.Select(e => e.Id), cancellationToken);
         }
 
         return result;
@@ -74,7 +74,7 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching)
-            await InvalidateCache(new[] { id }, cancellationToken);
+            await InvalidateCacheAsync(new[] { id }, cancellationToken);
 
         return result;
     }
@@ -85,7 +85,7 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
         int result = await _repository.DeleteMultipleAsync(ids, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching)
-            await InvalidateCache(ids, cancellationToken);
+            await InvalidateCacheAsync(ids, cancellationToken);
 
         return result;
     }
@@ -198,7 +198,7 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
                 .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching)
-            await InvalidateCache(new[] { entity.Id }, cancellationToken);
+            await InvalidateCacheAsync(new[] { entity.Id }, cancellationToken);
 
         return result;
     }
@@ -212,13 +212,14 @@ public class DataStoreService<TSchema, TEntity> : IDataStoreService<TSchema>
 
         if (_options.FeatureFlags.EnableCaching)
         {
-            await InvalidateCache(entities.Select(e => e.Id), cancellationToken);
+            await InvalidateCacheAsync(entities.Select(e => e.Id), cancellationToken);
         }
 
         return result;
     }
 
-    private async Task InvalidateCache(IEnumerable<string> ids, CancellationToken cancellationToken)
+    /// <inheritdoc/>
+    public async Task InvalidateCacheAsync(IEnumerable<string> ids, CancellationToken cancellationToken)
     {
         foreach (var id in ids)
             await _cacheStore?.DeleteAsync(id, cancellationToken);
