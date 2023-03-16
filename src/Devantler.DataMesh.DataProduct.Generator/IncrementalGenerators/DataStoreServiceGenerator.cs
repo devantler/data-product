@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
+using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
@@ -30,12 +31,16 @@ public class DataStoreServiceGenerator : GeneratorBase
         var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
-
+        var avroSchemaParser = new AvroSchemaParser();
         foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {
             string schemaName = schema.Name.ToPascalCase();
+            var schemaType = schema.Fields.FirstOrDefault(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase))?.Type;
+            string schemaIdType = schemaType is not null
+                ? avroSchemaParser.Parse(schemaType, Language.CSharp)
+                : "Guid";
 
-            var baseClass = new CSharpClass($"DataStoreService<{schemaName}, {schemaName}Entity>");
+            var baseClass = new CSharpClass($"DataStoreService<{schemaIdType}, {schemaName}, {schemaName}Entity>");
 
             var @class = new CSharpClass($"{schemaName}DataStoreService")
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
@@ -49,7 +54,7 @@ public class DataStoreServiceGenerator : GeneratorBase
 
             var constructor = new CSharpConstructor(@class.Name)
                 .SetDocBlock(new CSharpDocBlock($"""Creates a new instance of <see cref="{@class.Name}" />"""))
-                .AddParameter(new CSharpConstructorParameter($"IRepository<{schemaName}Entity>", "repository")
+                .AddParameter(new CSharpConstructorParameter($"IRepository<{schemaIdType}, {schemaName}Entity>", "repository")
                     .SetIsBaseParameter(true))
                 .AddParameter(new CSharpConstructorParameter("IMapper", "mapper")
                     .SetIsBaseParameter(true));

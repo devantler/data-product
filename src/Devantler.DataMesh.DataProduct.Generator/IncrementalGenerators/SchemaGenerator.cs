@@ -37,12 +37,17 @@ public class SchemaGenerator : GeneratorBase
             string schemaName = schema.Name.ToPascalCase();
             var @class = new CSharpClass(schemaName)
                 .SetDocBlock(new CSharpDocBlock($"An schema class for the {schemaName} record."))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"))
-                .AddImplementation(new CSharpInterface("ISchema"));
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"));
 
-            var idProperty = new CSharpProperty("string", "Id")
+            var idProperty = new CSharpProperty("Guid", "Id")
                 .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."));
+            if (schema.Fields.Any(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase)))
+            {
+                var idField = schema.Fields.First(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase));
+                idProperty.Type = avroSchemaParser.Parse(idField.Type, Language.CSharp);
+            };
             _ = @class.AddProperty(idProperty);
+            _ = @class.AddImplementation(new CSharpInterface($"ISchema<{idProperty.Type}>"));
 
             foreach (var field in schema.Fields)
             {

@@ -7,10 +7,10 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 /// <summary>
 /// An entity class for the RecordSchemaNamespace record.
 /// </summary>
-public class RecordSchemaNamespaceEntity : IEntity
+public class RecordSchemaNamespaceEntity : IEntity<Guid>
 {
     /// <summary>
-    /// The unique identifier for this schema.
+    /// The unique identifier for this entity.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 }

@@ -45,6 +45,15 @@
             "netCore": {
                 "appProject": "${workspaceFolder}/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj"
             }
+        },
+        {
+            "name": "Docker .NET Launch",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj"
+            }
         }
     ]
 }

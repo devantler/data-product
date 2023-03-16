@@ -7,12 +7,12 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 /// <summary>
 /// An entity class for the RecordSchemaPrimitiveTypeFloat record.
 /// </summary>
-public class RecordSchemaPrimitiveTypeFloatEntity : IEntity
+public class RecordSchemaPrimitiveTypeFloatEntity : IEntity<Guid>
 {
     /// <summary>
-    /// The unique identifier for this schema.
+    /// The unique identifier for this entity.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     /// <summary>
     /// The FloatField property.
     /// </summary>

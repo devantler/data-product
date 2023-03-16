@@ -7,12 +7,12 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 /// <summary>
 /// An entity class for the RecordSchemaPrimitiveTypeString record.
 /// </summary>
-public class RecordSchemaPrimitiveTypeStringEntity : IEntity
+public class RecordSchemaPrimitiveTypeStringEntity : IEntity<Guid>
 {
     /// <summary>
-    /// The unique identifier for this schema.
+    /// The unique identifier for this entity.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     /// <summary>
     /// The StringField property.
     /// </summary>

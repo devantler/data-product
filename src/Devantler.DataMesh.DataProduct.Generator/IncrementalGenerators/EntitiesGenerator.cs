@@ -37,12 +37,17 @@ public class EntitiesGenerator : GeneratorBase
             var @class = new CSharpClass($"{schemaName}Entity")
                 .SetDocBlock(new CSharpDocBlock($"An entity class for the {schemaName} record."))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity"))
-                .AddImplementation(new CSharpInterface("IEntity"));
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity"));
 
-            var idProperty = new CSharpProperty("string", "Id")
-                .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."));
+            var idProperty = new CSharpProperty("Guid", "Id")
+                .SetDocBlock(new CSharpDocBlock("The unique identifier for this entity."));
+            if (schema.Fields.Any(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase)))
+            {
+                var idField = schema.Fields.First(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase));
+                idProperty.Type = avroSchemaParser.Parse(idField.Type, Language.CSharp);
+            };
             _ = @class.AddProperty(idProperty);
+            _ = @class.AddImplementation(new CSharpInterface($"IEntity<{idProperty.Type}>"));
 
             foreach (var field in schema.Fields)
             {

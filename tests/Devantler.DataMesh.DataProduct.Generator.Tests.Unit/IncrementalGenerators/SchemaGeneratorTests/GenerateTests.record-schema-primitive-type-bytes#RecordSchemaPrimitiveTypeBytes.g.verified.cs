@@ -6,12 +6,12 @@ namespace Devantler.DataMesh.DataProduct.Schemas;
 /// <summary>
 /// An schema class for the RecordSchemaPrimitiveTypeBytes record.
 /// </summary>
-public class RecordSchemaPrimitiveTypeBytes : ISchema
+public class RecordSchemaPrimitiveTypeBytes : ISchema<Guid>
 {
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     /// <summary>
     /// The BytesField property.
     /// </summary>

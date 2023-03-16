@@ -6,10 +6,10 @@ namespace Devantler.DataMesh.DataProduct.Schemas;
 /// <summary>
 /// An schema class for the RecordSchemaEmpty record.
 /// </summary>
-public class RecordSchemaEmpty : ISchema
+public class RecordSchemaEmpty : ISchema<Guid>
 {
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 }

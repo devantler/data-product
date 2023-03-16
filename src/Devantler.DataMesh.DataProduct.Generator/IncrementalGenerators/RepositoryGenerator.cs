@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
+using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
@@ -33,14 +34,18 @@ public class RepositoryGenerator : GeneratorBase
         var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
-
+        var avroSchemaParser = new AvroSchemaParser();
         foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
         {
             string schemaName = schema.Name.ToPascalCase();
+            var schemaType = schema.Fields.FirstOrDefault(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase))?.Type;
+            string schemaIdType = schemaType is not null
+                ? avroSchemaParser.Parse(schemaType, Language.CSharp)
+                : "Guid";
 
             var baseClass = options.Services.DataStore.Type switch
             {
-                DataStoreType.SQL => new CSharpClass($"EntityFrameworkRepository<{schemaName}Entity>")
+                DataStoreType.SQL => new CSharpClass($"EntityFrameworkRepository<{schemaIdType}, {schemaName}Entity>")
                     .SetDocBlock(new CSharpDocBlock($$"""A repository to interact with entities of type <see cref="{{schemaName}}Entity"/>""")),
                 DataStoreType.NoSQL => throw new NotSupportedException("Document based data stores are not supported yet."),
                 DataStoreType.Graph => throw new NotSupportedException("Graph based data stores are not supported yet."),
