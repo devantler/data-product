@@ -8,7 +8,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 /// <summary>
 /// A repository to interact with entities of type <see cref="RecordSchemaPrimitiveTypesEntity"/>
 /// </summary>
-public class RecordSchemaPrimitiveTypesRepository : EntityFrameworkRepository<RecordSchemaPrimitiveTypesEntity>
+public class RecordSchemaPrimitiveTypesRepository : EntityFrameworkRepository<Guid, RecordSchemaPrimitiveTypesEntity>
 {
     /// <summary>
     /// Creates a new instance of the <see cref="RecordSchemaPrimitiveTypesRepository"/> class.

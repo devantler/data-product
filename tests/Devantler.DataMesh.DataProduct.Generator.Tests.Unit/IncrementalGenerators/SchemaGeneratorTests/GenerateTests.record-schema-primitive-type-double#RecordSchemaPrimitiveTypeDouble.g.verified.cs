@@ -6,12 +6,12 @@ namespace Devantler.DataMesh.DataProduct.Schemas;
 /// <summary>
 /// An schema class for the RecordSchemaPrimitiveTypeDouble record.
 /// </summary>
-public class RecordSchemaPrimitiveTypeDouble : ISchema
+public class RecordSchemaPrimitiveTypeDouble : ISchema<Guid>
 {
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     /// <summary>
     /// The DoubleField property.
     /// </summary>

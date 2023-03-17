@@ -7,12 +7,12 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 /// <summary>
 /// An entity class for the RecordSchemaPrimitiveTypeBytes record.
 /// </summary>
-public class RecordSchemaPrimitiveTypeBytesEntity : IEntity
+public class RecordSchemaPrimitiveTypeBytesEntity : IEntity<Guid>
 {
     /// <summary>
-    /// The unique identifier for this schema.
+    /// The unique identifier for this entity.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     /// <summary>
     /// The BytesField property.
     /// </summary>

@@ -10,12 +10,12 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 /// <summary>
 /// A data store service for the <see cref="RecordSchemaPrimitiveTypes" /> schema.
 /// </summary>
-public class RecordSchemaPrimitiveTypesDataStoreService : DataStoreService<RecordSchemaPrimitiveTypes, RecordSchemaPrimitiveTypesEntity>
+public class RecordSchemaPrimitiveTypesDataStoreService : DataStoreService<Guid, RecordSchemaPrimitiveTypes, RecordSchemaPrimitiveTypesEntity>
 {
     /// <summary>
     /// Creates a new instance of <see cref="RecordSchemaPrimitiveTypesDataStoreService" />
     /// </summary>
-    public RecordSchemaPrimitiveTypesDataStoreService(IRepository<RecordSchemaPrimitiveTypesEntity> repository, IMapper mapper) : base(repository, mapper)
+    public RecordSchemaPrimitiveTypesDataStoreService(IRepository<Guid, RecordSchemaPrimitiveTypesEntity> repository, IMapper mapper) : base(repository, mapper)
     {
     }
 }

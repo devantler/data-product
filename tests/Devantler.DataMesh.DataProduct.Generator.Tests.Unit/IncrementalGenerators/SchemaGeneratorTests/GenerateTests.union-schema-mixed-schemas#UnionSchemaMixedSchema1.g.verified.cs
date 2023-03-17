@@ -6,10 +6,10 @@ namespace Devantler.DataMesh.DataProduct.Schemas;
 /// <summary>
 /// An schema class for the UnionSchemaMixedSchema1 record.
 /// </summary>
-public class UnionSchemaMixedSchema1 : ISchema
+public class UnionSchemaMixedSchema1 : ISchema<Guid>
 {
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 }

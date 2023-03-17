@@ -10,12 +10,12 @@ namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 /// <summary>
 /// A controller to handle REST API requests for a the <see cref="RecordSchemaPrimitiveTypes" /> schema.
 /// </summary>
-public class RecordSchemaPrimitiveTypesController : RestApiController<RecordSchemaPrimitiveTypes>
+public class RecordSchemaPrimitiveTypesController : RestApiController<Guid, RecordSchemaPrimitiveTypes>
 {
     /// <summary>
     /// Creates a new instance of <see cref="RecordSchemaPrimitiveTypesController" />
     /// </summary>
-    public RecordSchemaPrimitiveTypesController(IDataStoreService<RecordSchemaPrimitiveTypes> dataStoreService) : base(dataStoreService)
+    public RecordSchemaPrimitiveTypesController(IDataStoreService<Guid, RecordSchemaPrimitiveTypes> dataStoreService) : base(dataStoreService)
     {
     }
 }

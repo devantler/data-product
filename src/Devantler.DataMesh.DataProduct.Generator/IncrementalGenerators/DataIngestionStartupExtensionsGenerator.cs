@@ -1,5 +1,6 @@
 using System.Collections.Immutable;
 using Chr.Avro.Abstract;
+using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.Core.Model;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
@@ -61,15 +62,25 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
             ? new[] { recordSchema }
             : rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>();
 
+        var avroSchemaParser = new AvroSchemaParser();
+
         foreach (var schema in schemas)
         {
+            var schemaType = schema.Fields.FirstOrDefault(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase))?.Type;
+            string schemaIdType = schemaType is not null
+                ? avroSchemaParser.Parse(schemaType, Language.CSharp)
+                : "Guid";
             foreach (var dataIngestorOptions in options.Services.DataIngestors.GroupBy(x => x.Type).Select(x => x.First()))
             {
                 if (dataIngestorOptions.Type == DataIngestorType.Kafka && options.Services.SchemaRegistry.Type != SchemaRegistryType.Kafka)
                     continue;
 
                 _ = addGeneratedServiceRegistrationsMethod.AddStatement(
+<<<<<<< HEAD
                     $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestorService<{schema.Name}>>();"
+=======
+                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestor<{schemaIdType}, {schema.Name}>>();"
+>>>>>>> main
                 );
             }
         }

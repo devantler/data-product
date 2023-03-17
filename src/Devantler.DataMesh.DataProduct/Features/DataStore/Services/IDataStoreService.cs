@@ -4,7 +4,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 /// Generic interface for services that interact with datastores.
 /// </summary>
 /// <typeparam name="TSchema"></typeparam>
-public interface IDataStoreService<TSchema> where TSchema : class
+public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
 {
     /// <summary>
     /// Creates a single <typeparamref name="TSchema"/> in a data store.
@@ -25,7 +25,7 @@ public interface IDataStoreService<TSchema> where TSchema : class
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<TSchema> GetSingleAsync(string id, CancellationToken cancellationToken = default);
+    Task<TSchema> GetSingleAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets all <typeparamref name="TSchema"/>'s from a data store as queryable objects.
@@ -38,7 +38,7 @@ public interface IDataStoreService<TSchema> where TSchema : class
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TSchema>> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
+    Task<IEnumerable<TSchema>> GetMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads paged <typeparamref name="TSchema"/>'s from a data store.
@@ -77,13 +77,14 @@ public interface IDataStoreService<TSchema> where TSchema : class
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<TSchema> DeleteSingleAsync(string id, CancellationToken cancellationToken = default);
+    Task<TSchema> DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple <typeparamref name="TSchema"/>'s from a data store.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
+<<<<<<< HEAD
     Task<int> DeleteMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -92,4 +93,7 @@ public interface IDataStoreService<TSchema> where TSchema : class
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
     Task InvalidateCacheAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
+=======
+    Task<int> DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
+>>>>>>> main
 }

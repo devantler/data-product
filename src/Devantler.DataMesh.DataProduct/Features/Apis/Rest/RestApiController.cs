@@ -9,20 +9,20 @@ namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 /// <typeparam name="TSchema"></typeparam>
 [ApiController]
 [Route("[controller]")]
-public abstract class RestApiController<TSchema> : ControllerBase, IController<TSchema> where TSchema : class, Schemas.ISchema
+public abstract class RestApiController<TKey, TSchema> : ControllerBase, IController<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
 {
-    readonly IDataStoreService<TSchema> _dataStoreService;
+    readonly IDataStoreService<TKey, TSchema> _dataStoreService;
 
     /// <summary>
     /// Constructs a new instance of <see cref="RestApiController{TSchema}"/> and injects the required services.
     /// </summary>
     /// <param name="dataStoreService"></param>
-    protected RestApiController(IDataStoreService<TSchema> dataStoreService)
+    protected RestApiController(IDataStoreService<TKey, TSchema> dataStoreService)
         => _dataStoreService = dataStoreService;
 
     /// <inheritdoc />
     [HttpGet("{id}")]
-    public async Task<ActionResult<TSchema>> GetSingleAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<TSchema>> GetSingleAsync(TKey id, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetSingleAsync(id, cancellationToken);
         return Ok(result);
@@ -30,7 +30,7 @@ public abstract class RestApiController<TSchema> : ControllerBase, IController<T
 
     /// <inheritdoc />
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync([FromQuery] List<string> ids,
+    public async Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync([FromQuery] List<TKey> ids,
         CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleAsync(ids, cancellationToken);
@@ -90,7 +90,7 @@ public abstract class RestApiController<TSchema> : ControllerBase, IController<T
 
     /// <inheritdoc />
     [HttpDelete("{id}")]
-    public async Task<ActionResult<TSchema>> DeleteSingleAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<TSchema>> DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.DeleteSingleAsync(id, cancellationToken);
         return Ok(result);
@@ -98,7 +98,7 @@ public abstract class RestApiController<TSchema> : ControllerBase, IController<T
 
     /// <inheritdoc />
     [HttpDelete]
-    public async Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync([FromQuery] List<string> ids,
+    public async Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync([FromQuery] List<TKey> ids,
         CancellationToken cancellationToken = default)
     {
         int result = await _dataStoreService.DeleteMultipleAsync(ids, cancellationToken);

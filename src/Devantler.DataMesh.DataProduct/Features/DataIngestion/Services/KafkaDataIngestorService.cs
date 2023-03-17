@@ -8,12 +8,12 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegist
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;
 
-namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
+namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Ingestors;
 
 /// <summary>
 /// A data ingestion source service that ingests data from a Kafka topic.
 /// </summary>
-public class KafkaDataIngestorService<TSchema> : BackgroundService
+public class KafkaDataIngestor<TSchema> : BackgroundService, IDataIngestor
     where TSchema : class, Schemas.ISchema
 {
     readonly IDataStoreService<TSchema> _dataStoreService;
@@ -22,7 +22,7 @@ public class KafkaDataIngestorService<TSchema> : BackgroundService
     /// <summary>
     /// Initializes a new instance of the <see cref="KafkaDataIngestor{TSchema}"/> class.
     /// </summary>
-    public KafkaDataIngestorService(IServiceScopeFactory scopeFactory)
+    public KafkaDataIngestor(IServiceScopeFactory scopeFactory)
     {
         var scope = scopeFactory.CreateScope();
         _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TSchema>>();
@@ -90,47 +90,3 @@ public class KafkaDataIngestorService<TSchema> : BackgroundService
         if (obj == null) return;
 
         var type = obj.GetType();
-
-        // If the type is a dictionary, set the Id value for each key-value pair
-        if (typeof(IDictionary).IsAssignableFrom(type))
-        {
-            foreach (object? dictKey in ((IDictionary)obj).Keys)
-            {
-                if (dictKey.ToString() == "Id")
-                {
-                    if (((IDictionary)obj)[dictKey] == null)
-                    {
-                        ((IDictionary)obj)[dictKey] = string.Empty;
-                    }
-                }
-                else
-                {
-                    SetIdsRecursively(((IDictionary)obj)[dictKey] ?? null!, string.Empty);
-                }
-            }
-        }
-        // If the type is an array, set the Id value for each element
-        else if (typeof(IEnumerable).IsAssignableFrom(type))
-        {
-            foreach (object? item in (IEnumerable)obj)
-            {
-                SetIdsRecursively(item, string.Empty);
-            }
-        }
-        // Otherwise, set the Id value for each property
-        else
-        {
-            foreach (var prop in type.GetProperties())
-            {
-                if (prop.Name == "Id" && prop.GetValue(obj) == null)
-                {
-                    prop.SetValue(obj, key);
-                }
-                else
-                {
-                    SetIdsRecursively(prop.GetValue(obj) ?? null!, string.Empty);
-                }
-            }
-        }
-    }
-}

@@ -6,12 +6,12 @@ namespace Devantler.DataMesh.DataProduct.Schemas;
 /// <summary>
 /// An schema class for the RecordSchemaPrimitiveTypeFloat record.
 /// </summary>
-public class RecordSchemaPrimitiveTypeFloat : ISchema
+public class RecordSchemaPrimitiveTypeFloat : ISchema<Guid>
 {
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     /// <summary>
     /// The FloatField property.
     /// </summary>

@@ -6,12 +6,12 @@ namespace Devantler.DataMesh.DataProduct.Schemas;
 /// <summary>
 /// An schema class for the RecordSchemaPrimitiveTypes record.
 /// </summary>
-public class RecordSchemaPrimitiveTypes : ISchema
+public class RecordSchemaPrimitiveTypes : ISchema<Guid>
 {
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     /// <summary>
     /// The BooleanField property.
     /// </summary>

@@ -20,8 +20,8 @@ public static partial class DataStoreStartupExtensions
     static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, IDataStoreOptions options)
     {
         _ = services.AddPooledDbContextFactory<SqliteDbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().UseSqlite(options?.ConnectionString));
-        _ = services.AddScoped<IRepository<RecordSchemaPrimitiveTypesEntity>, RecordSchemaPrimitiveTypesRepository>();
-        _ = services.AddScoped<IDataStoreService<RecordSchemaPrimitiveTypes>, RecordSchemaPrimitiveTypesDataStoreService>();
+        _ = services.AddScoped<IRepository<Guid, RecordSchemaPrimitiveTypesEntity>, RecordSchemaPrimitiveTypesRepository>();
+        _ = services.AddScoped<IDataStoreService<Guid, RecordSchemaPrimitiveTypes>, RecordSchemaPrimitiveTypesDataStoreService>();
     }
     /// <summary>
     /// Uses generated service registrations for a data store.

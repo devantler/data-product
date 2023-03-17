@@ -6,12 +6,12 @@ namespace Devantler.DataMesh.DataProduct.Schemas;
 /// <summary>
 /// An schema class for the RecordSchemaPrimitiveTypeNull record.
 /// </summary>
-public class RecordSchemaPrimitiveTypeNull : ISchema
+public class RecordSchemaPrimitiveTypeNull : ISchema<Guid>
 {
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     #nullable enable
     /// <summary>
     /// The NullField property.
