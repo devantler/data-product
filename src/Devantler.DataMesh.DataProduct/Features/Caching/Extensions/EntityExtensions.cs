@@ -13,7 +13,5 @@ public static class EntityExtensions
     /// <param name="entity"></param>
     /// <returns></returns>
     public static string CreateCacheKey<T>(this IEntity<T> entity)
-    {
-        return $"{entity.GetType().Name}:{entity.Id}";
-    }
+        => $"{entity.GetType().Name}:{entity.Id}";
 }
