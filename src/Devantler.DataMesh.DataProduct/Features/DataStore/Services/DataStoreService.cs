@@ -1,5 +1,6 @@
 using AutoMapper;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Features.Caching.Extensions;
 using Devantler.DataMesh.DataProduct.Features.Caching.Services;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
@@ -47,8 +48,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            var cacheKey = $"{typeof(TEntity).Name}:{entity.Id}";
-            await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+            await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
         }
 
         return result;
@@ -65,8 +65,8 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         {
             foreach (var entity in entities)
             {
-                var cacheKey = $"{typeof(TEntity).Name}:{entity.Id}";
-                await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+
+                await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
             }
         }
 
@@ -200,8 +200,8 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            var cacheKey = $"{typeof(TEntity).Name}:{entity.Id}";
-            await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+
+            await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
         }
 
         return result;
@@ -218,8 +218,8 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         {
             foreach (var entity in entities)
             {
-                var cacheKey = $"{typeof(TEntity).Name}:{entity.Id}";
-                await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+
+                await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
             }
         }
 
