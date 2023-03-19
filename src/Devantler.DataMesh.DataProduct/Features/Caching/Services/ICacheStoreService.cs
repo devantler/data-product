@@ -48,4 +48,11 @@ public interface ICacheStoreService<TKey, TValue>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task DeleteAsync(TKey key, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Invalidates cache store entries matching caching keys.!
+    /// </summary>
+    /// <param name="keys"></param>
+    /// <param name="cancellationToken"></param>
+    Task InvalidateAsync(IEnumerable<TKey> keys, CancellationToken cancellationToken = default);
 }

@@ -5,6 +5,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 /// <summary>
 /// Generic interface for repositories, with common functionality needed to interact with databases.
 /// </summary>
+/// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
 public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
 {

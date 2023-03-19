@@ -11,19 +11,16 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 /// <summary>
 /// Generic interface for data store services.
 /// </summary>
+/// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TSchema"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
 public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, TSchema>
     where TSchema : class, Schemas.ISchema<TKey>
     where TEntity : class, IEntity<TKey>
 {
-<<<<<<< HEAD
     readonly DataProductOptions _options;
-    readonly ICacheStoreService<string, TEntity>? _cacheStore;
-    readonly IRepository<TEntity> _repository;
-=======
+    readonly ICacheStoreService<TKey, TEntity>? _cacheStore;
     readonly IRepository<TKey, TEntity> _repository;
->>>>>>> main
     readonly IMapper _mapper;
 
     /// <summary>
@@ -32,15 +29,11 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     /// <param name="repository"></param>
     /// <param name="serviceProvider"></param>
     /// <param name="mapper"></param>
-<<<<<<< HEAD
-    protected DataStoreService(IRepository<TEntity> repository, IServiceProvider serviceProvider, IMapper mapper)
-=======
-    protected DataStoreService(IRepository<TKey, TEntity> repository, IMapper mapper)
->>>>>>> main
+    protected DataStoreService(IRepository<TKey, TEntity> repository, IServiceProvider serviceProvider, IMapper mapper)
     {
         _options = serviceProvider.GetRequiredService<IOptions<DataProductOptions>>().Value;
         if (_options.FeatureFlags.EnableCaching)
-            _cacheStore = serviceProvider.GetRequiredService<ICacheStoreService<string, TEntity>>();
+            _cacheStore = serviceProvider.GetRequiredService<ICacheStoreService<TKey, TEntity>>();
         _repository = repository;
         _mapper = mapper;
     }
@@ -52,9 +45,9 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         var result = await _repository.CreateSingleAsync(entity, cancellationToken)
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
-        if (_options.FeatureFlags.EnableCaching)
+        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            await InvalidateCacheAsync(new[] { entity.Id }, cancellationToken);
+            await _cacheStore.InvalidateAsync(new[] { entity.Id }, cancellationToken);
         }
 
         return result;
@@ -67,9 +60,9 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         var entities = _mapper.Map<IEnumerable<TEntity>>(models);
         int result = await _repository.CreateMultipleAsync(entities, cancellationToken);
 
-        if (_options.FeatureFlags.EnableCaching)
+        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            await InvalidateCacheAsync(entities.Select(e => e.Id), cancellationToken);
+            await _cacheStore.InvalidateAsync(entities.Select(e => e.Id), cancellationToken);
         }
 
         return result;
@@ -81,40 +74,35 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         var result = await _repository.DeleteSingleAsync(id, cancellationToken)
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
-        if (_options.FeatureFlags.EnableCaching)
-            await InvalidateCacheAsync(new[] { id }, cancellationToken);
+        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
+            await _cacheStore.InvalidateAsync(new[] { id }, cancellationToken);
 
         return result;
     }
 
     /// <inheritdoc/>
-<<<<<<< HEAD
-    public async Task<int> DeleteMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
+    public async Task<int> DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
     {
         int result = await _repository.DeleteMultipleAsync(ids, cancellationToken);
 
-        if (_options.FeatureFlags.EnableCaching)
-            await InvalidateCacheAsync(ids, cancellationToken);
+        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
+            await _cacheStore.InvalidateAsync(ids, cancellationToken);
 
         return result;
     }
-=======
-    public async Task<int> DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
-        => await _repository.DeleteMultipleAsync(ids, cancellationToken);
->>>>>>> main
 
     /// <inheritdoc/>
     public async Task<TSchema> GetSingleAsync(TKey id, CancellationToken cancellationToken = default)
     {
-        var entity = _options.FeatureFlags.EnableCaching
-            ? await _cacheStore?.GetAsync(id, cancellationToken)
+        var entity = _options.FeatureFlags.EnableCaching && _cacheStore is not null
+            ? await _cacheStore.GetAsync(id, cancellationToken)
             : null;
 
         if (entity is null)
         {
             entity = await _repository.ReadSingleAsync(id, cancellationToken);
-            if (_options.FeatureFlags.EnableCaching)
-                await _cacheStore?.SetAsync(id, entity, cancellationToken);
+            if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
+                await _cacheStore.SetAsync(id, entity, cancellationToken);
         }
 
         return _mapper.Map<TSchema>(entity);
@@ -123,37 +111,15 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     /// <inheritdoc />
     public async Task<IQueryable<TSchema>> GetAllAsQueryableAsync(CancellationToken cancellationToken = default)
     {
-        var entities = _options.FeatureFlags.EnableCaching
-            ? await _cacheStore?.GetMultipleAsync($"GetAllAsQueryableAsync.{typeof(TSchema).Name}", cancellationToken)
-            : null;
-
-        if (entities is null)
-        {
-            entities = await _repository.ReadAllAsQueryableAsync(cancellationToken);
-
-            if (_options.FeatureFlags.EnableCaching)
-                await _cacheStore?.SetMultipleAsync($"GetAllAsQueryableAsync.{typeof(TSchema).Name}", entities, cancellationToken);
-        }
-
-        return (entities as IQueryable).ProjectTo<TSchema>(_mapper.ConfigurationProvider);
+        var entities = await _repository.ReadAllAsQueryableAsync(cancellationToken);
+        return entities.ProjectTo<TSchema>(_mapper.ConfigurationProvider);
     }
 
     /// <inheritdoc/>
     public async Task<IEnumerable<TSchema>> GetMultipleWithLimitAsync(int limit, int offset,
         CancellationToken cancellationToken = default)
     {
-        var entities = _options.FeatureFlags.EnableCaching
-            ? await _cacheStore?.GetMultipleAsync($"GetMultipleWithLimitAsync.{limit}.{offset}", cancellationToken)
-            : null;
-
-        if (entities == null)
-        {
-            entities = await _repository.ReadMultipleWithLimitAsync(limit, offset, cancellationToken);
-
-            if (_options.FeatureFlags.EnableCaching)
-                await _cacheStore?.SetMultipleAsync($"GetMultipleWithLimitAsync.{limit}.{offset}", entities, cancellationToken);
-        }
-
+        var entities = await _repository.ReadMultipleWithLimitAsync(limit, offset, cancellationToken);
         return _mapper.Map<IEnumerable<TSchema>>(entities);
     }
 
@@ -163,15 +129,15 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     {
         var entities = Enumerable.Empty<TEntity>();
 
-        if (_options.FeatureFlags.EnableCaching)
+        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            foreach (string id in ids)
+            foreach (var id in ids)
             {
-                var entity = await _cacheStore?.GetAsync(id, cancellationToken);
+                var entity = await _cacheStore.GetAsync(id, cancellationToken);
                 if (entity == null)
                 {
                     entity = await _repository.ReadSingleAsync(id, cancellationToken);
-                    await _cacheStore?.SetAsync(id, entity, cancellationToken);
+                    await _cacheStore.SetAsync(id, entity, cancellationToken);
                 }
 
                 entities = entities.Append(entity);
@@ -188,18 +154,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     public async Task<IEnumerable<TSchema>> GetMultipleWithPaginationAsync(int page, int pageSize,
         CancellationToken cancellationToken = default)
     {
-        var entities = _options.FeatureFlags.EnableCaching
-            ? await _cacheStore?.GetMultipleAsync($"GetMultipleWithPaginationAsync.{page}.{pageSize}", cancellationToken)
-            : null;
-
-        if (entities == null)
-        {
-            entities = await _repository.ReadMultipleWithPaginationAsync(page, pageSize, cancellationToken);
-
-            if (_options.FeatureFlags.EnableCaching)
-                await _cacheStore?.SetMultipleAsync($"GetMultipleWithPaginationAsync.{page}.{pageSize}", entities, cancellationToken);
-        }
-
+        var entities = await _repository.ReadMultipleWithPaginationAsync(page, pageSize, cancellationToken);
         return _mapper.Map<IEnumerable<TSchema>>(entities);
     }
 
@@ -210,8 +165,8 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         var result = await _repository.UpdateSingleAsync(entity, cancellationToken)
                 .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
-        if (_options.FeatureFlags.EnableCaching)
-            await InvalidateCacheAsync(new[] { entity.Id }, cancellationToken);
+        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
+            await _cacheStore.InvalidateAsync(new[] { entity.Id }, cancellationToken);
 
         return result;
     }
@@ -223,22 +178,11 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         var entities = _mapper.Map<IEnumerable<TEntity>>(models);
         int result = await _repository.UpdateMultipleAsync(entities, cancellationToken);
 
-        if (_options.FeatureFlags.EnableCaching)
+        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            await InvalidateCacheAsync(entities.Select(e => e.Id), cancellationToken);
+            await _cacheStore.InvalidateAsync(entities.Select(e => e.Id), cancellationToken);
         }
 
         return result;
-    }
-
-    /// <inheritdoc/>
-    public async Task InvalidateCacheAsync(IEnumerable<string> ids, CancellationToken cancellationToken)
-    {
-        foreach (var id in ids)
-            await _cacheStore?.DeleteAsync(id, cancellationToken);
-
-        await _cacheStore?.DeleteAsync($"GetAllAsQueryableAsync.{typeof(TSchema).Name}", cancellationToken);
-        await _cacheStore?.DeleteAsync($"GetMultipleWithPaginationAsync.*", cancellationToken);
-        await _cacheStore?.DeleteAsync($"GetMultipleWithLimitAsync.*", cancellationToken);
     }
 }

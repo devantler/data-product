@@ -1,4 +1,3 @@
-using System.Collections;
 using Chr.Avro.Confluent;
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
@@ -8,24 +7,24 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegist
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;
 
-namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Ingestors;
+namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 
 /// <summary>
 /// A data ingestion source service that ingests data from a Kafka topic.
 /// </summary>
-public class KafkaDataIngestor<TSchema> : BackgroundService, IDataIngestor
-    where TSchema : class, Schemas.ISchema
+public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
+    where TSchema : class, Schemas.ISchema<TKey>
 {
-    readonly IDataStoreService<TSchema> _dataStoreService;
-    readonly List<KeyValuePair<IConsumer<string, TSchema>, string>> _consumers;
+    readonly IDataStoreService<TKey, TSchema> _dataStoreService;
+    readonly List<(IConsumer<TKey, TSchema>, string)> _consumers;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="KafkaDataIngestor{TSchema}"/> class.
+    /// Initializes a new instance of the <see cref="KafkaDataIngestorService{TKey, TSchema}"/> class.
     /// </summary>
-    public KafkaDataIngestor(IServiceScopeFactory scopeFactory)
+    public KafkaDataIngestorService(IServiceScopeFactory scopeFactory)
     {
         var scope = scopeFactory.CreateScope();
-        _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TSchema>>();
+        _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TKey, TSchema>>();
         var dataProductOptions = scope.ServiceProvider.GetRequiredService<IOptions<DataProductOptions>>().Value;
         var dataIngestorOptions = dataProductOptions.Services.DataIngestors
             .Where(x => x.Type == DataIngestorType.Kafka)
@@ -39,7 +38,7 @@ public class KafkaDataIngestor<TSchema> : BackgroundService, IDataIngestor
         };
 
         var registry = new CachedSchemaRegistryClient(registryConfig);
-        _consumers = new List<KeyValuePair<IConsumer<string, TSchema>, string>>();
+        _consumers = new List<(IConsumer<TKey, TSchema>, string)>();
         foreach (var options in dataIngestorOptions)
         {
             var consumerConfig = new ConsumerConfig
@@ -47,12 +46,12 @@ public class KafkaDataIngestor<TSchema> : BackgroundService, IDataIngestor
                 BootstrapServers = options.BootstrapServers,
                 GroupId = options.GroupId
             };
-            var consumer = new ConsumerBuilder<string, TSchema>(consumerConfig)
+            var consumer = new ConsumerBuilder<TKey, TSchema>(consumerConfig)
                 .SetAvroKeyDeserializer(registry)
                 .SetAvroValueDeserializer(registry)
                 .SetErrorHandler((_, error) => Console.Error.WriteLine(error.ToString()))
                 .Build();
-            _consumers.Add(new KeyValuePair<IConsumer<string, TSchema>, string>(consumer, options.Topic));
+            _consumers.Add(new(consumer, options.Topic));
         }
     }
 
@@ -61,32 +60,18 @@ public class KafkaDataIngestor<TSchema> : BackgroundService, IDataIngestor
     {
         await Parallel.ForEachAsync(_consumers, stoppingToken, async (item, token) =>
         {
-            var consumer = item.Key;
-            string topic = item.Value;
+            var consumer = item.Item1;
+            string topic = item.Item2;
             consumer.Subscribe(topic);
             while (!token.IsCancellationRequested)
             {
                 var consumeResult = consumer.Consume(token);
                 var schema = consumeResult.Message.Value;
 
-                SetIdsRecursively(schema, consumeResult.Message.Key);
+                // TODO: set ids to default value.
 
                 _ = await _dataStoreService.CreateSingleAsync(schema, token);
             }
         });
     }
-
-    /// <summary>
-    /// Sets all Id properties in the given object.
-    /// </summary>
-    /// <remarks>
-    /// The Id property on the root object is set to the give key. 
-    /// The rest of the Id properties are set to an empty string, so the datastore can generate a new Id without conflict.
-    /// </remarks>
-    /// <param name="obj">The object to set the Id properties on.</param>
-    /// <param name="key">The key to set the Id property to.</param>
-    public void SetIdsRecursively(object obj, string key)
-    {
-        if (obj == null) return;
-
-        var type = obj.GetType();
+}

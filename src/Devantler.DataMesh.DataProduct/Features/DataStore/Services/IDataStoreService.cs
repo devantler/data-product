@@ -3,6 +3,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 /// <summary>
 /// Generic interface for services that interact with datastores.
 /// </summary>
+/// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TSchema"></typeparam>
 public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
 {
@@ -84,16 +85,5 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-<<<<<<< HEAD
-    Task<int> DeleteMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Invalidates specified cache entries and queries that are affected by data changes.
-    /// </summary>
-    /// <param name="ids"></param>
-    /// <param name="cancellationToken"></param>
-    Task InvalidateCacheAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
-=======
     Task<int> DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
->>>>>>> main
 }

@@ -6,13 +6,16 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 /// <summary>
 /// Generic repository to interact with Entity Framework relational database contexts.
 /// </summary>
+/// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
-public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKey, TEntity> where TEntity : class, IEntity<TKey>
+public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+    where TKey : notnull
+    where TEntity : class, IEntity<TKey>
 {
     readonly DbContext _context;
 
     /// <summary>
-    /// Creates a new instance of <see cref="EntityFrameworkRepository{T}"/>.
+    /// Creates a new instance of <see cref="EntityFrameworkRepository{TKey, TEntity}"/>.
     /// </summary>
     /// <param name="context"></param>
     protected EntityFrameworkRepository(DbContext context) => _context = context;
@@ -29,9 +32,8 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
     public async Task<int> CreateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
         var distinctEntities = entities.GroupBy(e => e.Id).Select(e => e.First());
-        var filteredEntities = distinctEntities.Where(e1 => !_context.Set<TEntity>().Any(e2 => e1.Id.Equals(e2.Id)));
 
-        await _context.Set<TEntity>().AddRangeAsync(filteredEntities, cancellationToken);
+        await _context.Set<TEntity>().AddRangeAsync(distinctEntities, cancellationToken);
         return await _context.SaveChangesAsync(cancellationToken);
     }
 

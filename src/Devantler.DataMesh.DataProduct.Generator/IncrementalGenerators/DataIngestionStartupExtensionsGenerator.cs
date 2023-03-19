@@ -76,11 +76,7 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
                     continue;
 
                 _ = addGeneratedServiceRegistrationsMethod.AddStatement(
-<<<<<<< HEAD
-                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestorService<{schema.Name}>>();"
-=======
-                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestor<{schemaIdType}, {schema.Name}>>();"
->>>>>>> main
+                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestorService<{schemaIdType}, {schema.Name}>>();"
                 );
             }
         }
