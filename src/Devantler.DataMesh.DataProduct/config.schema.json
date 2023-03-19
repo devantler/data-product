@@ -114,197 +114,189 @@
                 }
             }
         },
-        "Services": {
+        "DataStore": {
+            "description": "The data store used by the data product.",
+            "type": "object",
+            "oneOf": [
+                {
+                    "properties": {
+                        "Type": {
+                            "type": "string",
+                            "enum": [
+                                "SQL"
+                            ]
+                        },
+                        "Provider": {
+                            "type": "string",
+                            "enum": [
+                                "Sqlite",
+                                "PostgreSQL"
+                            ]
+                        },
+                        "ConnectionString": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "Type",
+                        "Provider",
+                        "ConnectionString"
+                    ]
+                }
+            ]
+        },
+        "Apis": {
+            "description": "The APIs used by the data product.",
             "type": "object",
             "properties": {
-                "DataStore": {
-                    "description": "The data store used by the data product.",
+                "GraphQL": {
+                    "description": "The GraphQL API used by the data product.",
                     "type": "object",
-                    "oneOf": [
-                        {
-                            "properties": {
-                                "Type": {
-                                    "type": "string",
-                                    "enum": [
-                                        "SQL"
-                                    ]
-                                },
-                                "Provider": {
-                                    "type": "string",
-                                    "enum": [
-                                        "Sqlite",
-                                        "PostgreSQL"
-                                    ]
-                                },
-                                "ConnectionString": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "Type",
-                                "Provider",
-                                "ConnectionString"
-                            ]
-                        }
-                    ]
+                    "properties": {}
                 },
-                "Apis": {
-                    "description": "The APIs used by the data product.",
+                "Rest": {
+                    "description": "The Rest API used by the data product.",
                     "type": "object",
+                    "properties": {}
+                }
+            }
+        },
+        "SchemaRegistry": {
+            "description": "The schema registry used by the data product.",
+            "type": "object",
+            "oneOf": [
+                {
                     "properties": {
-                        "GraphQL": {
-                            "description": "The GraphQL API used by the data product.",
-                            "type": "object",
-                            "properties": {}
+                        "Type": {
+                            "description": "The type of schema registry.",
+                            "type": "string",
+                            "enum": [
+                                "Local"
+                            ]
                         },
-                        "Rest": {
-                            "description": "The Rest API used by the data product.",
+                        "Path": {
+                            "description": "The path to the schema registry. If not specified, a default path (assets/schemas) will be used.",
+                            "type": "string"
+                        },
+                        "Schema": {
+                            "description": "The schema for the schema registry.",
                             "type": "object",
-                            "properties": {}
-                        }
-                    }
-                },
-                "SchemaRegistry": {
-                    "description": "The schema registry used by the data product.",
-                    "type": "object",
-                    "oneOf": [
-                        {
                             "properties": {
-                                "Type": {
-                                    "description": "The type of schema registry.",
-                                    "type": "string",
-                                    "enum": [
-                                        "Local"
-                                    ]
-                                },
-                                "Path": {
-                                    "description": "The path to the schema registry. If not specified, a default path (assets/schemas) will be used.",
+                                "Subject": {
+                                    "description": "The subject of the schema.",
                                     "type": "string"
                                 },
-                                "Schema": {
-                                    "description": "The schema for the schema registry.",
-                                    "type": "object",
-                                    "properties": {
-                                        "Subject": {
-                                            "description": "The subject of the schema.",
-                                            "type": "string"
-                                        },
-                                        "Version": {
-                                            "type": "number",
-                                            "minimum": 1
-                                        }
-                                    },
-                                    "required": [
-                                        "Subject",
-                                        "Version"
-                                    ]
+                                "Version": {
+                                    "type": "number",
+                                    "minimum": 1
                                 }
                             },
                             "required": [
-                                "Type"
-                            ]
-                        },
-                        {
-                            "properties": {
-                                "Type": {
-                                    "description": "The type of schema registry.",
-                                    "type": "string",
-                                    "enum": [
-                                        "Kafka"
-                                    ]
-                                },
-                                "Url": {
-                                    "description": "The URL of the schema registry.",
-                                    "type": "string",
-                                    "format": "uri"
-                                },
-                                "Schema": {
-                                    "description": "The schema for the schema registry.",
-                                    "type": "object",
-                                    "properties": {
-                                        "Subject": {
-                                            "description": "The subject of the schema.",
-                                            "type": "string"
-                                        },
-                                        "Version": {
-                                            "type": "number",
-                                            "minimum": 1
-                                        }
-                                    },
-                                    "required": [
-                                        "Subject",
-                                        "Version"
-                                    ]
-                                }
-                            },
-                            "required": [
-                                "Type"
+                                "Subject",
+                                "Version"
                             ]
                         }
+                    },
+                    "required": [
+                        "Type"
                     ]
                 },
-                "DataIngestionSources": {
-                    "description": "The data ingestion sources used by the data product.",
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "anyOf": [
-                            {
-                                "properties": {
-                                    "Type": {
-                                        "type": "string",
-                                        "enum": [
-                                            "Local"
-                                        ]
-                                    },
-                                    "FilePath": {
-                                        "type": "string"
-                                    }
+                {
+                    "properties": {
+                        "Type": {
+                            "description": "The type of schema registry.",
+                            "type": "string",
+                            "enum": [
+                                "Kafka"
+                            ]
+                        },
+                        "Url": {
+                            "description": "The URL of the schema registry.",
+                            "type": "string",
+                            "format": "uri"
+                        },
+                        "Schema": {
+                            "description": "The schema for the schema registry.",
+                            "type": "object",
+                            "properties": {
+                                "Subject": {
+                                    "description": "The subject of the schema.",
+                                    "type": "string"
                                 },
-                                "required": [
-                                    "Type",
-                                    "FilePath"
+                                "Version": {
+                                    "type": "number",
+                                    "minimum": 1
+                                }
+                            },
+                            "required": [
+                                "Subject",
+                                "Version"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "Type"
+                    ]
+                }
+            ]
+        },
+        "DataIngestionSources": {
+            "description": "The data ingestion sources used by the data product.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "anyOf": [
+                    {
+                        "properties": {
+                            "Type": {
+                                "type": "string",
+                                "enum": [
+                                    "Local"
                                 ]
                             },
-                            {
-                                "properties": {
-                                    "Type": {
-                                        "type": "string",
-                                        "enum": [
-                                            "Kafka"
-                                        ]
-                                    },
-                                    "BootstrapServers": {
-                                        "type": "string",
-                                        "format": "uri-reference"
-                                    },
-                                    "GroupId": {
-                                        "type": "string"
-                                    },
-                                    "Topic": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "Type",
-                                    "BootstrapServers",
-                                    "GroupId",
-                                    "Topic"
-                                ]
+                            "FilePath": {
+                                "type": "string"
                             }
+                        },
+                        "required": [
+                            "Type",
+                            "FilePath"
+                        ]
+                    },
+                    {
+                        "properties": {
+                            "Type": {
+                                "type": "string",
+                                "enum": [
+                                    "Kafka"
+                                ]
+                            },
+                            "BootstrapServers": {
+                                "type": "string",
+                                "format": "uri-reference"
+                            },
+                            "GroupId": {
+                                "type": "string"
+                            },
+                            "Topic": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "Type",
+                            "BootstrapServers",
+                            "GroupId",
+                            "Topic"
                         ]
                     }
-                }
-            },
-            "required": [
-                "DataStore",
-                "SchemaRegistry"
-            ]
+                ]
+            }
         }
     },
     "required": [
         "Name",
         "Version",
-        "Services"
+        "DataStore",
+        "SchemaRegistry"
     ]
 }

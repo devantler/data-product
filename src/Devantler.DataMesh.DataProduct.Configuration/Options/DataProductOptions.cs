@@ -1,5 +1,10 @@
+using Devantler.DataMesh.DataProduct.Configuration.Options.Apis;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
 using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 
@@ -39,7 +44,22 @@ public class DataProductOptions
     public FeatureFlagsOptions FeatureFlags { get; set; } = new();
 
     /// <summary>
-    /// Options for the services used by or provided by the data product.
+    /// Options for the schema registry used by the data product.
     /// </summary>
-    public ServicesOptions Services { get; set; } = new();
+    public ISchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
+
+    /// <summary>
+    /// Options for the data store.
+    /// </summary>
+    public IDataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
+
+    /// <summary>
+    /// Options for the data ingestors.
+    /// </summary>
+    public List<IDataIngestorOptions> DataIngestors { get; set; } = new();
+
+    /// <summary>
+    /// Options for the APIs.
+    /// </summary>
+    public ApisOptions Apis { get; set; } = new();
 }

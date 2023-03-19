@@ -37,7 +37,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
 
             // Hack: Sets the schema registry path when the Generator run as an Analyzer. 
             // Analyzers do not support IO well (more specifically relative paths), so the path to the Avro Schemas is retrieved from AdditionalFiles instead.
-            options.Services.SchemaRegistry.OverrideLocalSchemaRegistryPath(additionalFiles
+            options.SchemaRegistry.OverrideLocalSchemaRegistryPath(additionalFiles
                 .FirstOrDefault(x => x.FileName.EndsWith(".avsc"))?.FileDirectoryPath);
 
             foreach (var source in Generate(compilationAndFiles.Left, compilationAndFiles.Right, options))

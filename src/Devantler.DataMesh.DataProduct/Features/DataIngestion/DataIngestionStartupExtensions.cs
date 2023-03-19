@@ -1,6 +1,6 @@
 #pragma warning disable S3251
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 
 namespace Devantler.DataMesh.DataProduct.Features.DataIngestion;
 
@@ -16,10 +16,10 @@ public static partial class DataIngestionStartupExtensions
     /// <param name="options"></param>
     public static IServiceCollection AddDataIngestion(this IServiceCollection services, DataProductOptions options)
     {
-        if (!options.Services.DataIngestors.Any())
+        if (!options.DataIngestors.Any())
             return services;
 
-        services.AddGeneratedServiceRegistrations(options.Services.DataIngestors);
+        services.AddGeneratedServiceRegistrations(options.DataIngestors);
 
         return services;
     }

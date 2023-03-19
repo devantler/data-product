@@ -47,7 +47,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            await _cacheStore.InvalidateAsync(new[] { entity.Id }, cancellationToken);
+            await _cacheStore.RemoveAsync(new[] { entity.Id }, cancellationToken);
         }
 
         return result;
@@ -62,7 +62,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            await _cacheStore.InvalidateAsync(entities.Select(e => e.Id), cancellationToken);
+            await _cacheStore.RemoveAsync(entities.Select(e => e.Id), cancellationToken);
         }
 
         return result;
@@ -75,7 +75,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-            await _cacheStore.InvalidateAsync(new[] { id }, cancellationToken);
+            await _cacheStore.RemoveAsync(new[] { id }, cancellationToken);
 
         return result;
     }
@@ -86,7 +86,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         int result = await _repository.DeleteMultipleAsync(ids, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-            await _cacheStore.InvalidateAsync(ids, cancellationToken);
+            await _cacheStore.RemoveAsync(ids, cancellationToken);
 
         return result;
     }
@@ -166,7 +166,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
                 .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-            await _cacheStore.InvalidateAsync(new[] { entity.Id }, cancellationToken);
+            await _cacheStore.RemoveAsync(new[] { entity.Id }, cancellationToken);
 
         return result;
     }
@@ -180,7 +180,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            await _cacheStore.InvalidateAsync(entities.Select(e => e.Id), cancellationToken);
+            await _cacheStore.RemoveAsync(entities.Select(e => e.Id), cancellationToken);
         }
 
         return result;

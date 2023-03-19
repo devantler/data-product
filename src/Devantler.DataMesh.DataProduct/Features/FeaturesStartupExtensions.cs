@@ -28,18 +28,10 @@ public static class FeaturesStartupExtensions
     {
         var options = builder.Configuration.GetDataProductOptions();
 
-        _ = builder.Services.AddOptions<DataProductOptions>().Configure(
-            o =>
-            {
-                o.Name = options.Name;
-                o.Description = options.Description;
-                o.Version = options.Version;
-                o.Owner = options.Owner;
-                o.License = options.License;
-                o.FeatureFlags = options.FeatureFlags;
-                o.Services = options.Services;
-            }
-        );
+#pragma warning disable S1854
+        _ = builder.Services.AddOptions<DataProductOptions>().Configure(o => o = options);
+#pragma warning restore S1854
+
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
         _ = builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

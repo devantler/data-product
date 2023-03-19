@@ -2,8 +2,8 @@ using Chr.Avro.Confluent;
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;
 
@@ -26,10 +26,10 @@ public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
         var scope = scopeFactory.CreateScope();
         _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TKey, TSchema>>();
         var dataProductOptions = scope.ServiceProvider.GetRequiredService<IOptions<DataProductOptions>>().Value;
-        var dataIngestorOptions = dataProductOptions.Services.DataIngestors
+        var dataIngestorOptions = dataProductOptions.DataIngestors
             .Where(x => x.Type == DataIngestorType.Kafka)
             .Cast<KafkaDataIngestorOptions>();
-        var schemaRegistryOptions = dataProductOptions.Services.SchemaRegistry as KafkaSchemaRegistryOptions
+        var schemaRegistryOptions = dataProductOptions.SchemaRegistry as KafkaSchemaRegistryOptions
             ?? throw new InvalidCastException("Unable to cast schema registry to kafka schema registry.");
 
         var registryConfig = new SchemaRegistryConfig

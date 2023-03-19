@@ -7,10 +7,10 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataStore.SQL;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
+using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
-using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
@@ -32,8 +32,8 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject, options.Services.SchemaRegistry.Schema.Version);
+        var schemaRegistryService = options.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.SchemaRegistry.Schema.Subject, options.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
@@ -74,16 +74,16 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
 
         var avroSchemaParser = new AvroSchemaParser();
 
-        switch (options.Services.DataStore.Type)
+        switch (options.DataStore.Type)
         {
             case DataStoreType.SQL:
-                string providerName = options.Services.DataStore.Provider switch
+                string providerName = options.DataStore.Provider switch
                 {
                     SQLDataStoreProvider.Sqlite => "Sqlite",
                     SQLDataStoreProvider.PostgreSQL => "Npgsql",
-                    _ => throw new NotSupportedException($"The data store provider '{options.Services.DataStore.Provider}' is not supported.")
+                    _ => throw new NotSupportedException($"The data store provider '{options.DataStore.Provider}' is not supported.")
                 };
-                _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{options.Services.DataStore.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{providerName}(options?.ConnectionString));");
+                _ = addGeneratedServiceRegistrationsMethod.AddStatement($"_ = services.AddPooledDbContextFactory<{options.DataStore.Provider}DbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().Use{providerName}(options?.ConnectionString));");
                 foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
                 {
                     string schemaName = schema.Name.ToPascalCase();
@@ -101,7 +101,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
                         $$"""
                         using var scope = app.Services.CreateScope();
                         var services = scope.ServiceProvider;
-                        var dbContextFactory = services.GetRequiredService<IDbContextFactory<{{options.Services.DataStore.Provider}}DbContext>>();
+                        var dbContextFactory = services.GetRequiredService<IDbContextFactory<{{options.DataStore.Provider}}DbContext>>();
                         using var context = dbContextFactory.CreateDbContext();
                         _ = context.Database.EnsureCreated();
                         """);
@@ -111,7 +111,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             case DataStoreType.Graph:
                 throw new NotSupportedException("Graph based data stores are not supported yet.");
             default:
-                throw new NotSupportedException($"Data store type '{options.Services.DataStore.Type}' is not supported.");
+                throw new NotSupportedException($"Data store type '{options.DataStore.Type}' is not supported.");
         }
 
         _ = @class.AddMethod(addGeneratedServiceRegistrationsMethod);

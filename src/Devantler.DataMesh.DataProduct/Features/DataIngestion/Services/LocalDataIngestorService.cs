@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataMesh.DataProduct.Features.DataIngestion.JsonConverters;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;
@@ -31,7 +31,7 @@ public class LocalDataIngestorService<TKey, TSchema> : BackgroundService
     /// <inheritdoc />
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var localDataIngestionSources = _options.Services.DataIngestors
+        var localDataIngestionSources = _options.DataIngestors
             .Where(x => x.Type == DataIngestorType.Local)
             .Cast<LocalDataIngestorOptions>()
             .ToList();

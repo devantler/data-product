@@ -19,11 +19,11 @@ public static class GraphQLStartupExtensions
         var requestExecutorBuilder = services.AddGraphQLServer()
             .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = environment.IsDevelopment())
             .AddQueryType<Query>();
-        if (options.Services.Apis.GraphQL.EnableProjections)
+        if (options.Apis.GraphQL.EnableProjections)
             _ = requestExecutorBuilder.AddProjections();
-        if (options.Services.Apis.GraphQL.EnableFiltering)
+        if (options.Apis.GraphQL.EnableFiltering)
             _ = requestExecutorBuilder.AddFiltering();
-        if (options.Services.Apis.GraphQL.EnableSorting)
+        if (options.Apis.GraphQL.EnableSorting)
             _ = requestExecutorBuilder.AddSorting();
 
         return services;

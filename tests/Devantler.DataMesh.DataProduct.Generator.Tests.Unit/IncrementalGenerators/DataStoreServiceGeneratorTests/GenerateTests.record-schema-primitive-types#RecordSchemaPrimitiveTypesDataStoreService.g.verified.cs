@@ -15,7 +15,7 @@ public class RecordSchemaPrimitiveTypesDataStoreService : DataStoreService<Guid,
     /// <summary>
     /// Creates a new instance of <see cref="RecordSchemaPrimitiveTypesDataStoreService" />
     /// </summary>
-    public RecordSchemaPrimitiveTypesDataStoreService(IRepository<Guid, RecordSchemaPrimitiveTypesEntity> repository, IMapper mapper) : base(repository, mapper)
+    public RecordSchemaPrimitiveTypesDataStoreService(IRepository<Guid, RecordSchemaPrimitiveTypesEntity> repository, IServiceProvider serviceProvider, IMapper mapper) : base(repository, serviceProvider, mapper)
     {
     }
 }

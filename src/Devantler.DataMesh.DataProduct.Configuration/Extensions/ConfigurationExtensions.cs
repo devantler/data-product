@@ -1,7 +1,7 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Extensions;
@@ -21,7 +21,7 @@ public static class ConfigurationExtensions
                                      $"Failed to bind configuration to the type '{typeof(DataProductOptions).FullName}'."
                                  );
 
-        dataProductOptions.Services.SchemaRegistry = dataProductOptions.Services.SchemaRegistry.Type switch
+        dataProductOptions.SchemaRegistry = dataProductOptions.SchemaRegistry.Type switch
         {
             SchemaRegistryType.Kafka => configuration.GetSection(ISchemaRegistryOptions.Key)
                 .Get<KafkaSchemaRegistryOptions>()
@@ -33,7 +33,7 @@ public static class ConfigurationExtensions
                     ?? throw new InvalidOperationException(
                         $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(LocalSchemaRegistryOptions).FullName}'."
                     ),
-            _ => throw new NotSupportedException($"Schema registry type '{dataProductOptions.Services.SchemaRegistry.Type}' is not supported.")
+            _ => throw new NotSupportedException($"Schema registry type '{dataProductOptions.SchemaRegistry.Type}' is not supported.")
         };
 
         var dataIngestors = new List<IDataIngestorOptions>();
@@ -55,7 +55,7 @@ public static class ConfigurationExtensions
             );
         }
 
-        dataProductOptions.Services.DataIngestors = dataIngestors;
+        dataProductOptions.DataIngestors = dataIngestors;
 
         return dataProductOptions;
     }

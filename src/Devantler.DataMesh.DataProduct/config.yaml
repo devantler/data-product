@@ -1,15 +1,19 @@
+
 Name: Contoso University Data Product
 Description: A data product to query and manage students and courses at the Contoso University.
 Version: v0.0.1
+
 License:
   Name: MIT
   Url: https://opensource.org/licenses/MIT
+
 Owner:
   Name: Test User
   Email: test@email.com
   Organisation: Test Org
   Phone: "+4512345678"
   Website: https://test-site.com
+
 FeatureFlags:
   EnableApis:
     - Rest
@@ -24,18 +28,20 @@ FeatureFlags:
   EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
   EnableWebhooks: false # TODO: Enable feature gated webhooks
   EnableDashboard: false # TODO: Enable feature gated dashboard
-Services:
-  DataStore:
-    Type: SQL
-    Provider: Sqlite
-    ConnectionString: Data Source=sqlite.db
-  SchemaRegistry:
-    Type: Local
-    Schema:
-      Subject: contoso-university
-      Version: 1
-  DataIngestors:
-    - Type: Local
-      FilePath: assets/data/contoso-university-single.json
-    - Type: Local
-      FilePath: assets/data/contoso-university-multiple.json
+
+DataStore:
+  Type: SQL
+  Provider: Sqlite
+  ConnectionString: Data Source=sqlite.db
+
+SchemaRegistry:
+  Type: Local
+  Schema:
+    Subject: contoso-university
+    Version: 1
+
+DataIngestors:
+  - Type: Local
+    FilePath: assets/data/contoso-university-single.json
+  - Type: Local
+    FilePath: assets/data/contoso-university-multiple.json

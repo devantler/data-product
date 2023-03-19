@@ -16,14 +16,6 @@ public interface ICacheStoreService<TKey, TValue>
     Task<TValue> GetAsync(TKey key, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Gets a value from the cache store.
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<IEnumerable<TValue>> GetMultipleAsync(TKey key, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Sets a value in the cache store.
     /// </summary>
     /// <param name="key"></param>
@@ -33,26 +25,9 @@ public interface ICacheStoreService<TKey, TValue>
     Task SetAsync(TKey key, TValue value, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Sets a value in the cache store.
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="values"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task SetMultipleAsync(TKey key, IEnumerable<TValue> values, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Deletes a value from the cache store.
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task DeleteAsync(TKey key, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Invalidates cache store entries matching caching keys.!
+    /// Removes a value in the cache store.
     /// </summary>
     /// <param name="keys"></param>
     /// <param name="cancellationToken"></param>
-    Task InvalidateAsync(IEnumerable<TKey> keys, CancellationToken cancellationToken = default);
+    Task RemoveAsync(IEnumerable<TKey> keys, CancellationToken cancellationToken = default);
 }
