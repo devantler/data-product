@@ -1,7 +1,5 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
-using Devantler.DataMesh.DataProduct.Features.Caching.Services;
-using Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
 
 namespace Devantler.DataMesh.DataProduct.Features.Caching;
 
@@ -14,6 +12,7 @@ public static partial class CachingStartupExtensions
     /// Registers the cache store to the DI container.
     /// </summary>
     /// <param name="services"></param>
+    /// <param name="options"></param>
     public static IServiceCollection AddCaching(this IServiceCollection services, DataProductOptions options)
     {
         _ = options.CacheStore.Type switch
@@ -23,7 +22,7 @@ public static partial class CachingStartupExtensions
             _ => throw new NotSupportedException($"Cache store type '{options.CacheStore.Type}' is not supported.")
         };
 
-        _ = services.AddSingleton<ICacheStoreService<int, StudentEntity>, InMemoryCacheStoreService<int, StudentEntity>>();
+        services.AddGeneratedServiceRegistrations(options);
         return services;
     }
 

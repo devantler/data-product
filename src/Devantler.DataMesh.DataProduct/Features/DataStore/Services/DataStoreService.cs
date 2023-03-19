@@ -1,6 +1,4 @@
-using System.Collections;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Features.Caching.Services;
 using Devantler.DataMesh.DataProduct.Features.DataStore.Entities;
@@ -21,7 +19,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     where TEntity : class, IEntity<TKey>
 {
     readonly DataProductOptions _options;
-    readonly ICacheStoreService<TKey, TEntity>? _cacheStore;
+    readonly ICacheStoreService<string, TEntity>? _cacheStore;
     readonly IRepository<TKey, TEntity> _repository;
     readonly IMapper _mapper;
 
@@ -35,7 +33,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     {
         _options = serviceProvider.GetRequiredService<IOptions<DataProductOptions>>().Value;
         if (_options.FeatureFlags.EnableCaching)
-            _cacheStore = serviceProvider.GetRequiredService<ICacheStoreService<TKey, TEntity>>();
+            _cacheStore = serviceProvider.GetRequiredService<ICacheStoreService<string, TEntity>>();
         _repository = repository;
         _mapper = mapper;
     }
@@ -48,7 +46,10 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-            await _cacheStore.RemoveAsync(new[] { entity.Id }, cancellationToken);
+        {
+            var cacheKey = $"{typeof(TEntity).Name}:{entity.Id}";
+            await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+        }
 
         return result;
     }
@@ -61,7 +62,13 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         int result = await _repository.CreateMultipleAsync(entities, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-            await _cacheStore.RemoveAsync(entities.Select(e => e.Id), cancellationToken);
+        {
+            foreach (var entity in entities)
+            {
+                var cacheKey = $"{typeof(TEntity).Name}:{entity.Id}";
+                await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+            }
+        }
 
         return result;
     }
@@ -73,7 +80,10 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-            await _cacheStore.RemoveAsync(new[] { id }, cancellationToken);
+        {
+            var cacheKey = $"{typeof(TEntity).Name}:{id}";
+            await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+        }
 
         return result;
     }
@@ -84,7 +94,13 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         int result = await _repository.DeleteMultipleAsync(ids, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-            await _cacheStore.RemoveAsync(ids, cancellationToken);
+        {
+            foreach (var id in ids)
+            {
+                var cacheKey = $"{typeof(TEntity).Name}:{id}";
+                await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+            }
+        }
 
         return result;
     }
@@ -92,11 +108,17 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     /// <inheritdoc/>
     public async Task<TSchema> GetSingleAsync(TKey id, CancellationToken cancellationToken = default)
     {
-        var entity = _options.FeatureFlags.EnableCaching && _cacheStore is not null
-            ? await _cacheStore.GetOrSetAsync(id, async () => await _repository.ReadSingleAsync(id, cancellationToken), cancellationToken)
-            : await _repository.ReadSingleAsync(id, cancellationToken);
-
-        return _mapper.Map<TSchema>(entity);
+        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
+        {
+            var cacheKey = $"{typeof(TEntity).Name}:{id}";
+            var entity = await _cacheStore.GetOrSetAsync(cacheKey, async () => await _repository.ReadSingleAsync(id, cancellationToken), cancellationToken);
+            return _mapper.Map<TSchema>(entity);
+        }
+        else
+        {
+            var entity = await _repository.ReadSingleAsync(id, cancellationToken);
+            return _mapper.Map<TSchema>(entity);
+        }
     }
 
     /// <inheritdoc />
@@ -140,7 +162,8 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         {
             foreach (var id in ids)
             {
-                var entity = await _cacheStore.GetOrSetAsync(id, async () => await _repository.ReadSingleAsync(id, cancellationToken), cancellationToken);
+                var cacheKey = $"{typeof(TEntity).Name}:{id}";
+                var entity = await _cacheStore.GetOrSetAsync(cacheKey, async () => await _repository.ReadSingleAsync(id, cancellationToken), cancellationToken);
                 if (entity is not null)
                     entities = entities.Append(entity);
             }
@@ -176,7 +199,10 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
                 .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-            await _cacheStore.RemoveAsync(new[] { entity.Id }, cancellationToken);
+        {
+            var cacheKey = $"{typeof(TEntity).Name}:{entity.Id}";
+            await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+        }
 
         return result;
     }
@@ -190,7 +216,11 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            await _cacheStore.RemoveAsync(entities.Select(e => e.Id), cancellationToken);
+            foreach (var entity in entities)
+            {
+                var cacheKey = $"{typeof(TEntity).Name}:{entity.Id}";
+                await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
+            }
         }
 
         return result;

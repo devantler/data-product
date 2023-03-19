@@ -41,7 +41,9 @@ public class CachingStartupExtensionsGenerator : GeneratorBase
 
         var @class = new CSharpClass("CachingStartupExtensions")
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ICacheStoreService")))
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataProductOptions")))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataProductOptions")
+                .NullIfEmpty() ?? "Devantler.DataMesh.DataProduct.Configuration.Options")
+            )
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
             .SetDocBlock(new CSharpDocBlock("A class that contains extension methods for service registrations and usages for caching."))
             .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "CachingStartupExtensions"))
@@ -59,23 +61,16 @@ public class CachingStartupExtensionsGenerator : GeneratorBase
             .AddParameter(servicesParameter)
             .AddParameter(optionsParameter);
 
-        var schemas = rootSchema is RecordSchema recordSchema
-            ? new[] { recordSchema }
-            : rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>();
+        var schemas = rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>();
 
         var avroSchemaParser = new AvroSchemaParser();
 
         foreach (var schema in schemas)
         {
-            var schemaIdType = schema.Fields.FirstOrDefault(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase))?.Type;
-            string idType = schemaIdType is not null
-                ? avroSchemaParser.Parse(schemaIdType, Language.CSharp)
-                : "Guid";
-
             _ = options.CacheStore.Type switch
             {
                 CacheStoreType.InMemory => addGeneratedServiceRegistrationsMethod.AddStatement(
-                    $"_ = services.AddSingleton<ICacheStoreService<{idType}, {schema.Name}Entity>, InMemoryCacheStoreService<{idType}, {schema.Name}Entity>>();"
+                    $"_ = services.AddScoped<ICacheStoreService<string, {schema.Name}Entity>, InMemoryCacheStoreService<string, {schema.Name}Entity>>();"
                 ),
                 CacheStoreType.Redis => throw new NotImplementedException("Redis cache store is not implemented yet."),
                 _ => throw new NotSupportedException($"Cache store type '{options.CacheStore.Type}' is not supported.")

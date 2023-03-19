@@ -52,12 +52,9 @@ public class InMemoryCacheStoreService<TKey, TValue> : ICacheStoreService<TKey, 
     }
 
     /// <inheritdoc />
-    public Task RemoveAsync(IEnumerable<TKey> keys, CancellationToken cancellationToken = default)
+    public Task RemoveAsync(TKey key, CancellationToken cancellationToken = default)
     {
-        foreach (var key in keys)
-        {
-            _memoryCache.Remove(key);
-        }
+        _memoryCache.Remove(key);
         return Task.CompletedTask;
     }
 }

@@ -36,7 +36,7 @@ public interface ICacheStoreService<TKey, TValue>
     /// <summary>
     /// Removes a value in the cache store.
     /// </summary>
-    /// <param name="keys"></param>
+    /// <param name="key"></param>
     /// <param name="cancellationToken"></param>
-    Task RemoveAsync(IEnumerable<TKey> keys, CancellationToken cancellationToken = default);
+    Task RemoveAsync(TKey key, CancellationToken cancellationToken = default);
 }
