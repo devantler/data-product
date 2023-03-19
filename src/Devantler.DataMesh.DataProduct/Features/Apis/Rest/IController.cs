@@ -5,6 +5,7 @@ namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 /// <summary>
 /// Generic interface for REST Controllers.
 /// </summary>
+/// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TSchema"></typeparam>
 public interface IController<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
 {

@@ -13,27 +13,23 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DataIngestionStartupE
         var additionalText = CreateDataProductConfig(
             $$"""
             {
-                "DataProduct": {
-                    "FeatureFlags": {
-                        "EnableDataIngestion": true
-                    },
-                    "Services": {
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "schemas",
-                            "Schema": {
-                                "Subject": "{{subject}}",
-                                "Version": 1
-                            }
-                        },
-                        "DataIngestors": [
-                            {
-                                "Type": "Local",
-                                "FilePath": "assets/data/{{subject}}.json"
-                            }
-                        ]
+                "FeatureFlags": {
+                    "EnableDataIngestion": true
+                },
+                "SchemaRegistry": {
+                    "Type": "Local",
+                    "Path": "schemas",
+                    "Schema": {
+                        "Subject": "{{subject}}",
+                        "Version": 1
                     }
-                }
+                },
+                "DataIngestors": [
+                    {
+                        "Type": "Local",
+                        "FilePath": "assets/data/{{subject}}.json"
+                    }
+                ]
             }
             """
         );

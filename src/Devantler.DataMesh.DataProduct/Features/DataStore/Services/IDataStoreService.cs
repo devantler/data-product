@@ -3,6 +3,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 /// <summary>
 /// Generic interface for services that interact with datastores.
 /// </summary>
+/// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TSchema"></typeparam>
 public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
 {
@@ -28,16 +29,10 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas
     Task<TSchema> GetSingleAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Get all <typeparamref name="TSchema"/>'s from a data store.
+    /// Gets all <typeparamref name="TSchema"/>'s from a data store.
     /// </summary>
     /// <param name="cancellationToken"></param>
     Task<IEnumerable<TSchema>> GetAllAsync(CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Gets all <typeparamref name="TSchema"/>'s from a data store as queryable objects.
-    /// </summary>
-    /// <param name="cancellationToken"></param>
-    Task<IQueryable<TSchema>> GetAllAsQueryableAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Read multiple <typeparamref name="TSchema"/>'s from a data store.

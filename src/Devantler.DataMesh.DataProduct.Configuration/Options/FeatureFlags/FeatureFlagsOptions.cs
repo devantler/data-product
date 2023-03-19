@@ -8,12 +8,17 @@ public class FeatureFlagsOptions
     /// <summary>
     /// A key to indicate the section in the configuration file that contains the features options.
     /// </summary>
-    public const string Key = "DataProduct:FeatureFlags";
+    public const string Key = "FeatureFlags";
 
     /// <summary>
     /// A list of APIs that should be enabled for the data product.
     /// </summary>
     public List<ApiFeatureFlagValues> EnableApis { get; set; } = new();
+
+    /// <summary>
+    /// A flag to indicate if a dashboard should be enabled for the data product.
+    /// </summary>
+    public bool EnableDashboard { get; set; }
 
     /// <summary>
     /// A flag to indicate if data ingestion should be enabled for the data product.
@@ -54,4 +59,9 @@ public class FeatureFlagsOptions
     /// A flag to indicate if authorisation should be enabled for the data product.
     /// </summary>
     public bool EnableAuthorisation { get; set; }
+
+    /// <summary>
+    /// A flag to indicate if webhooks should be enabled for the data product.
+    /// </summary>
+    public bool EnableWebhooks { get; set; }
 }

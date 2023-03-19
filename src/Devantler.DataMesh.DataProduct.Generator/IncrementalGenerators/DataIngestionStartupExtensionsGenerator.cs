@@ -5,11 +5,12 @@ using Devantler.Commons.CodeGen.Core.Model;
 using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
+using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
-using Devantler.DataMesh.SchemaRegistry;
 using Microsoft.CodeAnalysis;
 
 namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
@@ -31,16 +32,17 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        var schemaRegistryService = options.Services.SchemaRegistry.CreateSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.Services.SchemaRegistry.Schema.Subject,
-            options.Services.SchemaRegistry.Schema.Version);
+        var schemaRegistryService = options.SchemaRegistry.CreateSchemaRegistryService();
+        var rootSchema = schemaRegistryService.GetSchema(options.SchemaRegistry.Schema.Subject,
+            options.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
         var @class = new CSharpClass("DataIngestionStartupExtensions")
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace,
-                "IDataIngestorOptions")))
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataIngestor")))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataIngestionStartupExtensions") + ".Services"))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataIngestorOptions").NullIfEmpty()
+                ?? "Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors")
+            )
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
             .SetDocBlock(new CSharpDocBlock(
                 "A class that contains extension methods for service registrations and usages for data ingestors"))
@@ -71,13 +73,13 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
             string schemaIdType = schemaType is not null
                 ? avroSchemaParser.Parse(schemaType, Language.CSharp)
                 : "Guid";
-            foreach (var dataIngestorOptions in options.Services.DataIngestors.GroupBy(x => x.Type).Select(x => x.First()))
+            foreach (var dataIngestorOptions in options.DataIngestors.GroupBy(x => x.Type).Select(x => x.First()))
             {
-                if (dataIngestorOptions.Type == DataIngestorType.Kafka && options.Services.SchemaRegistry.Type != SchemaRegistryType.Kafka)
+                if (dataIngestorOptions.Type == DataIngestorType.Kafka && options.SchemaRegistry.Type != SchemaRegistryType.Kafka)
                     continue;
 
                 _ = addGeneratedServiceRegistrationsMethod.AddStatement(
-                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestor<{schemaIdType}, {schema.Name}>>();"
+                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestorService<{schemaIdType}, {schema.Name}>>();"
                 );
             }
         }

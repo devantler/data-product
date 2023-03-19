@@ -1,7 +1,8 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.DataIngestors;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
+using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Extensions;
@@ -16,12 +17,21 @@ public static class ConfigurationExtensions
     /// </summary>
     public static DataProductOptions GetDataProductOptions(this IConfiguration configuration)
     {
-        var dataProductOptions = configuration.GetSection(DataProductOptions.Key).Get<DataProductOptions>()
-                                 ?? throw new InvalidOperationException(
-                                     $"Failed to bind configuration section '{DataProductOptions.Key}' to the type '{typeof(DataProductOptions).FullName}'."
-                                 );
+        var dataProductOptions = configuration.Get<DataProductOptions>()
+            ?? throw new InvalidOperationException(
+                $"Failed to bind configuration to the type '{typeof(DataProductOptions).FullName}'."
+            );
 
-        dataProductOptions.Services.SchemaRegistry = dataProductOptions.Services.SchemaRegistry.Type switch
+        ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
+        ConfigureCacheStoreOptions(configuration, dataProductOptions);
+        ConfigureDataIngestorsOptions(configuration, dataProductOptions);
+
+        return dataProductOptions;
+    }
+
+    private static void ConfigureSchemaRegistryOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    {
+        dataProductOptions.SchemaRegistry = dataProductOptions.SchemaRegistry.Type switch
         {
             SchemaRegistryType.Kafka => configuration.GetSection(ISchemaRegistryOptions.Key)
                 .Get<KafkaSchemaRegistryOptions>()
@@ -33,13 +43,32 @@ public static class ConfigurationExtensions
                     ?? throw new InvalidOperationException(
                         $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(LocalSchemaRegistryOptions).FullName}'."
                     ),
-            _ => throw new NotSupportedException($"Schema registry type '{dataProductOptions.Services.SchemaRegistry.Type}' is not supported.")
+            _ => throw new NotSupportedException($"Schema registry type '{dataProductOptions.SchemaRegistry.Type}' is not supported.")
         };
+    }
 
-        var dataIngestors = new List<IDataIngestorOptions>();
+    private static void ConfigureCacheStoreOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    {
+        if (dataProductOptions.FeatureFlags.EnableCaching)
+        {
+            dataProductOptions.CacheStore = dataProductOptions.CacheStore.Type switch
+            {
+                CacheStoreType.InMemory => configuration.GetSection(ICacheStoreOptions.Key)
+                    .Get<InMemoryCacheStoreOptions>()
+                        ?? throw new InvalidOperationException(
+                            $"Failed to bind configuration section '{ICacheStoreOptions.Key}' to the type '{typeof(InMemoryCacheStoreOptions).FullName}'."
+                        ),
+                CacheStoreType.Redis => throw new NotImplementedException($"Cache store type '{dataProductOptions.CacheStore.Type}' is not implemented yet."),
+                _ => throw new NotSupportedException($"Cache store type '{dataProductOptions.CacheStore.Type}' is not supported.")
+            };
+        }
+    }
 
+    private static void ConfigureDataIngestorsOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    {
         if (dataProductOptions.FeatureFlags.EnableDataIngestion)
         {
+            var dataIngestors = new List<IDataIngestorOptions>();
             var localDataIngestorOptions = configuration.GetSection(IDataIngestorOptions.Key)
                 .Get<List<LocalDataIngestorOptions>>()
                 .Where(x => x.Type == DataIngestorType.Local);
@@ -53,10 +82,7 @@ public static class ConfigurationExtensions
                     .Get<List<KafkaDataIngestorOptions>>()
                     .Where(x => x.Type == DataIngestorType.Kafka)
             );
+            dataProductOptions.DataIngestors = dataIngestors;
         }
-
-        dataProductOptions.Services.DataIngestors = dataIngestors;
-
-        return dataProductOptions;
     }
 }

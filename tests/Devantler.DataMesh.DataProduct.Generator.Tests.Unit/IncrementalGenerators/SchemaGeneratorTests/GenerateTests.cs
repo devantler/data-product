@@ -13,16 +13,12 @@ public class GenerateTests : IncrementalGeneratorTestsBase<SchemaGenerator>
         var additionalText = CreateDataProductConfig(
             $$"""
             {
-                "DataProduct": {
-                    "Services": {
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "schemas",
-                            "Schema": {
-                                "Subject": "{{subject}}",
-                                "Version": 1
-                            }
-                        }
+                "SchemaRegistry": {
+                    "Type": "Local",
+                    "Path": "schemas",
+                    "Schema": {
+                        "Subject": "{{subject}}",
+                        "Version": 1
                     }
                 }
             }

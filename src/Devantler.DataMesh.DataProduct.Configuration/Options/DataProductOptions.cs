@@ -1,5 +1,11 @@
+using Devantler.DataMesh.DataProduct.Configuration.Options.Apis;
+using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
 using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 
 namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 
@@ -8,11 +14,6 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options;
 /// </summary>
 public class DataProductOptions
 {
-    /// <summary>
-    /// A key to indicate the section in the configuration file that contains the data product options.
-    /// </summary>
-    public const string Key = "DataProduct";
-
     /// <summary>
     /// The name of the data product.
     /// </summary>
@@ -44,7 +45,28 @@ public class DataProductOptions
     public FeatureFlagsOptions FeatureFlags { get; set; } = new();
 
     /// <summary>
-    /// Options for the services used by or provided by the data product.
+    /// Options for the APIs.
     /// </summary>
-    public ServicesOptions Services { get; set; } = new();
+    public ApisOptions Apis { get; set; } = new();
+
+    /// <summary>
+    /// Options for the schema registry used by the data product.
+    /// </summary>
+    public ISchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
+
+    /// <summary>
+    /// Options for the data store.
+    /// </summary>
+    public IDataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
+
+    /// <summary>
+    /// Options for the cache store.
+    /// </summary>
+    public ICacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
+
+    /// <summary>
+    /// Options for the data ingestors.
+    /// </summary>
+    public List<IDataIngestorOptions> DataIngestors { get; set; } = new();
+
 }

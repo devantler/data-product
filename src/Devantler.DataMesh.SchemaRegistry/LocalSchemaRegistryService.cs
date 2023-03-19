@@ -1,6 +1,6 @@
 using Chr.Avro.Abstract;
 using Chr.Avro.Representation;
-using Devantler.DataMesh.DataProduct.Configuration.Options.Services.SchemaRegistry.Providers;
+using Devantler.DataMesh.SchemaRegistry.Models;
 
 namespace Devantler.DataMesh.SchemaRegistry;
 
@@ -9,13 +9,24 @@ namespace Devantler.DataMesh.SchemaRegistry;
 /// </summary>
 public class LocalSchemaRegistryService : ISchemaRegistryService
 {
-    readonly LocalSchemaRegistryOptions? _schemaRegistryOptions;
+    readonly LocalSchemaRegistryOptions _options;
 
     /// <summary>
     /// A constructor to construct a Local schema registry service.
     /// </summary>
-    /// <param name="schemaRegistryOptions"></param>
-    public LocalSchemaRegistryService(LocalSchemaRegistryOptions? schemaRegistryOptions) => _schemaRegistryOptions = schemaRegistryOptions;
+    /// <param name="options"></param>
+    public LocalSchemaRegistryService(Action<LocalSchemaRegistryOptions> options)
+    {
+        _options = new LocalSchemaRegistryOptions();
+        options(_options);
+    }
+
+    /// <summary>
+    /// A constructor to construct a Local schema registry service.
+    /// </summary>
+    /// <param name="options"></param>
+    public LocalSchemaRegistryService(LocalSchemaRegistryOptions options)
+        => _options = options;
 
     /// <inheritdoc/>
     public async Task<Schema> GetSchemaAsync(string subject, int version, CancellationToken cancellationToken = default)
@@ -47,10 +58,10 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
-        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "schemas", schemaFileName).FirstOrDefault();
+        string schemaFile = Directory.GetFiles(_options.Path, schemaFileName).FirstOrDefault();
 
         return string.IsNullOrEmpty(schemaFile)
-            ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.")
+            ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_options.Path} not found.")
             : File.ReadAllText(schemaFile);
     }
 
@@ -65,10 +76,10 @@ public class LocalSchemaRegistryService : ISchemaRegistryService
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
-        string schemaFile = Directory.GetFiles(_schemaRegistryOptions?.Path ?? "schemas", schemaFileName).FirstOrDefault();
+        string schemaFile = Directory.GetFiles(_options.Path, schemaFileName).FirstOrDefault();
 
         return string.IsNullOrEmpty(schemaFile)
-            ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_schemaRegistryOptions?.Path ?? "schemas"} not found.")
+            ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_options.Path} not found.")
             : await File.ReadAllTextAsync(schemaFile, cancellationToken);
     }
 }

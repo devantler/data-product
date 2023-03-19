@@ -28,18 +28,23 @@ public static class FeaturesStartupExtensions
     {
         var options = builder.Configuration.GetDataProductOptions();
 
-        _ = builder.Services.AddOptions<DataProductOptions>().Configure(
-            o =>
-            {
-                o.Name = options.Name;
-                o.Description = options.Description;
-                o.Version = options.Version;
-                o.Owner = options.Owner;
-                o.License = options.License;
-                o.FeatureFlags = options.FeatureFlags;
-                o.Services = options.Services;
-            }
-        );
+#pragma warning disable S1854
+        _ = builder.Services.AddOptions<DataProductOptions>().Configure(o =>
+        {
+            o.Name = options.Name;
+            o.Description = options.Description;
+            o.Version = options.Version;
+            o.License = options.License;
+            o.Owner = options.Owner;
+            o.FeatureFlags = options.FeatureFlags;
+            o.Apis = options.Apis;
+            o.SchemaRegistry = options.SchemaRegistry;
+            o.DataStore = options.DataStore;
+            o.CacheStore = options.CacheStore;
+            o.DataIngestors = options.DataIngestors;
+        });
+#pragma warning restore S1854
+
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
         _ = builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
@@ -52,7 +57,7 @@ public static class FeaturesStartupExtensions
         _ = builder.Services.AddDataStore(options);
 
         if (options.FeatureFlags.EnableCaching)
-            _ = builder.Services.AddCaching();
+            _ = builder.Services.AddCaching(options);
 
         if (options.FeatureFlags.EnableDataIngestion)
             _ = builder.Services.AddDataIngestion(options);
@@ -87,9 +92,6 @@ public static class FeaturesStartupExtensions
             _ = app.UseAuthorization();
 
         _ = app.UseDataStore(options);
-
-        if (options.FeatureFlags.EnableCaching)
-            _ = app.UseCaching();
 
         if (options.FeatureFlags.EnableMetadata)
             _ = app.UseMetadata();

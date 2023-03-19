@@ -14,16 +14,12 @@ public class GenerateTests : IncrementalGeneratorTestsBase<GraphQLQueryGenerator
             /*lang=yaml,strict*/
             $$"""
             {
-                "DataProduct": {
-                    "Services": {
-                        "SchemaRegistry": {
-                            "Type": "Local",
-                            "Path": "schemas",
-                            "Schema": {
-                                "Subject": "{{subject}}",
-                                "Version": 1
-                            }
-                        }
+                "SchemaRegistry": {
+                    "Type": "Local",
+                    "Path": "schemas",
+                    "Schema": {
+                        "Subject": "{{subject}}",
+                        "Version": 1
                     }
                 }
             }

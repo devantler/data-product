@@ -6,13 +6,16 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 /// <summary>
 /// Generic repository to interact with Entity Framework relational database contexts.
 /// </summary>
+/// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
-public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKey, TEntity> where TEntity : class, IEntity<TKey>
+public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+    where TKey : notnull
+    where TEntity : class, IEntity<TKey>
 {
     readonly DbContext _context;
 
     /// <summary>
-    /// Creates a new instance of <see cref="EntityFrameworkRepository{T}"/>.
+    /// Creates a new instance of <see cref="EntityFrameworkRepository{TKey, TEntity}"/>.
     /// </summary>
     /// <param name="context"></param>
     protected EntityFrameworkRepository(DbContext context) => _context = context;
@@ -29,9 +32,15 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
     public async Task<int> CreateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
         var distinctEntities = entities.GroupBy(e => e.Id).Select(e => e.First());
-        var filteredEntities = distinctEntities.Where(e1 => !_context.Set<TEntity>().Any(e2 => e1.Id.Equals(e2.Id)));
 
-        await _context.Set<TEntity>().AddRangeAsync(filteredEntities, cancellationToken);
+        foreach (var entity in distinctEntities)
+        {
+            if (_context.Set<TEntity>().Find(entity.Id) is not null)
+                continue;
+
+            _ = _context.Set<TEntity>().Add(entity);
+        }
+
         return await _context.SaveChangesAsync(cancellationToken);
     }
 
@@ -45,8 +54,8 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
         => await _context.Set<TEntity>().ToListAsync(cancellationToken);
 
     ///<inheritdoc />
-    public async Task<IQueryable<TEntity>> ReadAllAsQueryableAsync(CancellationToken cancellationToken = default)
-        => await Task.FromResult(_context.Set<TEntity>());
+    public async Task<IEnumerable<TKey>> ReadAllIdsAsync(CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().Select(x => x.Id).ToListAsync(cancellationToken);
 
     /// <inheritdoc />
     public async Task<IEnumerable<TEntity>> ReadMultipleAsync(IEnumerable<TKey> ids,
@@ -59,9 +68,16 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
         => await _context.Set<TEntity>().Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
 
     /// <inheritdoc />
-    public async Task<IEnumerable<TEntity>> ReadMultipleWithLimitAsync(int limit, int offset,
-        CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TKey>> ReadMultipleIdsWithPaginationAsync(int page, int pageSize, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().Skip((page - 1) * pageSize).Take(pageSize).Select(x => x.Id).ToListAsync(cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<TEntity>> ReadMultipleWithLimitAsync(int limit, int offset, CancellationToken cancellationToken = default)
         => await _context.Set<TEntity>().Skip(offset).Take(limit).ToListAsync(cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<TKey>> ReadMultipleIdsWithLimitAsync(int limit, int offset, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().Skip(offset).Take(limit).Select(x => x.Id).ToListAsync(cancellationToken);
 
     /// <inheritdoc />
     public async Task<TEntity> UpdateSingleAsync(TEntity entity, CancellationToken cancellationToken = default)

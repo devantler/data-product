@@ -5,6 +5,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 /// <summary>
 /// Generic interface for repositories, with common functionality needed to interact with databases.
 /// </summary>
+/// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
 public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
 {
@@ -37,11 +38,11 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     Task<IEnumerable<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Reads all entities as queryable objects from a data store.
+    /// Reads all ids for entities in a data store.
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IQueryable<TEntity>> ReadAllAsQueryableAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<TKey>> ReadAllIdsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Read multiple entities from a data store.
@@ -56,8 +57,16 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TEntity>> ReadMultipleWithPaginationAsync(int page, int pageSize,
-        CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> ReadMultipleWithPaginationAsync(int page, int pageSize, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Reads ids of paged entities from a relational database.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="cancellationToken"></param>
+    Task<IEnumerable<TKey>> ReadMultipleIdsWithPaginationAsync(int page, int pageSize, CancellationToken cancellationToken = default);
+
 
     /// <summary>
     /// Reads entities from a relational database with a limit and an offset.
@@ -65,8 +74,15 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TEntity>> ReadMultipleWithLimitAsync(int limit, int offset,
-        CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> ReadMultipleWithLimitAsync(int limit, int offset, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Reads ids of entities from a relational database with a limit and an offset.
+    /// </summary>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <param name="cancellationToken"></param>
+    Task<IEnumerable<TKey>> ReadMultipleIdsWithLimitAsync(int limit, int offset, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates a single entity in a data store.

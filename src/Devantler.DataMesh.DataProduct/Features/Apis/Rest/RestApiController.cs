@@ -6,6 +6,7 @@ namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 /// <summary>
 /// A controller to handle REST API requests for a schema.
 /// </summary>
+/// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TSchema"></typeparam>
 [ApiController]
 [Route("[controller]")]
@@ -14,7 +15,7 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
     readonly IDataStoreService<TKey, TSchema> _dataStoreService;
 
     /// <summary>
-    /// Constructs a new instance of <see cref="RestApiController{TSchema}"/> and injects the required services.
+    /// Constructs a new instance of <see cref="RestApiController{TKey, TSchema}"/> and injects the required services.
     /// </summary>
     /// <param name="dataStoreService"></param>
     protected RestApiController(IDataStoreService<TKey, TSchema> dataStoreService)

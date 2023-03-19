@@ -1,40 +1,49 @@
-DataProduct:
-  Name: Students Data Product
-  Description: A data product to query and manage students and courses at SDU.
-  Version: v0.0.1
-  License:
-    Name: MIT
-    Url: https://opensource.org/licenses/MIT
-  Owner:
-    Name: Test User
-    Email: test@email.com
-    Organisation: Test Org
-    Phone: "+4512345678"
-    Website: https://test-site.com
-  FeatureFlags:
-    EnableApis:
-      - Rest
-      - GraphQL
-    EnableDataIngestion: true
-    EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
-    EnableMetadata: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
-    EnableTracing: false # TODO: #141 Enable feature gated tracing with OpenTelemetry and Jaeger
-    EnableMetrics: false # TODO: #140 Enable feature gated metrics with Prometheus and Grafana
-    EnableCaching: false # TODO: #139 Enable feature gated caching with Redis
-    EnableAuthentication: false # TODO: #138 Enable feature gated authentication with Duende IdentityServer and OpenID Connect
-    EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
-  Services:
-    DataStore:
-      Type: SQL
-      Provider: Sqlite
-      ConnectionString: Data Source=sqlite.db
-    SchemaRegistry:
-      Type: Local
-      Schema:
-        Subject: contoso-university
-        Version: 1
-    DataIngestors:
-      - Type: Local
-        FilePath: assets/data/contoso-university-single.json
-      - Type: Local
-        FilePath: assets/data/contoso-university-multiple.json
+Name: Contoso University Data Product
+Description: A data product to query and manage students and courses at the Contoso University.
+Version: v0.0.1
+
+License:
+  Name: MIT
+  Url: https://opensource.org/licenses/MIT
+
+Owner:
+  Name: Test User
+  Email: test@email.com
+  Organisation: Test Org
+  Phone: "+4512345678"
+  Website: https://test-site.com
+
+FeatureFlags:
+  EnableApis:
+    - Rest
+    - GraphQL
+  EnableCaching: true
+  EnableDataIngestion: true
+  EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
+  EnableMetadata: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
+  EnableTracing: false # TODO: #141 Enable feature gated tracing with OpenTelemetry and Jaeger
+  EnableMetrics: false # TODO: #140 Enable feature gated metrics with Prometheus and Grafana
+  EnableAuthentication: false # TODO: #138 Enable feature gated authentication with Duende IdentityServer and OpenID Connect
+  EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
+  EnableWebhooks: false # TODO: Enable feature gated webhooks
+  EnableDashboard: false # TODO: Enable feature gated dashboard
+
+DataStore:
+  Type: SQL
+  Provider: Sqlite
+  ConnectionString: Data Source=sqlite.db
+
+CacheStore:
+  Type: InMemory
+
+SchemaRegistry:
+  Type: Local
+  Schema:
+    Subject: contoso-university
+    Version: 1
+
+DataIngestors:
+  - Type: Local
+    FilePath: assets/data/contoso-university-single.json
+  - Type: Local
+    FilePath: assets/data/contoso-university-multiple.json
