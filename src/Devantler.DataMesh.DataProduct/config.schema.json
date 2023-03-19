@@ -145,7 +145,7 @@
                 }
             ]
         },
-        "DataStore": {
+        "CacheStore": {
             "description": "The cache store used by the data product.",
             "type": "object",
             "oneOf": [
@@ -164,9 +164,29 @@
                         }
                     },
                     "required": [
+                        "Type"
+                    ]
+                },
+                {
+                    "properties": {
+                        "Type": {
+                            "type": "string",
+                            "enum": [
+                                "Redis"
+                            ]
+                        },
+                        "RedisServer": {
+                            "type": "string"
+                        },
+                        "ExpirationTime": {
+                            "description": "The expiration time for cache entries in the cache store.",
+                            "type": "string",
+                            "pattern": "^([0-9]+)([smhd])?$"
+                        }
+                    },
+                    "required": [
                         "Type",
-                        "Provider",
-                        "ConnectionString"
+                        "RedisServer"
                     ]
                 }
             ]

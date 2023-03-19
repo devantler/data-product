@@ -66,9 +66,11 @@ public class CachingStartupExtensionsGenerator : GeneratorBase
             _ = options.CacheStore.Type switch
             {
                 CacheStoreType.InMemory => addGeneratedServiceRegistrationsMethod.AddStatement(
-                    $"_ = services.AddScoped<ICacheStoreService<string, {schema.Name}Entity>, InMemoryCacheStoreService<string, {schema.Name}Entity>>();"
+                    $"_ = services.AddScoped<ICacheStoreService<{schema.Name}Entity>, InMemoryCacheStoreService<{schema.Name}Entity>>();"
                 ),
-                CacheStoreType.Redis => throw new NotImplementedException("Redis cache store is not implemented yet."),
+                CacheStoreType.Redis => addGeneratedServiceRegistrationsMethod.AddStatement(
+                    $"_ = services.AddScoped<ICacheStoreService<{schema.Name}Entity>, RedisCacheStoreService<{schema.Name}Entity>>();"
+                ),
                 _ => throw new NotSupportedException($"Cache store type '{options.CacheStore.Type}' is not supported.")
             };
         }

@@ -16,6 +16,6 @@ public static partial class CachingStartupExtensions
     /// </summary>
     static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, DataProductOptions options)
     {
-        _ = services.AddScoped<ICacheStoreService<string, RecordSchemaPrimitiveTypesEntity>, InMemoryCacheStoreService<string, RecordSchemaPrimitiveTypesEntity>>();
+        _ = services.AddScoped<ICacheStoreService<RecordSchemaPrimitiveTypesEntity>, InMemoryCacheStoreService<RecordSchemaPrimitiveTypesEntity>>();
     }
 }
