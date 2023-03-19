@@ -1,5 +1,6 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
+using StackExchange.Redis;
 
 namespace Devantler.DataMesh.DataProduct.Features.Caching;
 
@@ -18,7 +19,7 @@ public static partial class CachingStartupExtensions
         _ = options.CacheStore.Type switch
         {
             CacheStoreType.InMemory => services.AddMemoryCache(),
-            CacheStoreType.Redis => throw new NotSupportedException("Redis cache store is not yet supported."),
+            CacheStoreType.Redis => services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(((RedisCacheStoreOptions)options.CacheStore).RedisServer)),
             _ => throw new NotSupportedException($"Cache store type '{options.CacheStore.Type}' is not supported.")
         };
 

@@ -20,7 +20,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     where TEntity : class, IEntity<TKey>
 {
     readonly DataProductOptions _options;
-    readonly ICacheStoreService<string, TEntity>? _cacheStore;
+    readonly ICacheStoreService<TEntity>? _cacheStore;
     readonly IRepository<TKey, TEntity> _repository;
     readonly IMapper _mapper;
 
@@ -34,7 +34,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     {
         _options = serviceProvider.GetRequiredService<IOptions<DataProductOptions>>().Value;
         if (_options.FeatureFlags.EnableCaching)
-            _cacheStore = serviceProvider.GetRequiredService<ICacheStoreService<string, TEntity>>();
+            _cacheStore = serviceProvider.GetRequiredService<ICacheStoreService<TEntity>>();
         _repository = repository;
         _mapper = mapper;
     }
@@ -81,7 +81,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            var cacheKey = $"{typeof(TEntity).Name}:{id}";
+            string cacheKey = $"{typeof(TEntity).Name}:{id}";
             await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
         }
 
@@ -97,7 +97,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         {
             foreach (var id in ids)
             {
-                var cacheKey = $"{typeof(TEntity).Name}:{id}";
+                string cacheKey = $"{typeof(TEntity).Name}:{id}";
                 await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
             }
         }
@@ -110,7 +110,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     {
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            var cacheKey = $"{typeof(TEntity).Name}:{id}";
+            string cacheKey = $"{typeof(TEntity).Name}:{id}";
             var entity = await _cacheStore.GetOrSetAsync(cacheKey, async () => await _repository.ReadSingleAsync(id, cancellationToken), cancellationToken);
             return _mapper.Map<TSchema>(entity);
         }
@@ -162,7 +162,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         {
             foreach (var id in ids)
             {
-                var cacheKey = $"{typeof(TEntity).Name}:{id}";
+                string cacheKey = $"{typeof(TEntity).Name}:{id}";
                 var entity = await _cacheStore.GetOrSetAsync(cacheKey, async () => await _repository.ReadSingleAsync(id, cancellationToken), cancellationToken);
                 if (entity is not null)
                     entities = entities.Append(entity);

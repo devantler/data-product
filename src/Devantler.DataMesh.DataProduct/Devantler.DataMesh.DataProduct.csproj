@@ -25,6 +25,7 @@
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
         <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.0.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+        <PackageReference Include="StackExchange.Redis" Version="2.6.96" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
     <ItemGroup>

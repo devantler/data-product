@@ -8,14 +8,13 @@ namespace Devantler.DataMesh.DataProduct.Features.Caching.Services;
 /// <summary>
 /// An in-memory cache store service, which can be used to store and retrieve data from memory.
 /// </summary>
-public class InMemoryCacheStoreService<TKey, TValue> : ICacheStoreService<TKey, TValue>
-    where TKey : notnull
+public class InMemoryCacheStoreService<TValue> : ICacheStoreService<TValue>
 {
     private readonly IMemoryCache _memoryCache;
     private readonly DataProductOptions _options;
 
     /// <summary>
-    /// Creates a new instance of the <see cref="InMemoryCacheStoreService{TKey, TValue}"/> class.
+    /// Creates a new instance of the <see cref="InMemoryCacheStoreService{TValue}"/> class.
     /// </summary>
     public InMemoryCacheStoreService(IMemoryCache memoryCache, IOptions<DataProductOptions> options)
     {
@@ -24,14 +23,14 @@ public class InMemoryCacheStoreService<TKey, TValue> : ICacheStoreService<TKey, 
     }
 
     /// <inheritdoc />
-    public Task<TValue?> GetAsync(TKey key, CancellationToken cancellationToken = default)
+    public Task<TValue?> GetAsync(string key, CancellationToken cancellationToken = default)
     {
         var cacheEntry = _memoryCache.Get<TValue>(key);
         return Task.FromResult(cacheEntry);
     }
 
     /// <inheritdoc />
-    public Task<TValue?> GetOrSetAsync(TKey key, Func<Task<TValue>> valueFactory, CancellationToken cancellationToken = default)
+    public Task<TValue?> GetOrSetAsync(string key, Func<Task<TValue>> valueFactory, CancellationToken cancellationToken = default)
     {
         var cacheEntry = _memoryCache.GetOrCreateAsync(key, async entry =>
         {
@@ -42,7 +41,7 @@ public class InMemoryCacheStoreService<TKey, TValue> : ICacheStoreService<TKey, 
     }
 
     /// <inheritdoc />
-    public Task SetAsync(TKey key, TValue value, CancellationToken cancellationToken = default)
+    public Task SetAsync(string key, TValue value, CancellationToken cancellationToken = default)
     {
         _ = _memoryCache.Set(key, value, new MemoryCacheEntryOptions
         {
@@ -52,7 +51,7 @@ public class InMemoryCacheStoreService<TKey, TValue> : ICacheStoreService<TKey, 
     }
 
     /// <inheritdoc />
-    public Task RemoveAsync(TKey key, CancellationToken cancellationToken = default)
+    public Task RemoveAsync(string key, CancellationToken cancellationToken = default)
     {
         _memoryCache.Remove(key);
         return Task.CompletedTask;

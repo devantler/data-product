@@ -58,7 +58,11 @@ public static class ConfigurationExtensions
                         ?? throw new InvalidOperationException(
                             $"Failed to bind configuration section '{ICacheStoreOptions.Key}' to the type '{typeof(InMemoryCacheStoreOptions).FullName}'."
                         ),
-                CacheStoreType.Redis => throw new NotImplementedException($"Cache store type '{dataProductOptions.CacheStore.Type}' is not implemented yet."),
+                CacheStoreType.Redis => configuration.GetSection(ICacheStoreOptions.Key)
+                    .Get<RedisCacheStoreOptions>()
+                        ?? throw new InvalidOperationException(
+                            $"Failed to bind configuration section '{ICacheStoreOptions.Key}' to the type '{typeof(RedisCacheStoreOptions).FullName}'."
+                        ),
                 _ => throw new NotSupportedException($"Cache store type '{dataProductOptions.CacheStore.Type}' is not supported.")
             };
         }
