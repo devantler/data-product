@@ -61,9 +61,16 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
         => await _context.Set<TEntity>().Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
 
     /// <inheritdoc />
-    public async Task<IEnumerable<TEntity>> ReadMultipleWithLimitAsync(int limit, int offset,
-        CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TKey>> ReadMultipleIdsWithPaginationAsync(int page, int pageSize, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().Skip((page - 1) * pageSize).Take(pageSize).Select(x => x.Id).ToListAsync(cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<TEntity>> ReadMultipleWithLimitAsync(int limit, int offset, CancellationToken cancellationToken = default)
         => await _context.Set<TEntity>().Skip(offset).Take(limit).ToListAsync(cancellationToken);
+
+    /// <inheritdoc />
+    public async Task<IEnumerable<TKey>> ReadMultipleIdsWithLimitAsync(int limit, int offset, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().Skip(offset).Take(limit).Select(x => x.Id).ToListAsync(cancellationToken);
 
     /// <inheritdoc />
     public async Task<TEntity> UpdateSingleAsync(TEntity entity, CancellationToken cancellationToken = default)

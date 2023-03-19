@@ -57,8 +57,16 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TEntity>> ReadMultipleWithPaginationAsync(int page, int pageSize,
-        CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> ReadMultipleWithPaginationAsync(int page, int pageSize, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Reads ids of paged entities from a relational database.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="cancellationToken"></param>
+    Task<IEnumerable<TKey>> ReadMultipleIdsWithPaginationAsync(int page, int pageSize, CancellationToken cancellationToken = default);
+
 
     /// <summary>
     /// Reads entities from a relational database with a limit and an offset.
@@ -66,8 +74,15 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TEntity>> ReadMultipleWithLimitAsync(int limit, int offset,
-        CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> ReadMultipleWithLimitAsync(int limit, int offset, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Reads ids of entities from a relational database with a limit and an offset.
+    /// </summary>
+    /// <param name="limit"></param>
+    /// <param name="offset"></param>
+    /// <param name="cancellationToken"></param>
+    Task<IEnumerable<TKey>> ReadMultipleIdsWithLimitAsync(int limit, int offset, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates a single entity in a data store.

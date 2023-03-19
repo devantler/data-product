@@ -16,6 +16,14 @@ public interface ICacheStoreService<TKey, TValue>
     Task<TValue> GetAsync(TKey key, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets or sets a value in the cache store.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="valueFactory"></param>
+    /// <param name="cancellationToken"></param>
+    Task<TValue> GetOrSetAsync(TKey key, Func<Task<TValue>> valueFactory, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Sets a value in the cache store.
     /// </summary>
     /// <param name="key"></param>
