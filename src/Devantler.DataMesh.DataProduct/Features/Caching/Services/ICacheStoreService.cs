@@ -1,11 +1,12 @@
 namespace Devantler.DataMesh.DataProduct.Features.Caching.Services;
 
 /// <summary>
-/// A generic interface for cache store services.
+/// A cache store service, which can be used to store and retrieve data from a cache store.
 /// </summary>
 /// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TValue"></typeparam>
 public interface ICacheStoreService<TKey, TValue>
+    where TKey : notnull
 {
     /// <summary>
     /// Gets a value from the cache store.
@@ -13,7 +14,7 @@ public interface ICacheStoreService<TKey, TValue>
     /// <param name="key"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<TValue> GetAsync(TKey key, CancellationToken cancellationToken = default);
+    Task<TValue?> GetAsync(TKey key, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets or sets a value in the cache store.
@@ -21,7 +22,7 @@ public interface ICacheStoreService<TKey, TValue>
     /// <param name="key"></param>
     /// <param name="valueFactory"></param>
     /// <param name="cancellationToken"></param>
-    Task<TValue> GetOrSetAsync(TKey key, Func<Task<TValue>> valueFactory, CancellationToken cancellationToken = default);
+    Task<TValue?> GetOrSetAsync(TKey key, Func<Task<TValue>> valueFactory, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Sets a value in the cache store.

@@ -33,7 +33,14 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
     {
         var distinctEntities = entities.GroupBy(e => e.Id).Select(e => e.First());
 
-        await _context.Set<TEntity>().AddRangeAsync(distinctEntities, cancellationToken);
+        foreach (var entity in distinctEntities)
+        {
+            if (_context.Set<TEntity>().Find(entity.Id) is not null)
+                continue;
+
+            _ = _context.Set<TEntity>().Add(entity);
+        }
+
         return await _context.SaveChangesAsync(cancellationToken);
     }
 
@@ -47,8 +54,8 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
         => await _context.Set<TEntity>().ToListAsync(cancellationToken);
 
     ///<inheritdoc />
-    public async Task<IQueryable<TEntity>> ReadAllAsQueryableAsync(CancellationToken cancellationToken = default)
-        => await Task.FromResult(_context.Set<TEntity>());
+    public async Task<IEnumerable<TKey>> ReadAllIdsAsync(CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().Select(x => x.Id).ToListAsync(cancellationToken);
 
     /// <inheritdoc />
     public async Task<IEnumerable<TEntity>> ReadMultipleAsync(IEnumerable<TKey> ids,

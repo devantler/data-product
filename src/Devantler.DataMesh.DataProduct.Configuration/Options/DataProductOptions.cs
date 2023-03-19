@@ -1,4 +1,5 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.Apis;
+using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
@@ -44,6 +45,11 @@ public class DataProductOptions
     public FeatureFlagsOptions FeatureFlags { get; set; } = new();
 
     /// <summary>
+    /// Options for the APIs.
+    /// </summary>
+    public ApisOptions Apis { get; set; } = new();
+
+    /// <summary>
     /// Options for the schema registry used by the data product.
     /// </summary>
     public ISchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
@@ -54,12 +60,13 @@ public class DataProductOptions
     public IDataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
 
     /// <summary>
+    /// Options for the cache store.
+    /// </summary>
+    public ICacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
+
+    /// <summary>
     /// Options for the data ingestors.
     /// </summary>
     public List<IDataIngestorOptions> DataIngestors { get; set; } = new();
 
-    /// <summary>
-    /// Options for the APIs.
-    /// </summary>
-    public ApisOptions Apis { get; set; } = new();
 }

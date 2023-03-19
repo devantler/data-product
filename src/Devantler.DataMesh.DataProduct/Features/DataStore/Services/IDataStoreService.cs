@@ -29,10 +29,10 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas
     Task<TSchema> GetSingleAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Gets all <typeparamref name="TSchema"/>'s from a data store as queryable objects.
+    /// Gets all <typeparamref name="TSchema"/>'s from a data store.
     /// </summary>
     /// <param name="cancellationToken"></param>
-    Task<IQueryable<TSchema>> GetAllAsQueryableAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<TSchema>> GetAllAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Read multiple <typeparamref name="TSchema"/>'s from a data store.

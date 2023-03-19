@@ -38,11 +38,11 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     Task<IEnumerable<TEntity>> ReadAllAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Reads all entities as queryable objects from a data store.
+    /// Reads all ids for entities in a data store.
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IQueryable<TEntity>> ReadAllAsQueryableAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<TKey>> ReadAllIdsAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Read multiple entities from a data store.

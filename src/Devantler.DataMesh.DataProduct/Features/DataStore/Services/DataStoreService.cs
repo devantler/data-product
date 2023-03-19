@@ -1,3 +1,4 @@
+using System.Collections;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
@@ -15,6 +16,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 /// <typeparam name="TSchema"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
 public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, TSchema>
+    where TKey : notnull
     where TSchema : class, Schemas.ISchema<TKey>
     where TEntity : class, IEntity<TKey>
 {
@@ -98,10 +100,19 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc />
-    public async Task<IQueryable<TSchema>> GetAllAsQueryableAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TSchema>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var entities = await _repository.ReadAllAsQueryableAsync(cancellationToken);
-        return entities.ProjectTo<TSchema>(_mapper.ConfigurationProvider);
+        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
+        {
+            var ids = await _repository.ReadAllIdsAsync(cancellationToken);
+
+            return await GetMultipleAsync(ids, cancellationToken);
+        }
+        else
+        {
+            var entities = await _repository.ReadAllAsync(cancellationToken);
+            return _mapper.Map<IEnumerable<TSchema>>(entities);
+        }
     }
 
     /// <inheritdoc/>
@@ -129,13 +140,9 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         {
             foreach (var id in ids)
             {
-                _ = entities.Append(
-                    await _cacheStore.GetOrSetAsync(
-                        id,
-                        async () => await _repository.ReadSingleAsync(id, cancellationToken),
-                        cancellationToken
-                    )
-                );
+                var entity = await _cacheStore.GetOrSetAsync(id, async () => await _repository.ReadSingleAsync(id, cancellationToken), cancellationToken);
+                if (entity is not null)
+                    entities = entities.Append(entity);
             }
         }
         else

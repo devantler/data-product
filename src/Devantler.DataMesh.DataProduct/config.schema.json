@@ -145,6 +145,32 @@
                 }
             ]
         },
+        "DataStore": {
+            "description": "The cache store used by the data product.",
+            "type": "object",
+            "oneOf": [
+                {
+                    "properties": {
+                        "Type": {
+                            "type": "string",
+                            "enum": [
+                                "InMemory"
+                            ]
+                        },
+                        "ExpirationTime": {
+                            "description": "The expiration time for cache entries in the cache store.",
+                            "type": "string",
+                            "pattern": "^([0-9]+)([smhd])?$"
+                        }
+                    },
+                    "required": [
+                        "Type",
+                        "Provider",
+                        "ConnectionString"
+                    ]
+                }
+            ]
+        },
         "Apis": {
             "description": "The APIs used by the data product.",
             "type": "object",

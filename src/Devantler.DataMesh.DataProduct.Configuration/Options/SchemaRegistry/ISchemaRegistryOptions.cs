@@ -1,7 +1,7 @@
 namespace Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 
 /// <summary>
-/// Options to configure a schema registry used by the data product.
+/// Options to configure a schema registry for the data product.
 /// </summary>
 public interface ISchemaRegistryOptions
 {
