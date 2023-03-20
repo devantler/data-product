@@ -68,5 +68,4 @@ public class DataProductOptions
     /// Options for the data ingestors.
     /// </summary>
     public List<IDataIngestorOptions> DataIngestors { get; set; } = new();
-
 }

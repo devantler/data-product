@@ -65,7 +65,6 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         {
             foreach (var entity in entities)
             {
-
                 await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
             }
         }
@@ -200,7 +199,6 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-
             await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
         }
 
@@ -218,7 +216,6 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         {
             foreach (var entity in entities)
             {
-
                 await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
             }
         }

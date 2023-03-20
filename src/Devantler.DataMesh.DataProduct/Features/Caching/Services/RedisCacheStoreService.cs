@@ -49,7 +49,7 @@ public class RedisCacheStoreService<TValue> : ICacheStoreService<TValue>
     /// <inheritdoc/>
     public Task SetAsync(string key, TValue value, CancellationToken cancellationToken = default)
     {
-        var expirationTime = _options.CacheStore.ExpirationTime;
+        string expirationTime = _options.CacheStore.ExpirationTime;
         return _redis.StringSetAsync(key, JsonSerializer.Serialize(value), expirationTime.ToTimeSpan());
     }
 }

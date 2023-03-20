@@ -32,7 +32,7 @@ public static class ApisStartupExtensions
     public static WebApplication UseApis(this WebApplication app, DataProductOptions options)
     {
         if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest))
-            _ = app.UseRest();
+            _ = app.UseRest(options);
 
         if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
             _ = app.UseGraphQL();

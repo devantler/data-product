@@ -6,6 +6,9 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Pr
 public class LocalSchemaRegistryOptions : ISchemaRegistryOptions
 {
     /// <inheritdoc/>
+    public string Name { get; set; } = "Local";
+
+    /// <inheritdoc/>
     public SchemaRegistryType Type { get; set; } = SchemaRegistryType.Local;
 
     /// <summary>

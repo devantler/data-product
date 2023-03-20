@@ -6,7 +6,10 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 public class RedisCacheStoreOptions : ICacheStoreOptions
 {
     /// <inheritdoc/>
-    public CacheStoreType Type { get; set; } = CacheStoreType.InMemory;
+    public string Name { get; set; } = "Redis";
+
+    /// <inheritdoc/>
+    public CacheStoreType Type { get; set; } = CacheStoreType.Redis;
 
     /// <inheritdoc/>
     public string ExpirationTime { get; set; } = "5m";

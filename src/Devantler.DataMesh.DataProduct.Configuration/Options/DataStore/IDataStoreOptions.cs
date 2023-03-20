@@ -9,6 +9,12 @@ public interface IDataStoreOptions
     /// A key to indicate the section in the configuration file that contains the data store options.
     /// </summary>
     public const string Key = "DataStore";
+
+    /// <summary>
+    /// The name of the data store.
+    /// </summary>
+    public string Name { get; set; }
+
     /// <summary>
     /// The data store type to use.
     /// </summary>

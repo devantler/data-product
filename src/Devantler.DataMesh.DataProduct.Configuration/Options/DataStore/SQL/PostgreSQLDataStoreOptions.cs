@@ -6,6 +6,9 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
 public class PostgreSQLDataStoreOptions : IDataStoreOptions
 {
     /// <inheritdoc/>
+    public string Name { get; set; } = "PostgreSQL";
+
+    /// <inheritdoc/>
     public DataStoreType Type { get; set; } = DataStoreType.SQL;
 
     /// <inheritdoc/>

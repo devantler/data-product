@@ -11,6 +11,11 @@ public interface ISchemaRegistryOptions
     public const string Key = "SchemaRegistry";
 
     /// <summary>
+    /// The name of the schema registry.
+    /// </summary>
+    public string Name { get; set; }
+
+    /// <summary>
     /// The schema registry type to use.
     /// </summary>
     public SchemaRegistryType Type { get; set; }

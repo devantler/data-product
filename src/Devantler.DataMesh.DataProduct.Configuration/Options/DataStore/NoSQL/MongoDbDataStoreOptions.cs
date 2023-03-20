@@ -6,6 +6,9 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.NoSQL;
 public class MongoDbDataStoreOptions : IDataStoreOptions
 {
     /// <inheritdoc/>
+    public string Name { get; set; } = "MongoDb";
+
+    /// <inheritdoc/>
     public DataStoreType Type { get; set; } = DataStoreType.NoSQL;
 
     /// <inheritdoc/>

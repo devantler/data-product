@@ -13,7 +13,6 @@ public static class DataEgestionStartupExtensions
     public static IServiceCollection AddDataEgestion(this IServiceCollection services)
         => services;
 
-
     /// <summary>
     /// Configures the web application to use data egestion.
     /// </summary>

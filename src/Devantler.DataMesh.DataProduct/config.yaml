@@ -29,21 +29,26 @@ FeatureFlags:
   EnableWebhooks: false # TODO: Enable feature gated webhooks
 
 DataStore:
+  Name: Local SQLite Data Store
   Type: SQL
   Provider: Sqlite
   ConnectionString: Data Source=sqlite.db
 
 CacheStore:
+  Name: In Memory Cache Store
   Type: InMemory
 
 SchemaRegistry:
+  Name: Local Schema Registry
   Type: Local
   Schema:
     Subject: contoso-university
     Version: 1
 
 DataIngestors:
-  - Type: Local
+  - Name: Local JSON File Ingestor 1
+    Type: Local
     FilePath: assets/data/contoso-university-single.json
-  - Type: Local
+  - Name: Local JSON File Ingestor 2
+    Type: Local
     FilePath: assets/data/contoso-university-multiple.json
