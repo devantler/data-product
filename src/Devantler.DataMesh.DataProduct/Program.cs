@@ -3,8 +3,11 @@ using Devantler.DataMesh.DataProduct.Features;
 
 #pragma warning disable CA1852
 
-var builder = WebApplication.CreateBuilder(args);
-
+var webApplicationOptions = new WebApplicationOptions
+{
+    WebRootPath = "Features/Dashboard/UI/wwwroot"
+};
+var builder = WebApplication.CreateBuilder(webApplicationOptions);
 _ = builder.Configuration.AddDataProductConfiguration(builder.Environment, args);
 builder.AddFeatures();
 

@@ -14,7 +14,7 @@
             "type": "string"
         },
         "Version": {
-            "description": "The version of the data product.",
+            "description": "The version of the data product. Uses semantic versioning (vX.Y.Z).",
             "type": "string",
             "pattern": "^v[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
         },
@@ -111,6 +111,14 @@
                 "EnableAuthorisation": {
                     "description": "Whether to enable authorisation for the data product. Policies must be configured for this feature to take effect.",
                     "type": "boolean"
+                },
+                "EnableWebhooks": {
+                    "description": "Whether to enable webhooks for the data product. Webhooks must be configured for this feature to take effect.",
+                    "type": "boolean"
+                },
+                "EnableDashboard": {
+                    "description": "Whether to enable the dashboard for the data product.",
+                    "type": "boolean"
                 }
             }
         },
@@ -152,13 +160,14 @@
                 {
                     "properties": {
                         "Type": {
+                            "description": "The type of cache store.",
                             "type": "string",
                             "enum": [
                                 "InMemory"
                             ]
                         },
                         "ExpirationTime": {
-                            "description": "The expiration time for cache entries in the cache store.",
+                            "description": "The expiration time for cache entries in the cache store. Example values: 3d (3 days), 2h (2 hours), 30m (30 minutes), 10s (10 seconds). The default value is 5 minutes.",
                             "type": "string",
                             "pattern": "^([0-9]+)([smhd])?$"
                         }
@@ -170,16 +179,18 @@
                 {
                     "properties": {
                         "Type": {
+                            "description": "The type of cache store.",
                             "type": "string",
                             "enum": [
                                 "Redis"
                             ]
                         },
                         "RedisServer": {
+                            "description": "The Redis server used by the cache store.",
                             "type": "string"
                         },
                         "ExpirationTime": {
-                            "description": "The expiration time for cache entries in the cache store.",
+                            "description": "The expiration time for cache entries in the cache store. Example values: 3d (3 days), 2h (2 hours), 30m (30 minutes), 10s (10 seconds). The default value is 5 minutes.",
                             "type": "string",
                             "pattern": "^([0-9]+)([smhd])?$"
                         }
@@ -225,7 +236,7 @@
                             "type": "string"
                         },
                         "Schema": {
-                            "description": "The schema for the schema registry.",
+                            "description": "The schema to use from the schema registry.",
                             "type": "object",
                             "properties": {
                                 "Subject": {
@@ -233,6 +244,7 @@
                                     "type": "string"
                                 },
                                 "Version": {
+                                    "description": "The version of the schema.",
                                     "type": "number",
                                     "minimum": 1
                                 }
@@ -286,8 +298,8 @@
                 }
             ]
         },
-        "DataIngestionSources": {
-            "description": "The data ingestion sources used by the data product.",
+        "DataIngestors": {
+            "description": "The data ingestors used by the data product.",
             "type": "array",
             "items": {
                 "type": "object",
@@ -295,12 +307,14 @@
                     {
                         "properties": {
                             "Type": {
+                                "description": "The type of data ingestor.",
                                 "type": "string",
                                 "enum": [
                                     "Local"
                                 ]
                             },
                             "FilePath": {
+                                "description": "The path to the file to ingest.",
                                 "type": "string"
                             }
                         },
@@ -312,19 +326,23 @@
                     {
                         "properties": {
                             "Type": {
+                                "description": "The type of data ingestor.",
                                 "type": "string",
                                 "enum": [
                                     "Kafka"
                                 ]
                             },
                             "BootstrapServers": {
+                                "description": "The bootstrap servers for the Kafka cluster.",
                                 "type": "string",
                                 "format": "uri-reference"
                             },
                             "GroupId": {
+                                "description": "The group ID for the Kafka consumer.",
                                 "type": "string"
                             },
                             "Topic": {
+                                "description": "The topic to consume from.",
                                 "type": "string"
                             }
                         },

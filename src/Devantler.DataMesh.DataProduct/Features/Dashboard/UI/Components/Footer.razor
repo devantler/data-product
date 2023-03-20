@@ -1,0 +1,19 @@
+@using Microsoft.Extensions.Options;
+@using Devantler.DataMesh.DataProduct.Configuration.Options;
+
+@inject IOptions<DataProductOptions> Options
+
+<Bar Background=Background.Light Breakpoint="Breakpoint.Desktop">
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <Text>Owned by <Text TextWeight=TextWeight.Bold>@Options.Value.Owner.Name</Text></Text>
+            </BarItem>
+        </BarStart>
+        <BarEnd>
+            <BarItem>
+                <Text>Licensed under <Text TextWeight=TextWeight.Bold>@Options.Value.License.Name</Text></Text>
+            </BarItem>
+        </BarEnd>
+    </BarMenu>
+</Bar>

@@ -1,0 +1,52 @@
+@using Microsoft.Extensions.Options;
+@using Devantler.DataMesh.DataProduct.Configuration.Options;
+@using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
+@using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
+@using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
+
+@inject IOptions<DataProductOptions> Options
+
+<Bar Background=Background.Light Breakpoint="Breakpoint.Desktop">
+    <BarBrand>
+        @Options.Value.Name
+    </BarBrand>
+    <BarToggler />
+    <BarMenu>
+        <BarStart>
+            <BarItem>
+                <BarLink To="/">Home</BarLink>
+            </BarItem>
+            @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest))
+            {
+                <BarItem>
+                    <BarLink To="/swagger-embedded">Swagger</BarLink>
+                </BarItem>
+            }
+            @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
+            {
+                <BarItem>
+                    <BarLink To="/graphql-embedded">GraphQL</BarLink>
+                </BarItem>
+            }
+            @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC))
+            {
+                <BarItem>
+                    <BarLink To="/grpc-embedded">gRPC</BarLink>
+                </BarItem>
+            }
+            @if (Options.Value.SchemaRegistry.Type != SchemaRegistryType.Local)
+            {
+                @if (Options.Value.SchemaRegistry.Type == SchemaRegistryType.Kafka)
+                {
+                    var schemaRegistryOptions = Options.Value.SchemaRegistry as KafkaSchemaRegistryOptions;
+                    <BarItem>
+                        <BarLink To=schemaRegistryOptions.Url>Schema Registry</BarLink>
+                    </BarItem>
+                }
+            }
+        </BarStart>
+        <BarEnd>
+            <Text>Version <Text TextWeight=TextWeight.Bold>@Options.Value.Version</Text></Text>
+        </BarEnd>
+    </BarMenu>
+</Bar>

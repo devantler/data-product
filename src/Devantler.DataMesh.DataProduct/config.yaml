@@ -14,6 +14,7 @@ Owner:
   Website: https://test-site.com
 
 FeatureFlags:
+  EnableDashboard: true
   EnableApis:
     - Rest
     - GraphQL
@@ -26,7 +27,6 @@ FeatureFlags:
   EnableAuthentication: false # TODO: #138 Enable feature gated authentication with Duende IdentityServer and OpenID Connect
   EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
   EnableWebhooks: false # TODO: Enable feature gated webhooks
-  EnableDashboard: false # TODO: Enable feature gated dashboard
 
 DataStore:
   Type: SQL
