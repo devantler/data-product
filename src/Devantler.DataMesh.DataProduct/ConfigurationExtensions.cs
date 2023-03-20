@@ -6,7 +6,7 @@ namespace Devantler.DataMesh.DataProduct;
 public static class ConfigurationExtensions
 {
     /// <summary>
-    /// Adds configuration from config.json, config.yml, config.yaml, config.{environment}.json, config.{environment}.yml, config.{environment}.yaml, environment variables, and command line arguments.
+    /// Adds a data product configuration from command line arguments, environment variables, config.{environment}.{json|yml|yaml}, and config.{json|yml|yaml}.
     /// </summary>
     /// <param name="configuration"></param>
     /// <param name="environment"></param>

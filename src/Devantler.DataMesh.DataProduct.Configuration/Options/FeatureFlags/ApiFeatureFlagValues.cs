@@ -14,7 +14,7 @@ public enum ApiFeatureFlagValues
     /// </summary>
     GraphQL,
     /// <summary>
-    /// A value to indicate that the GRPc API should be enabled.
+    /// A value to indicate that the gRPC API should be enabled.
     /// </summary>
-    GRPc
+    gRPC
 }

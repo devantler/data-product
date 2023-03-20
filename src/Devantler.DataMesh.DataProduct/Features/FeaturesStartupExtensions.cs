@@ -4,6 +4,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Features.Apis;
 using Devantler.DataMesh.DataProduct.Features.Caching;
+using Devantler.DataMesh.DataProduct.Features.Dashboard;
 using Devantler.DataMesh.DataProduct.Features.DataEgestion;
 using Devantler.DataMesh.DataProduct.Features.DataIngestion;
 using Devantler.DataMesh.DataProduct.Features.DataStore;
@@ -48,13 +49,13 @@ public static class FeaturesStartupExtensions
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
         _ = builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+        _ = builder.Services.AddDataStore(options);
+
         if (options.FeatureFlags.EnableAuthentication)
             _ = builder.Services.AddAuthentication();
 
         if (options.FeatureFlags.EnableAuthorisation)
             _ = builder.Services.AddAuthorization();
-
-        _ = builder.Services.AddDataStore(options);
 
         if (options.FeatureFlags.EnableCaching)
             _ = builder.Services.AddCaching(options);
@@ -74,7 +75,11 @@ public static class FeaturesStartupExtensions
         if (options.FeatureFlags.EnableTracing)
             _ = builder.Services.AddTracing();
 
-        _ = builder.Services.AddApis(options, builder.Environment);
+        if (options.FeatureFlags.EnableApis.Any())
+            _ = builder.Services.AddApis(options, builder.Environment);
+
+        if (options.FeatureFlags.EnableDashboard)
+            _ = builder.Services.AddDashboard(builder.Environment);
     }
 
     /// <summary>
@@ -85,13 +90,13 @@ public static class FeaturesStartupExtensions
     {
         var options = app.Services.GetRequiredService<IOptions<DataProductOptions>>().Value;
 
+        _ = app.UseDataStore(options);
+
         if (options.FeatureFlags.EnableAuthentication)
             _ = app.UseAuthentication();
 
         if (options.FeatureFlags.EnableAuthorisation)
             _ = app.UseAuthorization();
-
-        _ = app.UseDataStore(options);
 
         if (options.FeatureFlags.EnableMetadata)
             _ = app.UseMetadata();
@@ -102,6 +107,10 @@ public static class FeaturesStartupExtensions
         if (options.FeatureFlags.EnableTracing)
             _ = app.UseTracing();
 
-        _ = app.UseApis(options);
+        if (options.FeatureFlags.EnableApis.Any())
+            _ = app.UseApis(options);
+
+        if (options.FeatureFlags.EnableDashboard)
+            _ = app.UseDashboard();
     }
 }
