@@ -10,6 +10,7 @@ using Devantler.DataMesh.DataProduct.Features.DataIngestion;
 using Devantler.DataMesh.DataProduct.Features.DataStore;
 using Devantler.DataMesh.DataProduct.Features.Metadata;
 using Devantler.DataMesh.DataProduct.Features.Metrics;
+using Devantler.DataMesh.DataProduct.Features.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Features.Tracing;
 using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
@@ -49,6 +50,7 @@ public static class FeaturesStartupExtensions
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
         _ = builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
+        _ = builder.Services.AddSchemaRegistry(options);
         _ = builder.Services.AddDataStore(options);
 
         if (options.FeatureFlags.EnableAuthentication)

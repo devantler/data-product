@@ -1,0 +1,33 @@
+@using Microsoft.Extensions.Options;
+@using Devantler.DataMesh.DataProduct.Configuration.Options;
+@using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
+@using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
+
+@inject IOptions<DataProductOptions> Options
+
+<Card Margin=Margin.Is4.FromBottom>
+    <CardBody>
+        <CardTitle Size="3">Services</CardTitle>
+        <CardText>
+            <Card Margin=Margin.Is2.FromBottom>
+                <CardBody>
+                    <CardTitle Size="5">@Options.Value.SchemaRegistry.Name</CardTitle>
+                    <CardText>
+                        <Paragraph>Type: @Options.Value.SchemaRegistry.Type</Paragraph>
+                        <Paragraph>Schema:
+                            @Options.Value.SchemaRegistry.Schema.Subject-@Options.Value.SchemaRegistry.Schema.Version
+                        </Paragraph>
+                    </CardText>
+                </CardBody>
+            </Card>
+            <Card Margin=Margin.Is2.FromBottom>
+                <CardBody>
+                    <CardTitle Size="5">@Options.Value.DataStore.Name</CardTitle>
+                    <CardText>
+
+                    </CardText>
+                </CardBody>
+            </Card>
+        </CardText>
+    </CardBody>
+</Card>

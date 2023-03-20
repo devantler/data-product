@@ -1,0 +1,23 @@
+@using Chr.Avro.Abstract;
+
+<Card Margin=Margin.Is2.FromBottom>
+    <CardBody>
+        <CardTitle Size="5">
+            @Schema.Name
+        </CardTitle>
+        <CardText>
+            @foreach (var field in Schema.Fields)
+            {
+                <div>
+                    <p><strong>@field.Name</strong> - @field.Type.ToString().Replace("Schema", "")</p>
+                    <p>@field.Documentation</p>
+                </div>
+            }
+        </CardText>
+    </CardBody>
+</Card>
+
+@code {
+    [Parameter]
+    public required RecordSchema Schema { get; set; }
+}

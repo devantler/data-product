@@ -70,8 +70,8 @@ public static class RestStartupExtensions
         _ = app.UseSwaggerUI(
             swaggerOptions =>
             {
-                swaggerOptions.SwaggerEndpoint($"/swagger/{options.Version}/swagger.json", "Hello");
-                swaggerOptions.RoutePrefix = string.Empty;
+                swaggerOptions.SwaggerEndpoint($"/swagger/{options.Version}/swagger.json", $"{options.Name} {options.Version}");
+                swaggerOptions.RoutePrefix = "swagger";
             });
         _ = app.MapControllers();
 

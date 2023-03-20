@@ -1,0 +1,24 @@
+<Row>
+    
+    <Column ColumnSize="ColumnSize.Is10">
+        @Name
+    </Column>
+    <Column ColumnSize="ColumnSize.Is2">
+        @if (IsEnabled)
+        {
+            <Icon Name=IconName.Check />
+        }
+        else
+        {
+            <Icon Name=IconName.Times />
+        }
+    </Column>
+</Row>
+
+@code {
+    [Parameter]
+    public required string Name { get; set; }
+
+    [Parameter]
+    public required bool IsEnabled { get; set; }
+}

@@ -6,13 +6,13 @@
 <Bar Background=Background.Light Breakpoint="Breakpoint.Desktop">
     <BarMenu>
         <BarStart>
-            <BarItem>
-                <Text>Owned by <Text TextWeight=TextWeight.Bold>@Options.Value.Owner.Name</Text></Text>
-            </BarItem>
+            <Text>Owned by <Text TextWeight=TextWeight.Bold>@Options.Value.Owner.Name</Text></Text>
         </BarStart>
         <BarEnd>
             <BarItem>
-                <Text>Licensed under <Text TextWeight=TextWeight.Bold>@Options.Value.License.Name</Text></Text>
+                <BarLink To="@Options.Value.License.Url"><Text>Licensed under <Text
+                            TextWeight=TextWeight.Bold>@Options.Value.License.Name</Text></Text></BarLink>
+
             </BarItem>
         </BarEnd>
     </BarMenu>
