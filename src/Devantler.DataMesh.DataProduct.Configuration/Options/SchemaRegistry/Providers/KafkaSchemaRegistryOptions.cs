@@ -6,6 +6,9 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Pr
 public class KafkaSchemaRegistryOptions : ISchemaRegistryOptions
 {
     /// <inheritdoc/>
+    public string Name { get; set; } = "Kafka";
+
+    /// <inheritdoc/>
     public SchemaRegistryType Type { get; set; } = SchemaRegistryType.Kafka;
 
     /// <summary>

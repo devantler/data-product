@@ -11,6 +11,11 @@ public interface ICacheStoreOptions
     const string Key = "CacheStore";
 
     /// <summary>
+    /// The name of the cache store.
+    /// </summary>
+    string Name { get; set; }
+
+    /// <summary>
     /// The type of the cache store.
     /// </summary>
     CacheStoreType Type { get; set; }

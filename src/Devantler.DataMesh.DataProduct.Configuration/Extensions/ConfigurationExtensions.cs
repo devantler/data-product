@@ -29,7 +29,7 @@ public static class ConfigurationExtensions
         return dataProductOptions;
     }
 
-    private static void ConfigureSchemaRegistryOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    static void ConfigureSchemaRegistryOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {
         dataProductOptions.SchemaRegistry = dataProductOptions.SchemaRegistry.Type switch
         {
@@ -47,7 +47,7 @@ public static class ConfigurationExtensions
         };
     }
 
-    private static void ConfigureCacheStoreOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    static void ConfigureCacheStoreOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {
         if (dataProductOptions.FeatureFlags.EnableCaching)
         {
@@ -68,7 +68,7 @@ public static class ConfigurationExtensions
         }
     }
 
-    private static void ConfigureDataIngestorsOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    static void ConfigureDataIngestorsOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {
         if (dataProductOptions.FeatureFlags.EnableDataIngestion)
         {

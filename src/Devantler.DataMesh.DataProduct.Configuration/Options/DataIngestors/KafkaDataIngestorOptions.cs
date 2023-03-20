@@ -6,6 +6,9 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 public class KafkaDataIngestorOptions : IDataIngestorOptions
 {
     /// <inheritdoc/>
+    public string Name { get; set; } = "Kafka";
+
+    /// <inheritdoc/>
     public DataIngestorType Type { get; set; } = DataIngestorType.Kafka;
 
     /// <summary>

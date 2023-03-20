@@ -67,7 +67,6 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     /// <param name="cancellationToken"></param>
     Task<IEnumerable<TKey>> ReadMultipleIdsWithPaginationAsync(int page, int pageSize, CancellationToken cancellationToken = default);
 
-
     /// <summary>
     /// Reads entities from a relational database with a limit and an offset.
     /// </summary>

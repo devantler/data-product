@@ -10,8 +10,8 @@ namespace Devantler.DataMesh.DataProduct.Features.Caching.Services;
 /// </summary>
 public class InMemoryCacheStoreService<TValue> : ICacheStoreService<TValue>
 {
-    private readonly IMemoryCache _memoryCache;
-    private readonly DataProductOptions _options;
+    readonly IMemoryCache _memoryCache;
+    readonly DataProductOptions _options;
 
     /// <summary>
     /// Creates a new instance of the <see cref="InMemoryCacheStoreService{TValue}"/> class.

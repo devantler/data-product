@@ -27,7 +27,7 @@ public static class RestStartupExtensions
         _ = services.AddSwaggerGen(swaggerOptions =>
         {
             swaggerOptions.SwaggerDoc(
-                "v1",
+                options.Version,
                 new OpenApiInfo
                 {
                     Version = options.Version,
@@ -63,10 +63,16 @@ public static class RestStartupExtensions
     /// Configures the web application to use REST.
     /// </summary>
     /// <param name="app"></param>
-    public static WebApplication UseRest(this WebApplication app)
+    /// <param name="options"></param>
+    public static WebApplication UseRest(this WebApplication app, DataProductOptions options)
     {
         _ = app.UseSwagger();
-        _ = app.UseSwaggerUI();
+        _ = app.UseSwaggerUI(
+            swaggerOptions =>
+            {
+                swaggerOptions.SwaggerEndpoint($"/swagger/{options.Version}/swagger.json", "Hello");
+                swaggerOptions.RoutePrefix = string.Empty;
+            });
         _ = app.MapControllers();
 
         return app;

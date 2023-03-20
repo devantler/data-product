@@ -14,18 +14,18 @@
     <BarMenu>
         <BarStart>
             <BarItem>
-                <BarLink To="/">Home</BarLink>
+                <BarLink To="/">Dashboard</BarLink>
             </BarItem>
             @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest))
             {
                 <BarItem>
-                    <BarLink To="/swagger-embedded">Swagger</BarLink>
+                    <BarLink To="/swagger-embedded">Rest API</BarLink>
                 </BarItem>
             }
             @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
             {
                 <BarItem>
-                    <BarLink To="/graphql-embedded">GraphQL</BarLink>
+                    <BarLink To="/graphql-embedded">GraphQL API</BarLink>
                 </BarItem>
             }
             @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC))

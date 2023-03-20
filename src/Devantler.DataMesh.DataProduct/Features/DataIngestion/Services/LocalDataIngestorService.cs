@@ -11,7 +11,6 @@ namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 /// <summary>
 /// A data ingestor that ingests data from a local file.
 /// </summary>
-
 public class LocalDataIngestorService<TKey, TSchema> : BackgroundService
     where TSchema : class, Schemas.ISchema<TKey>
 {
