@@ -20,11 +20,10 @@ public static class SchemaRegistryStartupExtensions
             SchemaRegistryType.Local => services.AddScoped<ISchemaRegistryService, LocalSchemaRegistryService>(
                 service =>
                 {
-                    var localSchemaRegistryOptions = (LocalSchemaRegistryOptions)options.SchemaRegistry;
                     return new LocalSchemaRegistryService(
                         opt =>
                         {
-                            opt.Path = "assets/" + localSchemaRegistryOptions.Path;
+                            opt.Path = "assets/" + options.SchemaRegistry.Url;
                         }
                     );
                 }
@@ -32,11 +31,10 @@ public static class SchemaRegistryStartupExtensions
             SchemaRegistryType.Kafka => services.AddScoped<ISchemaRegistryService, KafkaSchemaRegistryService>(
                 service =>
                 {
-                    var kafkaSchemaRegistryOptions = (KafkaSchemaRegistryOptions)options.SchemaRegistry;
                     return new KafkaSchemaRegistryService(
                         opt =>
                         {
-                            opt.Url = kafkaSchemaRegistryOptions.Url;
+                            opt.Url = options.SchemaRegistry.Url;
                         }
                     );
                 }

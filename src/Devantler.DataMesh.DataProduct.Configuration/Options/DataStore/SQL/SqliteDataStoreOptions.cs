@@ -6,9 +6,6 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
 public class SqliteDataStoreOptions : IDataStoreOptions
 {
     /// <inheritdoc/>
-    public string Name { get; set; } = "Sqlite";
-
-    /// <inheritdoc/>
     public DataStoreType Type { get; set; } = DataStoreType.SQL;
 
     /// <inheritdoc/>

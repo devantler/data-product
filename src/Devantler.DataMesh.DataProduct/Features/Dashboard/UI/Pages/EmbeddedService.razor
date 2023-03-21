@@ -5,28 +5,31 @@
 @if (string.IsNullOrEmpty(Url))
 {
     <Alert Color=Color.Danger Visible>
-        <AlertMessage>Invalid URL</AlertMessage>
-        <AlertDescription>
-            The URL you have entered for an embedded service is invalid. Please check the URL and try again.
-        </AlertDescription>
-    </Alert>
+    <AlertMessage>Invalid URL</AlertMessage>
+    <AlertDescription>
+        The URL you have entered for an embedded service is invalid. Please check the URL and try again.
+    </AlertDescription>
+</Alert>
 }
 else
 {
-    <iframe src=@Url style="width:100%;height:100%;border:none;" />
+    <iframe src=@HttpUtility.UrlDecode(Url) style="width:100%;height:100%;border:none;" />
 }
 
 @code {
     [Parameter]
-    public string Url { get; set; } = string.Empty;
+    public string Url { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        await base.OnInitializedAsync();
+        base.OnParametersSet();
+        // do the same for all params
         Url = HttpUtility.UrlDecode(Url);
+
         if (Uri.TryCreate(Url, UriKind.Absolute, out var uri))
         {
-            Url = uri.AbsoluteUri;
+            if (uri.Scheme != "http" && uri.Scheme != "https")
+                Url = string.Empty;
         }
         else
         {

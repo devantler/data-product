@@ -6,16 +6,6 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.Dashboard;
 public class DashboardOptions
 {
     /// <summary>
-    /// The name of the dashboard.
-    /// </summary>
-    public string Name { get; set; } = string.Empty;
-
-    /// <summary>
-    /// A description of the dashboard.
-    /// </summary>
-    public string Description { get; set; } = string.Empty;
-
-    /// <summary>
     /// A set of urls that should be added to the Content Security Policy (CSP) directives to allow cross-origin requests in the embedded iframes.
     /// </summary>
     /// <remarks>

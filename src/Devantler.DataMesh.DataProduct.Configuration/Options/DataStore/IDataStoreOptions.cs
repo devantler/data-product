@@ -11,11 +11,6 @@ public interface IDataStoreOptions
     public const string Key = "DataStore";
 
     /// <summary>
-    /// The name of the data store.
-    /// </summary>
-    public string Name { get; set; }
-
-    /// <summary>
     /// The data store type to use.
     /// </summary>
     public DataStoreType Type { get; set; }

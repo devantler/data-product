@@ -2,6 +2,7 @@
 @using Devantler.DataMesh.DataProduct.Configuration.Options;
 @using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
 @using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
+@using System.Globalization;
 
 @inject IOptions<DataProductOptions> Options
 
@@ -11,7 +12,9 @@
         <CardText>
             <Card Margin=Margin.Is2.FromBottom>
                 <CardBody>
-                    <CardTitle Size="5">@Options.Value.SchemaRegistry.Name</CardTitle>
+                    <CardTitle Size="5">
+                        @CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Options.Value.SchemaRegistry.Type.ToString())
+                    </CardTitle>
                     <CardText>
                         <Paragraph>Type: @Options.Value.SchemaRegistry.Type</Paragraph>
                         <Paragraph>Schema:
@@ -22,7 +25,9 @@
             </Card>
             <Card Margin=Margin.Is2.FromBottom>
                 <CardBody>
-                    <CardTitle Size="5">@Options.Value.DataStore.Name</CardTitle>
+                    <CardTitle Size="5">
+                        @CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Options.Value.DataStore.Provider.ToString())
+                    </CardTitle>
                     <CardText>
 
                     </CardText>

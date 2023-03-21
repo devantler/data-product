@@ -6,15 +6,12 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 public class KafkaDataIngestorOptions : IDataIngestorOptions
 {
     /// <inheritdoc/>
-    public string Name { get; set; } = "Kafka";
-
-    /// <inheritdoc/>
     public DataIngestorType Type { get; set; } = DataIngestorType.Kafka;
 
     /// <summary>
-    /// The BootstrapServers to connect to.
+    /// The servers to connect to.
     /// </summary>
-    public string BootstrapServers { get; set; } = string.Empty;
+    public string Servers { get; set; } = string.Empty;
 
     /// <summary>
     /// The topic to read from.

@@ -29,12 +29,10 @@ public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
         var dataIngestorOptions = dataProductOptions.DataIngestors
             .Where(x => x.Type == DataIngestorType.Kafka)
             .Cast<KafkaDataIngestorOptions>();
-        var schemaRegistryOptions = dataProductOptions.SchemaRegistry as KafkaSchemaRegistryOptions
-            ?? throw new InvalidCastException("Unable to cast schema registry to kafka schema registry.");
 
         var registryConfig = new SchemaRegistryConfig
         {
-            Url = schemaRegistryOptions.Url
+            Url = dataProductOptions.SchemaRegistry.Url
         };
 
         var registry = new CachedSchemaRegistryClient(registryConfig);
@@ -43,7 +41,7 @@ public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
         {
             var consumerConfig = new ConsumerConfig
             {
-                BootstrapServers = options.BootstrapServers,
+                BootstrapServers = options.Servers,
                 GroupId = options.GroupId
             };
             var consumer = new ConsumerBuilder<TKey, TSchema>(consumerConfig)

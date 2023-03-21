@@ -11,14 +11,14 @@ public interface ISchemaRegistryOptions
     public const string Key = "SchemaRegistry";
 
     /// <summary>
-    /// The name of the schema registry.
-    /// </summary>
-    public string Name { get; set; }
-
-    /// <summary>
     /// The schema registry type to use.
     /// </summary>
     public SchemaRegistryType Type { get; set; }
+
+    /// <summary>
+    /// The URL to the schema registry. If the schema registry is local, this will be the path to folder containing the schemas.
+    /// </summary>
+    public string Url { get; set; }
 
     /// <summary>
     /// Options for the schema used by the data product.
