@@ -17,4 +17,9 @@ public class DashboardOptions
     /// The embedded services in the dashboard.
     /// </summary>
     public List<EmbeddedServiceOptions> EmbeddedServices { get; set; } = new();
+
+    /// <summary>
+    /// The links to show in the dashboard.
+    /// </summary>
+    public List<LinksOptions> Links { get; set; } = new();
 }
