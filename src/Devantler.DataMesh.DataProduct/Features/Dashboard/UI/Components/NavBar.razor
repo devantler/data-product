@@ -7,7 +7,7 @@
 
 @inject IOptions<DataProductOptions> Options
 
-<Bar Background=Background.Light Breakpoint="Breakpoint.Desktop">
+<Bar Background="Background.Light" ThemeContrast="ThemeContrast.Light" Breakpoint="Breakpoint.Desktop">
     <BarBrand>
         @Options.Value.Name
     </BarBrand>
@@ -59,7 +59,7 @@
             }
         </BarStart>
         <BarEnd>
-            <Text>Version <Text TextWeight=TextWeight.Bold>@Options.Value.Version</Text></Text>
+            <Text TextWeight=TextWeight.Bold>@Options.Value.Version</Text>
         </BarEnd>
     </BarMenu>
 </Bar>
