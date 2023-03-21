@@ -192,9 +192,9 @@
             },
             "else": {
                 "not": {
-                    "properties": {
-                        "Server": {}
-                    }
+                    "required": [
+                        "Server"
+                    ]
                 }
             }
         },
@@ -315,8 +315,8 @@
                     "type": "string",
                     "const": "Kafka"
                 },
-                "BootstrapServers": {
-                    "description": "The bootstrap servers used by the data ingestor.",
+                "Servers": {
+                    "description": "The servers used by the data ingestor.",
                     "type": "string",
                     "format": "uri-reference"
                 },
@@ -331,7 +331,7 @@
             },
             "required": [
                 "Type",
-                "BootstrapServers",
+                "Servers",
                 "GroupId",
                 "Topic"
             ]
