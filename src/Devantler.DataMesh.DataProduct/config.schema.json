@@ -192,11 +192,7 @@
             },
             "else": {
                 "not": {
-                    "properties": {
-                        "Server": {
-                            "type": "string"
-                        }
-                    }
+                    
                 }
             },
             "Apis": {
