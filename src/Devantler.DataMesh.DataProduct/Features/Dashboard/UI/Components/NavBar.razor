@@ -7,7 +7,7 @@
 
 @inject IOptions<DataProductOptions> Options
 
-<Bar Background=Background.Light Breakpoint="Breakpoint.Desktop" >
+<Bar Background="Background.Light" ThemeContrast="ThemeContrast.Light" Breakpoint="Breakpoint.Desktop">
     <BarBrand>
         @Options.Value.Name
     </BarBrand>
@@ -20,31 +20,46 @@
             @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest))
             {
                 <BarItem>
-                    <BarLink To="/embedded-service/swagger">Rest API</BarLink>
+                    <BarLink To="/embedded-service/swagger">
+                        <Icon Name=IconName.Star /><Text Margin=Margin.Is1.FromStart>Rest API</Text>
+                    </BarLink>
                 </BarItem>
             }
             @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
             {
                 <BarItem>
-                    <BarLink To="/embedded-service/graphql">GraphQL API</BarLink>
+                    <BarLink To="/embedded-service/graphql">
+                        <Icon Name=IconName.Star /><Text Margin=Margin.Is1.FromStart>GraphQL API</Text>
+                    </BarLink>
                 </BarItem>
             }
             @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC))
             {
                 <BarItem>
-                    <BarLink To="/embedded-service/grpc">gRPC</BarLink>
+                    <BarLink To="/embedded-service/grpc">
+                        <Icon Name=IconName.Star /><Text Margin=Margin.Is1.FromStart>gRPC</Text>
+                    </BarLink>
                 </BarItem>
             }
             @foreach (var embeddedService in Options.Value.Dashboard.EmbeddedServices)
             {
                 <BarItem>
                     <BarLink To="@($"/embedded-service/{HttpUtility.UrlEncode(embeddedService.Url)}")">
-                        @embeddedService.Name</BarLink>
+                        <Icon Name=IconName.Cloud /><Text Margin=Margin.Is1.FromStart>@embeddedService.Name</Text>
+                    </BarLink>
+                </BarItem>
+            }
+            @foreach (var link in Options.Value.Dashboard.Links)
+            {
+                <BarItem>
+                    <BarLink To=@link.Url>
+                        <Icon Name=IconName.Link /><Text Margin=Margin.Is1.FromStart>@link.Name</Text>
+                    </BarLink>
                 </BarItem>
             }
         </BarStart>
         <BarEnd>
-            <Text>Version <Text TextWeight=TextWeight.Bold>@Options.Value.Version</Text></Text>
+            <Text TextWeight=TextWeight.Bold>@Options.Value.Version</Text>
         </BarEnd>
     </BarMenu>
 </Bar>

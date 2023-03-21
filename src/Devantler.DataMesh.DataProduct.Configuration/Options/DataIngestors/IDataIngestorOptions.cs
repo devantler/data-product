@@ -11,11 +11,6 @@ public interface IDataIngestorOptions
     public const string Key = "DataIngestors";
 
     /// <summary>
-    /// The name of the data ingestor.
-    /// </summary>
-    public string Name { get; set; }
-
-    /// <summary>
     /// The data ingestor type to use.
     /// </summary>
     public DataIngestorType Type { get; set; }

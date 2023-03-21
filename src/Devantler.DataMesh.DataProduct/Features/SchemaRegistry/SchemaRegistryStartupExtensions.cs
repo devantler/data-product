@@ -1,6 +1,5 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 using Devantler.DataMesh.SchemaRegistry;
 
 namespace Devantler.DataMesh.DataProduct.Features.SchemaRegistry;
@@ -20,11 +19,10 @@ public static class SchemaRegistryStartupExtensions
             SchemaRegistryType.Local => services.AddScoped<ISchemaRegistryService, LocalSchemaRegistryService>(
                 service =>
                 {
-                    var localSchemaRegistryOptions = (LocalSchemaRegistryOptions)options.SchemaRegistry;
                     return new LocalSchemaRegistryService(
                         opt =>
                         {
-                            opt.Path = "assets/" + localSchemaRegistryOptions.Path;
+                            opt.Path = "assets/" + options.SchemaRegistry.Url;
                         }
                     );
                 }
@@ -32,11 +30,10 @@ public static class SchemaRegistryStartupExtensions
             SchemaRegistryType.Kafka => services.AddScoped<ISchemaRegistryService, KafkaSchemaRegistryService>(
                 service =>
                 {
-                    var kafkaSchemaRegistryOptions = (KafkaSchemaRegistryOptions)options.SchemaRegistry;
                     return new KafkaSchemaRegistryService(
                         opt =>
                         {
-                            opt.Url = kafkaSchemaRegistryOptions.Url;
+                            opt.Url = options.SchemaRegistry.Url;
                         }
                     );
                 }

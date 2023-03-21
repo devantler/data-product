@@ -5,9 +5,6 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 public class LocalDataIngestorOptions : IDataIngestorOptions
 {
     /// <inheritdoc/>
-    public string Name { get; set; } = "Local";
-
-    /// <inheritdoc/>
     public DataIngestorType Type { get; set; } = DataIngestorType.Local;
     /// <summary>
     /// The path to the file to read from.

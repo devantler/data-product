@@ -6,9 +6,6 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 public class InMemoryCacheStoreOptions : ICacheStoreOptions
 {
     /// <inheritdoc/>
-    public string Name { get; set; } = "InMemory";
-
-    /// <inheritdoc/>
     public CacheStoreType Type { get; set; } = CacheStoreType.InMemory;
 
     /// <inheritdoc/>

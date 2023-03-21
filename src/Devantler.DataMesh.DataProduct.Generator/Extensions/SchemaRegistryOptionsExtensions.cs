@@ -1,5 +1,4 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 using Devantler.DataMesh.SchemaRegistry;
 
 namespace Devantler.DataMesh.DataProduct.Generator.Extensions;
@@ -20,13 +19,11 @@ public static class SchemaRegistryOptionsExtensions
         {
             SchemaRegistryType.Kafka => new KafkaSchemaRegistryService(o =>
             {
-                var kafkaSchemaRegistryOptions = (KafkaSchemaRegistryOptions)options;
-                o.Url = kafkaSchemaRegistryOptions.Url;
+                o.Url = options.Url;
             }),
             SchemaRegistryType.Local => new LocalSchemaRegistryService(o =>
             {
-                var localSchemaRegistryOptions = (LocalSchemaRegistryOptions)options;
-                o.Path = localSchemaRegistryOptions.Path;
+                o.Path = options.Url;
             }),
             _ => throw new NotSupportedException($"Schema registry type '{options.Type}' is not supported."),
         };

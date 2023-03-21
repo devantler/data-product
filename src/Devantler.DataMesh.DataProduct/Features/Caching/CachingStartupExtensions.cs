@@ -19,7 +19,7 @@ public static partial class CachingStartupExtensions
         _ = options.CacheStore.Type switch
         {
             CacheStoreType.InMemory => services.AddMemoryCache(),
-            CacheStoreType.Redis => services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(((RedisCacheStoreOptions)options.CacheStore).RedisServer)),
+            CacheStoreType.Redis => services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(((RedisCacheStoreOptions)options.CacheStore).Server)),
             _ => throw new NotSupportedException($"Cache store type '{options.CacheStore.Type}' is not supported.")
         };
 

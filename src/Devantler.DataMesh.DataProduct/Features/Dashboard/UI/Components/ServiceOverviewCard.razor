@@ -1,33 +1,75 @@
 @using Microsoft.Extensions.Options;
 @using Devantler.DataMesh.DataProduct.Configuration.Options;
 @using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
+@using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 @using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
+@using System.Globalization;
 
 @inject IOptions<DataProductOptions> Options
 
-<Card Margin=Margin.Is4.FromBottom>
+<Card Background="Background.Light" Margin=Margin.Is4.FromBottom>
     <CardBody>
         <CardTitle Size="3">Services</CardTitle>
         <CardText>
-            <Card Margin=Margin.Is2.FromBottom>
-                <CardBody>
-                    <CardTitle Size="5">@Options.Value.SchemaRegistry.Name</CardTitle>
-                    <CardText>
-                        <Paragraph>Type: @Options.Value.SchemaRegistry.Type</Paragraph>
-                        <Paragraph>Schema:
-                            @Options.Value.SchemaRegistry.Schema.Subject-@Options.Value.SchemaRegistry.Schema.Version
-                        </Paragraph>
-                    </CardText>
-                </CardBody>
-            </Card>
-            <Card Margin=Margin.Is2.FromBottom>
-                <CardBody>
-                    <CardTitle Size="5">@Options.Value.DataStore.Name</CardTitle>
-                    <CardText>
+            <ListGroup Flush>
+                <ListGroupItem>
+                    <ServiceDetails Name="@Options.Value.DataStore.Provider.ToString()"
+                        Type=@($"Data Store - {Options.Value.DataStore.Type.ToString()}")
+                        Description="The Data Store in use by the data product." />
+                </ListGroupItem>
 
-                    </CardText>
-                </CardBody>
-            </Card>
+                <ListGroupItem>
+                    <ServiceDetails Name="@Options.Value.SchemaRegistry.Type.ToString()" Type="Schema Registry"
+                        Description="The Schema Registry in use by the data product." 
+                        SubDescriptions=@(new List<string>() { $"Url: {Options.Value.SchemaRegistry.Url}", $"Schema: {Options.Value.SchemaRegistry.Schema.Subject} v{Options.Value.SchemaRegistry.Schema.Version}" })/>
+                </ListGroupItem>
+
+                @if (Options.Value.FeatureFlags.EnableCaching)
+                {
+                    <ListGroupItem>
+                        <ServiceDetails Name="@Options.Value.CacheStore.Type.ToString()" Type="Cache Store"
+                        Description="The Cache Store in use by the data product." />
+                    </ListGroupItem>
+                }
+
+                @if (Options.Value.FeatureFlags.EnableDataIngestion)
+                {
+                    @foreach (var ingestor in Options.Value.DataIngestors)
+                    {
+                        switch (ingestor.Type)
+                        {
+                            case DataIngestorType.Kafka:
+                                var kafkaIngestor = (KafkaDataIngestorOptions)ingestor;
+                                var kafkaSubDescriptions = new List<string>() {
+                                    $"Bootstrap Servers: {kafkaIngestor.Servers}",
+                                    $"Consumer Group: {kafkaIngestor.GroupId}",
+                                    $"Topic: {kafkaIngestor.Topic}"
+                                };
+                                <ListGroupItem>
+                                    <ServiceDetails Name="@ingestor.Type.ToString()" Type="Data Ingestor"
+                        Description="A Kafka Data Ingestor in use by the data product." 
+                        SubDescriptions=@kafkaSubDescriptions/>
+                                </ListGroupItem>
+                                break;
+                            case DataIngestorType.Local:
+                                var localIngestor = (LocalDataIngestorOptions)ingestor;
+                                var localSubDescriptions = new List<string>() {
+                                    $"File: {localIngestor.FilePath}"
+                                };
+                                <ListGroupItem>
+                                    <ServiceDetails Name="@ingestor.Type.ToString()" Type="Data Ingestor"
+                        Description="A Local Data Ingestor in use by the data product." 
+                        SubDescriptions=@localSubDescriptions/>
+                                </ListGroupItem>
+                                break;
+
+                        }
+
+                    }
+                }
+
+
+            </ListGroup>
         </CardText>
     </CardBody>
 </Card>
