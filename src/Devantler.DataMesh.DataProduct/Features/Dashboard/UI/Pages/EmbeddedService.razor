@@ -18,11 +18,11 @@ else
 
 @code {
     [Parameter]
-    public string Url { get; set; }
+    public string Url { get; set; } = string.Empty;
 
     protected override async Task OnParametersSetAsync()
     {
-        base.OnParametersSet();
+        await base.OnParametersSetAsync();
         // do the same for all params
         Url = HttpUtility.UrlDecode(Url);
 

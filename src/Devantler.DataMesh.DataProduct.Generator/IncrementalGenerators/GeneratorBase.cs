@@ -19,8 +19,8 @@ public abstract class GeneratorBase : IIncrementalGenerator
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         // #if DEBUG
-        //         while (!System.Diagnostics.Debugger.IsAttached)
-        //             Thread.Sleep(500);
+        //                 while (!System.Diagnostics.Debugger.IsAttached)
+        //                     Thread.Sleep(500);
         // #endif
         var collectedFiles = CollectFiles(context);
 

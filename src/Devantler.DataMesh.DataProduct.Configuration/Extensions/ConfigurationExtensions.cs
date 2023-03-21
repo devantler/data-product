@@ -22,30 +22,30 @@ public static class ConfigurationExtensions
                 $"Failed to bind configuration to the type '{typeof(DataProductOptions).FullName}'."
             );
 
-        //ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
+        ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
         ConfigureCacheStoreOptions(configuration, dataProductOptions);
         ConfigureDataIngestorsOptions(configuration, dataProductOptions);
 
         return dataProductOptions;
     }
 
-    // static void ConfigureSchemaRegistryOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
-    // {
-    //     dataProductOptions.SchemaRegistry = dataProductOptions.SchemaRegistry.Type switch
-    //     {
-    //         SchemaRegistryType.Kafka => configuration.GetSection(ISchemaRegistryOptions.Key)
-    //             .Get<KafkaSchemaRegistryOptions>()
-    //                 ?? throw new InvalidOperationException(
-    //                     $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(KafkaSchemaRegistryOptions).FullName}'."
-    //                 ),
-    //         SchemaRegistryType.Local => configuration.GetSection(ISchemaRegistryOptions.Key)
-    //             .Get<LocalSchemaRegistryOptions>()
-    //                 ?? throw new InvalidOperationException(
-    //                     $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(LocalSchemaRegistryOptions).FullName}'."
-    //                 ),
-    //         _ => throw new NotSupportedException($"Schema registry type '{dataProductOptions.SchemaRegistry.Type}' is not supported.")
-    //     };
-    // }
+    static void ConfigureSchemaRegistryOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    {
+        dataProductOptions.SchemaRegistry = dataProductOptions.SchemaRegistry.Type switch
+        {
+            SchemaRegistryType.Kafka => configuration.GetSection(ISchemaRegistryOptions.Key)
+                .Get<KafkaSchemaRegistryOptions>()
+                    ?? throw new InvalidOperationException(
+                        $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(KafkaSchemaRegistryOptions).FullName}'."
+                    ),
+            SchemaRegistryType.Local => configuration.GetSection(ISchemaRegistryOptions.Key)
+                .Get<LocalSchemaRegistryOptions>()
+                    ?? throw new InvalidOperationException(
+                        $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(LocalSchemaRegistryOptions).FullName}'."
+                    ),
+            _ => throw new NotSupportedException($"Schema registry type '{dataProductOptions.SchemaRegistry.Type}' is not supported.")
+        };
+    }
 
     static void ConfigureCacheStoreOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {

@@ -23,15 +23,15 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
 
     /// <inheritdoc />
     [HttpGet("{id}")]
-    public async Task<ActionResult<TSchema>> GetSingleAsync(TKey id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<TSchema>> GetById(TKey id, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetSingleAsync(id, cancellationToken);
         return Ok(result);
     }
 
     /// <inheritdoc />
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<TSchema>>> GetMultipleAsync([FromQuery] List<TKey> ids,
+    [HttpGet("bulk")]
+    public async Task<ActionResult<IEnumerable<TSchema>>> GetByIds([FromQuery] List<TKey> ids,
         CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleAsync(ids, cancellationToken);
@@ -39,33 +39,32 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
     }
 
     /// <inheritdoc />
-    [HttpGet("paged")]
-    public async Task<ActionResult<IEnumerable<TSchema>>> GetMultipleWithPaginationAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 10,
-        CancellationToken cancellationToken = default)
+    [HttpGet("page")]
+    public async Task<ActionResult<IEnumerable<TSchema>>> GetPageAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 10, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleWithPaginationAsync(page, pageSize, cancellationToken);
         return Ok(result);
     }
 
     /// <inheritdoc />
-    [HttpGet("limited")]
-    public async Task<ActionResult<IEnumerable<TSchema>>> GetMultipleWithLimitAsync([FromQuery] int limit = 20, [FromQuery] int offset = 0, CancellationToken cancellationToken = default)
+    [HttpGet("offset")]
+    public async Task<ActionResult<IEnumerable<TSchema>>> GetByOffset([FromQuery] int limit = 20, [FromQuery] int offset = 0, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleWithLimitAsync(limit, offset, cancellationToken);
         return Ok(result);
     }
 
     /// <inheritdoc />
-    [HttpPost("single")]
-    public async Task<ActionResult<TSchema>> PostSingleAsync([FromBody] TSchema schema, CancellationToken cancellationToken = default)
+    [HttpPost]
+    public async Task<ActionResult<TSchema>> PostAsync([FromBody] TSchema schema, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.CreateSingleAsync(schema, cancellationToken);
         return Ok(result);
     }
 
     /// <inheritdoc />
-    [HttpPost]
-    public async Task<ActionResult<int>> PostMultipleAsync([FromBody] IEnumerable<TSchema> models,
+    [HttpPost("bulk")]
+    public async Task<ActionResult<int>> PostAsync([FromBody] IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
     {
         int result = await _dataStoreService.CreateMultipleAsync(models, cancellationToken);
@@ -73,16 +72,16 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
     }
 
     /// <inheritdoc />
-    [HttpPut("single")]
-    public async Task<ActionResult<TSchema>> PutSingleAsync(TSchema schema, CancellationToken cancellationToken = default)
+    [HttpPut]
+    public async Task<ActionResult<TSchema>> PutAsync(TSchema schema, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.UpdateSingleAsync(schema, cancellationToken);
         return Ok(result);
     }
 
     /// <inheritdoc />
-    [HttpPut]
-    public async Task<ActionResult<int>> PutMultipleAsync(IEnumerable<TSchema> models,
+    [HttpPut("bulk")]
+    public async Task<ActionResult<int>> PutAsync(IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
     {
         int result = await _dataStoreService.UpdateMultipleAsync(models, cancellationToken);
@@ -91,15 +90,15 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
 
     /// <inheritdoc />
     [HttpDelete("{id}")]
-    public async Task<ActionResult<TSchema>> DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<TSchema>> DeleteAsync(TKey id, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.DeleteSingleAsync(id, cancellationToken);
         return Ok(result);
     }
 
     /// <inheritdoc />
-    [HttpDelete]
-    public async Task<ActionResult<IEnumerable<TSchema>>> DeleteMultipleAsync([FromQuery] List<TKey> ids,
+    [HttpDelete("bulk")]
+    public async Task<ActionResult<IEnumerable<TSchema>>> DeleteAsync([FromQuery] List<TKey> ids,
         CancellationToken cancellationToken = default)
     {
         int result = await _dataStoreService.DeleteMultipleAsync(ids, cancellationToken);
