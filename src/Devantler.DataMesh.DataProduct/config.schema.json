@@ -193,148 +193,149 @@
             "else": {
                 "not": {
                     "properties": {
-                        "Server": {}
+                        "Server": {
+                            "type": "string"
+                        }
                     }
                 }
-            }
-        },
-        "Apis": {
-            "description": "The APIs used by the data product.",
-            "type": "object",
-            "properties": {
-                "GraphQL": {
-                    "description": "The GraphQL API used by the data product.",
-                    "type": "object",
-                    "properties": {}
-                },
-                "Rest": {
-                    "description": "The Rest API used by the data product.",
-                    "type": "object",
-                    "properties": {}
-                }
-            }
-        },
-        "SchemaRegistry": {
-            "description": "The schema registry used by the data product.",
-            "type": "object",
-            "properties": {
-                "Type": {
-                    "description": "The type of schema registry.",
-                    "type": "string",
-                    "enum": [
-                        "Local",
-                        "Kafka"
-                    ]
-                },
-                "Url": {
-                    "description": "The URL of the schema registry. If the schema registry is local, this value is the path to where you store your schemas.",
-                    "type": "string",
-                    "format": "uri"
-                },
-                "Schema": {
-                    "description": "The schema to use from the schema registry.",
-                    "type": "object",
-                    "properties": {
-                        "Subject": {
-                            "description": "The subject of the schema.",
-                            "type": "string"
-                        },
-                        "Version": {
-                            "description": "The version of the schema.",
-                            "type": "number",
-                            "minimum": 1
-                        }
+            },
+            "Apis": {
+                "description": "The APIs used by the data product.",
+                "type": "object",
+                "properties": {
+                    "GraphQL": {
+                        "description": "The GraphQL API used by the data product.",
+                        "type": "object",
+                        "properties": {}
                     },
-                    "required": [
-                        "Subject",
-                        "Version"
-                    ]
+                    "Rest": {
+                        "description": "The Rest API used by the data product.",
+                        "type": "object",
+                        "properties": {}
+                    }
                 }
             },
-            "required": [
-                "Type"
-            ],
-            "if": {
+            "SchemaRegistry": {
+                "description": "The schema registry used by the data product.",
+                "type": "object",
                 "properties": {
                     "Type": {
-                        "const": "Kafka"
-                    }
-                }
-            },
-            "then": {
-                "required": [
-                    "Url"
-                ]
-            }
-        },
-        "DataIngestors": {
-            "type": "array",
-            "description": "The data ingestors used by the data product.",
-            "items": {
-                "anyOf": [
-                    {
-                        "$ref": "#/definitions/LocalDataIngestor"
+                        "description": "The type of schema registry.",
+                        "type": "string",
+                        "enum": [
+                            "Local",
+                            "Kafka"
+                        ]
                     },
-                    {
-                        "$ref": "#/definitions/KafkaDataIngestor"
+                    "Url": {
+                        "description": "The URL of the schema registry. If the schema registry is local, this value is the path to where you store your schemas.",
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "Schema": {
+                        "description": "The schema to use from the schema registry.",
+                        "type": "object",
+                        "properties": {
+                            "Subject": {
+                                "description": "The subject of the schema.",
+                                "type": "string"
+                            },
+                            "Version": {
+                                "description": "The version of the schema.",
+                                "type": "number",
+                                "minimum": 1
+                            }
+                        },
+                        "required": [
+                            "Subject",
+                            "Version"
+                        ]
                     }
+                },
+                "required": [
+                    "Type"
+                ],
+                "if": {
+                    "properties": {
+                        "Type": {
+                            "const": "Kafka"
+                        }
+                    }
+                },
+                "then": {
+                    "required": [
+                        "Url"
+                    ]
+                }
+            },
+            "DataIngestors": {
+                "type": "array",
+                "description": "The data ingestors used by the data product.",
+                "items": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/LocalDataIngestor"
+                        },
+                        {
+                            "$ref": "#/definitions/KafkaDataIngestor"
+                        }
+                    ]
+                }
+            }
+        },
+        "required": [
+            "Name",
+            "Version",
+            "DataStore",
+            "SchemaRegistry"
+        ],
+        "definitions": {
+            "LocalDataIngestor": {
+                "type": "object",
+                "properties": {
+                    "Type": {
+                        "description": "The type of data ingestor.",
+                        "type": "string",
+                        "const": "Local"
+                    },
+                    "FilePath": {
+                        "description": "The path to the file to ingest.",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "Type",
+                    "FilePath"
+                ]
+            },
+            "KafkaDataIngestor": {
+                "type": "object",
+                "properties": {
+                    "Type": {
+                        "description": "The type of data ingestor.",
+                        "type": "string",
+                        "const": "Kafka"
+                    },
+                    "BootstrapServers": {
+                        "description": "The bootstrap servers used by the data ingestor.",
+                        "type": "string",
+                        "format": "uri-reference"
+                    },
+                    "GroupId": {
+                        "description": "The group ID used by the data ingestor.",
+                        "type": "string"
+                    },
+                    "Topic": {
+                        "description": "The topic used by the data ingestor.",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "Type",
+                    "BootstrapServers",
+                    "GroupId",
+                    "Topic"
                 ]
             }
-        }
-    },
-    "required": [
-        "Name",
-        "Version",
-        "DataStore",
-        "SchemaRegistry"
-    ],
-    "definitions": {
-        "LocalDataIngestor": {
-            "type": "object",
-            "properties": {
-                "Type": {
-                    "description": "The type of data ingestor.",
-                    "type": "string",
-                    "const": "Local"
-                },
-                "FilePath": {
-                    "description": "The path to the file to ingest.",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "Type",
-                "FilePath"
-            ]
-        },
-        "KafkaDataIngestor": {
-            "type": "object",
-            "properties": {
-                "Type": {
-                    "description": "The type of data ingestor.",
-                    "type": "string",
-                    "const": "Kafka"
-                },
-                "BootstrapServers": {
-                    "description": "The bootstrap servers used by the data ingestor.",
-                    "type": "string",
-                    "format": "uri-reference"
-                },
-                "GroupId": {
-                    "description": "The group ID used by the data ingestor.",
-                    "type": "string"
-                },
-                "Topic": {
-                    "description": "The topic used by the data ingestor.",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "Type",
-                "BootstrapServers",
-                "GroupId",
-                "Topic"
-            ]
         }
     }
-}
