@@ -154,6 +154,7 @@
             ]
         },
         "Dashboard": {
+            "description": "The dashboard configuration for the data product.",
             "type": "object",
             "properties": {
                 "CSPFrameAncestors": {
@@ -165,6 +166,7 @@
                     }
                 },
                 "EmbeddedServices": {
+                    "description": "The embedded services for the dashboard.",
                     "type": "array",
                     "items": {
                         "type": "object",
@@ -186,6 +188,7 @@
                     }
                 },
                 "Links": {
+                    "description": "The links for the dashboard.",
                     "type": "array",
                     "items": {
                         "type": "object",
