@@ -156,47 +156,14 @@
         "CacheStore": {
             "description": "The cache store used by the data product.",
             "type": "object",
-            "properties": {
-                "Type": {
-                    "description": "The type of cache store.",
-                    "type": "string",
-                    "enum": [
-                        "InMemory",
-                        "Redis"
-                    ]
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/InMemoryCacheStore"
                 },
-                "Server": {
-                    "description": "The server used by the cache store.",
-                    "type": "string"
-                },
-                "ExpirationTime": {
-                    "description": "The expiration time for cache entries in the cache store. Example values: 3d (3 days), 2h (2 hours), 30m (30 minutes), 10s (10 seconds). The default value is 5 minutes.",
-                    "type": "string",
-                    "pattern": "^([0-9]+)([smhd])?$"
+                {
+                    "$ref": "#/definitions/RedisCacheStore"
                 }
-            },
-            "required": [
-                "Type"
-            ],
-            "if": {
-                "properties": {
-                    "Type": {
-                        "const": "Redis"
-                    }
-                }
-            },
-            "then": {
-                "required": [
-                    "Server"
-                ]
-            },
-            "else": {
-                "not": {
-                    "required": [
-                        "Server"
-                    ]
-                }
-            }
+            ]
         },
         "Apis": {
             "description": "The APIs used by the data product.",
@@ -289,6 +256,47 @@
         "SchemaRegistry"
     ],
     "definitions": {
+        "InMemoryCacheStore": {
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "description": "The type of cache store.",
+                    "type": "string",
+                    "const": "InMemory"
+                },
+                "ExpirationTime": {
+                    "description": "The expiration time for cache entries in the cache store. Example values: 3d (3 days), 2h (2 hours), 30m (30 minutes), 10s (10 seconds). The default value is 5 minutes.",
+                    "type": "string",
+                    "pattern": "^([0-9]+)([smhd])?$"
+                }
+            },
+            "required": [
+                "Type"
+            ]
+        },
+        "RedisCacheStore": {
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "description": "The type of cache store.",
+                    "type": "string",
+                    "const": "Redis"
+                },
+                "Server": {
+                    "description": "The server used by the cache store.",
+                    "type": "string"
+                },
+                "ExpirationTime": {
+                    "description": "The expiration time for cache entries in the cache store. Example values: 3d (3 days), 2h (2 hours), 30m (30 minutes), 10s (10 seconds). The default value is 5 minutes.",
+                    "type": "string",
+                    "pattern": "^([0-9]+)([smhd])?$"
+                }
+            },
+            "required": [
+                "Type",
+                "Server"
+            ]
+        },
         "LocalDataIngestor": {
             "type": "object",
             "properties": {

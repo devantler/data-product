@@ -44,7 +44,6 @@ DataStore:
   ConnectionString: Data Source=sqlite.db
 
 CacheStore:
-  Name: In Memory Cache Store
   Type: InMemory
 
 SchemaRegistry:
