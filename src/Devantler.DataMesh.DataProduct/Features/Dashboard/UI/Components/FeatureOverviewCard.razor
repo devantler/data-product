@@ -13,79 +13,79 @@
             <ListGroup>
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) ? Color.Success : Color.Danger)">
-                    <FeatureDetails Name=@($"{nameof(ApiFeatureFlagValues.Rest)} API")
+                    <FeatureDetails FeatureName=@($"{nameof(ApiFeatureFlagValues.Rest)} API")
                         IsEnabled=Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL) ? Color.Success : Color.Danger)">
-                    <FeatureDetails Name=@($"{nameof(ApiFeatureFlagValues.GraphQL)} API")
+                    <FeatureDetails FeatureName=@($"{nameof(ApiFeatureFlagValues.GraphQL)} API")
                         IsEnabled=Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL) />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC) ? Color.Success : Color.Warning)">
-                    <FeatureDetails Name=@($"{nameof(ApiFeatureFlagValues.gRPC)} API (Not supported yet)")
+                    <FeatureDetails FeatureName=@($"{nameof(ApiFeatureFlagValues.gRPC)} API (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC) />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableAuthentication ? Color.Success : Color.Warning)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableAuthentication).Replace("Enable", "")} (Not supported yet)")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableAuthentication).Replace("Enable", "")} (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableAuthentication />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableAuthorisation ? Color.Success : Color.Warning)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableAuthorisation).Replace("Enable", "")} (Not supported yet)")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableAuthorisation).Replace("Enable", "")} (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableAuthentication />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableCaching ? Color.Success : Color.Danger)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableCaching).Replace("Enable", "")}")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableCaching).Replace("Enable", "")}")
                         IsEnabled=Options.Value.FeatureFlags.EnableCaching />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableDataEgestion ? Color.Success : Color.Warning)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableDataEgestion).Replace("Enable", "")} (Not supported yet)")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableDataEgestion).Replace("Enable", "")} (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableDataEgestion />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableDataIngestion ? Color.Success : Color.Danger)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableDataIngestion).Replace("Enable", "")}")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableDataIngestion).Replace("Enable", "")}")
                         IsEnabled=Options.Value.FeatureFlags.EnableDataIngestion />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableDataMigration ? Color.Success : Color.Warning)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableDataMigration).Replace("Enable", "")} (Not supported yet)")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableDataMigration).Replace("Enable", "")} (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableDataMigration />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableMetadata ? Color.Success : Color.Warning)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableMetadata).Replace("Enable", "")} (Not supported yet)")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableMetadata).Replace("Enable", "")} (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableMetadata />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableMetrics ? Color.Success : Color.Warning)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableMetrics).Replace("Enable", "")} (Not supported yet)")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableMetrics).Replace("Enable", "")} (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableMetrics />
                 </ListGroupItem>
 
                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableTracing ? Color.Success : Color.Warning)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableTracing).Replace("Enable", "")} (Not supported yet)")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableTracing).Replace("Enable", "")} (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableTracing />
                 </ListGroupItem>
 
                  <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableWebhooks ? Color.Success : Color.Warning)">
-                    <FeatureDetails Name=@($"{nameof(Options.Value.FeatureFlags.EnableWebhooks).Replace("Enable", "")} (Not supported yet)")
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableWebhooks).Replace("Enable", "")} (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableWebhooks />
                 </ListGroupItem>
 

@@ -1,0 +1,24 @@
+<Div Flex="Flex.JustifyContent.Between" Width="Width.Is100">
+    <Heading Size="HeadingSize.Is5" Margin="Margin.Is1.FromBottom">@Name</Heading>
+    <Small>@Type</Small>
+</Div>
+<Paragraph Margin="Margin.Is1.FromBottom">@Description</Paragraph>
+@foreach (var subDescription in SubDescriptions)
+{
+    <Small>@subDescription</Small>
+    <br />
+}
+
+@code {
+    [Parameter]
+    public string Name { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Type { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Description { get; set; } = string.Empty;
+
+    [Parameter]
+    public List<string> SubDescriptions { get; set; } = new();
+}

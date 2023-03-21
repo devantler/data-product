@@ -1,9 +1,6 @@
-<Row>
-    
-    <Column ColumnSize="ColumnSize.Is10">
-        @Name
-    </Column>
-    <Column ColumnSize="ColumnSize.Is2">
+<Div Flex="Flex.JustifyContent.Between" Width="Width.Is100">
+    <Text>@FeatureName</Text>
+
         @if (IsEnabled)
         {
             <Icon Name=IconName.Check />
@@ -12,12 +9,11 @@
         {
             <Icon Name=IconName.Times />
         }
-    </Column>
-</Row>
+    </Div>
 
 @code {
     [Parameter]
-    public required string Name { get; set; }
+    public required string FeatureName { get; set; }
 
     [Parameter]
     public required bool IsEnabled { get; set; }
