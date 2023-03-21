@@ -1,5 +1,6 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.Apis;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.Dashboard;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
@@ -43,6 +44,11 @@ public class DataProductOptions
     /// Options for the features in the data product.
     /// </summary>
     public FeatureFlagsOptions FeatureFlags { get; set; } = new();
+
+    /// <summary>
+    /// Options for the dashboard.
+    /// </summary>
+    public DashboardOptions Dashboard { get; set; } = new();
 
     /// <summary>
     /// Options for the APIs.

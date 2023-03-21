@@ -28,6 +28,15 @@ FeatureFlags:
   EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
   EnableWebhooks: false # TODO: Enable feature gated webhooks
 
+Dashboard:
+  Name: Contoso University Dashboard
+  Description: A dashboard that allows you to interact with the Contoso University data product.
+  CSPFrameAncestors:
+    - https://*.cloudflareaccess.com
+  EmbeddedServices:
+    - Name: Kafka
+      Url: https://kafka-ui.devantler.com
+  
 DataStore:
   Name: Local SQLite Data Store
   Type: SQL

@@ -39,6 +39,7 @@ public static class FeaturesStartupExtensions
             o.License = options.License;
             o.Owner = options.Owner;
             o.FeatureFlags = options.FeatureFlags;
+            o.Dashboard = options.Dashboard;
             o.Apis = options.Apis;
             o.SchemaRegistry = options.SchemaRegistry;
             o.DataStore = options.DataStore;
@@ -113,6 +114,6 @@ public static class FeaturesStartupExtensions
             _ = app.UseApis(options);
 
         if (options.FeatureFlags.EnableDashboard)
-            _ = app.UseDashboard();
+            _ = app.UseDashboard(options);
     }
 }

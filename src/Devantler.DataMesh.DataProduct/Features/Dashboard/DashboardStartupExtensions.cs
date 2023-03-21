@@ -1,6 +1,7 @@
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
+using Devantler.DataMesh.DataProduct.Configuration.Options;
 
 namespace Devantler.DataMesh.DataProduct.Features.Dashboard;
 
@@ -33,7 +34,7 @@ public static class DashboardStartupExtensions
     /// Configures the web application to use the dashboard feature.
     /// </summary>
     /// <param name="app"></param>
-    public static WebApplication UseDashboard(this WebApplication app)
+    public static WebApplication UseDashboard(this WebApplication app, DataProductOptions options)
     {
         if (!app.Environment.IsDevelopment())
         {
@@ -51,6 +52,12 @@ public static class DashboardStartupExtensions
         _ = app.MapBlazorHub();
         _ = app.MapFallbackToPage("/_Host");
 
+        _ = app.Use((context, next) =>
+        {
+            context.Response.Headers.Add("Content-Security-Policy", $"frame-ancestors 'self' {string.Join(" ", options.Dashboard.CSPFrameAncestors)} {string.Join(" ", options.Dashboard.EmbeddedServices.Select(x => x.Url))}");
+
+            return next();
+        });
         return app;
     }
 }

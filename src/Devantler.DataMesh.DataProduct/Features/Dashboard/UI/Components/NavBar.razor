@@ -3,6 +3,7 @@
 @using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 @using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 @using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
+@using System.Web;
 
 @inject IOptions<DataProductOptions> Options
 
@@ -19,30 +20,27 @@
             @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest))
             {
                 <BarItem>
-                    <BarLink To="/swagger-embedded">Rest API</BarLink>
+                    <BarLink To="/embedded-service/swagger">Rest API</BarLink>
                 </BarItem>
             }
             @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
             {
                 <BarItem>
-                    <BarLink To="/graphql-embedded">GraphQL API</BarLink>
+                    <BarLink To="/embedded-service/graphql">GraphQL API</BarLink>
                 </BarItem>
             }
             @if (Options.Value.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC))
             {
                 <BarItem>
-                    <BarLink To="/grpc-embedded">gRPC</BarLink>
+                    <BarLink To="/embedded-service/grpc">gRPC</BarLink>
                 </BarItem>
             }
-            @if (Options.Value.SchemaRegistry.Type != SchemaRegistryType.Local)
+            @foreach (var embeddedService in Options.Value.Dashboard.EmbeddedServices)
             {
-                @if (Options.Value.SchemaRegistry.Type == SchemaRegistryType.Kafka)
-                {
-                    var schemaRegistryOptions = Options.Value.SchemaRegistry as KafkaSchemaRegistryOptions;
-                    <BarItem>
-                        <BarLink To=schemaRegistryOptions.Url>Schema Registry</BarLink>
-                    </BarItem>
-                }
+                <BarItem>
+                    <BarLink To="@($"/embedded-service/{HttpUtility.UrlEncode(embeddedService.Url)}")">
+                        @embeddedService.Name</BarLink>
+                </BarItem>
             }
         </BarStart>
         <BarEnd>
