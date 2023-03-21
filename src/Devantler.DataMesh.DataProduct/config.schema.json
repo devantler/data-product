@@ -63,7 +63,10 @@
                     "type": "string",
                     "format": "uri"
                 }
-            }
+            },
+            "required": [
+                "Name"
+            ]
         },
         "FeatureFlags": {
             "description": "The feature flags for the data product.",
@@ -76,7 +79,8 @@
                         "type": "string",
                         "enum": [
                             "Rest",
-                            "GraphQL"
+                            "GraphQL",
+                            "gRPC"
                         ]
                     }
                 },
@@ -125,82 +129,74 @@
         "DataStore": {
             "description": "The data store used by the data product.",
             "type": "object",
-            "oneOf": [
-                {
-                    "properties": {
-                        "Type": {
-                            "type": "string",
-                            "enum": [
-                                "SQL"
-                            ]
-                        },
-                        "Provider": {
-                            "type": "string",
-                            "enum": [
-                                "Sqlite",
-                                "PostgreSQL"
-                            ]
-                        },
-                        "ConnectionString": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "Type",
-                        "Provider",
-                        "ConnectionString"
+            "properties": {
+                "Type": {
+                    "type": "string",
+                    "enum": [
+                        "SQL"
                     ]
+                },
+                "Provider": {
+                    "type": "string",
+                    "enum": [
+                        "Sqlite",
+                        "PostgreSQL"
+                    ]
+                },
+                "ConnectionString": {
+                    "type": "string"
                 }
+            },
+            "required": [
+                "Type",
+                "Provider",
+                "ConnectionString"
             ]
         },
         "CacheStore": {
             "description": "The cache store used by the data product.",
             "type": "object",
-            "oneOf": [
-                {
-                    "properties": {
-                        "Type": {
-                            "description": "The type of cache store.",
-                            "type": "string",
-                            "enum": [
-                                "InMemory"
-                            ]
-                        },
-                        "ExpirationTime": {
-                            "description": "The expiration time for cache entries in the cache store. Example values: 3d (3 days), 2h (2 hours), 30m (30 minutes), 10s (10 seconds). The default value is 5 minutes.",
-                            "type": "string",
-                            "pattern": "^([0-9]+)([smhd])?$"
-                        }
-                    },
-                    "required": [
-                        "Type"
+            "properties": {
+                "Type": {
+                    "description": "The type of cache store.",
+                    "type": "string",
+                    "enum": [
+                        "InMemory",
+                        "Redis"
                     ]
                 },
-                {
-                    "properties": {
-                        "Type": {
-                            "description": "The type of cache store.",
-                            "type": "string",
-                            "enum": [
-                                "Redis"
-                            ]
-                        },
-                        "RedisServer": {
-                            "description": "The Redis server used by the cache store.",
-                            "type": "string"
-                        },
-                        "ExpirationTime": {
-                            "description": "The expiration time for cache entries in the cache store. Example values: 3d (3 days), 2h (2 hours), 30m (30 minutes), 10s (10 seconds). The default value is 5 minutes.",
-                            "type": "string",
-                            "pattern": "^([0-9]+)([smhd])?$"
-                        }
-                    },
-                    "required": [
-                        "Type",
-                        "RedisServer"
-                    ]
+                "Server": {
+                    "description": "The Redis server used by the cache store.",
+                    "type": "string"
+                },
+                "ExpirationTime": {
+                    "description": "The expiration time for cache entries in the cache store. Example values: 3d (3 days), 2h (2 hours), 30m (30 minutes), 10s (10 seconds). The default value is 5 minutes.",
+                    "type": "string",
+                    "pattern": "^([0-9]+)([smhd])?$"
                 }
-            ]
+            },
+            "required": [
+                "Type"
+            ],
+            "if": {
+                "properties": {
+                    "Type": {
+                        "const": "Redis"
+                    }
+                }
+            },
+            "then": {
+                "required": [
+                    "Server"
+                ]
+            },
+            "else": {
+                "not": {
+                    "properties": {
+                        "RedisServer": {}
+                    }
+                }
+            }
         },
         "Apis": {
             "description": "The APIs used by the data product.",
@@ -221,137 +217,115 @@
         "SchemaRegistry": {
             "description": "The schema registry used by the data product.",
             "type": "object",
-            "oneOf": [
-                {
-                    "properties": {
-                        "Type": {
-                            "description": "The type of schema registry.",
-                            "type": "string",
-                            "enum": [
-                                "Local"
-                            ]
-                        },
-                        "Path": {
-                            "description": "The path to the schema registry. If not specified, a default path (assets/schemas) will be used.",
-                            "type": "string"
-                        },
-                        "Schema": {
-                            "description": "The schema to use from the schema registry.",
-                            "type": "object",
-                            "properties": {
-                                "Subject": {
-                                    "description": "The subject of the schema.",
-                                    "type": "string"
-                                },
-                                "Version": {
-                                    "description": "The version of the schema.",
-                                    "type": "number",
-                                    "minimum": 1
-                                }
-                            },
-                            "required": [
-                                "Subject",
-                                "Version"
-                            ]
-                        }
-                    },
-                    "required": [
-                        "Type"
+            "properties": {
+                "Type": {
+                    "description": "The type of schema registry.",
+                    "type": "string",
+                    "enum": [
+                        "Local",
+                        "Kafka"
                     ]
                 },
-                {
+                "Url": {
+                    "description": "The URL of the schema registry. If the schema registry is local, this value is the path to where you store your schemas.",
+                    "type": "string",
+                    "format": "uri"
+                },
+                "Schema": {
+                    "description": "The schema to use from the schema registry.",
+                    "type": "object",
                     "properties": {
-                        "Type": {
-                            "description": "The type of schema registry.",
-                            "type": "string",
-                            "enum": [
-                                "Kafka"
-                            ]
+                        "Subject": {
+                            "description": "The subject of the schema.",
+                            "type": "string"
                         },
-                        "Url": {
-                            "description": "The URL of the schema registry.",
-                            "type": "string",
-                            "format": "uri"
-                        },
-                        "Schema": {
-                            "description": "The schema for the schema registry.",
-                            "type": "object",
-                            "properties": {
-                                "Subject": {
-                                    "description": "The subject of the schema.",
-                                    "type": "string"
-                                },
-                                "Version": {
-                                    "type": "number",
-                                    "minimum": 1
-                                }
-                            },
-                            "required": [
-                                "Subject",
-                                "Version"
-                            ]
+                        "Version": {
+                            "description": "The version of the schema.",
+                            "type": "number",
+                            "minimum": 1
                         }
                     },
                     "required": [
-                        "Type"
+                        "Subject",
+                        "Version"
                     ]
                 }
-            ]
+            },
+            "required": [
+                "Type"
+            ],
+            "if": {
+                "properties": {
+                    "Type": {
+                        "const": "Kafka"
+                    }
+                }
+            },
+            "then": {
+                "required": [
+                    "Url"
+                ]
+            }
         },
         "DataIngestors": {
-            "description": "The data ingestors used by the data product.",
+            "definitions": {
+                "localDataIngestor": {
+                    "type": "object",
+                    "properties": {
+                        "Type": {
+                            "description": "The type of data ingestor.",
+                            "type": "string",
+                            "const": "Local"
+                        },
+                        "FilePath": {
+                            "description": "The path to the file to ingest.",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "Type",
+                        "FilePath"
+                    ]
+                },
+                "kafkaDataIngestor": {
+                    "type": "object",
+                    "properties": {
+                        "Type": {
+                            "description": "The type of data ingestor.",
+                            "type": "string",
+                            "const": "Kafka"
+                        },
+                        "BootstrapServers": {
+                            "description": "The bootstrap servers used by the data ingestor.",
+                            "type": "string",
+                            "format": "uri-reference"
+                        },
+                        "GroupId": {
+                            "description": "The group ID used by the data ingestor.",
+                            "type": "string"
+                        },
+                        "Topic": {
+                            "description": "The topic used by the data ingestor.",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "Type",
+                        "BootstrapServers",
+                        "GroupId",
+                        "Topic"
+                    ]
+                }
+            },
             "type": "array",
+            "description": "The data ingestors used by the data product.",
             "items": {
-                "type": "object",
                 "anyOf": [
                     {
-                        "properties": {
-                            "Type": {
-                                "description": "The type of data ingestor.",
-                                "type": "string",
-                                "enum": [
-                                    "Local"
-                                ]
-                            },
-                            "FilePath": {
-                                "description": "The path to the file to ingest.",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "Type",
-                            "FilePath"
-                        ]
+                        "$ref": "#/definitions/localDataIngestor"
                     },
                     {
-                        "properties": {
-                            "Type": {
-                                "description": "The type of data ingestor.",
-                                "type": "string",
-                                "enum": [
-                                    "Kafka"
-                                ]
-                            },
-                            "BootstrapServers": {
-                                "description": "The bootstrap servers for the Kafka cluster.",
-                                "type": "string",
-                                "format": "uri-reference"
-                            },
-                            "GroupId": {
-                                "description": "The group ID for the Kafka consumer.",
-                                "type": "string"
-                            },
-                            "Topic": {
-                                "description": "The topic to consume from.",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "Type",
-                            "BootstrapServers",
-                            "GroupId",
-                            "Topic"
-                        ]
+                        "$ref": "#/definitions/kafkaDataIngestor"
                     }
                 ]
             }
