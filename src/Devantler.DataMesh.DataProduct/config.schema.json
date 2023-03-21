@@ -153,6 +153,61 @@
                 "ConnectionString"
             ]
         },
+        "Dashboard": {
+            "type": "object",
+            "properties": {
+                "CSPFrameAncestors": {
+                    "type": "array",
+                    "items": {
+                        "description": "A CSP frame-ancestors directive. Must be a valid URL or a wildcard.",
+                        "type": "string",
+                        "pattern": "^(http|https):\/\/\\*\\.[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)$"
+                    }
+                },
+                "EmbeddedServices": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "Name": {
+                                "description": "The name of the embedded service.",
+                                "type": "string"
+                            },
+                            "Url": {
+                                "description": "The URL of the embedded service.",
+                                "type": "string",
+                                "format": "uri"
+                            }
+                        },
+                        "required": [
+                            "Name",
+                            "Url"
+                        ]
+                    }
+                },
+                "Links": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "Name": {
+                                "description": "The name of the link.",
+                                "type": "string"
+                            },
+                            "Url": {
+                                "description": "The URL of the link.",
+                                "type": "string",
+                                "format": "uri"
+                            }
+                        },
+                        "required": [
+                            "Name",
+                            "Url"
+                        ]
+                    }
+                }
+            }
+        },
         "CacheStore": {
             "description": "The cache store used by the data product.",
             "type": "object",
