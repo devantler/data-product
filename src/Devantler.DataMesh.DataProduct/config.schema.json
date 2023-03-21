@@ -166,7 +166,7 @@
                     ]
                 },
                 "Server": {
-                    "description": "The Redis server used by the cache store.",
+                    "description": "The server used by the cache store.",
                     "type": "string"
                 },
                 "ExpirationTime": {
@@ -193,7 +193,7 @@
             "else": {
                 "not": {
                     "properties": {
-                        "RedisServer": {}
+                        "Server": {}
                     }
                 }
             }
