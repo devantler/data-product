@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-        <Content Include="schemas/**" CopyToOutputDirectory="PreserveNewest" />
-    </ItemGroup>
+    <Content Include="assets/**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
 </Project>

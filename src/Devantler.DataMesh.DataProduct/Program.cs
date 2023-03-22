@@ -1,4 +1,4 @@
-using Devantler.DataMesh.DataProduct;
+using Devantler.DataMesh.DataProduct.Extensions;
 using Devantler.DataMesh.DataProduct.Features;
 
 #pragma warning disable CA1852
