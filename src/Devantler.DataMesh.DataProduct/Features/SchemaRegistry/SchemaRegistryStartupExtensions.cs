@@ -22,7 +22,7 @@ public static class SchemaRegistryStartupExtensions
                     return new LocalSchemaRegistryService(
                         opt =>
                         {
-                            opt.Path = "assets/" + options.SchemaRegistry.Url;
+                            opt.Path = options.SchemaRegistry.Url;
                         }
                     );
                 }

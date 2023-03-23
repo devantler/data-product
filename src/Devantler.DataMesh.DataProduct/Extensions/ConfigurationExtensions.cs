@@ -1,4 +1,4 @@
-namespace Devantler.DataMesh.DataProduct;
+namespace Devantler.DataMesh.DataProduct.Extensions;
 
 /// <summary>
 /// Extension methods for <see cref="IConfiguration"/>.

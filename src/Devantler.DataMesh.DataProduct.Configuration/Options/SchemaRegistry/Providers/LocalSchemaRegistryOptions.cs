@@ -9,7 +9,7 @@ public class LocalSchemaRegistryOptions : ISchemaRegistryOptions
     public SchemaRegistryType Type { get; set; } = SchemaRegistryType.Local;
 
     /// <inheritdoc/>
-    public string Url { get; set; } = "schemas";
+    public string Url { get; set; } = "assets/schemas";
 
     /// <inheritdoc/>
     public SchemaOptions Schema { get; set; } = new();

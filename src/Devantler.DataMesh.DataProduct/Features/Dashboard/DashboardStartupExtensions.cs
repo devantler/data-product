@@ -34,6 +34,7 @@ public static class DashboardStartupExtensions
     /// Configures the web application to use the dashboard feature.
     /// </summary>
     /// <param name="app"></param>
+    /// <param name="options"></param>
     public static WebApplication UseDashboard(this WebApplication app, DataProductOptions options)
     {
         if (!app.Environment.IsDevelopment())
