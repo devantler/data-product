@@ -1,6 +1,6 @@
 using Chr.Avro.Abstract;
 
-namespace Devantler.DataMesh.SchemaRegistry;
+namespace Devantler.DataMesh.SchemaRegistryClient;
 
 /// <summary>
 /// An interface for scheme registry services.

@@ -7,7 +7,7 @@
         <Nullable>enable</Nullable>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageId>Devantler.DataMesh.SchemaRegistry</PackageId>
+        <PackageId>Devantler.DataMesh.SchemaRegistryClient</PackageId>
         <Version>0.1.59</Version>
         <Authors>devantler</Authors>
         <Company>Devantler Software</Company>

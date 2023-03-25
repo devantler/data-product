@@ -34,7 +34,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Devantler.DataMesh.DataProduct.Generator\Devantler.DataMesh.DataProduct.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-        <ProjectReference Include="..\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj" />
+        <ProjectReference Include="..\Devantler.DataMesh.SchemaRegistryClient\Devantler.DataMesh.SchemaRegistryClient.csproj" />
         <ProjectReference Include="../Devantler.DataMesh.DataProduct.Configuration/Devantler.DataMesh.DataProduct.Configuration.csproj" />
     </ItemGroup>
     <ItemGroup>

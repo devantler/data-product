@@ -1,8 +1,8 @@
 using Chr.Avro.Representation;
 using Confluent.SchemaRegistry;
-using Devantler.DataMesh.SchemaRegistry.Models;
+using Devantler.DataMesh.SchemaRegistryClient.Models;
 
-namespace Devantler.DataMesh.SchemaRegistry;
+namespace Devantler.DataMesh.SchemaRegistryClient;
 
 /// <summary>
 /// A Kafka schema registry service.

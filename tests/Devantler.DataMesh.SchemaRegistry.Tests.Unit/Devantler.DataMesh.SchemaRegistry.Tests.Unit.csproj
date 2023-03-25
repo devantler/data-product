@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Devantler.DataMesh.SchemaRegistry\Devantler.DataMesh.SchemaRegistry.csproj" />
+    <ProjectReference Include="..\..\src\Devantler.DataMesh.SchemaRegistryClient\Devantler.DataMesh.SchemaRegistryClient.csproj" />
   </ItemGroup>
 
   <ItemGroup>
