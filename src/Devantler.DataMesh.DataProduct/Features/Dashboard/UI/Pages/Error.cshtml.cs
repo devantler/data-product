@@ -21,8 +21,9 @@ public class ErrorModel : PageModel
     /// </summary>
     public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
+#pragma warning disable IDE0052 // Remove unread private members
     readonly ILogger<ErrorModel> _logger;
-
+#pragma warning restore IDE0052 // Remove unread private members
     /// <summary>
     /// Initializes a new instance of the <see cref="ErrorModel"/> class.
     /// </summary>

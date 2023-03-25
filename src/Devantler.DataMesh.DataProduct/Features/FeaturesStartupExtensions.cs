@@ -5,10 +5,10 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Features.Apis;
 using Devantler.DataMesh.DataProduct.Features.Caching;
 using Devantler.DataMesh.DataProduct.Features.Dashboard;
+using Devantler.DataMesh.DataProduct.Features.DataCatalog;
 using Devantler.DataMesh.DataProduct.Features.DataEgestion;
 using Devantler.DataMesh.DataProduct.Features.DataIngestion;
 using Devantler.DataMesh.DataProduct.Features.DataStore;
-using Devantler.DataMesh.DataProduct.Features.Metadata;
 using Devantler.DataMesh.DataProduct.Features.Metrics;
 using Devantler.DataMesh.DataProduct.Features.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Features.Tracing;
@@ -70,7 +70,7 @@ public static class FeaturesStartupExtensions
             _ = builder.Services.AddDataEgestion();
 
         if (options.FeatureFlags.EnableMetadata)
-            _ = builder.Services.AddMetadata();
+            _ = builder.Services.AddDataCatalog();
 
         if (options.FeatureFlags.EnableMetrics)
             _ = builder.Services.AddMetrics();
@@ -102,7 +102,7 @@ public static class FeaturesStartupExtensions
             _ = app.UseAuthorization();
 
         if (options.FeatureFlags.EnableMetadata)
-            _ = app.UseMetadata();
+            _ = app.UseDataCatalog();
 
         if (options.FeatureFlags.EnableMetrics)
             _ = app.UseMetrics();

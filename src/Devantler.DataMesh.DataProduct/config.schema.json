@@ -92,8 +92,8 @@
                     "description": "Whether to enable data publication for the data product. Data Publication Target must be configured for this feature to take effect.",
                     "type": "boolean"
                 },
-                "EnableMetadata": {
-                    "description": "Whether to enable metadata publication for the data product. Metadata Publication Target must be configured for this feature to take effect.",
+                "EnableDataCatalog": {
+                    "description": "Whether to enable a data catalog integration for the data product. A data catalog must be configured for this feature to take effect.",
                     "type": "boolean"
                 },
                 "EnableTracing": {

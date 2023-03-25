@@ -21,7 +21,7 @@ FeatureFlags:
   EnableCaching: true
   EnableDataIngestion: true
   EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
-  EnableMetadata: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
+  EnableDataCatalog: false # TODO: #142 Enable feature gated metadata publication with LinkedIn DataHub
   EnableTracing: false # TODO: #141 Enable feature gated tracing with OpenTelemetry and Jaeger
   EnableMetrics: false # TODO: #140 Enable feature gated metrics with Prometheus and Grafana
   EnableAuthentication: false # TODO: #138 Enable feature gated authentication with Duende IdentityServer and OpenID Connect
