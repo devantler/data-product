@@ -3,6 +3,7 @@ using Chr.Avro.Representation;
 using Devantler.Commons.CodeGen.Core;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Extensions;
 using Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Helpers;
 using Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models;
@@ -51,19 +52,41 @@ public class DataHubDataCatalogService : BackgroundService
 
     void AddLinks(string urn, Metadata metadata)
     {
+        var links = new List<InstitutionalMemoryMetadata>();
+
+        if (_options.FeatureFlags.EnableDashboard)
+        {
+            links.Add(new InstitutionalMemoryMetadata
+            {
+                Url = _options.PublicUrl,
+                Description = $"Dashboard"
+            });
+        }
+
+        if (_options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest))
+        {
+            links.Add(new InstitutionalMemoryMetadata
+            {
+                Url = _options.PublicUrl + "/swagger",
+                Description = $"Rest API"
+            });
+        }
+
+        if (_options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
+        {
+            links.Add(new InstitutionalMemoryMetadata
+            {
+                Url = _options.PublicUrl + "/graphql",
+                Description = $"GraphQL API"
+            });
+        }
+
         metadata.Entities.Add(new DatasetEntity
         {
             EntityUrn = urn,
             Aspect = new InstitutionalMemoryAspect
             {
-                Elements = new List<InstitutionalMemoryMetadata>
-                {
-                    new()
-                    {
-                        Url = _options.PublicUrl,
-                        Description = $"The {_options.Name}'s dashboard."
-                    }
-                }
+                Elements = links
             }
         });
     }

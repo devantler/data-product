@@ -53,11 +53,11 @@ public static class DashboardStartupExtensions
         _ = app.MapBlazorHub();
         _ = app.MapFallbackToPage("/_Host");
 
-        _ = app.Use((context, next) =>
+        _ = app.Use(async (context, next) =>
         {
             context.Response.Headers.Add("Content-Security-Policy", $"frame-ancestors 'self' {string.Join(" ", options.Dashboard.CSPFrameAncestors)} {string.Join(" ", options.Dashboard.EmbeddedServices.Select(x => x.Url))}");
 
-            return next();
+            await next();
         });
         return app;
     }
