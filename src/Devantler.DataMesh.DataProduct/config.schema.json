@@ -162,7 +162,7 @@
                     "items": {
                         "description": "A CSP frame-ancestors directive. Must be a valid URL or a wildcard.",
                         "type": "string",
-                        "pattern": "^(http|https):\/\/\\*\\.[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)$"
+                        "pattern": "^(http|https):[a-zA-Z0-9-.*]+(\\.[a-zA-Z0-9-]+)$"
                     }
                 },
                 "EmbeddedServices": {
