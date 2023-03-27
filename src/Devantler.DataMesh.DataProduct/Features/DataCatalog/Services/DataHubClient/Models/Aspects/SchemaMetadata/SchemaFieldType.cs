@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Schemas;
+namespace Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Aspects.SchemaMetadata;
 
 /// <summary>
 /// A model that represents a field type in a schema.

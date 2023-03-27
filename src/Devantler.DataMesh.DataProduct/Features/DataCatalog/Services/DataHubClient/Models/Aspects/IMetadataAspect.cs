@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Aspects.SchemaMetadata;
 
 namespace Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Aspects;
 
@@ -7,6 +8,7 @@ namespace Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubCl
 /// </summary>
 [JsonDerivedType(typeof(SchemaMetadataAspect))]
 [JsonDerivedType(typeof(DatasetPropertiesAspect))]
+[JsonDerivedType(typeof(InstitutionalMemoryAspect))]
 public interface IMetadataAspect
 {
     /// <summary>

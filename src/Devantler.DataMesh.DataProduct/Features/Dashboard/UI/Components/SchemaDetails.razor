@@ -9,8 +9,8 @@
             @foreach (var field in Schema.Fields)
             {
                 <div>
-                    <p><strong>@field.Name</strong> - @field.Type.ToString().Replace("Schema", "")</p>
-                    <p>@field.Documentation</p>
+                    <p><strong>@field.Name</strong> - @field.Type.ToString().Replace("Schema", "") -
+                        <em>@field.Documentation</em></p>
                 </div>
             }
         </CardText>

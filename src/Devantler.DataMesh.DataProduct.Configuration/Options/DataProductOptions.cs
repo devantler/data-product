@@ -32,6 +32,11 @@ public class DataProductOptions
     public string Version { get; set; } = string.Empty;
 
     /// <summary>
+    /// The public URL of the data product.
+    /// </summary>
+    public string PublicUrl { get; set; } = string.Empty;
+
+    /// <summary>
     /// Options for the license used by the data product.
     /// </summary>
     public LicenseOptions License { get; set; } = new();

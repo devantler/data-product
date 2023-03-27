@@ -36,7 +36,8 @@
                 {
                     <ListGroupItem>
                         <ServiceDetails Name="@Options.Value.DataCatalog.Type.ToString()" Type="Data Catalog"
-                        Description="The Data Catalog in use by the data product." />
+                        Description="The Data Catalog in use by the data product." 
+                        SubDescriptions=@(new List<string>() { $"Url: {Options.Value.DataCatalog.Url}" })/>
                     </ListGroupItem>
                 }
 

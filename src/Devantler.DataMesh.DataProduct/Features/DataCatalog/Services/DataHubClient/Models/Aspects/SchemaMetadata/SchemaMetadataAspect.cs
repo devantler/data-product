@@ -1,8 +1,7 @@
 using System.Text.Json.Serialization;
-using Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Schemas;
-using Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Schemas.PlatformSchemas;
+using Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Aspects.SchemaMetadata.PlatformSchemas;
 
-namespace Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Aspects;
+namespace Devantler.DataMesh.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Aspects.SchemaMetadata;
 
 /// <summary>
 /// A model that represents the schema metadata aspect in the DataHub metadata model.
@@ -31,7 +30,7 @@ public class SchemaMetadataAspect : IMetadataAspect
     /// <summary>
     /// The platforms schema.
     /// </summary>
-    public PlatformTableSchema PlatformSchema { get; set; } = new PlatformTableSchema();
+    public required IPlatformSchema PlatformSchema { get; set; }
 
     /// <summary>
     /// The hash of the schema.
