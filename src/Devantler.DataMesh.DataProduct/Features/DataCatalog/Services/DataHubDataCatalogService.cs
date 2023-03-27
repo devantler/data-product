@@ -98,7 +98,7 @@ public class DataHubDataCatalogService : BackgroundService
             EntityUrn = urn,
             Aspect = new DatasetPropertiesAspect
             {
-                Description = _options.Description
+                Description = _options.Description + Environment.NewLine + Environment.NewLine + "**Warning!** Metadata for this data product is published automatically. Any changes made to the metadata will likely be overwritten."
             }
         });
     }
