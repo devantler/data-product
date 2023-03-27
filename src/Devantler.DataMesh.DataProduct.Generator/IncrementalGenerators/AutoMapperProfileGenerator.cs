@@ -29,8 +29,8 @@ public class AutoMapperProfileGenerator : GeneratorBase
         DataProductOptions options
     )
     {
-        var schemaRegistryService = options.SchemaRegistry.CreateSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.SchemaRegistry.Schema.Subject, options.SchemaRegistry.Schema.Version);
+        var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
+        var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject, options.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 

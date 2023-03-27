@@ -423,11 +423,16 @@
                     "description": "The URL of the data catalog.",
                     "type": "string",
                     "format": "uri"
+                },
+                "AccessToken": {
+                    "description": "The access token used to authenticate with the data catalog.",
+                    "type": "string"
                 }
             },
             "required": [
                 "Type",
-                "Url"
+                "Url",
+                "AccessToken"
             ]
         }
     }

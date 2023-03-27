@@ -16,10 +16,10 @@ public static class SchemaRegistryStartupExtensions
     {
         _ = options.SchemaRegistry.Type switch
         {
-            SchemaRegistryType.Local => services.AddScoped<ISchemaRegistryService, LocalSchemaRegistryService>(
+            SchemaRegistryType.Local => services.AddScoped<ISchemaRegistryClient, LocalSchemaRegistryClient>(
                 service =>
                 {
-                    return new LocalSchemaRegistryService(
+                    return new LocalSchemaRegistryClient(
                         opt =>
                         {
                             opt.Path = options.SchemaRegistry.Url;
@@ -27,10 +27,10 @@ public static class SchemaRegistryStartupExtensions
                     );
                 }
             ),
-            SchemaRegistryType.Kafka => services.AddScoped<ISchemaRegistryService, KafkaSchemaRegistryService>(
+            SchemaRegistryType.Kafka => services.AddScoped<ISchemaRegistryClient, KafkaSchemaRegistryClient>(
                 service =>
                 {
-                    return new KafkaSchemaRegistryService(
+                    return new KafkaSchemaRegistryClient(
                         opt =>
                         {
                             opt.Url = options.SchemaRegistry.Url;

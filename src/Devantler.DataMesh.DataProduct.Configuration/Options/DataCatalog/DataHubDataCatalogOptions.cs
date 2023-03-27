@@ -3,8 +3,8 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataCatalog;
 /// <summary>
 /// LinkedIn DataHub Data Catalog Options
 /// </summary>
-public class DataHubDataCatalogOptions : IDataCatalogOptions
+public class DataHubDataCatalogOptions : DataCatalogOptions
 {
     /// <inheritdoc />
-    public DataCatalogType Type { get; set; } = DataCatalogType.DataHub;
+    public override DataCatalogType Type { get; set; } = DataCatalogType.DataHub;
 }

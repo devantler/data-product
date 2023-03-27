@@ -3,14 +3,11 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Pr
 /// <summary>
 /// Options to configure a local schema registry used by the data product.
 /// </summary>
-public class LocalSchemaRegistryOptions : ISchemaRegistryOptions
+public class LocalSchemaRegistryOptions : SchemaRegistryOptions
 {
     /// <inheritdoc/>
-    public SchemaRegistryType Type { get; set; } = SchemaRegistryType.Local;
+    public override SchemaRegistryType Type { get; set; } = SchemaRegistryType.Local;
 
     /// <inheritdoc/>
-    public string Url { get; set; } = "assets/schemas";
-
-    /// <inheritdoc/>
-    public SchemaOptions Schema { get; set; } = new();
+    public override string Url { get; set; } = "assets/schemas";
 }

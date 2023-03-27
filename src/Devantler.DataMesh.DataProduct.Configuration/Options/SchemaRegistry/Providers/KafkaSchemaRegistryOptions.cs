@@ -3,14 +3,11 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Pr
 /// <summary>
 /// Options to configure a Kafka schema registry used by the data product.
 /// </summary>
-public class KafkaSchemaRegistryOptions : ISchemaRegistryOptions
+public class KafkaSchemaRegistryOptions : SchemaRegistryOptions
 {
     /// <inheritdoc/>
-    public SchemaRegistryType Type { get; set; } = SchemaRegistryType.Kafka;
+    public override SchemaRegistryType Type { get; set; } = SchemaRegistryType.Kafka;
 
     /// <inheritdoc/>
-    public string Url { get; set; } = string.Empty;
-
-    /// <Inheritdoc/>
-    public SchemaOptions Schema { get; set; } = new();
+    public override string Url { get; set; } = string.Empty;
 }

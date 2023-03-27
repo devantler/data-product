@@ -3,7 +3,7 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 /// <summary>
 /// Options to configure a data ingestor for the data product.
 /// </summary>
-public interface IDataIngestorOptions
+public class DataIngestorOptions
 {
     /// <summary>
     /// The key for the data ingestor options.
@@ -13,5 +13,5 @@ public interface IDataIngestorOptions
     /// <summary>
     /// The data ingestor type to use.
     /// </summary>
-    public DataIngestorType Type { get; set; }
+    public virtual DataIngestorType Type { get; set; }
 }

@@ -35,15 +35,15 @@ public static class ConfigurationExtensions
     {
         dataProductOptions.SchemaRegistry = dataProductOptions.SchemaRegistry.Type switch
         {
-            SchemaRegistryType.Kafka => configuration.GetSection(ISchemaRegistryOptions.Key)
+            SchemaRegistryType.Kafka => configuration.GetSection(SchemaRegistryOptions.Key)
                 .Get<KafkaSchemaRegistryOptions>()
                     ?? throw new InvalidOperationException(
-                        $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(KafkaSchemaRegistryOptions).FullName}'."
+                        $"Failed to bind configuration section '{SchemaRegistryOptions.Key}' to the type '{typeof(KafkaSchemaRegistryOptions).FullName}'."
                     ),
-            SchemaRegistryType.Local => configuration.GetSection(ISchemaRegistryOptions.Key)
+            SchemaRegistryType.Local => configuration.GetSection(SchemaRegistryOptions.Key)
                 .Get<LocalSchemaRegistryOptions>()
                     ?? throw new InvalidOperationException(
-                        $"Failed to bind configuration section '{ISchemaRegistryOptions.Key}' to the type '{typeof(LocalSchemaRegistryOptions).FullName}'."
+                        $"Failed to bind configuration section '{SchemaRegistryOptions.Key}' to the type '{typeof(LocalSchemaRegistryOptions).FullName}'."
                     ),
             _ => throw new NotSupportedException($"Schema registry type '{dataProductOptions.SchemaRegistry.Type}' is not supported.")
         };
@@ -55,15 +55,15 @@ public static class ConfigurationExtensions
         {
             dataProductOptions.CacheStore = dataProductOptions.CacheStore.Type switch
             {
-                CacheStoreType.InMemory => configuration.GetSection(ICacheStoreOptions.Key)
+                CacheStoreType.InMemory => configuration.GetSection(CacheStoreOptions.Key)
                     .Get<InMemoryCacheStoreOptions>()
                         ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{ICacheStoreOptions.Key}' to the type '{typeof(InMemoryCacheStoreOptions).FullName}'."
+                            $"Failed to bind configuration section '{CacheStoreOptions.Key}' to the type '{typeof(InMemoryCacheStoreOptions).FullName}'."
                         ),
-                CacheStoreType.Redis => configuration.GetSection(ICacheStoreOptions.Key)
+                CacheStoreType.Redis => configuration.GetSection(CacheStoreOptions.Key)
                     .Get<RedisCacheStoreOptions>()
                         ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{ICacheStoreOptions.Key}' to the type '{typeof(RedisCacheStoreOptions).FullName}'."
+                            $"Failed to bind configuration section '{CacheStoreOptions.Key}' to the type '{typeof(RedisCacheStoreOptions).FullName}'."
                         ),
                 _ => throw new NotSupportedException($"Cache store type '{dataProductOptions.CacheStore.Type}' is not supported.")
             };
@@ -74,8 +74,8 @@ public static class ConfigurationExtensions
     {
         if (dataProductOptions.FeatureFlags.EnableDataIngestion)
         {
-            var dataIngestors = new List<IDataIngestorOptions>();
-            var localDataIngestorOptions = configuration.GetSection(IDataIngestorOptions.Key)
+            var dataIngestors = new List<DataIngestorOptions>();
+            var localDataIngestorOptions = configuration.GetSection(DataIngestorOptions.Key)
                 .Get<List<LocalDataIngestorOptions>>()
                 .Where(x => x.Type == DataIngestorType.Local);
 
@@ -84,7 +84,7 @@ public static class ConfigurationExtensions
             );
 
             dataIngestors.AddRange(
-                configuration.GetSection(IDataIngestorOptions.Key)
+                configuration.GetSection(DataIngestorOptions.Key)
                     .Get<List<KafkaDataIngestorOptions>>()
                     .Where(x => x.Type == DataIngestorType.Kafka)
             );
@@ -97,14 +97,14 @@ public static class ConfigurationExtensions
         if (dataProductOptions.FeatureFlags.EnableDataCatalog)
         {
             if (dataProductOptions.DataCatalog == null)
-                throw new InvalidOperationException($"The configuration section '{IDataCatalogOptions.Key}' is invalid or missing.");
+                throw new InvalidOperationException($"The configuration section '{DataCatalogOptions.Key}' is invalid or missing.");
 
             dataProductOptions.DataCatalog = dataProductOptions.DataCatalog.Type switch
             {
-                DataCatalogType.DataHub => configuration.GetSection(IDataCatalogOptions.Key)
+                DataCatalogType.DataHub => configuration.GetSection(DataCatalogOptions.Key)
                     .Get<DataHubDataCatalogOptions>()
                         ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{IDataCatalogOptions.Key}' to the type '{typeof(DataHubDataCatalogOptions).FullName}'."
+                            $"Failed to bind configuration section '{DataCatalogOptions.Key}' to the type '{typeof(DataHubDataCatalogOptions).FullName}'."
                         ),
                 _ => throw new NotSupportedException($"Data catalog type '{dataProductOptions.DataCatalog.Type}' is not supported.")
             };

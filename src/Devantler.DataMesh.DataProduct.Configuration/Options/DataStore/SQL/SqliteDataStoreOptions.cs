@@ -3,14 +3,14 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
 /// <summary>
 /// Options to configure a Sqlite data store.
 /// </summary>
-public class SqliteDataStoreOptions : IDataStoreOptions
+public class SqliteDataStoreOptions : DataStoreOptions
 {
     /// <inheritdoc/>
-    public DataStoreType Type { get; set; } = DataStoreType.SQL;
+    public override DataStoreType Type { get; set; } = DataStoreType.SQL;
 
     /// <inheritdoc/>
-    public string ConnectionString { get; set; } = "Data Source=sqlite.db";
+    public override string ConnectionString { get; set; } = "Data Source=sqlite.db";
 
     /// <inheritdoc/>
-    public string Provider { get; set; } = SQLDataStoreProvider.Sqlite;
+    public override string Provider { get; set; } = SQLDataStoreProvider.Sqlite;
 }

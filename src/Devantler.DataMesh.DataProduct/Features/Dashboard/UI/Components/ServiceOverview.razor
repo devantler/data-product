@@ -13,7 +13,7 @@
         <CardText>
             <ListGroup Flush>
                 <ListGroupItem>
-                    <ServiceDetails Name="@Options.Value.DataStore.Provider.ToString()"
+                    <ServiceDetails Name="@Options.Value.DataStore.Provider"
                         Type=@($"Data Store - {Options.Value.DataStore.Type.ToString()}")
                         Description="The Data Store in use by the data product." />
                 </ListGroupItem>
@@ -29,6 +29,14 @@
                     <ListGroupItem>
                         <ServiceDetails Name="@Options.Value.CacheStore.Type.ToString()" Type="Cache Store"
                         Description="The Cache Store in use by the data product." />
+                    </ListGroupItem>
+                }
+
+                @if(Options.Value.FeatureFlags.EnableDataCatalog && Options.Value.DataCatalog != null)
+                {
+                    <ListGroupItem>
+                        <ServiceDetails Name="@Options.Value.DataCatalog.Type.ToString()" Type="Data Catalog"
+                        Description="The Data Catalog in use by the data product." />
                     </ListGroupItem>
                 }
 

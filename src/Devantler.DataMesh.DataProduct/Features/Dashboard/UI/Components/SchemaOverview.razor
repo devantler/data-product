@@ -5,7 +5,7 @@
 @using Chr.Avro.Abstract;
 
 @inject IOptions<DataProductOptions> Options
-@inject ISchemaRegistryService SchemaRegistryService
+@inject ISchemaRegistryClient SchemaRegistryClient
 
 <Card Background="Background.Light" Margin=Margin.Is4.FromBottom>
     <CardBody>
@@ -33,7 +33,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var rootSchema = await SchemaRegistryService.GetSchemaAsync(Options.Value.SchemaRegistry.Schema.Subject,
+        var rootSchema = await SchemaRegistryClient.GetSchemaAsync(Options.Value.SchemaRegistry.Schema.Subject,
         Options.Value.SchemaRegistry.Schema.Version);
         var schemas = rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>();
         _schemas = schemas.ToList();

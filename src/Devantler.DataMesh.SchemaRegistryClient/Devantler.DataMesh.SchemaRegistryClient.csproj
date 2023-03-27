@@ -8,15 +8,15 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageId>Devantler.DataMesh.SchemaRegistryClient</PackageId>
-        <Version>0.1.59</Version>
+        <Version>0.1.60</Version>
         <Authors>devantler</Authors>
         <Company>Devantler Software</Company>
-        <PackageDescription>Services to interact with different schema registries.</PackageDescription>
+        <PackageDescription>Clients to interact with different schema registries.</PackageDescription>
         <RepositoryUrl>https://github.com/devantler/data-mesh</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.59" />
+        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.60" />
         <PackageReference Include="Confluent.SchemaRegistry" Version="2.0.2" />
         <PackageReference Include="Chr.Avro" Version="9.4.1" />
         <PackageReference Include="Chr.Avro.Json" Version="9.4.1" />

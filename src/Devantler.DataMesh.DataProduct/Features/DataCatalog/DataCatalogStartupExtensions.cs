@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataMesh.DataProduct.Features.DataCatalog.Services;
@@ -14,11 +15,19 @@ public static class DataCatalogStartupExtensions
     /// </summary>
     public static IServiceCollection AddDataCatalog(this IServiceCollection services, DataProductOptions options)
     {
-        _ = options.DataCatalog?.Type switch
+        switch (options.DataCatalog?.Type)
         {
-            DataCatalogType.DataHub => services.AddHttpClient<IDataCatalogService, DataHubDataCatalogService>(),
-            _ => throw new NotSupportedException($"The data catalog type '{options.DataCatalog?.Type}' is not supported.")
-        };
+            case DataCatalogType.DataHub:
+                _ = services.AddHttpClient<Services.DataHubClient.Client>(client =>
+                {
+                    client.BaseAddress = new Uri(options.DataCatalog.Url);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", options.DataCatalog.AccessToken);
+                });
+                _ = services.AddHostedService<DataHubDataCatalogService>();
+                break;
+            default:
+                throw new NotSupportedException($"The data catalog type '{options.DataCatalog?.Type}' is not supported.");
+        }
         return services;
     }
 

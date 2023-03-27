@@ -40,14 +40,7 @@ public interface IController<TKey, TSchema> where TSchema : class, Schemas.ISche
     /// <param name="limit">20 by default</param>
     /// <param name="offset">0 by default</param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TSchema>>> GetByOffset(int limit = 20, int offset = 0, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Creates an entity.
-    /// </summary>
-    /// <param name="schema"></param>
-    /// <param name="cancellationToken"></param>
-    Task<ActionResult<TSchema>> PostAsync(TSchema schema, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> GetByOffset(int offset = 0, int limit = 20, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates multiple entities.
@@ -55,13 +48,6 @@ public interface IController<TKey, TSchema> where TSchema : class, Schemas.ISche
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
     Task<ActionResult<int>> PostAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Updates an entity.
-    /// </summary>
-    /// <param name="schema"></param>
-    /// <param name="cancellationToken"></param>
-    Task<ActionResult<TSchema>> PutAsync(TSchema schema, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates multiple entities.

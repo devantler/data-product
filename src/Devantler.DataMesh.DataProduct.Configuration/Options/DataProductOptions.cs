@@ -59,25 +59,25 @@ public class DataProductOptions
     /// <summary>
     /// Options for the schema registry used by the data product.
     /// </summary>
-    public ISchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
+    public SchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
 
     /// <summary>
     /// Options for the data store.
     /// </summary>
-    public IDataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
+    public DataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
 
     /// <summary>
     /// Options for the cache store.
     /// </summary>
-    public ICacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
+    public CacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
 
     /// <summary>
     /// Options for the data ingestors.
     /// </summary>
-    public List<IDataIngestorOptions> DataIngestors { get; set; } = new();
+    public List<DataIngestorOptions> DataIngestors { get; set; } = new();
 
     /// <summary>
     /// Options for the data catalog.
     /// </summary>
-    public IDataCatalogOptions? DataCatalog { get; set; }
+    public DataCatalogOptions? DataCatalog { get; set; }
 }

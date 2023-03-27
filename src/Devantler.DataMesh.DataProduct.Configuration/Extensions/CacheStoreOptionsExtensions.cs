@@ -3,7 +3,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 namespace Devantler.DataMesh.DataProduct.Configuration.Extensions;
 
 /// <summary>
-/// Extensions for <see cref="ICacheStoreOptions"/>.
+/// Extensions for <see cref="CacheStoreOptions"/>.
 /// </summary>
 public static class CacheStoreOptionsExtensions
 {

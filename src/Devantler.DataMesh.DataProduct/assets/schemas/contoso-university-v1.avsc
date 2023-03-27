@@ -1,40 +1,50 @@
 {
     "name": "Student",
+    "doc": "A student at the Contoso University.",
     "type": "record",
     "fields": [
         {
             "name": "Id",
+            "doc": "The ID of the student.",
             "type": "int"
         },
         {
             "name": "FirstMidName",
+            "doc": "The first and middle name of the student.",
             "type": "string"
         },
         {
             "name": "LastName",
+            "doc": "The last name of the student.",
             "type": "string"
         },
         {
             "name": "EnrollmentDate",
+            "doc": "The date the student enrolled at the university.",
             "type": "string"
         },
         {
             "name": "Enrollments",
+            "doc": "The courses the student is enrolled in.",
             "type": {
                 "type": "array",
                 "items": {
                     "name": "Enrollment",
+                    "doc": "A course the student is enrolled in.",
                     "type": "record",
                     "fields": [
                         {
                             "name": "Id",
+                            "doc": "The ID of the enrollment.",
                             "type": "int"
                         },
                         {
                             "name": "Grade",
+                            "doc": "The grade the student received in the course.",
                             "type": {
-                                "type": "enum",
                                 "name": "Grade",
+                                "doc": "The possible grades.",
+                                "type": "enum",
                                 "symbols": [
                                     "A",
                                     "B",
@@ -46,20 +56,25 @@
                         },
                         {
                             "name": "Course",
+                            "doc": "The course the student is enrolled in.",
                             "type": {
                                 "name": "Course",
+                                "doc": "A course at the university.",
                                 "type": "record",
                                 "fields": [
                                     {
                                         "name": "Id",
+                                        "doc": "The ID of the course.",
                                         "type": "int"
                                     },
                                     {
                                         "name": "Title",
+                                        "doc": "The title of the course.",
                                         "type": "string"
                                     },
                                     {
                                         "name": "Credits",
+                                        "doc": "The number of credits the course is worth.",
                                         "type": "int"
                                     }
                                 ]

@@ -30,7 +30,7 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
     }
 
     /// <inheritdoc />
-    [HttpGet("bulk")]
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<TSchema>>> GetByIds([FromQuery] List<TKey> ids,
         CancellationToken cancellationToken = default)
     {
@@ -39,16 +39,16 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
     }
 
     /// <inheritdoc />
-    [HttpGet("page")]
-    public async Task<ActionResult<IEnumerable<TSchema>>> GetPageAsync([FromQuery] int page = 1, [FromQuery] int pageSize = 10, CancellationToken cancellationToken = default)
+    [HttpGet("page/{page}/pageSize/{pageSize}")]
+    public async Task<ActionResult<IEnumerable<TSchema>>> GetPageAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleWithPaginationAsync(page, pageSize, cancellationToken);
         return Ok(result);
     }
 
     /// <inheritdoc />
-    [HttpGet("offset")]
-    public async Task<ActionResult<IEnumerable<TSchema>>> GetByOffset([FromQuery] int limit = 20, [FromQuery] int offset = 0, CancellationToken cancellationToken = default)
+    [HttpGet("offset/{offset}/limit/{limit}")]
+    public async Task<ActionResult<IEnumerable<TSchema>>> GetByOffset(int offset = 0, int limit = 20, CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.GetMultipleWithLimitAsync(limit, offset, cancellationToken);
         return Ok(result);
@@ -56,14 +56,6 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
 
     /// <inheritdoc />
     [HttpPost]
-    public async Task<ActionResult<TSchema>> PostAsync([FromBody] TSchema schema, CancellationToken cancellationToken = default)
-    {
-        var result = await _dataStoreService.CreateSingleAsync(schema, cancellationToken);
-        return Ok(result);
-    }
-
-    /// <inheritdoc />
-    [HttpPost("bulk")]
     public async Task<ActionResult<int>> PostAsync([FromBody] IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
     {
@@ -73,14 +65,6 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
 
     /// <inheritdoc />
     [HttpPut]
-    public async Task<ActionResult<TSchema>> PutAsync(TSchema schema, CancellationToken cancellationToken = default)
-    {
-        var result = await _dataStoreService.UpdateSingleAsync(schema, cancellationToken);
-        return Ok(result);
-    }
-
-    /// <inheritdoc />
-    [HttpPut("bulk")]
     public async Task<ActionResult<int>> PutAsync(IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
     {
@@ -97,7 +81,7 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
     }
 
     /// <inheritdoc />
-    [HttpDelete("bulk")]
+    [HttpDelete]
     public async Task<ActionResult<IEnumerable<TSchema>>> DeleteAsync([FromQuery] List<TKey> ids,
         CancellationToken cancellationToken = default)
     {

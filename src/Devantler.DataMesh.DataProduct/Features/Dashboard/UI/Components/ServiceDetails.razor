@@ -10,15 +10,27 @@
 }
 
 @code {
+    /// <summary>
+    /// The name of the Service.
+    /// </summary>
     [Parameter]
     public string Name { get; set; } = string.Empty;
 
+    /// <summary>
+    /// The type of the Service.
+    /// </summary>
     [Parameter]
     public string Type { get; set; } = string.Empty;
 
+    /// <summary>
+    /// A description of the Service.
+    /// </summary>
     [Parameter]
     public string Description { get; set; } = string.Empty;
 
+    /// <summary>
+    /// A list of sub descriptions for the Service.
+    /// </summary>
     [Parameter]
     public List<string> SubDescriptions { get; set; } = new();
 }

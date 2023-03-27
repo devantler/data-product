@@ -3,9 +3,9 @@ using Chr.Avro.Abstract;
 namespace Devantler.DataMesh.SchemaRegistryClient;
 
 /// <summary>
-/// An interface for scheme registry services.
+/// An interface for scheme registry clients.
 /// </summary>
-public interface ISchemaRegistryService
+public interface ISchemaRegistryClient
 {
     /// <summary>
     /// Retrieves a schema from a schema registry.
