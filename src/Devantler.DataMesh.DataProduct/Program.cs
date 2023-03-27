@@ -5,7 +5,7 @@ using Devantler.DataMesh.DataProduct.Features;
 
 var webApplicationOptions = new WebApplicationOptions
 {
-    WebRootPath = "Features/Dashboard/UI/wwwroot"
+    WebRootPath = "Features/Dashboard/UI"
 };
 var builder = WebApplication.CreateBuilder(webApplicationOptions);
 _ = builder.Configuration.AddDataProductConfiguration(builder.Environment, args);
