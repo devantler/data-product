@@ -5,26 +5,26 @@ using Devantler.DataMesh.SchemaRegistryClient.Models;
 namespace Devantler.DataMesh.SchemaRegistryClient;
 
 /// <summary>
-/// A Kafka schema registry service.
+/// A Kafka schema registry client.
 /// </summary>
-public class KafkaSchemaRegistryService : ISchemaRegistryService
+public class KafkaSchemaRegistryClient : ISchemaRegistryClient
 {
     readonly KafkaSchemaRegistryOptions _options;
 
     /// <summary>
-    /// A constructor to construct a kafka schema registry service.
+    /// A constructor to construct a kafka schema registry client.
     /// </summary>
     /// <param name="options"></param>
-    public KafkaSchemaRegistryService(Action<KafkaSchemaRegistryOptions> options)
+    public KafkaSchemaRegistryClient(Action<KafkaSchemaRegistryOptions> options)
     {
         _options = new KafkaSchemaRegistryOptions();
         options(_options);
     }
 
     /// <summary>
-    /// A constructor to construct a kafka schema registry service.
+    /// A constructor to construct a kafka schema registry client.
     /// </summary>
-    public KafkaSchemaRegistryService(KafkaSchemaRegistryOptions options)
+    public KafkaSchemaRegistryClient(KafkaSchemaRegistryOptions options)
         => _options = options;
 
     /// <inheritdoc/>

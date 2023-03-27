@@ -66,9 +66,9 @@
                 </ListGroupItem>
 
                 <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableMetadata ? Color.Success : Color.Warning)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableMetadata).Replace("Enable", "")} (Not supported yet)")
-                        IsEnabled=Options.Value.FeatureFlags.EnableMetadata />
+                    Color="@(Options.Value.FeatureFlags.EnableDataCatalog ? Color.Success : Color.Danger)">
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableDataCatalog).Replace("Enable", "")}")
+                        IsEnabled=Options.Value.FeatureFlags.EnableDataCatalog />
                 </ListGroupItem>
 
                 <ListGroupItem

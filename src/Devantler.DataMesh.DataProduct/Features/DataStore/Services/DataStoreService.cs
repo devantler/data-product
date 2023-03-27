@@ -35,6 +35,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         _options = serviceProvider.GetRequiredService<IOptions<DataProductOptions>>().Value;
         if (_options.FeatureFlags.EnableCaching)
             _cacheStore = serviceProvider.GetRequiredService<ICacheStoreService<TEntity>>();
+
         _repository = repository;
         _mapper = mapper;
     }
@@ -47,9 +48,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-        {
             await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
-        }
 
         return result;
     }

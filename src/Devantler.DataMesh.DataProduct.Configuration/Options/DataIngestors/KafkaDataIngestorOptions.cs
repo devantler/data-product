@@ -3,10 +3,10 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 /// <summary>
 /// Options to configure a Kafka data ingestor for the data product.
 /// </summary>
-public class KafkaDataIngestorOptions : IDataIngestorOptions
+public class KafkaDataIngestorOptions : DataIngestorOptions
 {
     /// <inheritdoc/>
-    public DataIngestorType Type { get; set; } = DataIngestorType.Kafka;
+    public override DataIngestorType Type { get; set; } = DataIngestorType.Kafka;
 
     /// <summary>
     /// The servers to connect to.

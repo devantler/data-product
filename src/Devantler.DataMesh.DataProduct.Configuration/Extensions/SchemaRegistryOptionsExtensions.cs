@@ -4,7 +4,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Provid
 namespace Devantler.DataMesh.DataProduct.Configuration.Extensions;
 
 /// <summary>
-/// A static class containing extension methods for the <see cref="ISchemaRegistryOptions"/> type.
+/// A static class containing extension methods for the <see cref="SchemaRegistryOptions"/> type.
 /// </summary>
 public static class SchemaRegistryOptionsExtensions
 {
@@ -16,7 +16,7 @@ public static class SchemaRegistryOptionsExtensions
     /// </remarks>
     /// <param name="options"></param>
     /// <param name="path"></param>
-    public static void OverrideLocalSchemaRegistryPath(this ISchemaRegistryOptions options, string? path)
+    public static void OverrideLocalSchemaRegistryPath(this SchemaRegistryOptions options, string? path)
     {
         if (options is not LocalSchemaRegistryOptions || options.Url.StartsWith("/") || string.IsNullOrEmpty(path))
             return;

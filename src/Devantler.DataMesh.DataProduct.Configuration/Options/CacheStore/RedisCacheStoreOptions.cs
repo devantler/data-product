@@ -3,13 +3,10 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 /// <summary>
 /// Options to configure a Redis cache store for the data product.
 /// </summary>
-public class RedisCacheStoreOptions : ICacheStoreOptions
+public class RedisCacheStoreOptions : CacheStoreOptions
 {
     /// <inheritdoc/>
-    public CacheStoreType Type { get; set; } = CacheStoreType.Redis;
-
-    /// <inheritdoc/>
-    public string ExpirationTime { get; set; } = "5m";
+    public override CacheStoreType Type { get; set; } = CacheStoreType.Redis;
 
     /// <summary>
     /// The server to connect to.

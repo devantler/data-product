@@ -1,6 +1,7 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.Apis;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Dashboard;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
@@ -31,6 +32,11 @@ public class DataProductOptions
     public string Version { get; set; } = string.Empty;
 
     /// <summary>
+    /// The public URL of the data product.
+    /// </summary>
+    public string PublicUrl { get; set; } = string.Empty;
+
+    /// <summary>
     /// Options for the license used by the data product.
     /// </summary>
     public LicenseOptions License { get; set; } = new();
@@ -58,20 +64,25 @@ public class DataProductOptions
     /// <summary>
     /// Options for the schema registry used by the data product.
     /// </summary>
-    public ISchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
+    public SchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
 
     /// <summary>
     /// Options for the data store.
     /// </summary>
-    public IDataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
+    public DataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
 
     /// <summary>
     /// Options for the cache store.
     /// </summary>
-    public ICacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
+    public CacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
 
     /// <summary>
     /// Options for the data ingestors.
     /// </summary>
-    public List<IDataIngestorOptions> DataIngestors { get; set; } = new();
+    public List<DataIngestorOptions> DataIngestors { get; set; } = new();
+
+    /// <summary>
+    /// Options for the data catalog.
+    /// </summary>
+    public DataCatalogOptions? DataCatalog { get; set; }
 }

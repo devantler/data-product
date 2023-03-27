@@ -32,15 +32,15 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        var schemaRegistryService = options.SchemaRegistry.CreateSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.SchemaRegistry.Schema.Subject,
+        var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
+        var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject,
             options.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
         var @class = new CSharpClass("DataIngestionStartupExtensions")
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataIngestionStartupExtensions") + ".Services"))
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataIngestorOptions").NullIfEmpty()
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataIngestorOptions").NullIfEmpty()
                 ?? "Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors")
             )
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
@@ -51,7 +51,7 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
             .SetIsPartial(true);
 
         var servicesParameter = new CSharpParameter("IServiceCollection", "services");
-        var optionsParameter = new CSharpParameter("List<IDataIngestorOptions>", "options");
+        var optionsParameter = new CSharpParameter("List<DataIngestorOptions>", "options");
         var addGeneratedServiceRegistrationsMethod = new CSharpMethod("AddGeneratedServiceRegistrations")
             .SetIsStatic(true)
             .SetIsPartial(true)

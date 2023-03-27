@@ -32,15 +32,15 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        var schemaRegistryService = options.SchemaRegistry.CreateSchemaRegistryService();
-        var rootSchema = schemaRegistryService.GetSchema(options.SchemaRegistry.Schema.Subject, options.SchemaRegistry.Schema.Version);
+        var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
+        var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject, options.SchemaRegistry.Schema.Version);
 
         var codeCompilation = new CSharpCompilation();
 
         string codeNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions");
-        string dataStoreOptionsNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreOptions");
+        string dataStoreOptionsNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreOptions");
         var @class = new CSharpClass("DataStoreStartupExtensions")
-            .AddImport(new CSharpUsing(string.IsNullOrEmpty(dataStoreOptionsNamespace) ? "Devantler.DataMesh.DataProduct.Configuration.Options.DataStoreOptions" : dataStoreOptionsNamespace))
+            .AddImport(new CSharpUsing(string.IsNullOrEmpty(dataStoreOptionsNamespace) ? "Devantler.DataMesh.DataProduct.Configuration.Options.DataStore" : dataStoreOptionsNamespace))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
@@ -52,7 +52,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             .SetIsPartial(true);
 
         var servicesParameter = new CSharpParameter("IServiceCollection", "services");
-        var optionsParameter = new CSharpParameter("IDataStoreOptions", "options");
+        var optionsParameter = new CSharpParameter("DataStoreOptions", "options");
         var addGeneratedServiceRegistrationsMethod = new CSharpMethod("AddGeneratedServiceRegistrations")
             .SetIsStatic(true)
             .SetIsPartial(true)

@@ -36,6 +36,7 @@ public static class FeaturesStartupExtensions
             o.Name = options.Name;
             o.Description = options.Description;
             o.Version = options.Version;
+            o.PublicUrl = options.PublicUrl;
             o.License = options.License;
             o.Owner = options.Owner;
             o.FeatureFlags = options.FeatureFlags;
@@ -45,6 +46,7 @@ public static class FeaturesStartupExtensions
             o.DataStore = options.DataStore;
             o.CacheStore = options.CacheStore;
             o.DataIngestors = options.DataIngestors;
+            o.DataCatalog = options.DataCatalog;
         });
 #pragma warning restore S1854
 
@@ -69,8 +71,8 @@ public static class FeaturesStartupExtensions
         if (options.FeatureFlags.EnableDataEgestion)
             _ = builder.Services.AddDataEgestion();
 
-        if (options.FeatureFlags.EnableMetadata)
-            _ = builder.Services.AddDataCatalog();
+        if (options.FeatureFlags.EnableDataCatalog)
+            _ = builder.Services.AddDataCatalog(options);
 
         if (options.FeatureFlags.EnableMetrics)
             _ = builder.Services.AddMetrics();
@@ -101,7 +103,7 @@ public static class FeaturesStartupExtensions
         if (options.FeatureFlags.EnableAuthorisation)
             _ = app.UseAuthorization();
 
-        if (options.FeatureFlags.EnableMetadata)
+        if (options.FeatureFlags.EnableDataCatalog)
             _ = app.UseDataCatalog();
 
         if (options.FeatureFlags.EnableMetrics)

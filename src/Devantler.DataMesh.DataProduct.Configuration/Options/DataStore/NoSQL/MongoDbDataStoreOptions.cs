@@ -3,14 +3,11 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.NoSQL;
 /// <summary>
 /// Options to configure a MongoDb data store.
 /// </summary>
-public class MongoDbDataStoreOptions : IDataStoreOptions
+public class MongoDbDataStoreOptions : DataStoreOptions
 {
     /// <inheritdoc/>
-    public DataStoreType Type { get; set; } = DataStoreType.NoSQL;
+    public override DataStoreType Type { get; set; } = DataStoreType.NoSQL;
 
     /// <inheritdoc/>
-    public string Provider { get; set; } = NoSQLDataStoreProvider.LiteDb;
-
-    /// <inheritdoc/>
-    public string ConnectionString { get; set; } = string.Empty;
+    public override string Provider { get; set; } = NoSQLDataStoreProvider.LiteDb;
 }

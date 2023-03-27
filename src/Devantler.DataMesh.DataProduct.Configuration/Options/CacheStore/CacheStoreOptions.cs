@@ -3,17 +3,17 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 /// <summary>
 /// Options to configure a cache store for the data product.
 /// </summary>
-public interface ICacheStoreOptions
+public class CacheStoreOptions
 {
     /// <summary>
     /// A key to indicate the section in the configuration file that contains the cache store options.
     /// </summary>
-    const string Key = "CacheStore";
+    public const string Key = "CacheStore";
 
     /// <summary>
     /// The type of the cache store.
     /// </summary>
-    CacheStoreType Type { get; set; }
+    public virtual CacheStoreType Type { get; set; }
 
     /// <summary>
     /// The expiration time for cache entries.
@@ -23,5 +23,5 @@ public interface ICacheStoreOptions
     /// Default value is "5m".
     /// Default format is minutes. For example, "5" for five minutes.
     /// </remarks>
-    string ExpirationTime { get; set; }
+    public virtual string ExpirationTime { get; set; } = "5m";
 }

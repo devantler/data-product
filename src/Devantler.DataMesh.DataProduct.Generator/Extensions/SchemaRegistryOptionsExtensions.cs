@@ -4,7 +4,7 @@ using Devantler.DataMesh.SchemaRegistryClient;
 namespace Devantler.DataMesh.DataProduct.Generator.Extensions;
 
 /// <summary>
-/// Extensions for <see cref="ISchemaRegistryOptions"/>.
+/// Extensions for <see cref="SchemaRegistryOptions"/>.
 /// </summary>
 public static class SchemaRegistryOptionsExtensions
 {
@@ -13,15 +13,15 @@ public static class SchemaRegistryOptionsExtensions
     /// </summary>
     /// <param name="options">The options to use.</param>
     /// <returns>A schema registry service.</returns>
-    public static ISchemaRegistryService CreateSchemaRegistryService(this ISchemaRegistryOptions options)
+    public static ISchemaRegistryClient CreateSchemaRegistryClient(this SchemaRegistryOptions options)
     {
         return options.Type switch
         {
-            SchemaRegistryType.Kafka => new KafkaSchemaRegistryService(o =>
+            SchemaRegistryType.Kafka => new KafkaSchemaRegistryClient(o =>
             {
                 o.Url = options.Url;
             }),
-            SchemaRegistryType.Local => new LocalSchemaRegistryService(o =>
+            SchemaRegistryType.Local => new LocalSchemaRegistryClient(o =>
             {
                 o.Path = options.Url;
             }),

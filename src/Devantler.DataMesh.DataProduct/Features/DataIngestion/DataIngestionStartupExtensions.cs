@@ -25,6 +25,6 @@ public static partial class DataIngestionStartupExtensions
     }
 
     static partial void AddGeneratedServiceRegistrations(this IServiceCollection services,
-        List<IDataIngestorOptions> options);
+        List<DataIngestorOptions> options);
 }
 #pragma warning restore S3251

@@ -5,27 +5,27 @@ using Devantler.DataMesh.SchemaRegistryClient.Models;
 namespace Devantler.DataMesh.SchemaRegistryClient;
 
 /// <summary>
-/// A Local schema registry service.
+/// A Local schema registry client.
 /// </summary>
-public class LocalSchemaRegistryService : ISchemaRegistryService
+public class LocalSchemaRegistryClient : ISchemaRegistryClient
 {
     readonly LocalSchemaRegistryOptions _options;
 
     /// <summary>
-    /// A constructor to construct a Local schema registry service.
+    /// A constructor to construct a Local schema registry client.
     /// </summary>
     /// <param name="options"></param>
-    public LocalSchemaRegistryService(Action<LocalSchemaRegistryOptions> options)
+    public LocalSchemaRegistryClient(Action<LocalSchemaRegistryOptions> options)
     {
         _options = new LocalSchemaRegistryOptions();
         options(_options);
     }
 
     /// <summary>
-    /// A constructor to construct a Local schema registry service.
+    /// A constructor to construct a Local schema registry client.
     /// </summary>
     /// <param name="options"></param>
-    public LocalSchemaRegistryService(LocalSchemaRegistryOptions options)
+    public LocalSchemaRegistryClient(LocalSchemaRegistryOptions options)
         => _options = options;
 
     /// <inheritdoc/>

@@ -64,9 +64,9 @@ public static partial class DataStoreStartupExtensions
         return app;
     }
 
-    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, IDataStoreOptions options);
+    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, DataStoreOptions options);
 
-    static partial void UseGeneratedServiceRegistrations(this WebApplication app, IDataStoreOptions options);
+    static partial void UseGeneratedServiceRegistrations(this WebApplication app, DataStoreOptions options);
 }
 
 #pragma warning restore S3251
