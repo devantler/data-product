@@ -1,4 +1,4 @@
-# Data Mesh
+# Data Product
 
 [![codecov](https://codecov.io/gh/devantler/data-mesh/branch/main/graph/badge.svg?token=9lh1Z59deC)](https://codecov.io/gh/devantler/data-mesh)
 
