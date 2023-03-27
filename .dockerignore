@@ -24,5 +24,8 @@
 **/tests
 **/config.yaml
 **/config.Development.yaml
+**/.DS_Store
+**/*.db
+.github
 LICENSE
 README.md

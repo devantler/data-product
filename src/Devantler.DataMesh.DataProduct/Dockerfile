@@ -1,16 +1,10 @@
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-WORKDIR /app
-EXPOSE 5156
-
-ENV ASPNETCORE_URLS=http://+:5156
-
-# Creates a non-root user with an explicit UID and adds permission to access the /app folder
-# For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
-RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
-USER appuser
-
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS app
 WORKDIR /app
+
+EXPOSE 5000
+
+ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_ENVIRONMENT=Production
 
 COPY Devantler.DataMesh.sln .
 COPY src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj ./src/Devantler.DataMesh.DataProduct/
@@ -22,5 +16,11 @@ RUN dotnet restore src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataPro
 
 COPY . .
 
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+# For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
+# RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+# USER appuser
+
 WORKDIR /app/src/Devantler.DataMesh.DataProduct
-ENTRYPOINT ["dotnet", "run", "-c Release"]
+
+ENTRYPOINT ["dotnet", "run", "-c Release", "--no-launch-profile"]
