@@ -305,6 +305,15 @@
                     }
                 ]
             }
+        },
+        "DataCatalog": {
+            "type": "object",
+            "description": "The data catalog used by the data product.",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/DataHubDataCatalog"
+                }
+            ]
         }
     },
     "required": [
@@ -400,6 +409,25 @@
                 "Servers",
                 "GroupId",
                 "Topic"
+            ]
+        },
+        "DataHubDataCatalog": {
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "description": "The type of data catalog.",
+                    "type": "string",
+                    "const": "DataHub"
+                },
+                "Url": {
+                    "description": "The URL of the data catalog.",
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "required": [
+                "Type",
+                "Url"
             ]
         }
     }

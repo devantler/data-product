@@ -1,5 +1,6 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
@@ -25,6 +26,7 @@ public static class ConfigurationExtensions
         ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
         ConfigureCacheStoreOptions(configuration, dataProductOptions);
         ConfigureDataIngestorsOptions(configuration, dataProductOptions);
+        ConfigureDataCatalogOptions(configuration, dataProductOptions);
 
         return dataProductOptions;
     }
@@ -87,6 +89,25 @@ public static class ConfigurationExtensions
                     .Where(x => x.Type == DataIngestorType.Kafka)
             );
             dataProductOptions.DataIngestors = dataIngestors;
+        }
+    }
+
+    static void ConfigureDataCatalogOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    {
+        if (dataProductOptions.FeatureFlags.EnableDataCatalog)
+        {
+            if (dataProductOptions.DataCatalog == null)
+                throw new InvalidOperationException($"The configuration section '{IDataCatalogOptions.Key}' is invalid or missing.");
+
+            dataProductOptions.DataCatalog = dataProductOptions.DataCatalog.Type switch
+            {
+                DataCatalogType.DataHub => configuration.GetSection(IDataCatalogOptions.Key)
+                    .Get<DataHubDataCatalogOptions>()
+                        ?? throw new InvalidOperationException(
+                            $"Failed to bind configuration section '{IDataCatalogOptions.Key}' to the type '{typeof(DataHubDataCatalogOptions).FullName}'."
+                        ),
+                _ => throw new NotSupportedException($"Data catalog type '{dataProductOptions.DataCatalog.Type}' is not supported.")
+            };
         }
     }
 }

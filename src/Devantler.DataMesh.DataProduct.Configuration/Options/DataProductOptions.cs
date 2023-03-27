@@ -1,6 +1,7 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options.Apis;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.Dashboard;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
@@ -74,4 +75,9 @@ public class DataProductOptions
     /// Options for the data ingestors.
     /// </summary>
     public List<IDataIngestorOptions> DataIngestors { get; set; } = new();
+
+    /// <summary>
+    /// Options for the data catalog.
+    /// </summary>
+    public IDataCatalogOptions? DataCatalog { get; set; }
 }

@@ -36,9 +36,9 @@ public class FeatureFlagsOptions
     public bool EnableDataEgestion { get; set; }
 
     /// <summary>
-    /// A flag to indicate if metadata should be enabled for the data product.
+    /// A flag to indicate if a data catalog integration should be enabled for the data product.
     /// </summary>
-    public bool EnableMetadata { get; set; }
+    public bool EnableDataCatalog { get; set; }
 
     /// <summary>
     /// A flag to indicate if tracing should be enabled for the data product.
