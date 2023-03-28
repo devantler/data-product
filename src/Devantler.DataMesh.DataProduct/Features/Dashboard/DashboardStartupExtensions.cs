@@ -37,6 +37,13 @@ public static class DashboardStartupExtensions
     /// <param name="options"></param>
     public static WebApplication UseDashboard(this WebApplication app, DataProductOptions options)
     {
+        _ = app.Use(async (context, next) =>
+        {
+            context.Response.Headers.Add("Content-Security-Policy", $"frame-ancestors 'self' {string.Join(" ", options.Dashboard.CSPFrameAncestors)} {string.Join(" ", options.Dashboard.EmbeddedServices.Select(x => x.Url))}");
+
+            await next();
+        });
+
         if (!app.Environment.IsDevelopment())
         {
             _ = app.UseExceptionHandler("/Error");
@@ -53,12 +60,6 @@ public static class DashboardStartupExtensions
         _ = app.MapBlazorHub();
         _ = app.MapFallbackToPage("/_Host");
 
-        _ = app.Use(async (context, next) =>
-        {
-            context.Response.Headers.Add("Content-Security-Policy", $"frame-ancestors 'self' {string.Join(" ", options.Dashboard.CSPFrameAncestors)} {string.Join(" ", options.Dashboard.EmbeddedServices.Select(x => x.Url))}");
-
-            await next();
-        });
         return app;
     }
 }
