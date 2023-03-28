@@ -27,6 +27,7 @@
 **/config.Production.yaml
 **/.DS_Store
 **/*.db
+**/*.schema.json
 .github
 LICENSE
 README.md

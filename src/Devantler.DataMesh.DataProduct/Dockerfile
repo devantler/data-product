@@ -1,5 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS app
-WORKDIR /app
+
+WORKDIR /build
 
 EXPOSE 5000
 
@@ -21,6 +22,7 @@ COPY . .
 # RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 # USER appuser
 
-WORKDIR /app/src/Devantler.DataMesh.DataProduct
-
-ENTRYPOINT ["dotnet", "run", "-c Release", "--no-launch-profile"]
+WORKDIR /
+COPY src/Devantler.DataMesh.DataProduct/entrypoint.sh ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]
