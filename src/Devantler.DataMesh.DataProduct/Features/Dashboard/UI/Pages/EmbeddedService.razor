@@ -20,9 +20,6 @@ else
     [Parameter]
     public string Url { get; set; } = string.Empty;
 
-    [Inject]
-    public NavigationManager Navigator { get; set; }
-
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
@@ -40,7 +37,7 @@ else
             {
                 case "swagger":
                 case "graphql":
-                    Url = $"{Navigator.BaseUri}{Url}/";
+                    Url = $"{Url}/";
                     break;
                 default:
                     Url = string.Empty;

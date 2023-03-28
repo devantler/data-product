@@ -9,8 +9,8 @@
             @foreach (var field in Schema.Fields)
             {
                 <div>
-                    <p><strong>@field.Name</strong> - @field.Type.ToString().Replace("Schema", "") -
-                        <em>@field.Documentation</em></p>
+                    <p><strong>@field.Name</strong> - @field.Type.ToString().Replace("Schema",
+                    "")@(!string.IsNullOrEmpty(field.Documentation) ? "- <em>@field.Documentation</em>" : "")</p>
                 </div>
             }
         </CardText>
