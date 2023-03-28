@@ -24,6 +24,7 @@
 **/tests
 **/config.yaml
 **/config.Development.yaml
+**/config.Production.yaml
 **/.DS_Store
 **/*.db
 .github
