@@ -6,6 +6,8 @@ on:
       - "src/**"
       - ".github/workflows/publish-images.yaml"
     branches: ["main"]
+    tags:
+      - "v*"
 
 jobs:
   build-and-publish-data-product:

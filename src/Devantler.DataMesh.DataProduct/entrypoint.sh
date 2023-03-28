@@ -3,12 +3,15 @@ echo "📦 Publishing Data Product"
 cp /app/config.yaml /build/src/Devantler.DataMesh.DataProduct/config.yaml
 cd /build/src/Devantler.DataMesh.DataProduct
 dotnet publish -c Release --no-restore -o /app/publish
+cd /
 
 echo "Copy published files to /app"
 cp -r /app/publish/* /app
 
 echo "🧹 Cleaning up"
 apt-get autoremove -y
+apt-get autoclean -y
+apt-get clean -y
 rm -rf /usr/share/dotnet
 rm -rf /var/lib/apt/lists/*
 rm -rf /build
@@ -22,7 +25,6 @@ chmod +x ./dotnet-install.sh
 rm -rf dotnet-install.sh
 
 echo "🚀 Starting Data Product"
-cd /
 adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 su appuser
 
