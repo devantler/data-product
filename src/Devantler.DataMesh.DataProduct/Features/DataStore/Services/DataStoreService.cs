@@ -54,11 +54,11 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> models,
+    public async Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> models, bool insertIfNotExists,
         CancellationToken cancellationToken = default)
     {
         var entities = _mapper.Map<IEnumerable<TEntity>>(models);
-        var result = await _repository.CreateMultipleAsync(entities, cancellationToken);
+        var result = await _repository.CreateMultipleAsync(entities, insertIfNotExists, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {

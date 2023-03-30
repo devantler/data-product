@@ -20,8 +20,9 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     /// Creates multiple entities in a data store.
     /// </summary>
     /// <param name="entities"></param>
+    /// <param name="insertIfNotExists"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TEntity>> CreateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> CreateMultipleAsync(IEnumerable<TEntity> entities, bool insertIfNotExists, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads a single entity from a data store.

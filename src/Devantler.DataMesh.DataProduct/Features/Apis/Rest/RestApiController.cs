@@ -59,7 +59,7 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
     public async Task<ActionResult<IEnumerable<TSchema>>> PostAsync([FromBody] IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
     {
-        var result = await _dataStoreService.CreateMultipleAsync(models, cancellationToken);
+        var result = await _dataStoreService.CreateMultipleAsync(models, false, cancellationToken);
         return Ok(result);
     }
 

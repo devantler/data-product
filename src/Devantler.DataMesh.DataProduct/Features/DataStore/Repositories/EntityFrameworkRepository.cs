@@ -29,21 +29,21 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<TEntity>> CreateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> CreateMultipleAsync(IEnumerable<TEntity> entities, bool insertIfNotExists, CancellationToken cancellationToken = default)
     {
         //Bulk insert is only supported by SQL Server and PostgreSQL
         if (_context.Database.IsNpgsql())
         {
-            await _context.Set<TEntity>().BulkInsertAsync(entities, cancellationToken);
+            await _context.Set<TEntity>().BulkInsertAsync(entities, o => o.InsertIfNotExists = insertIfNotExists, cancellationToken);
+            await _context.BulkSaveChangesAsync(cancellationToken);
+            return await _context.Set<TEntity>().BulkReadAsync(entities, cancellationToken);
         }
-        else
-        {
-            await _context.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
-        }
-
-        await _context.BulkSaveChangesAsync(cancellationToken);
-
-        return await _context.Set<TEntity>().BulkReadAsync(entities, cancellationToken);
+        var entitiesToInsert = insertIfNotExists
+            ? entities.Where(x => _context.Set<TEntity>().Find(x.Id) == null)
+            : entities;
+        await _context.Set<TEntity>().AddRangeAsync(entitiesToInsert, cancellationToken);
+        _ = await _context.SaveChangesAsync(cancellationToken);
+        return entitiesToInsert;
     }
 
     /// <inheritdoc />

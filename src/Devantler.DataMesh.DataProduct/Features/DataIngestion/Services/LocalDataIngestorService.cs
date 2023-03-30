@@ -70,6 +70,6 @@ public class LocalDataIngestorService<TKey, TSchema> : BackgroundService
                     throw new NotSupportedException($"File extension {file.Extension} is not supported.");
             }
         }
-        await _dataStoreService.UpdateMultipleAsync(schemas, stoppingToken);
+        _ = await _dataStoreService.CreateMultipleAsync(schemas.Distinct(), true, stoppingToken);
     }
 }
