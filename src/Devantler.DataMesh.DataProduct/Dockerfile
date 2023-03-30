@@ -17,7 +17,6 @@ RUN dotnet restore src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataPro
 COPY . .
 
 WORKDIR /app
-#Copy all config.{yaml,yml,json} files in /app to /build/src/Devantler.DataMesh.DataProduct with CMD
 CMD cp config.* /build/src/Devantler.DataMesh.DataProduct \
     && dotnet publish -c Release -o ./ /build/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj \
     && rm -rf /build \
