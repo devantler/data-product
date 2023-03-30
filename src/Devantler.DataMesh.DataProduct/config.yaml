@@ -43,9 +43,8 @@ SchemaRegistry:
     Version: 1
 
 TracingSystem:
-  Type: Jaeger
-  Host: localhost
-  Port: 6831
+  Type: OpenTelemetry
+  Endpoint: http://localhost:4317/
 
 DataIngestors:
   - Type: Local

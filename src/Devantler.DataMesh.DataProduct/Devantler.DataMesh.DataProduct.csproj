@@ -30,8 +30,10 @@
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
         <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.0.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.6" />
         <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0" />
         <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0" />
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.4.0" />
         <PackageReference Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.5.0-alpha.1" />
         <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.4.0" />
         <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
@@ -39,6 +41,7 @@
         <PackageReference Include="OpenTelemetry.Instrumentation.GrpcNetClient" Version="1.0.0-rc9.14" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
         <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.0.0-rc9.14" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.0.0-rc9.8" />
         <PackageReference Include="StackExchange.Redis" Version="2.6.104" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
         <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="7.20.2" />

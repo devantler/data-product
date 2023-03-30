@@ -101,10 +101,20 @@ public static class ConfigurationExtensions
         {
             dataProductOptions.TracingSystem = dataProductOptions.TracingSystem.Type switch
             {
+                TracingSystemType.OpenTelemetry => configuration.GetSection(TracingSystemOptions.Key)
+                    .Get<OpenTelemetryTracingSystemOptions>()
+                        ?? throw new InvalidOperationException(
+                            $"Failed to bind configuration section '{TracingSystemOptions.Key}' to the type '{typeof(OpenTelemetryTracingSystemOptions).FullName}'."
+                        ),
                 TracingSystemType.Jaeger => configuration.GetSection(TracingSystemOptions.Key)
                     .Get<JaegerTracingSystemOptions>()
                         ?? throw new InvalidOperationException(
                             $"Failed to bind configuration section '{TracingSystemOptions.Key}' to the type '{typeof(JaegerTracingSystemOptions).FullName}'."
+                        ),
+                TracingSystemType.Zipkin => configuration.GetSection(TracingSystemOptions.Key)
+                    .Get<ZipkinTracingSystemOptions>()
+                        ?? throw new InvalidOperationException(
+                            $"Failed to bind configuration section '{TracingSystemOptions.Key}' to the type '{typeof(ZipkinTracingSystemOptions).FullName}'."
                         ),
                 TracingSystemType.Console => configuration.GetSection(TracingSystemOptions.Key)
                     .Get<ConsoleTracingSystemOptions>()

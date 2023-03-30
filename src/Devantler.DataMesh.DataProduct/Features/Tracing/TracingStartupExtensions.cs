@@ -1,5 +1,6 @@
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Configuration.Options.TracingSystem;
@@ -30,10 +31,23 @@ public static class TracingStartupExtensions
                     _ = builder.AddGrpcClientInstrumentation();
 
                 if (options.DataStore.Type == DataStoreType.SQL)
+                {
                     _ = builder.AddSqlClientInstrumentation();
+                    _ = builder.AddEntityFrameworkCoreInstrumentation();
+                }
+
+                if (options.CacheStore.Type == CacheStoreType.Redis)
+                    _ = builder.AddRedisInstrumentation();
 
                 _ = options.TracingSystem.Type switch
                 {
+                    TracingSystemType.OpenTelemetry => builder.AddOtlpExporter(
+                        opt =>
+                        {
+                            var openTelemetryOptions = (OpenTelemetryTracingSystemOptions)options.TracingSystem;
+                            opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+                        }
+                    ),
                     TracingSystemType.Jaeger => builder.AddJaegerExporter(
                         opt =>
                         {
