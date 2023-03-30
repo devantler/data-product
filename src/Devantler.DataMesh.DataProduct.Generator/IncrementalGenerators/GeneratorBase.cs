@@ -65,45 +65,36 @@ public abstract class GeneratorBase : IIncrementalGenerator
 
     static IConfigurationRoot BuildConfiguration(ImmutableArray<AdditionalFile> files)
     {
-        var configurationBuilder = new ConfigurationBuilder();
+        string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
 
-        string ymlOrJsonFileExtension = files.Any(file => file.FileName.Equals("config.yml")) ? "yml" : "json";
-        string fileExtension = files.Any(file => file.FileName.Equals("config.yaml")) ? "yaml" : ymlOrJsonFileExtension;
+        var configuration = new ConfigurationBuilder();
 
-        var configFile = files.FirstOrDefault(file => file.FileName.Equals($"config.{fileExtension}"))
-            ?? throw new InvalidOperationException($"Failed to find required 'config.{fileExtension}'.");
-#if DEBUG
-        var developmentConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"config.Development.{fileExtension}"));
-#elif RELEASE
-        var productionConfigFile = files.FirstOrDefault(file => file.FileName.Equals($"config.Production.{fileExtension}"));
-#endif
-        if (fileExtension.Equals("json"))
+        var configFiles = files.Where(file => file.FileName.StartsWith("config"));
+
+        string configFileExtension = configFiles.Any(f => f.FileName.EndsWith("yaml")) ? "yaml" : "yml";
+
+
+        foreach (var configFile in configFiles.Where(x => x.FileName.EndsWith("json")))
         {
-            var textStream = new MemoryStream(Encoding.UTF8.GetBytes(configFile?.Contents?.ToString()));
-            configurationBuilder.AddJsonStream(textStream);
-#if DEBUG
-            if (developmentConfigFile is not null)
-                configurationBuilder.AddJsonFile(developmentConfigFile.FilePath, optional: true);
-#elif RELEASE
-            if (productionConfigFile is not null)
-                configurationBuilder.AddJsonFile(productionConfigFile.FilePath, optional: true);
-#endif
-        }
-        else
-        {
-            configurationBuilder.AddYamlFile(configFile.FilePath, optional: false);
-#if DEBUG
-            if (developmentConfigFile is not null)
-                configurationBuilder.AddYamlFile(developmentConfigFile.FilePath, optional: true);
-#elif RELEASE
-            if (productionConfigFile is not null)
-                configurationBuilder.AddYamlFile(productionConfigFile.FilePath, optional: true);
-#endif
+            if (string.IsNullOrEmpty(configFile.FileDirectoryPath))
+            {
+                var textStream = new MemoryStream(Encoding.UTF8.GetBytes(configFile?.Contents?.ToString()));
+                _ = configuration.AddJsonStream(textStream);
+            }
+            else
+            {
+                _ = configuration.AddJsonFile(configFile.FilePath, optional: true);
+            }
         }
 
-        configurationBuilder.AddEnvironmentVariables();
+        foreach (var configFile in configFiles.Where(x => x.FileName.EndsWith(configFileExtension)))
+        {
+            _ = configuration.AddYamlFile(configFile.FilePath, optional: true);
+        }
 
-        return configurationBuilder.Build();
+        _ = configuration.AddEnvironmentVariables();
+
+        return configuration.Build();
     }
 
     /// <summary>
