@@ -35,7 +35,7 @@ public static class FeaturesStartupExtensions
         {
             o.Name = options.Name;
             o.Description = options.Description;
-            o.Version = options.Version;
+            o.Release = options.Release;
             o.PublicUrl = options.PublicUrl;
             o.License = options.License;
             o.Owner = options.Owner;

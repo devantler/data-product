@@ -29,10 +29,10 @@ public static class RestStartupExtensions
             string[] methodsOrder = new string[7] { "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE" };
             swaggerOptions.OrderActionsBy((apiDesc) => $"{apiDesc.ActionDescriptor.RouteValues["controller"]}_{Array.IndexOf(methodsOrder, apiDesc.HttpMethod)}");
             swaggerOptions.SwaggerDoc(
-                options.Version,
+                options.Release,
                 new OpenApiInfo
                 {
-                    Version = options.Version,
+                    Version = options.Release,
                     Title = options.Name,
                     Description = options.Description,
                     TermsOfService = !string.IsNullOrEmpty(options.Owner.Website)
@@ -72,7 +72,7 @@ public static class RestStartupExtensions
         _ = app.UseSwaggerUI(
             swaggerOptions =>
             {
-                swaggerOptions.SwaggerEndpoint($"/swagger/{options.Version}/swagger.json", $"{options.Name} {options.Version}");
+                swaggerOptions.SwaggerEndpoint($"/swagger/{options.Release}/swagger.json", $"{options.Name} {options.Release}");
                 swaggerOptions.RoutePrefix = "swagger";
             });
         _ = app.MapControllers();

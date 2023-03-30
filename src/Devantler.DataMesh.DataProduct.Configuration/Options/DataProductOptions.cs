@@ -27,9 +27,9 @@ public class DataProductOptions
     public string Description { get; set; } = string.Empty;
 
     /// <summary>
-    /// The version of the data product.
+    /// The current release of the data product.
     /// </summary>
-    public string Version { get; set; } = string.Empty;
+    public string Release { get; set; } = string.Empty;
 
     /// <summary>
     /// The public URL of the data product.

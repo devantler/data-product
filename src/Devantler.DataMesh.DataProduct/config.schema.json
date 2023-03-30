@@ -13,8 +13,8 @@
             "description": "A description of the data product.",
             "type": "string"
         },
-        "Version": {
-            "description": "The version of the data product. Uses semantic versioning (vX.Y.Z).",
+        "Release": {
+            "description": "The current release of the data product. Uses semantic versioning (vX.Y.Z).",
             "type": "string",
             "pattern": "^v[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
         },

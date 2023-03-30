@@ -54,11 +54,11 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc/>
-    public async Task<int> CreateMultipleAsync(IEnumerable<TSchema> models,
+    public async Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
     {
         var entities = _mapper.Map<IEnumerable<TEntity>>(models);
-        int result = await _repository.CreateMultipleAsync(entities, cancellationToken);
+        var result = await _repository.CreateMultipleAsync(entities, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
@@ -68,28 +68,25 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
             }
         }
 
-        return result;
+        return _mapper.Map<IEnumerable<TSchema>>(result);
     }
 
     /// <inheritdoc/>
-    public async Task<TSchema> DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default)
+    public async Task DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default)
     {
-        var result = await _repository.DeleteSingleAsync(id, cancellationToken)
-            .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
+        await _repository.DeleteSingleAsync(id, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
             string cacheKey = $"{typeof(TEntity).Name}:{id}";
             await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
         }
-
-        return result;
     }
 
     /// <inheritdoc/>
-    public async Task<int> DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
+    public async Task DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
     {
-        int result = await _repository.DeleteMultipleAsync(ids, cancellationToken);
+        await _repository.DeleteMultipleAsync(ids, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
@@ -99,8 +96,6 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
                 await _cacheStore.RemoveAsync(cacheKey, cancellationToken);
             }
         }
-
-        return result;
     }
 
     /// <inheritdoc/>
@@ -190,26 +185,23 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc/>
-    public async Task<TSchema> UpdateSingleAsync(TSchema schema, CancellationToken cancellationToken = default)
+    public async Task UpdateSingleAsync(TSchema schema, CancellationToken cancellationToken = default)
     {
         var entity = _mapper.Map<TEntity>(schema);
-        var result = await _repository.UpdateSingleAsync(entity, cancellationToken)
-                .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
+        await _repository.UpdateSingleAsync(entity, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
             await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
         }
-
-        return result;
     }
 
     /// <inheritdoc/>
-    public async Task<int> UpdateMultipleAsync(IEnumerable<TSchema> models,
+    public async Task UpdateMultipleAsync(IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
     {
         var entities = _mapper.Map<IEnumerable<TEntity>>(models);
-        int result = await _repository.UpdateMultipleAsync(entities, cancellationToken);
+        await _repository.UpdateMultipleAsync(entities, cancellationToken);
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
@@ -218,7 +210,5 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
                 await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
             }
         }
-
-        return result;
     }
 }
