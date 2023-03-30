@@ -82,10 +82,10 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
 
     /// <inheritdoc />
     [HttpDelete]
-    public async Task<ActionResult> DeleteAsync([FromQuery] List<TKey> ids,
+    public async Task<ActionResult> DeleteAsync([FromQuery] List<TKey> id,
         CancellationToken cancellationToken = default)
     {
-        await _dataStoreService.DeleteMultipleAsync(ids, cancellationToken);
+        await _dataStoreService.DeleteMultipleAsync(id, cancellationToken);
         return Ok();
     }
 }
