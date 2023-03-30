@@ -72,14 +72,14 @@
                 </ListGroupItem>
 
                 <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableMetrics ? Color.Success : Color.Warning)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableMetrics).Replace("Enable", "")} (Not supported yet)")
+                    Color="@(Options.Value.FeatureFlags.EnableMetrics ? Color.Success : Color.Danger)">
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableMetrics).Replace("Enable", "")} (Work in progress)")
                         IsEnabled=Options.Value.FeatureFlags.EnableMetrics />
                 </ListGroupItem>
 
                 <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableTracing ? Color.Success : Color.Warning)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableTracing).Replace("Enable", "")} (Not supported yet)")
+                    Color="@(Options.Value.FeatureFlags.EnableTracing ? Color.Success : Color.Danger)">
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableTracing).Replace("Enable", "")} (Work in progress)")
                         IsEnabled=Options.Value.FeatureFlags.EnableTracing />
                 </ListGroupItem>
 

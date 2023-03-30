@@ -18,8 +18,9 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas
     /// Creates multiple <typeparamref name="TSchema"/>'s in a data store.
     /// </summary>
     /// <param name="models"></param>
+    /// <param name="insertIfNotExists"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
+    Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> models, bool insertIfNotExists, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads a single <typeparamref name="TSchema"/> from a data store.

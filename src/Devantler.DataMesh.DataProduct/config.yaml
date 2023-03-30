@@ -21,9 +21,9 @@ FeatureFlags:
   EnableCaching: true
   EnableDataIngestion: true
   EnableDataCatalog: false
+  EnableMetrics: true
+  EnableTracing: true
   EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
-  EnableTracing: false # TODO: #141 Enable feature gated tracing with OpenTelemetry and Jaeger
-  EnableMetrics: false # TODO: #140 Enable feature gated metrics with Prometheus and Grafana
   EnableAuthentication: false # TODO: #138 Enable feature gated authentication with Duende IdentityServer and OpenID Connect
   EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
   EnableWebhooks: false # TODO: Enable feature gated webhooks
@@ -41,6 +41,11 @@ SchemaRegistry:
   Schema:
     Subject: contoso-university
     Version: 1
+
+TracingSystem:
+  Type: Jaeger
+  Host: localhost
+  Port: 6831
 
 DataIngestors:
   - Type: Local
