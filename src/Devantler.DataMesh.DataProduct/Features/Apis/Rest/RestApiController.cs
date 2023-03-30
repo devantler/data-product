@@ -56,36 +56,36 @@ public abstract class RestApiController<TKey, TSchema> : ControllerBase, IContro
 
     /// <inheritdoc />
     [HttpPost]
-    public async Task<ActionResult<int>> PostAsync([FromBody] IEnumerable<TSchema> models,
+    public async Task<ActionResult<IEnumerable<TSchema>>> PostAsync([FromBody] IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
     {
-        int result = await _dataStoreService.CreateMultipleAsync(models, cancellationToken);
+        var result = await _dataStoreService.CreateMultipleAsync(models, cancellationToken);
         return Ok(result);
     }
 
     /// <inheritdoc />
     [HttpPut]
-    public async Task<ActionResult<int>> PutAsync(IEnumerable<TSchema> models,
+    public async Task<ActionResult> PutAsync(IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
     {
-        int result = await _dataStoreService.UpdateMultipleAsync(models, cancellationToken);
-        return Ok(result);
+        await _dataStoreService.UpdateMultipleAsync(models, cancellationToken);
+        return Ok();
     }
 
     /// <inheritdoc />
     [HttpDelete("{id}")]
-    public async Task<ActionResult<TSchema>> DeleteAsync(TKey id, CancellationToken cancellationToken = default)
+    public async Task<ActionResult> DeleteAsync(TKey id, CancellationToken cancellationToken = default)
     {
-        var result = await _dataStoreService.DeleteSingleAsync(id, cancellationToken);
-        return Ok(result);
+        await _dataStoreService.DeleteSingleAsync(id, cancellationToken);
+        return Ok();
     }
 
     /// <inheritdoc />
     [HttpDelete]
-    public async Task<ActionResult<IEnumerable<TSchema>>> DeleteAsync([FromQuery] List<TKey> ids,
+    public async Task<ActionResult> DeleteAsync([FromQuery] List<TKey> ids,
         CancellationToken cancellationToken = default)
     {
-        int result = await _dataStoreService.DeleteMultipleAsync(ids, cancellationToken);
-        return Ok(result);
+        await _dataStoreService.DeleteMultipleAsync(ids, cancellationToken);
+        return Ok();
     }
 }

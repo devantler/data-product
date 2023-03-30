@@ -21,7 +21,7 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     /// </summary>
     /// <param name="entities"></param>
     /// <param name="cancellationToken"></param>
-    Task<int> CreateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+    Task<IEnumerable<TEntity>> CreateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads a single entity from a data store.
@@ -88,26 +88,26 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="cancellationToken"></param>
-    Task<TEntity> UpdateSingleAsync(TEntity entity, CancellationToken cancellationToken = default);
+    Task UpdateSingleAsync(TEntity entity, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates multiple entities in a data store.
     /// </summary>
     /// <param name="entities"></param>
     /// <param name="cancellationToken"></param>
-    Task<int> UpdateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
+    Task UpdateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a single entity from a data store.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<TEntity> DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default);
+    Task DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple entities from a data store.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<int> DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
+    Task DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
 }

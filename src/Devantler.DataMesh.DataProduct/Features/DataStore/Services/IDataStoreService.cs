@@ -19,7 +19,7 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<int> CreateMultipleAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
+    Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads a single <typeparamref name="TSchema"/> from a data store.
@@ -64,26 +64,26 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas
     /// </summary>
     /// <param name="schema"></param>
     /// <param name="cancellationToken"></param>
-    Task<TSchema> UpdateSingleAsync(TSchema schema, CancellationToken cancellationToken = default);
+    Task UpdateSingleAsync(TSchema schema, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates multiple <typeparamref name="TSchema"/>'s in a data store.
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<int> UpdateMultipleAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
+    Task UpdateMultipleAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a single <typeparamref name="TSchema"/> from a data store.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<TSchema> DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default);
+    Task DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple <typeparamref name="TSchema"/>'s from a data store.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<int> DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
+    Task DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
 }

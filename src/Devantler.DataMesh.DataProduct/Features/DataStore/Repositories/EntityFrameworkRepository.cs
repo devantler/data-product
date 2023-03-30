@@ -29,19 +29,21 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
     }
 
     /// <inheritdoc />
-    public async Task<int> CreateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> CreateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
-        var distinctEntities = entities.GroupBy(e => e.Id).Select(e => e.First());
-
-        foreach (var entity in distinctEntities)
+        //Bulk insert is only supported by SQL Server and PostgreSQL
+        if (_context.Database.IsNpgsql())
         {
-            if (_context.Set<TEntity>().Find(entity.Id) is not null)
-                continue;
-
-            _ = _context.Set<TEntity>().Add(entity);
+            await _context.Set<TEntity>().BulkInsertAsync(entities, cancellationToken);
+        }
+        else
+        {
+            await _context.Set<TEntity>().AddRangeAsync(entities, cancellationToken);
         }
 
-        return await _context.SaveChangesAsync(cancellationToken);
+        await _context.BulkSaveChangesAsync(cancellationToken);
+
+        return await _context.Set<TEntity>().BulkReadAsync(entities, cancellationToken);
     }
 
     /// <inheritdoc />
@@ -60,7 +62,7 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
     /// <inheritdoc />
     public async Task<IEnumerable<TEntity>> ReadMultipleAsync(IEnumerable<TKey> ids,
         CancellationToken cancellationToken = default)
-        => await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
+        => await _context.Set<TEntity>().BulkReadAsync(ids, cancellationToken);
 
     /// <inheritdoc />
     public async Task<IEnumerable<TEntity>> ReadMultipleWithPaginationAsync(int page, int pageSize,
@@ -80,35 +82,33 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
         => await _context.Set<TEntity>().Skip(offset).Take(limit).Select(x => x.Id).ToListAsync(cancellationToken);
 
     /// <inheritdoc />
-    public async Task<TEntity> UpdateSingleAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task UpdateSingleAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        var result = _context.Set<TEntity>().Update(entity);
+        _ = _context.Set<TEntity>().Update(entity);
         _ = await _context.SaveChangesAsync(cancellationToken);
-        return result.Entity;
     }
 
     /// <inheritdoc />
-    public async Task<int> UpdateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
+    public async Task UpdateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
-        _context.Set<TEntity>().UpdateRange(entities);
-        return await _context.SaveChangesAsync(cancellationToken);
+        await _context.Set<TEntity>().BulkUpdateAsync(entities, cancellationToken);
+        await _context.BulkSaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc />
-    public async Task<TEntity> DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default)
+    public async Task DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default)
     {
         var entity = await _context.Set<TEntity>().FindAsync(new object[] { id }, cancellationToken)
                      ?? throw new InvalidOperationException($"Entity of type {typeof(TEntity).Name} with id {id} not found");
-        var result = _context.Set<TEntity>().Remove(entity);
+        _ = _context.Set<TEntity>().Remove(entity);
         _ = await _context.SaveChangesAsync(cancellationToken);
-        return result.Entity;
     }
 
     /// <inheritdoc />
-    public async Task<int> DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
+    public async Task DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
     {
         var entities = await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
-        _context.Set<TEntity>().RemoveRange(entities);
-        return await _context.SaveChangesAsync(cancellationToken);
+        await _context.Set<TEntity>().BulkDeleteAsync(entities, cancellationToken);
+        await _context.BulkSaveChangesAsync(cancellationToken);
     }
 }

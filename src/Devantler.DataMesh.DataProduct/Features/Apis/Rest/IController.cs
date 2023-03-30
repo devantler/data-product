@@ -47,26 +47,26 @@ public interface IController<TKey, TSchema> where TSchema : class, Schemas.ISche
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<int>> PostAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> PostAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Updates multiple entities.
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<int>> PutAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
+    Task<ActionResult> PutAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes an entity.
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TSchema>> DeleteAsync(TKey id, CancellationToken cancellationToken = default);
+    Task<ActionResult> DeleteAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple entities.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TSchema>>> DeleteAsync(List<TKey> ids, CancellationToken cancellationToken = default);
+    Task<ActionResult> DeleteAsync(List<TKey> ids, CancellationToken cancellationToken = default);
 }
