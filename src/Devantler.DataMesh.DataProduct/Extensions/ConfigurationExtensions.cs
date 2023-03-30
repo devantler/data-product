@@ -17,9 +17,9 @@ public static class ConfigurationExtensions
         string fileExtension = File.Exists("config.yaml") ? "yaml" : ymlOrJsonFileExtension;
 
         _ = fileExtension.Equals("json", StringComparison.Ordinal)
-            ? configuration.AddJsonFile($"config.{fileExtension}", optional: false)
+            ? configuration.AddJsonFile($"config.{fileExtension}", optional: true)
                 .AddJsonFile($"config.{environment.EnvironmentName}.{fileExtension}", optional: true)
-            : configuration.AddYamlFile($"config.{fileExtension}", optional: false)
+            : configuration.AddYamlFile($"config.{fileExtension}", optional: true)
                 .AddYamlFile($"config.{environment.EnvironmentName}.{fileExtension}", optional: true);
 
         _ = configuration.AddEnvironmentVariables()
