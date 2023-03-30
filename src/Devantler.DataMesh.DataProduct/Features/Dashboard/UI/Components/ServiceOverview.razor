@@ -76,8 +76,19 @@
 
                     }
                 }
-
-
+                @if(Options.Value.FeatureFlags.EnableMetrics){
+                    <ListGroupItem>
+                        <ServiceDetails Name="@Options.Value.MetricsSystem.Type.ToString()" Type="Metrics"
+                        Description="The metrics system in use by the data product." />
+                    </ListGroupItem>
+                }
+                @if(Options.Value.FeatureFlags.EnableTracing)
+                {
+                    <ListGroupItem>
+                        <ServiceDetails Name="@Options.Value.TracingSystem.Type.ToString()" Type="Tracing"
+                        Description="The tracing system in use by the data product." />
+                    </ListGroupItem>
+                }
             </ListGroup>
         </CardText>
     </CardBody>

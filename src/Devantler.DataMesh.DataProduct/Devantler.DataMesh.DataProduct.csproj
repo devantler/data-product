@@ -20,6 +20,7 @@
         <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.62" />
         <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.62" />
         <PackageReference Include="FluentValidation" Version="11.5.1" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.52.0" />
         <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.5" />
         <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.0.5" />
         <PackageReference Include="HotChocolate.Data" Version="13.0.5" />
@@ -29,7 +30,16 @@
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
         <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.0.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
-        <PackageReference Include="StackExchange.Redis" Version="2.6.96" />
+        <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0" />
+        <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0" />
+        <PackageReference Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.5.0-alpha.1" />
+        <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.4.0" />
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.GrpcNetClient" Version="1.0.0-rc9.14" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.0.0-rc9.14" />
+        <PackageReference Include="StackExchange.Redis" Version="2.6.104" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
         <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="7.20.2" />
     </ItemGroup>

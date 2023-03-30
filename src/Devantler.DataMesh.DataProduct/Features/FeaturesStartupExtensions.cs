@@ -30,7 +30,6 @@ public static class FeaturesStartupExtensions
     {
         var options = builder.Configuration.GetDataProductOptions();
 
-#pragma warning disable S1854
         _ = builder.Services.AddOptions<DataProductOptions>().Configure(o =>
         {
             o.Name = options.Name;
@@ -40,15 +39,16 @@ public static class FeaturesStartupExtensions
             o.License = options.License;
             o.Owner = options.Owner;
             o.FeatureFlags = options.FeatureFlags;
-            o.Dashboard = options.Dashboard;
             o.Apis = options.Apis;
-            o.SchemaRegistry = options.SchemaRegistry;
-            o.DataStore = options.DataStore;
             o.CacheStore = options.CacheStore;
-            o.DataIngestors = options.DataIngestors;
+            o.Dashboard = options.Dashboard;
             o.DataCatalog = options.DataCatalog;
+            o.DataIngestors = options.DataIngestors;
+            o.DataStore = options.DataStore;
+            o.MetricsSystem = options.MetricsSystem;
+            o.SchemaRegistry = options.SchemaRegistry;
+            o.TracingSystem = options.TracingSystem;
         });
-#pragma warning restore S1854
 
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
         _ = builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
@@ -75,10 +75,10 @@ public static class FeaturesStartupExtensions
             _ = builder.Services.AddDataCatalog(options);
 
         if (options.FeatureFlags.EnableMetrics)
-            _ = builder.Services.AddMetrics();
+            _ = builder.Services.AddMetrics(options);
 
         if (options.FeatureFlags.EnableTracing)
-            _ = builder.Services.AddTracing();
+            _ = builder.Services.AddTracing(options);
 
         if (options.FeatureFlags.EnableApis.Any())
             _ = builder.Services.AddApis(options, builder.Environment);
@@ -105,12 +105,6 @@ public static class FeaturesStartupExtensions
 
         if (options.FeatureFlags.EnableDataCatalog)
             _ = app.UseDataCatalog();
-
-        if (options.FeatureFlags.EnableMetrics)
-            _ = app.UseMetrics();
-
-        if (options.FeatureFlags.EnableTracing)
-            _ = app.UseTracing();
 
         if (options.FeatureFlags.EnableApis.Any())
             _ = app.UseApis(options);

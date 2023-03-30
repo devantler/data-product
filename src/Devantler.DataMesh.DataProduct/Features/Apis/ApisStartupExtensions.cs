@@ -1,6 +1,7 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Features.Apis.GraphQL;
+using Devantler.DataMesh.DataProduct.Features.Apis.gRPC;
 using Devantler.DataMesh.DataProduct.Features.Apis.Rest;
 
 namespace Devantler.DataMesh.DataProduct.Features.Apis;
@@ -18,9 +19,14 @@ public static class ApisStartupExtensions
     /// <param name="environment"></param>
     public static IServiceCollection AddApis(this IServiceCollection services, DataProductOptions options, IWebHostEnvironment environment)
     {
-        _ = services.AddRest(options);
-        _ = services.AddGraphQL(options, environment);
+        if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest))
+            _ = services.AddRest(options);
 
+        if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
+            _ = services.AddGraphQL(options, environment);
+
+
+        _ = services.AddGRpc();
         return services;
     }
 
@@ -36,6 +42,9 @@ public static class ApisStartupExtensions
 
         if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
             _ = app.UseGraphQL();
+
+        if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC))
+            _ = app.UseGRpc();
 
         return app;
     }
