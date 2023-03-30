@@ -47,6 +47,10 @@ public class KafkaSchemaRegistryClient : ISchemaRegistryClient
         {
             await cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version)
         };
+
+        if (registeredSchemas.Count == 0)
+            throw new Exception("No schema found for subject: " + subject + " and version: " + version);
+
         var schemaReader = new JsonSchemaReader();
         return schemaReader.Read(registeredSchemas[0].SchemaString);
     }
