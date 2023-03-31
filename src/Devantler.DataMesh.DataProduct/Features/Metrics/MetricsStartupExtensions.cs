@@ -29,9 +29,8 @@ public static class MetricsStartupExtensions
                 {
                     MetricsSystemType.Prometheus => builder.AddPrometheusExporter(),
                     MetricsSystemType.Console => builder.AddConsoleExporter(),
-                    _ => builder.AddConsoleExporter(),
+                    _ => throw new NotSupportedException($"Metrics system type '{options.MetricsSystem.Type}' is not supported."),
                 };
-                _ = builder.AddConsoleExporter();
             });
         return services;
     }
