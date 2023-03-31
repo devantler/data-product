@@ -17,7 +17,7 @@ COPY . .
 
 WORKDIR /app
 CMD ["cp config.* /build/src/Devantler.DataMesh.DataProduct \
-    && dotnet publish -c Release -o ./ /build/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj \
+    && dotnet publish /build/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj -c Release -o ./  \
     && rm -rf /build \
     && adduser -D -u 1000 -g 1000 appuser \
     && chown -R appuser:appuser ./" ]
