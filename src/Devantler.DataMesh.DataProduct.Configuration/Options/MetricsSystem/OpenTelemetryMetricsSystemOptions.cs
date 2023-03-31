@@ -8,7 +8,7 @@ public class OpenTelemetryMetricsSystemOptions : MetricsSystemOptions
     /// <summary>
     /// The type of metrics system to use.
     /// </summary>
-    public override MetricsSystemType Type { get; set; } = MetricsSystemType.Console;
+    public override MetricsSystemType Type { get; set; } = MetricsSystemType.OpenTelemetry;
 
     /// <summary>
     /// The endpoint to send metrics to.
