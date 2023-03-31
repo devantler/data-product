@@ -16,9 +16,9 @@ RUN dotnet restore build/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.D
 COPY . .
 
 WORKDIR /app
-CMD cp config.* /build/src/Devantler.DataMesh.DataProduct \
+CMD ["cp config.* /build/src/Devantler.DataMesh.DataProduct \
     && dotnet publish -c Release -o ./ /build/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj \
     && rm -rf /build \
     && adduser -D -u 1000 -g 1000 appuser \
-    && chown -R appuser:appuser ./
+    && chown -R appuser:appuser ./" ]
 ENTRYPOINT [ "dotnet", "Devantler.DataMesh.DataProduct.dll" ]
