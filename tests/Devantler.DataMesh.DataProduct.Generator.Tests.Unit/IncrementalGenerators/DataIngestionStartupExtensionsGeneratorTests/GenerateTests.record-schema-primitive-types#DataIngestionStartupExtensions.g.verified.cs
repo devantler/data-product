@@ -4,7 +4,7 @@
 // Any changes made to this file will be overwritten.
 using Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
-using Devantler.DataMesh.DataProduct.Schemas;
+using Devantler.DataMesh.DataProduct.Features.Schemas;
 namespace Devantler.DataMesh.DataProduct.Features.DataIngestion;
 /// <summary>
 /// A class that contains extension methods for service registrations and usages for data ingestors
