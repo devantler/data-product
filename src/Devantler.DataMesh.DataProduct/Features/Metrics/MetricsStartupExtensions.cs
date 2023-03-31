@@ -23,6 +23,8 @@ public static class MetricsStartupExtensions
                 _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
                 _ = builder.AddAspNetCoreInstrumentation();
                 _ = builder.AddRuntimeInstrumentation();
+                _ = builder.AddProcessInstrumentation();
+
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
                     _ = builder.AddHttpClientInstrumentation();
 
