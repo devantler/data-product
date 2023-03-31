@@ -78,15 +78,15 @@
                 }
                 @if(Options.Value.FeatureFlags.EnableMetrics){
                     <ListGroupItem>
-                        <ServiceDetails Name="@Options.Value.MetricsExporter.Type.ToString()" Type="Metrics"
-                        Description="The metrics system in use by the data product." />
+                        <ServiceDetails Name="@Options.Value.MetricsExporter.Type.ToString()" Type="MetricsExporter"
+                        Description="The metrics exporter in use by the data product." />
                     </ListGroupItem>
                 }
                 @if(Options.Value.FeatureFlags.EnableTracing)
                 {
                     <ListGroupItem>
-                        <ServiceDetails Name="@Options.Value.TracingExporter.Type.ToString()" Type="Tracing"
-                        Description="The tracing system in use by the data product." />
+                        <ServiceDetails Name="@Options.Value.TracingExporter.Type.ToString()" Type="TracingExporter"
+                        Description="The tracing exporter in use by the data product." />
                     </ListGroupItem>
                 }
             </ListGroup>
