@@ -13,5 +13,5 @@ public class OpenTelemetryMetricsExporterOptions : MetricsExporterOptions
     /// <summary>
     /// The endpoint to send metrics to.
     /// </summary>
-    public string Endpoint { get; set; } = "http://localhost:9090";
+    public string Endpoint { get; set; } = "http://localhost:4317";
 }
