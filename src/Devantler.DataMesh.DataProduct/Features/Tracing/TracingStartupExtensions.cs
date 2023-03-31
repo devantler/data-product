@@ -3,7 +3,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
-using Devantler.DataMesh.DataProduct.Configuration.Options.TracingSystem;
+using Devantler.DataMesh.DataProduct.Configuration.Options.TracingExporter;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -39,26 +39,17 @@ public static class TracingStartupExtensions
                 if (options.CacheStore.Type == CacheStoreType.Redis)
                     _ = builder.AddRedisInstrumentation();
 
-                _ = options.TracingSystem.Type switch
+                _ = options.TracingExporter.Type switch
                 {
-                    TracingSystemType.OpenTelemetry => builder.AddOtlpExporter(
+                    TracingExporterType.OpenTelemetry => builder.AddOtlpExporter(
                         opt =>
                         {
-                            var openTelemetryOptions = (OpenTelemetryTracingSystemOptions)options.TracingSystem;
+                            var openTelemetryOptions = (OpenTelemetryTracingExporterOptions)options.TracingExporter;
                             opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
                         }
                     ),
-                    TracingSystemType.Jaeger => builder.AddJaegerExporter(
-                        opt =>
-                        {
-                            var jaegerOptions = (JaegerTracingSystemOptions)options.TracingSystem;
-                            opt.AgentHost = jaegerOptions.Host;
-                            opt.AgentPort = jaegerOptions.Port;
-                        }
-                    ),
-                    TracingSystemType.Zipkin => builder.AddZipkinExporter(),
-                    TracingSystemType.Console => builder.AddConsoleExporter(),
-                    _ => builder.AddConsoleExporter(),
+                    TracingExporterType.Console => builder.AddConsoleExporter(),
+                    _ => throw new NotSupportedException($"Tracing system type '{options.TracingExporter.Type}' is not supported.")
                 };
             });
         return services;

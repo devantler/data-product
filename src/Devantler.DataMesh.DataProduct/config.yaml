@@ -42,10 +42,10 @@ SchemaRegistry:
     Subject: contoso-university
     Version: 1
 
-MetricsSystem:
+MetricsExporter:
   Type: Console
 
-TracingSystem:
+TracingExporter:
   Type: Console
 
 DataIngestors:

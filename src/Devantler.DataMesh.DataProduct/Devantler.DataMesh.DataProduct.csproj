@@ -17,8 +17,8 @@
         <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.2.2" />
         <PackageReference Include="Chr.Avro.Confluent" Version="9.4.1" />
         <PackageReference Include="Confluent.Kafka" Version="2.0.2" />
-        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.62" />
         <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.62" />
+        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.62" />
         <PackageReference Include="FluentValidation" Version="11.5.1" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.52.0" />
         <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.5" />
@@ -30,14 +30,11 @@
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
         <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.0.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
-        <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.6" />
         <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0" />
-        <PackageReference Include="OpenTelemetry.Exporter.Jaeger" Version="1.4.0" />
         <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.4.0" />
-        <PackageReference Include="OpenTelemetry.Exporter.Prometheus.AspNetCore" Version="1.5.0-alpha.1" />
-        <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.4.0" />
         <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.4.0" />
         <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.14" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.6" />
         <PackageReference Include="OpenTelemetry.Instrumentation.GrpcNetClient" Version="1.0.0-rc9.14" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.1.0-rc.2" />

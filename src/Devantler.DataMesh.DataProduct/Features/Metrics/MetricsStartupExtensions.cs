@@ -1,7 +1,7 @@
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
-using Devantler.DataMesh.DataProduct.Configuration.Options.MetricsSystem;
+using Devantler.DataMesh.DataProduct.Configuration.Options.MetricsExporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
@@ -26,18 +26,17 @@ public static class MetricsStartupExtensions
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
                     _ = builder.AddHttpClientInstrumentation();
 
-                _ = options.MetricsSystem.Type switch
+                _ = options.MetricsExporter.Type switch
                 {
-                    MetricsSystemType.OpenTelemetry => builder.AddOtlpExporter(
+                    MetricsExporterType.OpenTelemetry => builder.AddOtlpExporter(
                         opt =>
                         {
-                            var openTelemetryOptions = (OpenTelemetryMetricsSystemOptions)options.MetricsSystem;
+                            var openTelemetryOptions = (OpenTelemetryMetricsExporterOptions)options.MetricsExporter;
                             opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
                         }
                     ),
-                    MetricsSystemType.Prometheus => builder.AddPrometheusExporter(),
-                    MetricsSystemType.Console => builder.AddConsoleExporter(),
-                    _ => throw new NotSupportedException($"Metrics system type '{options.MetricsSystem.Type}' is not supported."),
+                    MetricsExporterType.Console => builder.AddConsoleExporter(),
+                    _ => throw new NotSupportedException($"Metrics system type '{options.MetricsExporter.Type}' is not supported."),
                 };
             });
         return services;

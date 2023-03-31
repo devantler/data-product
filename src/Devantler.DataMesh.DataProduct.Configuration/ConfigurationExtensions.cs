@@ -2,10 +2,10 @@ using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
-using Devantler.DataMesh.DataProduct.Configuration.Options.MetricsSystem;
+using Devantler.DataMesh.DataProduct.Configuration.Options.MetricsExporter;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
-using Devantler.DataMesh.DataProduct.Configuration.Options.TracingSystem;
+using Devantler.DataMesh.DataProduct.Configuration.Options.TracingExporter;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataMesh.DataProduct.Configuration;
@@ -28,8 +28,8 @@ public static class ConfigurationExtensions
         ConfigureCacheStoreOptions(configuration, dataProductOptions);
         ConfigureDataCatalogOptions(configuration, dataProductOptions);
         ConfigureDataIngestorsOptions(configuration, dataProductOptions);
-        ConfigureMetricsSystemOptions(configuration, dataProductOptions);
-        ConfigureTracingSystemOptions(configuration, dataProductOptions);
+        ConfigureMetricsExporterOptions(configuration, dataProductOptions);
+        ConfigureTracingExporterOptions(configuration, dataProductOptions);
         ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
 
         return dataProductOptions;
@@ -97,59 +97,44 @@ public static class ConfigurationExtensions
         }
     }
 
-    static void ConfigureMetricsSystemOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    static void ConfigureMetricsExporterOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {
         if (dataProductOptions.FeatureFlags.EnableTracing)
         {
-            dataProductOptions.MetricsSystem = dataProductOptions.MetricsSystem.Type switch
+            dataProductOptions.MetricsExporter = dataProductOptions.MetricsExporter.Type switch
             {
-                MetricsSystemType.OpenTelemetry => configuration.GetSection(MetricsSystemOptions.Key)
-                    .Get<OpenTelemetryMetricsSystemOptions>()
+                MetricsExporterType.OpenTelemetry => configuration.GetSection(MetricsExporterOptions.Key)
+                    .Get<OpenTelemetryMetricsExporterOptions>()
                         ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{MetricsSystemOptions.Key}' to the type '{typeof(OpenTelemetryMetricsSystemOptions).FullName}'."
+                            $"Failed to bind configuration section '{MetricsExporterOptions.Key}' to the type '{typeof(OpenTelemetryMetricsExporterOptions).FullName}'."
                         ),
-                MetricsSystemType.Prometheus => configuration.GetSection(MetricsSystemOptions.Key)
-                    .Get<PrometheusMetricsSystemOptions>()
+                MetricsExporterType.Console => configuration.GetSection(MetricsExporterOptions.Key)
+                    .Get<ConsoleMetricsExporterOptions>()
                         ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{MetricsSystemOptions.Key}' to the type '{typeof(PrometheusMetricsSystemOptions).FullName}'."
+                            $"Failed to bind configuration section '{MetricsExporterOptions.Key}' to the type '{typeof(ConsoleMetricsExporterOptions).FullName}'."
                         ),
-                MetricsSystemType.Console => configuration.GetSection(MetricsSystemOptions.Key)
-                    .Get<ConsoleMetricsSystemOptions>()
-                        ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{MetricsSystemOptions.Key}' to the type '{typeof(ConsoleMetricsSystemOptions).FullName}'."
-                        ),
-                _ => throw new NotSupportedException($"Tracing system type '{dataProductOptions.TracingSystem.Type}' is not supported.")
+                _ => throw new NotSupportedException($"Tracing system type '{dataProductOptions.TracingExporter.Type}' is not supported.")
             };
         }
     }
 
-    static void ConfigureTracingSystemOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    static void ConfigureTracingExporterOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {
         if (dataProductOptions.FeatureFlags.EnableTracing)
         {
-            dataProductOptions.TracingSystem = dataProductOptions.TracingSystem.Type switch
+            dataProductOptions.TracingExporter = dataProductOptions.TracingExporter.Type switch
             {
-                TracingSystemType.OpenTelemetry => configuration.GetSection(TracingSystemOptions.Key)
-                    .Get<OpenTelemetryTracingSystemOptions>()
+                TracingExporterType.OpenTelemetry => configuration.GetSection(TracingExporterOptions.Key)
+                    .Get<OpenTelemetryTracingExporterOptions>()
                         ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{TracingSystemOptions.Key}' to the type '{typeof(OpenTelemetryTracingSystemOptions).FullName}'."
+                            $"Failed to bind configuration section '{TracingExporterOptions.Key}' to the type '{typeof(OpenTelemetryTracingExporterOptions).FullName}'."
                         ),
-                TracingSystemType.Jaeger => configuration.GetSection(TracingSystemOptions.Key)
-                    .Get<JaegerTracingSystemOptions>()
+                TracingExporterType.Console => configuration.GetSection(TracingExporterOptions.Key)
+                    .Get<ConsoleTracingExporterOptions>()
                         ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{TracingSystemOptions.Key}' to the type '{typeof(JaegerTracingSystemOptions).FullName}'."
+                            $"Failed to bind configuration section '{TracingExporterOptions.Key}' to the type '{typeof(ConsoleTracingExporterOptions).FullName}'."
                         ),
-                TracingSystemType.Zipkin => configuration.GetSection(TracingSystemOptions.Key)
-                    .Get<ZipkinTracingSystemOptions>()
-                        ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{TracingSystemOptions.Key}' to the type '{typeof(ZipkinTracingSystemOptions).FullName}'."
-                        ),
-                TracingSystemType.Console => configuration.GetSection(TracingSystemOptions.Key)
-                    .Get<ConsoleTracingSystemOptions>()
-                        ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{TracingSystemOptions.Key}' to the type '{typeof(ConsoleTracingSystemOptions).FullName}'."
-                        ),
-                _ => throw new NotSupportedException($"Tracing system type '{dataProductOptions.TracingSystem.Type}' is not supported.")
+                _ => throw new NotSupportedException($"Tracing system type '{dataProductOptions.TracingExporter.Type}' is not supported.")
             };
         }
     }

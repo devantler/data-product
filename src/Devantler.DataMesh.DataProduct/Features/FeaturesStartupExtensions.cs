@@ -45,9 +45,9 @@ public static class FeaturesStartupExtensions
             o.DataCatalog = options.DataCatalog;
             o.DataIngestors = options.DataIngestors;
             o.DataStore = options.DataStore;
-            o.MetricsSystem = options.MetricsSystem;
+            o.MetricsExporter = options.MetricsExporter;
             o.SchemaRegistry = options.SchemaRegistry;
-            o.TracingSystem = options.TracingSystem;
+            o.TracingExporter = options.TracingExporter;
         });
 
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
