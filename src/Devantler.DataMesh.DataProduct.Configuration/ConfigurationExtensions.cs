@@ -2,6 +2,8 @@ using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
+using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
 using Devantler.DataMesh.DataProduct.Configuration.Options.MetricsExporter;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
@@ -25,6 +27,7 @@ public static class ConfigurationExtensions
                 $"Failed to bind configuration to the type '{typeof(DataProductOptions).FullName}'."
             );
 
+        ConfigureDataStoreOptions(configuration, dataProductOptions);
         ConfigureCacheStoreOptions(configuration, dataProductOptions);
         ConfigureDataCatalogOptions(configuration, dataProductOptions);
         ConfigureDataIngestorsOptions(configuration, dataProductOptions);
@@ -33,6 +36,24 @@ public static class ConfigurationExtensions
         ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
 
         return dataProductOptions;
+    }
+
+    static void ConfigureDataStoreOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    {
+        dataProductOptions.DataStore = (dataProductOptions.DataStore.Type, dataProductOptions.DataStore.Provider) switch
+        {
+            (DataStoreType.SQL, SQLDataStoreProvider.Sqlite) => configuration.GetSection(DataStoreOptions.Key)
+                .Get<SqliteDataStoreOptions>()
+                    ?? throw new InvalidOperationException(
+                        $"Failed to bind configuration section '{DataStoreOptions.Key}' to the type '{typeof(SqliteDataStoreOptions).FullName}'."
+                    ),
+            (DataStoreType.SQL, SQLDataStoreProvider.PostgreSQL) => configuration.GetSection(DataStoreOptions.Key)
+                .Get<PostgreSQLDataStoreOptions>()
+                    ?? throw new InvalidOperationException(
+                        $"Failed to bind configuration section '{DataStoreOptions.Key}' to the type '{typeof(PostgreSQLDataStoreOptions).FullName}'."
+                    ),
+            _ => throw new NotSupportedException($"Data store type '{dataProductOptions.DataStore.Type}:{dataProductOptions.DataStore.Provider}' is not supported.")
+        };
     }
 
     static void ConfigureCacheStoreOptions(IConfiguration configuration, DataProductOptions dataProductOptions)

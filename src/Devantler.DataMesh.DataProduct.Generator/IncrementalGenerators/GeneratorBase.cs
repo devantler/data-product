@@ -75,7 +75,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
         string configFileExtension = configFiles.Any(f => f.FileName.EndsWith("yaml")) ? "yaml" : "yml";
 
 
-        foreach (var configFile in configFiles.Where(x => x.FileName.EndsWith("json")))
+        foreach (var configFile in configFiles.Where(x => x.FileName.EndsWith("json")).OrderByDescending(x => x.FileName))
         {
             if (string.IsNullOrEmpty(configFile.FileDirectoryPath))
             {
@@ -88,7 +88,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
             }
         }
 
-        foreach (var configFile in configFiles.Where(x => x.FileName.EndsWith(configFileExtension)))
+        foreach (var configFile in configFiles.Where(x => x.FileName.EndsWith(configFileExtension)).OrderByDescending(x => x.FileName))
         {
             _ = configuration.AddYamlFile(configFile.FilePath, optional: true);
         }

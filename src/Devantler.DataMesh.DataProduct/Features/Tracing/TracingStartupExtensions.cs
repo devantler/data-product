@@ -36,7 +36,7 @@ public static class TracingStartupExtensions
                     _ = builder.AddEntityFrameworkCoreInstrumentation();
                 }
 
-                if (options.CacheStore.Type == CacheStoreType.Redis)
+                if (options.FeatureFlags.EnableCaching && options.CacheStore.Type == CacheStoreType.Redis)
                     _ = builder.AddRedisInstrumentation();
 
                 _ = options.TracingExporter.Type switch

@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 
 namespace Devantler.DataMesh.DataProduct.Features.Caching.Services;
@@ -17,10 +18,10 @@ public class RedisCacheStoreService<TValue> : ICacheStoreService<TValue>
     /// </summary>
     /// <param name="redis"></param>
     /// <param name="options"></param>
-    public RedisCacheStoreService(IDatabase redis, DataProductOptions options)
+    public RedisCacheStoreService(IDatabase redis, IOptions<DataProductOptions> options)
     {
         _redis = redis;
-        _options = options;
+        _options = options.Value;
     }
 
     /// <inheritdoc/>
