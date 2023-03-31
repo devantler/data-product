@@ -15,7 +15,7 @@ public static class DataCatalogStartupExtensions
     /// </summary>
     public static IServiceCollection AddDataCatalog(this IServiceCollection services, DataProductOptions options)
     {
-        switch (options.DataCatalog?.Type)
+        switch (options.DataCatalog.Type)
         {
             case DataCatalogType.DataHub:
                 _ = services.AddHttpClient<Services.DataHubClient.Client>(client =>
@@ -26,7 +26,7 @@ public static class DataCatalogStartupExtensions
                 _ = services.AddHostedService<DataHubDataCatalogService>();
                 break;
             default:
-                throw new NotSupportedException($"The data catalog type '{options.DataCatalog?.Type}' is not supported.");
+                throw new NotSupportedException($"The data catalog type '{options.DataCatalog.Type}' is not supported.");
         }
         return services;
     }

@@ -96,5 +96,5 @@ public class DataProductOptions
     /// <summary>
     /// Options for the data catalog.
     /// </summary>
-    public DataCatalogOptions? DataCatalog { get; set; }
+    public DataCatalogOptions DataCatalog { get; set; } = new DataHubDataCatalogOptions();
 }

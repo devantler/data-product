@@ -42,9 +42,11 @@ SchemaRegistry:
     Subject: contoso-university
     Version: 1
 
+MetricsSystem:
+  Type: Console
+
 TracingSystem:
-  Type: OpenTelemetry
-  Endpoint: http://localhost:4317/
+  Type: Console
 
 DataIngestors:
   - Type: Local

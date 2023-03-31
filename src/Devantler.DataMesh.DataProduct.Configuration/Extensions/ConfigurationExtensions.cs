@@ -2,6 +2,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataMesh.DataProduct.Configuration.Options.MetricsSystem;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 using Devantler.DataMesh.DataProduct.Configuration.Options.TracingSystem;
@@ -27,6 +28,7 @@ public static class ConfigurationExtensions
         ConfigureCacheStoreOptions(configuration, dataProductOptions);
         ConfigureDataCatalogOptions(configuration, dataProductOptions);
         ConfigureDataIngestorsOptions(configuration, dataProductOptions);
+        ConfigureMetricsSystemOptions(configuration, dataProductOptions);
         ConfigureTracingSystemOptions(configuration, dataProductOptions);
         ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
 
@@ -92,6 +94,27 @@ public static class ConfigurationExtensions
                     .Where(x => x.Type == DataIngestorType.Kafka)
             );
             dataProductOptions.DataIngestors = dataIngestors;
+        }
+    }
+
+    static void ConfigureMetricsSystemOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    {
+        if (dataProductOptions.FeatureFlags.EnableTracing)
+        {
+            dataProductOptions.MetricsSystem = dataProductOptions.MetricsSystem.Type switch
+            {
+                MetricsSystemType.Prometheus => configuration.GetSection(MetricsSystemOptions.Key)
+                    .Get<PrometheusMetricsSystemOptions>()
+                        ?? throw new InvalidOperationException(
+                            $"Failed to bind configuration section '{MetricsSystemOptions.Key}' to the type '{typeof(PrometheusMetricsSystemOptions).FullName}'."
+                        ),
+                MetricsSystemType.Console => configuration.GetSection(MetricsSystemOptions.Key)
+                    .Get<ConsoleMetricsSystemOptions>()
+                        ?? throw new InvalidOperationException(
+                            $"Failed to bind configuration section '{MetricsSystemOptions.Key}' to the type '{typeof(ConsoleMetricsSystemOptions).FullName}'."
+                        ),
+                _ => throw new NotSupportedException($"Tracing system type '{dataProductOptions.TracingSystem.Type}' is not supported.")
+            };
         }
     }
 
