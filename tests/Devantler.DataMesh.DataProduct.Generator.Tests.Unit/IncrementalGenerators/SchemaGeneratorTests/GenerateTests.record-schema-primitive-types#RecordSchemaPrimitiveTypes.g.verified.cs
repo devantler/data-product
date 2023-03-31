@@ -11,7 +11,7 @@ public class RecordSchemaPrimitiveTypes : ISchema<Guid>
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = default;
     /// <summary>
     /// The BooleanField property.
     /// </summary>

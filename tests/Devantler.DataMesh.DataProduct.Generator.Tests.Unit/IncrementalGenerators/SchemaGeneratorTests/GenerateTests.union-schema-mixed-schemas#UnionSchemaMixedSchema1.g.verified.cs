@@ -11,5 +11,5 @@ public class UnionSchemaMixedSchema1 : ISchema<Guid>
     /// <summary>
     /// The unique identifier for this schema.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = default;
 }
