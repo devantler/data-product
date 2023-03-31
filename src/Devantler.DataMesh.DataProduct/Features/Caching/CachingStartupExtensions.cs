@@ -16,12 +16,23 @@ public static partial class CachingStartupExtensions
     /// <param name="options"></param>
     public static IServiceCollection AddCaching(this IServiceCollection services, DataProductOptions options)
     {
-        _ = options.CacheStore.Type switch
+        switch (options.CacheStore.Type)
         {
-            CacheStoreType.InMemory => services.AddMemoryCache(),
-            CacheStoreType.Redis => services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(((RedisCacheStoreOptions)options.CacheStore).Server)),
-            _ => throw new NotSupportedException($"Cache store type '{options.CacheStore.Type}' is not supported.")
-        };
+            case CacheStoreType.InMemory:
+                _ = services.AddMemoryCache();
+                break;
+            case CacheStoreType.Redis:
+                _ = services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(((RedisCacheStoreOptions)options.CacheStore).Server));
+                _ = services.AddScoped(cfg =>
+                {
+                    var redisOptions = (RedisCacheStoreOptions)options.CacheStore;
+                    IConnectionMultiplexer multiplexer = ConnectionMultiplexer.Connect(redisOptions.Server);
+                    return multiplexer.GetDatabase();
+                });
+                break;
+            default:
+                throw new NotSupportedException($"Cache store type '{options.CacheStore.Type}' is not supported.");
+        }
 
         services.AddGeneratedServiceRegistrations(options);
         return services;

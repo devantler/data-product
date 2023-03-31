@@ -15,11 +15,11 @@ public class RedisCacheStoreService<TValue> : ICacheStoreService<TValue>
     /// <summary>
     /// Initializes a new instance of the <see cref="RedisCacheStoreService{TValue}"/> class.
     /// </summary>
-    /// <param name="redisConnectionMultiplexer"></param>
+    /// <param name="redis"></param>
     /// <param name="options"></param>
-    public RedisCacheStoreService(IConnectionMultiplexer redisConnectionMultiplexer, DataProductOptions options)
+    public RedisCacheStoreService(IDatabase redis, DataProductOptions options)
     {
-        _redis = redisConnectionMultiplexer.GetDatabase();
+        _redis = redis;
         _options = options;
     }
 
