@@ -47,9 +47,6 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         var result = await _repository.CreateSingleAsync(entity, cancellationToken)
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
 
-        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-            await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
-
         return result;
     }
 
@@ -59,14 +56,6 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     {
         var entities = _mapper.Map<IEnumerable<TEntity>>(models);
         var result = await _repository.CreateMultipleAsync(entities, insertIfNotExists, cancellationToken);
-
-        if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
-        {
-            foreach (var entity in entities)
-            {
-                await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
-            }
-        }
 
         return _mapper.Map<IEnumerable<TSchema>>(result);
     }
@@ -153,13 +142,9 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
-            foreach (var id in ids)
-            {
-                string cacheKey = $"{typeof(TEntity).Name}:{id}";
-                var entity = await _cacheStore.GetOrSetAsync(cacheKey, async () => await _repository.ReadSingleAsync(id, cancellationToken), cancellationToken);
-                if (entity is not null)
-                    entities = entities.Append(entity);
-            }
+            var cacheKeys = ids.Select(id => $"{typeof(TEntity).Name}:{id}");
+            var cachedEntities = await _cacheStore.GetAsync(cacheKeys, cancellationToken);
+            entities = cachedEntities.Where(entity => entity is not null).Select(entity => entity!);
         }
         else
         {
@@ -167,6 +152,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         }
 
         return _mapper.Map<IEnumerable<TSchema>>(entities);
+
     }
 
     /// <inheritdoc/>

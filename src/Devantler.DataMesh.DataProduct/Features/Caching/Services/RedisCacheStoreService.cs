@@ -16,11 +16,11 @@ public class RedisCacheStoreService<TValue> : ICacheStoreService<TValue>
     /// <summary>
     /// Initializes a new instance of the <see cref="RedisCacheStoreService{TValue}"/> class.
     /// </summary>
-    /// <param name="redis"></param>
+    /// <param name="redisConnectionMultiplexer"></param>
     /// <param name="options"></param>
-    public RedisCacheStoreService(IDatabase redis, IOptions<DataProductOptions> options)
+    public RedisCacheStoreService(IConnectionMultiplexer redisConnectionMultiplexer, IOptions<DataProductOptions> options)
     {
-        _redis = redis;
+        _redis = redisConnectionMultiplexer.GetDatabase();
         _options = options.Value;
     }
 
@@ -34,13 +34,27 @@ public class RedisCacheStoreService<TValue> : ICacheStoreService<TValue>
     }
 
     /// <inheritdoc/>
+    public async Task<IEnumerable<TValue?>> GetAsync(IEnumerable<string> keys, CancellationToken cancellationToken = default)
+    {
+        var redisKeys = keys.Select(k => (RedisKey)k).ToArray();
+
+        var redisValues = await _redis.StringGetAsync(redisKeys);
+
+        var values = redisValues.Select(v => v.HasValue ? JsonSerializer.Deserialize<TValue>(v.ToString()) : default);
+
+        return values;
+    }
+
+    /// <inheritdoc/>
     public async Task<TValue?> GetOrSetAsync(string key, Func<Task<TValue>> valueFactory, CancellationToken cancellationToken = default)
     {
-        var value = await _redis.StringGetSetAsync(key, JsonSerializer.Serialize(await valueFactory()));
-        _ = _redis.KeyExpireAsync(key, _options.CacheStore.ExpirationTime.ToTimeSpan());
-        return value.HasValue
-            ? JsonSerializer.Deserialize<TValue>(value.ToString())
-            : default;
+        var value = await GetAsync(key, cancellationToken);
+        if (value is not null)
+            return value;
+
+        value = await valueFactory();
+        await SetAsync(key, value, cancellationToken);
+        return value;
     }
 
     /// <inheritdoc/>
