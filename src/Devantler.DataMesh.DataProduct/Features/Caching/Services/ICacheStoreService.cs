@@ -15,6 +15,11 @@ public interface ICacheStoreService<TValue>
     Task<TValue?> GetAsync(string key, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Gets multiple values from the cache store.
+    /// </summary>
+    Task<IEnumerable<TValue?>> GetAsync(IEnumerable<string> keys, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Gets or sets a value in the cache store.
     /// </summary>
     /// <param name="key"></param>

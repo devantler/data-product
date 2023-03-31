@@ -23,12 +23,6 @@ public static partial class CachingStartupExtensions
                 break;
             case CacheStoreType.Redis:
                 _ = services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(((RedisCacheStoreOptions)options.CacheStore).Server));
-                _ = services.AddScoped(cfg =>
-                {
-                    var redisOptions = (RedisCacheStoreOptions)options.CacheStore;
-                    IConnectionMultiplexer multiplexer = ConnectionMultiplexer.Connect(redisOptions.Server);
-                    return multiplexer.GetDatabase();
-                });
                 break;
             default:
                 throw new NotSupportedException($"Cache store type '{options.CacheStore.Type}' is not supported.");

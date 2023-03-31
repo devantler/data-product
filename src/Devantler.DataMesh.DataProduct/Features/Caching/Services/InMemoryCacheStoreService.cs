@@ -56,4 +56,11 @@ public class InMemoryCacheStoreService<TValue> : ICacheStoreService<TValue>
         _memoryCache.Remove(key);
         return Task.CompletedTask;
     }
+
+    /// <inheritdoc />
+    public Task<IEnumerable<TValue?>> GetAsync(IEnumerable<string> keys, CancellationToken cancellationToken = default)
+    {
+        var cacheEntries = keys.Select(_memoryCache.Get<TValue>);
+        return Task.FromResult(cacheEntries);
+    }
 }
