@@ -40,7 +40,8 @@ public class SchemaGenerator : GeneratorBase
                 .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"));
 
             var idProperty = new CSharpProperty("Guid", "Id")
-                .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."));
+                .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."))
+                .SetValue("default");
             if (schema.Fields.Any(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase)))
             {
                 var idField = schema.Fields.First(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase));
@@ -48,7 +49,6 @@ public class SchemaGenerator : GeneratorBase
             };
             _ = @class.AddProperty(idProperty);
             _ = @class.AddImplementation(new CSharpInterface($"ISchema<{idProperty.Type}>"));
-
             foreach (var field in schema.Fields)
             {
                 if (field.Name.Equals("id", StringComparison.OrdinalIgnoreCase))

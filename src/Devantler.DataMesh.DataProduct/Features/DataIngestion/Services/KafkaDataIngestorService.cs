@@ -65,7 +65,8 @@ public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
                 var consumeResult = consumer.Consume(token);
                 var schema = consumeResult.Message.Value;
 
-                // TODO: set ids to default value.
+                if (schema is null)
+                    continue;
 
                 _ = await _dataStoreService.CreateSingleAsync(schema, token);
             }
