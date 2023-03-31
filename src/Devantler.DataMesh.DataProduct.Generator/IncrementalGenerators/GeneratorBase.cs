@@ -1,7 +1,8 @@
 using System.Collections.Immutable;
 using System.Text;
-using Devantler.DataMesh.DataProduct.Configuration.Extensions;
+using Devantler.DataMesh.DataProduct.Configuration;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Microsoft.CodeAnalysis;

@@ -8,7 +8,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Provid
 using Devantler.DataMesh.DataProduct.Configuration.Options.TracingSystem;
 using Microsoft.Extensions.Configuration;
 
-namespace Devantler.DataMesh.DataProduct.Configuration.Extensions;
+namespace Devantler.DataMesh.DataProduct.Configuration;
 
 /// <summary>
 /// Extension methods for <see cref="IConfiguration"/>.

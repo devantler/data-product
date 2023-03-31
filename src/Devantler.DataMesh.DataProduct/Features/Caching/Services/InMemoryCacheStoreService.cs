@@ -1,5 +1,5 @@
-using Devantler.DataMesh.DataProduct.Configuration.Extensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 

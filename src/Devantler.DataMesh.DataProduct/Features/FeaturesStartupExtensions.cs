@@ -1,5 +1,5 @@
 using System.Reflection;
-using Devantler.DataMesh.DataProduct.Configuration.Extensions;
+using Devantler.DataMesh.DataProduct.Configuration;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Features.Apis;

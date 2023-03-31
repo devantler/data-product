@@ -1,7 +1,6 @@
-using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 
-namespace Devantler.DataMesh.DataProduct.Configuration.Extensions;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 
 /// <summary>
 /// A static class containing extension methods for the <see cref="SchemaRegistryOptions"/> type.

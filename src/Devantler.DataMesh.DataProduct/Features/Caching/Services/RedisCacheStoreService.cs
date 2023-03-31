@@ -1,6 +1,6 @@
 using System.Text.Json;
-using Devantler.DataMesh.DataProduct.Configuration.Extensions;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 using StackExchange.Redis;
 
 namespace Devantler.DataMesh.DataProduct.Features.Caching.Services;

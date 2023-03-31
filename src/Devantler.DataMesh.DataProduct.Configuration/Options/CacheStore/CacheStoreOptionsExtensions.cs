@@ -1,6 +1,4 @@
-using Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
-
-namespace Devantler.DataMesh.DataProduct.Configuration.Extensions;
+namespace Devantler.DataMesh.DataProduct.Configuration.Options.CacheStore;
 
 /// <summary>
 /// Extensions for <see cref="CacheStoreOptions"/>.
