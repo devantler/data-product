@@ -5,6 +5,7 @@ EXPOSE 5000
 ENV ASPNETCORE_URLS=http://+:5000 \
     ASPNETCORE_ENVIRONMENT=Production
 
+WORKDIR /
 COPY src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj /build/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj
 COPY src/Devantler.DataMesh.DataProduct.Generator/Devantler.DataMesh.DataProduct.Generator.csproj /build/src/Devantler.DataMesh.DataProduct.Generator/Devantler.DataMesh.DataProduct.Generator.csproj
 COPY src/Devantler.DataMesh.DataProduct.Configuration/Devantler.DataMesh.DataProduct.Configuration.csproj /build/src/Devantler.DataMesh.DataProduct.Configuration/Devantler.DataMesh.DataProduct.Configuration.csproj
