@@ -42,17 +42,13 @@ public static class ConfigurationExtensions
     {
         dataProductOptions.DataStore = (dataProductOptions.DataStore.Type, dataProductOptions.DataStore.Provider) switch
         {
-            (DataStoreType.SQL, SQLDataStoreProvider.Sqlite) => configuration.GetSection(DataStoreOptions.Key)
-                .Get<SqliteDataStoreOptions>()
-                    ?? throw new InvalidOperationException(
-                        $"Failed to bind configuration section '{DataStoreOptions.Key}' to the type '{typeof(SqliteDataStoreOptions).FullName}'."
-                    ),
+            (DataStoreType.SQL, SQLDataStoreProvider.Sqlite) => dataProductOptions.DataStore,
             (DataStoreType.SQL, SQLDataStoreProvider.PostgreSQL) => configuration.GetSection(DataStoreOptions.Key)
                 .Get<PostgreSQLDataStoreOptions>()
                     ?? throw new InvalidOperationException(
                         $"Failed to bind configuration section '{DataStoreOptions.Key}' to the type '{typeof(PostgreSQLDataStoreOptions).FullName}'."
                     ),
-            _ => throw new NotSupportedException($"Data store type '{dataProductOptions.DataStore.Type}:{dataProductOptions.DataStore.Provider}' is not supported.")
+            _ => throw new NotSupportedException($"Data store type '{dataProductOptions.DataStore.Type}' and provider '{dataProductOptions.DataStore.Provider}' is not supported.")
         };
     }
 
@@ -62,11 +58,7 @@ public static class ConfigurationExtensions
         {
             dataProductOptions.CacheStore = dataProductOptions.CacheStore.Type switch
             {
-                CacheStoreType.InMemory => configuration.GetSection(CacheStoreOptions.Key)
-                    .Get<InMemoryCacheStoreOptions>()
-                        ?? throw new InvalidOperationException(
-                            $"Failed to bind configuration section '{CacheStoreOptions.Key}' to the type '{typeof(InMemoryCacheStoreOptions).FullName}'."
-                        ),
+                CacheStoreType.InMemory => dataProductOptions.CacheStore,
                 CacheStoreType.Redis => configuration.GetSection(CacheStoreOptions.Key)
                     .Get<RedisCacheStoreOptions>()
                         ?? throw new InvalidOperationException(

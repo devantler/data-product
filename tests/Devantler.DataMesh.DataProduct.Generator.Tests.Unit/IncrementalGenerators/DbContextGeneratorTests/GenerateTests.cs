@@ -35,7 +35,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
 
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-    public Task GivenOtherDataStore_DoesNothing(string subject)
+    public void GivenOtherDataStore_DoesNothing(string subject)
     {
         //Arrange
         var additionalText = CreateDataProductConfig(
@@ -61,8 +61,10 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
 
         //Act
         var driver = RunGenerator(additionalText);
+        Func<Task> act = () => Verify(driver);
 
         //Assert
-        return Verify(driver);
+        // Check that the task contains a NotSupported exception
+        _ = act.Should().ThrowAsync<NotSupportedException>();
     }
 }
