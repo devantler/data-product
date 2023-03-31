@@ -103,6 +103,11 @@ public static class ConfigurationExtensions
         {
             dataProductOptions.MetricsSystem = dataProductOptions.MetricsSystem.Type switch
             {
+                MetricsSystemType.OpenTelemetry => configuration.GetSection(MetricsSystemOptions.Key)
+                    .Get<OpenTelemetryMetricsSystemOptions>()
+                        ?? throw new InvalidOperationException(
+                            $"Failed to bind configuration section '{MetricsSystemOptions.Key}' to the type '{typeof(OpenTelemetryMetricsSystemOptions).FullName}'."
+                        ),
                 MetricsSystemType.Prometheus => configuration.GetSection(MetricsSystemOptions.Key)
                     .Get<PrometheusMetricsSystemOptions>()
                         ?? throw new InvalidOperationException(

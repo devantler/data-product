@@ -22,11 +22,19 @@ public static class MetricsStartupExtensions
             {
                 _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
                 _ = builder.AddAspNetCoreInstrumentation();
+                _ = builder.AddRuntimeInstrumentation();
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
                     _ = builder.AddHttpClientInstrumentation();
 
                 _ = options.MetricsSystem.Type switch
                 {
+                    MetricsSystemType.OpenTelemetry => builder.AddOtlpExporter(
+                        opt =>
+                        {
+                            var openTelemetryOptions = (OpenTelemetryMetricsSystemOptions)options.MetricsSystem;
+                            opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+                        }
+                    ),
                     MetricsSystemType.Prometheus => builder.AddPrometheusExporter(),
                     MetricsSystemType.Console => builder.AddConsoleExporter(),
                     _ => throw new NotSupportedException($"Metrics system type '{options.MetricsSystem.Type}' is not supported."),

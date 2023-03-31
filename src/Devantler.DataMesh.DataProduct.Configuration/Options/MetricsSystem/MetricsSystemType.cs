@@ -14,4 +14,8 @@ public enum MetricsSystemType
     /// A simple console exporter that writes metrics to the console.
     /// </summary>
     Console,
+    /// <summary>
+    /// An open-source telemetry data collection and processing pipeline.
+    /// </summary>
+    OpenTelemetry,
 }
