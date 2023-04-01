@@ -15,7 +15,6 @@ namespace Devantler.DataMesh.DataProduct.Features.DataIngestion.Services;
 public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
     where TSchema : class, Schemas.ISchema<TKey>
 {
-    static readonly ActivitySource _source = new("KafkaDataIngestorService");
     readonly IDataStoreService<TKey, TSchema> _dataStoreService;
     readonly List<(IConsumer<TKey, TSchema>, string)> _consumers;
 
@@ -64,24 +63,26 @@ public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
             consumer.Subscribe(topic);
             while (!token.IsCancellationRequested)
             {
-                using var activity = _source.StartActivity($"Consume message from {topic}", ActivityKind.Consumer);
                 var consumeResult = consumer.Consume(token);
-
-                _ = activity?.AddTag("topic", topic)
-                    .AddTag("key", consumeResult.Message.Key)
-                    .AddTag("partition", consumeResult.Partition.Value)
-                    .AddTag("offset", consumeResult.Offset.Value);
 
                 var schema = consumeResult.Message.Value;
 
                 if (schema is null)
                     continue;
 
-                _ = activity?.AddEvent(new ActivityEvent($"Create entity {schema.Id} in data store."));
                 _ = await _dataStoreService.CreateSingleAsync(schema, token);
-                _ = activity?.AddEvent(new ActivityEvent($"Entity {schema.Id} created in data store."));
-                _ = activity?.AddEvent(new ActivityEvent($"Message {consumeResult.Message.Key} successfully consumed from {topic}"));
             }
         });
+    }
+
+    /// <inheritdoc />
+    public override async Task StopAsync(CancellationToken cancellationToken)
+    {
+        foreach (var consumer in _consumers)
+        {
+            consumer.Item1.Close();
+            consumer.Item1.Dispose();
+        }
+        await base.StopAsync(cancellationToken);
     }
 }

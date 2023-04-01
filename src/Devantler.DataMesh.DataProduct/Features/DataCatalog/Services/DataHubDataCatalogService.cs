@@ -50,6 +50,10 @@ public class DataHubDataCatalogService : BackgroundService
         await _dataHubClient.EmitMetadata(metadata, stoppingToken);
     }
 
+    /// <inheritdoc />
+    public override async Task StopAsync(CancellationToken cancellationToken)
+        => await base.StopAsync(cancellationToken);
+
     void AddLinks(string urn, Metadata metadata)
     {
         var links = new List<InstitutionalMemoryMetadata>();

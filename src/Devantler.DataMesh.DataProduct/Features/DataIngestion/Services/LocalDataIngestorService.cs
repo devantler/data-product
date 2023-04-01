@@ -72,4 +72,8 @@ public class LocalDataIngestorService<TKey, TSchema> : BackgroundService
         }
         _ = await _dataStoreService.CreateMultipleAsync(schemas.Distinct(), true, stoppingToken);
     }
+
+    /// <inheritdoc />
+    public override async Task StopAsync(CancellationToken cancellationToken)
+        => await base.StopAsync(cancellationToken);
 }
