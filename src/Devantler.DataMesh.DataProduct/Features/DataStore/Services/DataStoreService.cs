@@ -145,8 +145,13 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
             var entitiesFromCache = cachedEntities.Where(entity => entity is not null).Select(entity => entity!);
 
             var idsNotInCache = ids.Except(entitiesFromCache.Select(entity => entity.Id));
-            var entitiesNotInCache = await _repository.ReadMultipleAsync(idsNotInCache, cancellationToken);
-            await _cacheStore.SetAsync(idsNotInCache.Select(id => $"{typeof(TEntity).Name}:{id}"), entitiesNotInCache, cancellationToken);
+
+            var entitiesNotInCache = Enumerable.Empty<TEntity>();
+            if (idsNotInCache.Any())
+            {
+                entitiesNotInCache = await _repository.ReadMultipleAsync(idsNotInCache, cancellationToken);
+                await _cacheStore.SetAsync(idsNotInCache.Select(id => $"{typeof(TEntity).Name}:{id}"), entitiesNotInCache, cancellationToken);
+            }
 
             var entities = entitiesFromCache.Concat(entitiesNotInCache);
             return _mapper.Map<IEnumerable<TSchema>>(entities);

@@ -32,7 +32,6 @@ public static class TracingStartupExtensions
 
                 if (options.DataStore.Type == DataStoreType.SQL)
                 {
-                    _ = builder.AddSqlClientInstrumentation();
                     _ = builder.AddEntityFrameworkCoreInstrumentation();
                 }
 
