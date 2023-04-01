@@ -138,20 +138,24 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     /// <inheritdoc/>
     public async Task<IEnumerable<TSchema>> GetMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
     {
-        var entities = Enumerable.Empty<TEntity>();
-
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
             var cacheKeys = ids.Select(id => $"{typeof(TEntity).Name}:{id}");
             var cachedEntities = await _cacheStore.GetAsync(cacheKeys, cancellationToken);
-            entities = cachedEntities.Where(entity => entity is not null).Select(entity => entity!);
-            ids = ids.Except(entities.Select(entity => entity.Id));
+            var entitiesFromCache = cachedEntities.Where(entity => entity is not null).Select(entity => entity!);
+
+            var idsNotInCache = ids.Except(entitiesFromCache.Select(entity => entity.Id));
+            var entitiesNotInCache = await _repository.ReadMultipleAsync(idsNotInCache, cancellationToken);
+            await _cacheStore.SetAsync(idsNotInCache.Select(id => $"{typeof(TEntity).Name}:{id}"), entitiesNotInCache, cancellationToken);
+
+            var entities = entitiesFromCache.Concat(entitiesNotInCache);
+            return _mapper.Map<IEnumerable<TSchema>>(entities);
         }
-
-        if (ids.Any())
-            entities = entities.Concat(await _repository.ReadMultipleAsync(ids, cancellationToken));
-
-        return _mapper.Map<IEnumerable<TSchema>>(entities);
+        else
+        {
+            var entities = await _repository.ReadMultipleAsync(ids, cancellationToken);
+            return _mapper.Map<IEnumerable<TSchema>>(entities);
+        }
     }
 
     /// <inheritdoc/>

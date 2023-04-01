@@ -63,4 +63,13 @@ public class InMemoryCacheStoreService<TValue> : ICacheStoreService<TValue>
         var cacheEntries = keys.Select(_memoryCache.Get<TValue>);
         return Task.FromResult(cacheEntries);
     }
+
+    /// <inheritdoc />
+    public async Task SetAsync(IEnumerable<string> keys, IEnumerable<TValue> values, CancellationToken cancellationToken = default)
+    {
+        foreach (var (key, value) in keys.Zip(values, (key, value) => (key, value)))
+        {
+            await SetAsync(key, value, cancellationToken);
+        }
+    }
 }

@@ -67,4 +67,13 @@ public class RedisCacheStoreService<TValue> : ICacheStoreService<TValue>
         string expirationTime = _options.CacheStore.ExpirationTime;
         return _redis.StringSetAsync(key, JsonSerializer.Serialize(value), expirationTime.ToTimeSpan());
     }
+
+    /// <inheritdoc/>
+    public async Task SetAsync(IEnumerable<string> keys, IEnumerable<TValue> values, CancellationToken cancellationToken = default)
+    {
+        foreach ((string key, var value) in keys.Zip(values, (k, v) => (k, v)))
+        {
+            await SetAsync(key, value, cancellationToken);
+        }
+    }
 }
