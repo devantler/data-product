@@ -62,7 +62,7 @@ public class LocalDataIngestorService<TKey, TSchema> : BackgroundService
                         JsonValueKind.Object => new List<TSchema> { json.Deserialize<TSchema>(options)
                             ?? throw new InvalidOperationException($"Failed to deserialize JSON as {typeof(TSchema).Name}.")
                         },
-                        _ => throw new NotSupportedException($"JSON value kind {json.RootElement.ValueKind} is not supported."),
+                        _ => throw new NotSupportedException($"JSON value kind {json.RootElement.ValueKind} is not supported.")
                     };
                     schemas.AddRange(deserializedSchemas);
                     break;

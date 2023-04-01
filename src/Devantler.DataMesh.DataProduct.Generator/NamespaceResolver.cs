@@ -26,15 +26,19 @@ public static class NamespaceResolver
     {
         foreach (var member in namespaceSymbol.GetMembers())
         {
-            if (member is INamespaceSymbol namespaceMember)
+            switch (member)
             {
-                string @namespace = ResolveForType(namespaceMember, typeName);
-                if (!string.IsNullOrEmpty(@namespace))
-                    return @namespace;
-            }
-            else if (member is INamedTypeSymbol namedTypeMember && namedTypeMember.Name == typeName)
-            {
-                return namespaceSymbol.ToDisplayString();
+                case INamespaceSymbol namespaceMember:
+                    {
+                        string @namespace = ResolveForType(namespaceMember, typeName);
+                        if (!string.IsNullOrEmpty(@namespace))
+                            return @namespace;
+                        break;
+                    }
+                case INamedTypeSymbol namedTypeMember when namedTypeMember.Name == typeName:
+                    return namespaceSymbol.ToDisplayString();
+                default:
+                    continue;
             }
         }
 

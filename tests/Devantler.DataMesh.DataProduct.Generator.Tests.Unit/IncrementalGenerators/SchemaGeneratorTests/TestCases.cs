@@ -26,7 +26,4 @@ public static class TestCases
             new object[]{"union-schema-record-schema"},
             new object[]{"union-schema-record-schemas"}
         };
-
-    public static IEnumerable<object[]> InvalidCases =>
-        new List<object[]>();
 }

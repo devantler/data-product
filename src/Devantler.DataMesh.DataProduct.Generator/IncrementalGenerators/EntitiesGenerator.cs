@@ -45,7 +45,8 @@ public class EntitiesGenerator : GeneratorBase
             {
                 var idField = schema.Fields.First(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase));
                 idProperty.Type = avroSchemaParser.Parse(idField.Type, Language.CSharp);
-            };
+            }
+
             _ = @class.AddProperty(idProperty);
             _ = @class.AddImplementation(new CSharpInterface($"IEntity<{idProperty.Type}>"));
 

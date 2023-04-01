@@ -38,7 +38,7 @@ public static class MetricsStartupExtensions
                         }
                     ),
                     MetricsExporterType.Console => builder.AddConsoleExporter(),
-                    _ => throw new NotSupportedException($"Metrics system type '{options.MetricsExporter.Type}' is not supported."),
+                    _ => throw new NotSupportedException($"Metrics system type '{options.MetricsExporter.Type}' is not supported.")
                 };
             });
         return services;

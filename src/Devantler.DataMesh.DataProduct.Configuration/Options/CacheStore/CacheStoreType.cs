@@ -13,5 +13,5 @@ public enum CacheStoreType
     /// <summary>
     /// A distributed Redis cache store.
     /// </summary>
-    Redis,
+    Redis
 }
