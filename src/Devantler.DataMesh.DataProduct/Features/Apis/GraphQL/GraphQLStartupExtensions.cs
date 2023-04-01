@@ -1,4 +1,5 @@
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using HotChocolate.Types.Pagination;
 
 namespace Devantler.DataMesh.DataProduct.Features.Apis.GraphQL;
 
@@ -19,6 +20,11 @@ public static class GraphQLStartupExtensions
         var requestExecutorBuilder = services.AddGraphQLServer()
             .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = environment.IsDevelopment())
             .AddQueryType<Query>();
+        _ = requestExecutorBuilder.SetPagingOptions(new PagingOptions
+        {
+            DefaultPageSize = options.Apis.GraphQL.DefaultPageSize,
+            MaxPageSize = options.Apis.GraphQL.MaxPageSize
+        });
         if (options.Apis.GraphQL.EnableProjections)
             _ = requestExecutorBuilder.AddProjections();
         if (options.Apis.GraphQL.EnableFiltering)

@@ -230,7 +230,35 @@
                 "GraphQL": {
                     "description": "The GraphQL API used by the data product.",
                     "type": "object",
-                    "properties": {}
+                    "properties": {
+                        "EnableFiltering": {
+                            "description": "Whether to enable filtering for the GraphQL API.",
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "EnableSorting": {
+                            "description": "Whether to enable sorting for the GraphQL API.",
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "EnableProjections": {
+                            "description": "Whether to enable pagination for the GraphQL API.",
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "DefaultPageSize": {
+                            "description": "The default page size for the GraphQL API.",
+                            "type": "integer",
+                            "minimum": 1,
+                            "default": 10
+                        },
+                        "MaxPageSize": {
+                            "description": "The maximum page size for the GraphQL API.",
+                            "type": "integer",
+                            "minimum": 1,
+                            "default": 100
+                        }
+                    }
                 },
                 "Rest": {
                     "description": "The Rest API used by the data product.",
