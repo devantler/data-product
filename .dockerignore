@@ -28,6 +28,9 @@
 **/.DS_Store
 **/*.db
 **/*.schema.json
-.github
+**/.github
+**/sqlite.db
+**/generated
+**/Properties
 LICENSE
 README.md
