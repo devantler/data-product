@@ -56,7 +56,6 @@ public abstract class GeneratorBase : IIncrementalGenerator
             .Select((additionalText, _) => new AdditionalFile
             {
                 FileName = Path.GetFileName(additionalText.Path),
-                FileNameWithoutExtension = Path.GetFileNameWithoutExtension(additionalText.Path),
                 FilePath = additionalText.Path,
                 FileDirectoryPath = Path.GetDirectoryName(additionalText.Path) ?? "",
                 Contents = additionalText.GetText()
@@ -66,20 +65,19 @@ public abstract class GeneratorBase : IIncrementalGenerator
 
     static IConfigurationRoot BuildConfiguration(ImmutableArray<AdditionalFile> files)
     {
-        string environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
-
         var configuration = new ConfigurationBuilder();
 
         var configFiles = files.Where(file => file.FileName.StartsWith("config"));
 
-        string configFileExtension = configFiles.Any(f => f.FileName.EndsWith("yaml")) ? "yaml" : "yml";
+        var additionalFiles = configFiles as AdditionalFile[] ?? configFiles.ToArray();
+        string configFileExtension = additionalFiles.Any(f => f.FileName.EndsWith("yaml")) ? "yaml" : "yml";
 
 
-        foreach (var configFile in configFiles.Where(x => x.FileName.EndsWith("json")).OrderByDescending(x => x.FileName))
+        foreach (var configFile in additionalFiles.Where(x => x.FileName.EndsWith("json")).OrderByDescending(x => x.FileName))
         {
-            if (string.IsNullOrEmpty(configFile.FileDirectoryPath))
+            if (string.IsNullOrEmpty(configFile.FileDirectoryPath) && configFile.Contents != null)
             {
-                var textStream = new MemoryStream(Encoding.UTF8.GetBytes(configFile?.Contents?.ToString()));
+                var textStream = new MemoryStream(Encoding.UTF8.GetBytes(configFile.Contents.ToString()));
                 _ = configuration.AddJsonStream(textStream);
             }
             else
@@ -88,7 +86,7 @@ public abstract class GeneratorBase : IIncrementalGenerator
             }
         }
 
-        foreach (var configFile in configFiles.Where(x => x.FileName.EndsWith(configFileExtension)).OrderByDescending(x => x.FileName))
+        foreach (var configFile in additionalFiles.Where(x => x.FileName.EndsWith(configFileExtension)).OrderByDescending(x => x.FileName))
         {
             _ = configuration.AddYamlFile(configFile.FilePath, optional: true);
         }

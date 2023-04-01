@@ -22,7 +22,7 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
         _driver = CSharpGeneratorDriver.Create(new T());
     }
 
-    static List<PortableExecutableReference> LoadAssemblyReferences()
+    static IEnumerable<PortableExecutableReference> LoadAssemblyReferences()
     {
         return AppDomain.CurrentDomain.GetAssemblies()
             .Where(a => !a.IsDynamic)
@@ -57,5 +57,5 @@ public class CustomAdditionalText : AdditionalText
         _text = text;
     }
 
-    public override SourceText? GetText(CancellationToken cancellationToken = default) => SourceText.From(_text);
+    public override SourceText GetText(CancellationToken cancellationToken = default) => SourceText.From(_text);
 }

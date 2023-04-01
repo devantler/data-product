@@ -61,8 +61,6 @@ public class CachingStartupExtensionsGenerator : GeneratorBase
 
         var schemas = rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>();
 
-        var avroSchemaParser = new AvroSchemaParser();
-
         foreach (var schema in schemas)
         {
             _ = options.CacheStore.Type switch

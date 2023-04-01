@@ -7,7 +7,7 @@
 @inject IOptions<DataProductOptions> Options
 @inject ISchemaRegistryClient SchemaRegistryClient
 
-<Card Background="Background.Light" Margin=Margin.Is4.FromBottom>
+<Card Background="Background.Light" Margin="Margin.Is4.FromBottom">
     <CardBody>
         <CardTitle Size="3">
             Schema
@@ -31,6 +31,7 @@
 @code {
     private List<RecordSchema> _schemas = new();
 
+    /// <inheritdoc />
     protected override async Task OnInitializedAsync()
     {
         var rootSchema = await SchemaRegistryClient.GetSchemaAsync(Options.Value.SchemaRegistry.Schema.Subject,

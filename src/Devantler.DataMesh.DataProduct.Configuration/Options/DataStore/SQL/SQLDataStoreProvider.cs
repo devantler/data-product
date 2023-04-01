@@ -3,7 +3,7 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
 /// <summary>
 /// Supported data store providers for the relational data store type.
 /// </summary>
-public class SQLDataStoreProvider : IProvider
+public abstract class SQLDataStoreProvider : IProvider
 {
     /// <summary>
     /// The Sqlite data store provider.

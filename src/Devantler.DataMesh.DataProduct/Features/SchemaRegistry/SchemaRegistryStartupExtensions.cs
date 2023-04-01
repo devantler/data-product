@@ -17,7 +17,7 @@ public static class SchemaRegistryStartupExtensions
         _ = options.SchemaRegistry.Type switch
         {
             SchemaRegistryType.Local => services.AddScoped<ISchemaRegistryClient, LocalSchemaRegistryClient>(
-                service =>
+                _ =>
                 {
                     return new LocalSchemaRegistryClient(
                         opt =>
@@ -28,7 +28,7 @@ public static class SchemaRegistryStartupExtensions
                 }
             ),
             SchemaRegistryType.Kafka => services.AddScoped<ISchemaRegistryClient, KafkaSchemaRegistryClient>(
-                service =>
+                _ =>
                 {
                     return new KafkaSchemaRegistryClient(
                         opt =>

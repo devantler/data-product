@@ -23,10 +23,6 @@ public class AdditionalFile
     public string FileDirectoryPath { get; set; } = string.Empty;
 
     /// <summary>
-    /// The name of the file without the file extension.
-    /// </summary>
-    public string FileNameWithoutExtension { get; set; } = string.Empty;
-    /// <summary>
     /// The contents of the file.
     /// </summary>
     public SourceText? Contents { get; set; }

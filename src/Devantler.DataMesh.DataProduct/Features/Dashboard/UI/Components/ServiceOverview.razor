@@ -7,7 +7,7 @@
 
 @inject IOptions<DataProductOptions> Options
 
-<Card Background="Background.Light" Margin=Margin.Is4.FromBottom>
+<Card Background="Background.Light" Margin="Margin.Is4.FromBottom">
     <CardBody>
         <CardTitle Size="3">Services</CardTitle>
         <CardText>
@@ -32,7 +32,7 @@
                     </ListGroupItem>
                 }
 
-                @if(Options.Value.FeatureFlags.EnableDataCatalog && Options.Value.DataCatalog != null)
+                @if(Options.Value.FeatureFlags.EnableDataCatalog)
                 {
                     <ListGroupItem>
                         <ServiceDetails Name="@Options.Value.DataCatalog.Type.ToString()" Type="Data Catalog"

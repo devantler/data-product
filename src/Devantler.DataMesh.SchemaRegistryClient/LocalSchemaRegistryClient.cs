@@ -58,7 +58,7 @@ public class LocalSchemaRegistryClient : ISchemaRegistryClient
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
-        string schemaFile = Directory.GetFiles(_options.Path, schemaFileName).FirstOrDefault();
+        string? schemaFile = Directory.GetFiles(_options.Path, schemaFileName).FirstOrDefault();
 
         return string.IsNullOrEmpty(schemaFile)
             ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_options.Path} not found.")
@@ -76,7 +76,7 @@ public class LocalSchemaRegistryClient : ISchemaRegistryClient
     {
         string schemaFileName = $"{subject}-v{version}.avsc";
 
-        string schemaFile = Directory.GetFiles(_options.Path, schemaFileName).FirstOrDefault();
+        string? schemaFile = Directory.GetFiles(_options.Path, schemaFileName).FirstOrDefault();
 
         return string.IsNullOrEmpty(schemaFile)
             ? throw new FileNotFoundException($"Schema file {schemaFileName} in path {_options.Path} not found.")

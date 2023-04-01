@@ -3,7 +3,7 @@ namespace Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.NoSQL;
 /// <summary>
 /// The NoSQL data store provider to use.
 /// </summary>
-public class NoSQLDataStoreProvider : IProvider
+public abstract class NoSQLDataStoreProvider : IProvider
 {
     /// <summary>
     /// The MongoDb data store provider. Not supported yet.

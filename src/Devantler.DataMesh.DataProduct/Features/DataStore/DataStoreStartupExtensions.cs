@@ -24,7 +24,7 @@ public static partial class DataStoreStartupExtensions
             DataStoreType.SQL => services.AddDatabaseDeveloperPageExceptionFilter(),
             DataStoreType.NoSQL => throw new NotSupportedException("Document based data stores are not supported yet."),
             DataStoreType.Graph => throw new NotSupportedException("Graph based data stores are not supported yet."),
-            _ => throw new NotSupportedException($"The data store type {options.DataStore} is not supported."),
+            _ => throw new NotSupportedException($"The data store type {options.DataStore} is not supported.")
         };
         return services;
     }

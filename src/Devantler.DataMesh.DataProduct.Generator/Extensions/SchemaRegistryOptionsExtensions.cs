@@ -25,7 +25,7 @@ public static class SchemaRegistryOptionsExtensions
             {
                 o.Path = options.Url;
             }),
-            _ => throw new NotSupportedException($"Schema registry type '{options.Type}' is not supported."),
+            _ => throw new NotSupportedException($"Schema registry type '{options.Type}' is not supported.")
         };
     }
 }

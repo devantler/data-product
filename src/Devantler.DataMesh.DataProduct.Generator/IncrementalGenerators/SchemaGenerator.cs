@@ -46,7 +46,8 @@ public class SchemaGenerator : GeneratorBase
             {
                 var idField = schema.Fields.First(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase));
                 idProperty.Type = avroSchemaParser.Parse(idField.Type, Language.CSharp);
-            };
+            }
+
             _ = @class.AddProperty(idProperty);
             _ = @class.AddImplementation(new CSharpInterface($"ISchema<{idProperty.Type}>"));
             foreach (var field in schema.Fields)

@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Chr.Avro.Confluent;
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
@@ -49,7 +48,7 @@ public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
                 .SetAvroValueDeserializer(registry)
                 .SetErrorHandler((_, error) => Console.Error.WriteLine(error.ToString()))
                 .Build();
-            _consumers.Add(new(consumer, options.Topic));
+            _consumers.Add(new ValueTuple<IConsumer<TKey, TSchema>, string>(consumer, options.Topic));
         }
     }
 

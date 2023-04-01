@@ -41,15 +41,15 @@ public class DbContextGenerator : GeneratorBase
 
         var codeCompilation = new CSharpCompilation();
 
-        var @class = new CSharpClass($"{dataStoreOptions?.Provider}DbContext")
+        var @class = new CSharpClass($"{dataStoreOptions.Provider}DbContext")
             .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
             .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions"))
-            .SetDocBlock(new CSharpDocBlock($"A {dataStoreOptions?.Provider} database context."))
+            .SetDocBlock(new CSharpDocBlock($"A {dataStoreOptions.Provider} database context."))
             .SetBaseClass(new CSharpClass("DbContext"));
 
         var constructor = new CSharpConstructor(@class.Name)
-            .SetDocBlock(new CSharpDocBlock($"A constructor to construct a {dataStoreOptions?.Provider} database context."))
+            .SetDocBlock(new CSharpDocBlock($"A constructor to construct a {dataStoreOptions.Provider} database context."))
             .AddParameter(new CSharpConstructorParameter($"DbContextOptions<{@class.Name}>", "options")
                 .SetIsBaseParameter(true));
 

@@ -41,11 +41,14 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Devantler.DataMesh.DataProduct.Generator\Devantler.DataMesh.DataProduct.Generator.csproj" />
         <ProjectReference Include="..\..\src\Devantler.DataMesh.DataProduct\Devantler.DataMesh.DataProduct.csproj" />
-        <ProjectReference Include="..\Devantler.DataMesh.Tests.Assets\Devantler.DataMesh.Tests.Assets.csproj" />
     </ItemGroup>
 
     <ItemGroup>
         <AdditionalFiles Include="BannedSymbols.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="assets/**" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
 </Project>
