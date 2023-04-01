@@ -15,7 +15,7 @@ public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
     where TSchema : class, Schemas.ISchema<TKey>
 {
     readonly IDataStoreService<TKey, TSchema> _dataStoreService;
-    readonly List<(IConsumer<TKey, TSchema>, string)> _consumers;
+    readonly List<(IConsumer<string, TSchema>, string)> _consumers;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="KafkaDataIngestorService{TKey, TSchema}"/> class.
@@ -35,7 +35,7 @@ public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
         };
 
         var registry = new CachedSchemaRegistryClient(registryConfig);
-        _consumers = new List<(IConsumer<TKey, TSchema>, string)>();
+        _consumers = new List<(IConsumer<string, TSchema>, string)>();
         foreach (var options in dataIngestorOptions)
         {
             var consumerConfig = new ConsumerConfig
@@ -43,12 +43,11 @@ public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
                 BootstrapServers = options.Servers,
                 GroupId = options.GroupId
             };
-            var consumer = new ConsumerBuilder<TKey, TSchema>(consumerConfig)
-                .SetAvroKeyDeserializer(registry)
+            var consumer = new ConsumerBuilder<string, TSchema>(consumerConfig)
                 .SetAvroValueDeserializer(registry)
                 .SetErrorHandler((_, error) => Console.Error.WriteLine(error.ToString()))
                 .Build();
-            _consumers.Add(new ValueTuple<IConsumer<TKey, TSchema>, string>(consumer, options.Topic));
+            _consumers.Add(new ValueTuple<IConsumer<string, TSchema>, string>(consumer, options.Topic));
         }
     }
 
