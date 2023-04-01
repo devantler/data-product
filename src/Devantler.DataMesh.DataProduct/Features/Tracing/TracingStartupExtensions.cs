@@ -6,7 +6,6 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Configuration.Options.TracingExporter;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using StackExchange.Redis;
 
 namespace Devantler.DataMesh.DataProduct.Features.Tracing;
 
