@@ -22,9 +22,9 @@ FeatureFlags:
   EnableDataIngestion: true
   EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
   EnableDataCatalog: false
-  EnableLogging: true
-  EnableMetrics: true
-  EnableTracing: true
+  EnableLogging: false
+  EnableMetrics: false
+  EnableTracing: false
   EnableAuthentication: false # TODO: #138 Enable feature gated authentication with Duende IdentityServer and OpenID Connect
   EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
   EnableWebhooks: false # TODO: Enable feature gated webhooks
@@ -42,15 +42,6 @@ SchemaRegistry:
   Schema:
     Subject: contoso-university
     Version: 1
-
-LoggingExporter:
-  Type: Console
-
-MetricsExporter:
-  Type: Console
-
-TracingExporter:
-  Type: Console
 
 DataIngestors:
   - Type: Local
