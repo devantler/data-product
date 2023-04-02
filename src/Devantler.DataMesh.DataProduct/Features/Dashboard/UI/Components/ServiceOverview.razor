@@ -76,6 +76,13 @@
 
                     }
                 }
+                @if(Options.Value.FeatureFlags.EnableLogging){
+                    <ListGroupItem>
+                        <ServiceDetails Name="@Options.Value.LoggingExporter.Type.ToString()" Type="LoggingExporter"
+                        Description="The logging exporter in use by the data product." />
+                    </ListGroupItem>
+                }
+
                 @if(Options.Value.FeatureFlags.EnableMetrics){
                     <ListGroupItem>
                         <ServiceDetails Name="@Options.Value.MetricsExporter.Type.ToString()" Type="MetricsExporter"

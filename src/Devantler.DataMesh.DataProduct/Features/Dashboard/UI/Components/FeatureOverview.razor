@@ -72,6 +72,12 @@
                 </ListGroupItem>
 
                 <ListGroupItem
+                    Color="@(Options.Value.FeatureFlags.EnableLogging ? Color.Success : Color.Danger)">
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableLogging).Replace("Enable", "")}")
+                        IsEnabled=Options.Value.FeatureFlags.EnableLogging />
+                </ListGroupItem>
+
+                <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableMetrics ? Color.Success : Color.Danger)">
                     <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableMetrics).Replace("Enable", "")}")
                         IsEnabled=Options.Value.FeatureFlags.EnableMetrics />
