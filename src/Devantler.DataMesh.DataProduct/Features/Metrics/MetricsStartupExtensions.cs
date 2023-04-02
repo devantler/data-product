@@ -21,6 +21,7 @@ public static class MetricsStartupExtensions
             .WithMetrics(builder =>
             {
                 _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
+
                 _ = builder.AddAspNetCoreInstrumentation();
                 _ = builder.AddRuntimeInstrumentation();
                 _ = builder.AddProcessInstrumentation();

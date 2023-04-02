@@ -69,4 +69,9 @@ public class FeatureFlagsOptions
     /// A flag to indicate if webhooks should be enabled for the data product.
     /// </summary>
     public bool EnableWebhooks { get; set; }
+
+    /// <summary>
+    /// A flag to indicate if logging should be enabled for the data product.
+    /// </summary>
+    public bool EnableLogging { get; set; }
 }

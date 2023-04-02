@@ -9,6 +9,7 @@ using Devantler.DataMesh.DataProduct.Features.DataCatalog;
 using Devantler.DataMesh.DataProduct.Features.DataEgestion;
 using Devantler.DataMesh.DataProduct.Features.DataIngestion;
 using Devantler.DataMesh.DataProduct.Features.DataStore;
+using Devantler.DataMesh.DataProduct.Features.Logging;
 using Devantler.DataMesh.DataProduct.Features.Metrics;
 using Devantler.DataMesh.DataProduct.Features.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Features.Tracing;
@@ -45,6 +46,7 @@ public static class FeaturesStartupExtensions
             o.DataCatalog = options.DataCatalog;
             o.DataIngestors = options.DataIngestors;
             o.DataStore = options.DataStore;
+            o.LoggingExporter = options.LoggingExporter;
             o.MetricsExporter = options.MetricsExporter;
             o.SchemaRegistry = options.SchemaRegistry;
             o.TracingExporter = options.TracingExporter;
@@ -73,6 +75,9 @@ public static class FeaturesStartupExtensions
 
         if (options.FeatureFlags.EnableDataCatalog)
             _ = builder.Services.AddDataCatalog(options);
+
+        if (options.FeatureFlags.EnableLogging)
+            _ = builder.Services.AddLogging(options);
 
         if (options.FeatureFlags.EnableMetrics)
             _ = builder.Services.AddMetrics(options);

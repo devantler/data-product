@@ -6,6 +6,7 @@ using Devantler.DataMesh.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore.SQL;
 using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
+using Devantler.DataMesh.DataProduct.Configuration.Options.LoggingExporter;
 using Devantler.DataMesh.DataProduct.Configuration.Options.MetricsExporter;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataMesh.DataProduct.Configuration.Options.SchemaRegistry.Providers;
@@ -79,12 +80,17 @@ public class DataProductOptions
     public CacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
 
     /// <summary>
-    /// Options for the metrics system.
+    /// Options for the logging exporter.
+    /// </summary>
+    public LoggingExporterOptions LoggingExporter { get; set; } = new ConsoleLoggingExporterOptions();
+
+    /// <summary>
+    /// Options for the metrics exporter.
     /// </summary>
     public MetricsExporterOptions MetricsExporter { get; set; } = new ConsoleMetricsExporterOptions();
 
     /// <summary>
-    /// Options for the tracing system.
+    /// Options for the tracing exporter.
     /// </summary>
     public TracingExporterOptions TracingExporter { get; set; } = new ConsoleTracingExporterOptions();
 

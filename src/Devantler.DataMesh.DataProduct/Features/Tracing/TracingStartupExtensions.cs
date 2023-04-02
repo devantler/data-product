@@ -23,6 +23,7 @@ public static class TracingStartupExtensions
             .WithTracing(builder =>
             {
                 _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
+
                 _ = builder.AddAspNetCoreInstrumentation();
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
                     _ = builder.AddHttpClientInstrumentation();
