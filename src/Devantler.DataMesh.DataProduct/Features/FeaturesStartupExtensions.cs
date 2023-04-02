@@ -77,7 +77,7 @@ public static class FeaturesStartupExtensions
             _ = builder.Services.AddDataCatalog(options);
 
         if (options.FeatureFlags.EnableLogging)
-            _ = builder.Services.AddLogging(options);
+            _ = builder.AddLogging(options);
 
         if (options.FeatureFlags.EnableMetrics)
             _ = builder.Services.AddMetrics(options);
