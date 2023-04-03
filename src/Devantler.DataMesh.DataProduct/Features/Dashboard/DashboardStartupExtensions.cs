@@ -13,21 +13,21 @@ public static class DashboardStartupExtensions
     /// <summary>
     /// Configures the web application to use the dashboard feature.
     /// </summary>
-    /// <param name="services"></param>
-    /// <param name="environment"></param>
-    public static IServiceCollection AddDashboard(this IServiceCollection services, IWebHostEnvironment environment)
+    /// <param name="builder"></param>
+    public static WebApplicationBuilder AddDashboard(this WebApplicationBuilder builder)
     {
-        _ = services.AddRazorPages(opt => opt.RootDirectory = "/Features/Dashboard/UI/Pages");
-        _ = services.AddServerSideBlazor(opt =>
+        _ = builder.WebHost.UseStaticWebAssets();
+        _ = builder.Services.AddRazorPages(opt => opt.RootDirectory = "/Features/Dashboard/UI/Pages");
+        _ = builder.Services.AddServerSideBlazor(opt =>
         {
-            if (environment.IsDevelopment())
+            if (builder.Environment.IsDevelopment())
                 opt.DetailedErrors = true;
         });
-        _ = services.AddBlazorise(options => options.Immediate = true)
+        _ = builder.Services.AddBlazorise(options => options.Immediate = true)
             .AddBootstrapProviders()
             .AddFontAwesomeIcons();
 
-        return services;
+        return builder;
     }
 
     /// <summary>
