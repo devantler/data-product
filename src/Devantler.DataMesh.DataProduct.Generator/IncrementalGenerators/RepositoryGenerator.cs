@@ -45,7 +45,7 @@ public class RepositoryGenerator : GeneratorBase
 
             var baseClass = options.DataStore.Type switch
             {
-                DataStoreType.SQL => new CSharpClass($"EntityFrameworkRepository<{schemaIdType}, {schemaName}Entity>")
+                DataStoreType.SQL => new CSharpClass($"SQLRepository<{schemaIdType}, {schemaName}Entity>")
                     .SetDocBlock(new CSharpDocBlock($$"""A repository to interact with entities of type <see cref="{{schemaName}}Entity"/>""")),
                 DataStoreType.NoSQL => throw new NotSupportedException("Document based data stores are not supported yet."),
                 DataStoreType.Graph => throw new NotSupportedException("Graph based data stores are not supported yet."),

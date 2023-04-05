@@ -1,20 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest;
+namespace Devantler.DataMesh.DataProduct.Features.Apis.Rest.CRUDBulk;
 
 /// <summary>
-/// Generic interface for REST Controllers.
+/// Generic interface for CRUD Controllers.
 /// </summary>
 /// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TSchema"></typeparam>
-public interface IController<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
+public interface ICRUDBulkController<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
 {
     /// <summary>
-    /// Read an entity by id.
+    /// Creates multiple entities.
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult<TSchema>> GetById(TKey id, CancellationToken cancellationToken = default);
+    Task<ActionResult<IEnumerable<TSchema>>> PostAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Reads all entities.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    Task<ActionResult<IEnumerable<TSchema>>> GetAll(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads multiple entities by id.
@@ -43,25 +49,11 @@ public interface IController<TKey, TSchema> where TSchema : class, Schemas.ISche
     Task<ActionResult<IEnumerable<TSchema>>> GetByOffset(int offset = 0, int limit = 20, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Creates multiple entities.
-    /// </summary>
-    /// <param name="models"></param>
-    /// <param name="cancellationToken"></param>
-    Task<ActionResult<IEnumerable<TSchema>>> PostAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
-
-    /// <summary>
     /// Updates multiple entities.
     /// </summary>
     /// <param name="models"></param>
     /// <param name="cancellationToken"></param>
     Task<ActionResult> PutAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Deletes an entity.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    Task<ActionResult> DeleteAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes multiple entities.

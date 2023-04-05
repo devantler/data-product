@@ -16,7 +16,7 @@ namespace Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 /// A generator that generates REST API controllers in the data product.
 /// </summary>
 [Generator]
-public class RestApiControllerGenerator : GeneratorBase
+public class CRUDControllerGenerator : GeneratorBase
 {
     /// <summary>
     /// Generates REST API controllers in the data product.
@@ -41,15 +41,15 @@ public class RestApiControllerGenerator : GeneratorBase
             string schemaIdType = schemaType is not null
                 ? avroSchemaParser.Parse(schemaType, Language.CSharp)
                 : "Guid";
-            var @class = new CSharpClass($"{schemaName.ToPlural()}Controller")
+            var @class = new CSharpClass($"{schemaName}Controller")
                 .AddImport(new CSharpUsing("AutoMapper"))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreService")))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestApiController"))
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "CRUDController"))
                 .SetDocBlock(new CSharpDocBlock(
-                    $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
-                .SetBaseClass(new CSharpClass($"RestApiController<{schemaIdType}, {schemaName}>"));
+                    $$"""A controller to handle CRUD REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
+                .SetBaseClass(new CSharpClass($"CRUDController<{schemaIdType}, {schemaName}>"));
 
             var constructor = new CSharpConstructor(@class.Name)
                 .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of <see cref="{{@class.Name}}" />"""));

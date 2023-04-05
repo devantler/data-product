@@ -88,7 +88,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc/>
-    public async Task<TSchema> GetSingleAsync(TKey id, CancellationToken cancellationToken = default)
+    public async Task<TSchema> ReadSingleAsync(TKey id, CancellationToken cancellationToken = default)
     {
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
@@ -104,13 +104,13 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<TSchema>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TSchema>> ReadAllAsync(CancellationToken cancellationToken = default)
     {
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
             var ids = await _repository.ReadAllIdsAsync(cancellationToken);
 
-            return await GetMultipleAsync(ids, cancellationToken);
+            return await ReadMultipleAsync(ids, cancellationToken);
         }
         else
         {
@@ -120,13 +120,13 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<TSchema>> GetMultipleWithLimitAsync(int limit, int offset, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TSchema>> ReadMultipleWithOffsetAsync(int limit, int offset, CancellationToken cancellationToken = default)
     {
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
             var ids = await _repository.ReadMultipleIdsWithLimitAsync(limit, offset, cancellationToken);
 
-            return await GetMultipleAsync(ids, cancellationToken);
+            return await ReadMultipleAsync(ids, cancellationToken);
         }
         else
         {
@@ -136,7 +136,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<TSchema>> GetMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TSchema>> ReadMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
     {
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
@@ -164,12 +164,12 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<TSchema>> GetMultipleWithPaginationAsync(int page, int pageSize, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TSchema>> ReadMultipleWithPaginationAsync(int page, int pageSize, CancellationToken cancellationToken = default)
     {
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
             var ids = await _repository.ReadMultipleIdsWithPaginationAsync(page, pageSize, cancellationToken);
-            return await GetMultipleAsync(ids, cancellationToken);
+            return await ReadMultipleAsync(ids, cancellationToken);
         }
         else
         {

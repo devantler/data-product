@@ -6,6 +6,7 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers;
 using Devantler.DataMesh.DataProduct.Configuration.Options;
+using Devantler.DataMesh.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataMesh.DataProduct.Generator.Extensions;
 using Devantler.DataMesh.DataProduct.Generator.Models;
 using Microsoft.CodeAnalysis;
@@ -27,6 +28,9 @@ public class GraphQLQueryGenerator : GeneratorBase
     public override Dictionary<string, string> Generate(Compilation compilation,
         ImmutableArray<AdditionalFile> additionalFiles, DataProductOptions options)
     {
+        if (!options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
+            return new Dictionary<string, string>();
+
         var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
         var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject, options.SchemaRegistry.Schema.Version);
 
@@ -59,7 +63,7 @@ public class GraphQLQueryGenerator : GeneratorBase
                 .SetReturnType($"Task<IEnumerable<{schemaName}>>")
                 .AddParameter(new CSharpParameter($"[Service] IDataStoreService<{schemaIdType}, {schemaName}>", "dataStoreService"))
                 .AddParameter(new CSharpParameter("CancellationToken", "cancellationToken"))
-                .AddStatement("await dataStoreService.GetAllAsync(cancellationToken);")
+                .AddStatement("await dataStoreService.ReadAllAsync(cancellationToken);")
                 .SetIsExpressionBodied(true);
 
             _ = @class.AddMethod(method);

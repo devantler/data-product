@@ -1,9 +1,9 @@
 using Devantler.DataMesh.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.GraphQLQueryGeneratorTests;
+namespace Devantler.DataMesh.DataProduct.Generator.Tests.Unit.IncrementalGenerators.CRUDBulkControllerGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : IncrementalGeneratorTestsBase<GraphQLQueryGenerator>
+public class GenerateTests : IncrementalGeneratorTestsBase<CRUDBulkControllerGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
@@ -11,12 +11,12 @@ public class GenerateTests : IncrementalGeneratorTestsBase<GraphQLQueryGenerator
     {
         //Arrange
         var additionalText = CreateDataProductConfig(
-            /*lang=yaml,strict*/
+            /*lang=json,strict*/
             $$"""
             {
                 "FeatureFlags": {
                     "EnableApis": [
-                        "GraphQL"
+                        "Rest"
                     ]
                 },
                 "SchemaRegistry": {
@@ -25,6 +25,11 @@ public class GenerateTests : IncrementalGeneratorTestsBase<GraphQLQueryGenerator
                     "Schema": {
                         "Subject": "{{subject}}",
                         "Version": 1
+                    }
+                },
+                "Apis": {
+                    "Rest": {
+                        "EnableBulkControllers": true
                     }
                 }
             }

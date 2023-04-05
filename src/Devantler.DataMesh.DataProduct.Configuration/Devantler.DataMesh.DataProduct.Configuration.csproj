@@ -7,7 +7,7 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>Devantler.DataMesh.DataProduct.Configuration</PackageId>
-    <Version>0.1.62</Version>
+    <Version>0.1.63</Version>
     <Authors>devantler</Authors>
     <Company>Devantler Software</Company>
     <PackageDescription>Models and classes to get configuration for a data product.</PackageDescription>

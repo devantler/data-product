@@ -8,17 +8,17 @@ namespace Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
 /// </summary>
 /// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TEntity"></typeparam>
-public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKey, TEntity>
+public abstract class SQLRepository<TKey, TEntity> : IRepository<TKey, TEntity>
     where TKey : notnull
     where TEntity : class, IEntity<TKey>
 {
     readonly DbContext _context;
 
     /// <summary>
-    /// Creates a new instance of <see cref="EntityFrameworkRepository{TKey, TEntity}"/>.
+    /// Creates a new instance of <see cref="SQLRepository{TKey, TEntity}"/>.
     /// </summary>
     /// <param name="context"></param>
-    protected EntityFrameworkRepository(DbContext context) => _context = context;
+    protected SQLRepository(DbContext context) => _context = context;
 
     /// <inheritdoc />
     public async Task<TEntity> CreateSingleAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -62,7 +62,12 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
     /// <inheritdoc />
     public async Task<IEnumerable<TEntity>> ReadMultipleAsync(IEnumerable<TKey> ids,
         CancellationToken cancellationToken = default)
-        => await _context.Set<TEntity>().BulkReadAsync(ids, cancellationToken);
+    {
+        return _context.Database.IsNpgsql()
+            ? await _context.Set<TEntity>().BulkReadAsync(ids, cancellationToken)
+            : (IEnumerable<TEntity>)await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
+
+    }
 
     /// <inheritdoc />
     public async Task<IEnumerable<TEntity>> ReadMultipleWithPaginationAsync(int page, int pageSize,
@@ -91,8 +96,16 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
     /// <inheritdoc />
     public async Task UpdateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
-        await _context.Set<TEntity>().BulkUpdateAsync(entities, cancellationToken);
-        await _context.BulkSaveChangesAsync(cancellationToken);
+        if (_context.Database.IsNpgsql())
+        {
+            await _context.Set<TEntity>().BulkUpdateAsync(entities, cancellationToken);
+            await _context.BulkSaveChangesAsync(cancellationToken);
+        }
+        else
+        {
+            _context.Set<TEntity>().UpdateRange(entities);
+            _ = await _context.SaveChangesAsync(cancellationToken);
+        }
     }
 
     /// <inheritdoc />
@@ -108,7 +121,15 @@ public abstract class EntityFrameworkRepository<TKey, TEntity> : IRepository<TKe
     public async Task DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
     {
         var entities = await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
-        await _context.Set<TEntity>().BulkDeleteAsync(entities, cancellationToken);
-        await _context.BulkSaveChangesAsync(cancellationToken);
+        if (_context.Database.IsNpgsql())
+        {
+            await _context.Set<TEntity>().BulkDeleteAsync(entities, cancellationToken);
+            await _context.BulkSaveChangesAsync(cancellationToken);
+        }
+        else
+        {
+            _context.Set<TEntity>().RemoveRange(entities);
+            _ = await _context.SaveChangesAsync(cancellationToken);
+        }
     }
 }

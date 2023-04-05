@@ -2,6 +2,8 @@
 
 using Devantler.DataMesh.DataProduct.Configuration.Options;
 using Devantler.DataMesh.DataProduct.Configuration.Options.DataStore;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Repositories;
+using Devantler.DataMesh.DataProduct.Features.DataStore.Services;
 
 namespace Devantler.DataMesh.DataProduct.Features.DataStore;
 
@@ -18,13 +20,21 @@ public static partial class DataStoreStartupExtensions
     /// <exception cref="NotImplementedException">Thrown when a data store is not implemented.</exception>
     public static IServiceCollection AddDataStore(this IServiceCollection services, DataProductOptions options)
     {
+        _ = services.AddScoped<IProxyRepository, SQLProxyRepository>();
         services.AddGeneratedServiceRegistrations(options.DataStore);
-        _ = options.DataStore.Type switch
+
+        switch (options.DataStore.Type)
         {
-            DataStoreType.SQL => services.AddDatabaseDeveloperPageExceptionFilter(),
-            DataStoreType.NoSQL => throw new NotSupportedException("Document based data stores are not supported yet."),
-            DataStoreType.Graph => throw new NotSupportedException("Graph based data stores are not supported yet."),
-            _ => throw new NotSupportedException($"The data store type {options.DataStore} is not supported.")
+            case DataStoreType.SQL:
+                _ = services.AddScoped<IDataStoreProxyService, DataStoreProxyService>();
+                _ = services.AddDatabaseDeveloperPageExceptionFilter();
+                break;
+            case DataStoreType.NoSQL:
+                throw new NotSupportedException("Document based data stores are not supported yet.");
+            case DataStoreType.Graph:
+                throw new NotSupportedException("Graph based data stores are not supported yet.");
+            default:
+                throw new NotSupportedException($"The data store type {options.DataStore} is not supported.");
         };
         return services;
     }

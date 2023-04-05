@@ -53,9 +53,12 @@ public static class RestStartupExtensions
                             ? new Uri(options.License.Url)
                             : null
                     }
-                });
-            swaggerOptions.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory,
-                $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
+                }
+            );
+            swaggerOptions.IncludeXmlComments(
+                System.IO.Path.Combine(AppContext.BaseDirectory,
+                $"{Assembly.GetExecutingAssembly().GetName().Name}.xml")
+            );
         });
         _ = services.AddEndpointsApiExplorer();
         return services;
@@ -75,6 +78,7 @@ public static class RestStartupExtensions
                 swaggerOptions.SwaggerEndpoint($"/swagger/{options.Release}/swagger.json", $"{options.Name} {options.Release}");
                 swaggerOptions.RoutePrefix = "swagger";
             });
+
         _ = app.MapControllers();
 
         return app;

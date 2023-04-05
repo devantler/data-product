@@ -52,6 +52,7 @@ public class DbContextGenerator : GeneratorBase
             .SetDocBlock(new CSharpDocBlock($"A constructor to construct a {dataStoreOptions.Provider} database context."))
             .AddParameter(new CSharpConstructorParameter($"DbContextOptions<{@class.Name}>", "options")
                 .SetIsBaseParameter(true));
+        _ = @class.AddConstructor(constructor);
 
         var onModelCreatingMethod = new CSharpMethod("OnModelCreating")
             .SetDocBlock(new CSharpDocBlock("A method to configure the schema."))
@@ -70,8 +71,6 @@ public class DbContextGenerator : GeneratorBase
             _ = onModelCreatingMethod.AddStatement(
                 $"_ = modelBuilder.Entity<{schemaName}Entity>().ToTable(\"{schemaName}\");");
         }
-
-        _ = @class.AddConstructor(constructor);
         _ = @class.AddMethod(onModelCreatingMethod);
 
         _ = codeCompilation.AddType(@class);

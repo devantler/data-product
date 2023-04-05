@@ -27,20 +27,20 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
-    Task<TSchema> GetSingleAsync(TKey id, CancellationToken cancellationToken = default);
+    Task<TSchema> ReadSingleAsync(TKey id, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets all <typeparamref name="TSchema"/>'s from a data store.
     /// </summary>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TSchema>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<TSchema>> ReadAllAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Read multiple <typeparamref name="TSchema"/>'s from a data store.
     /// </summary>
     /// <param name="ids"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TSchema>> GetMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
+    Task<IEnumerable<TSchema>> ReadMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads paged <typeparamref name="TSchema"/>'s from a data store.
@@ -48,7 +48,7 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas
     /// <param name="page"></param>
     /// <param name="pageSize"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TSchema>> GetMultipleWithPaginationAsync(int page, int pageSize,
+    Task<IEnumerable<TSchema>> ReadMultipleWithPaginationAsync(int page, int pageSize,
         CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -57,7 +57,7 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas
     /// <param name="limit"></param>
     /// <param name="offset"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TSchema>> GetMultipleWithLimitAsync(int limit, int offset,
+    Task<IEnumerable<TSchema>> ReadMultipleWithOffsetAsync(int limit, int offset,
         CancellationToken cancellationToken = default);
 
     /// <summary>

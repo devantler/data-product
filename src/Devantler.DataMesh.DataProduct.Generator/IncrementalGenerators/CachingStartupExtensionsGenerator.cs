@@ -32,6 +32,7 @@ public class CachingStartupExtensionsGenerator : GeneratorBase
     {
         if (options.FeatureFlags.EnableCaching == false)
             return new Dictionary<string, string>();
+
         var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
         var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject, options.SchemaRegistry.Schema.Version);
 

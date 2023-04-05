@@ -32,6 +32,9 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
+        if (!options.FeatureFlags.EnableDataIngestion || !options.DataIngestors.Any())
+            return new Dictionary<string, string>();
+
         var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
         var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject,
             options.SchemaRegistry.Schema.Version);
