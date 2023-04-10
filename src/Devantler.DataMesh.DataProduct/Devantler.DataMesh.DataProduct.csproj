@@ -15,7 +15,7 @@
         <PackageReference Include="Blazorise.Bootstrap" Version="1.2.2" />
         <PackageReference Include="Blazorise.Bootstrap5" Version="1.2.2" />
         <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.2.2" />
-        <PackageReference Include="Chr.Avro.Confluent" Version="9.4.1" />
+        <PackageReference Include="Chr.Avro.Confluent" Version="9.5.0" />
         <PackageReference Include="Confluent.Kafka" Version="2.0.2" />
         <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.62" />
         <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.62" />
