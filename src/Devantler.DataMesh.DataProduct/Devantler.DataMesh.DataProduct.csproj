@@ -20,7 +20,7 @@
         <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.62" />
         <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.62" />
         <PackageReference Include="FluentValidation" Version="11.5.1" />
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.52.0" />
         <PackageReference Include="HotChocolate.AspNetCore" Version="13.0.5" />
         <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.0.5" />
