@@ -1,0 +1,43 @@
+using Devantler.DataProduct.Generator.IncrementalGenerators;
+
+namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.DataIngestionStartupExtensionsGeneratorTests;
+
+[UsesVerify]
+public class GenerateTests : IncrementalGeneratorTestsBase<DataIngestionStartupExtensionsGenerator>
+{
+    [Theory]
+    [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
+    public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
+    {
+        //Arrange
+        var additionalText = CreateDataProductConfig(
+            $$"""
+            {
+                "FeatureFlags": {
+                    "EnableDataIngestion": true
+                },
+                "SchemaRegistry": {
+                    "Type": "Local",
+                    "Path": "schemas",
+                    "Schema": {
+                        "Subject": "{{subject}}",
+                        "Version": 1
+                    }
+                },
+                "DataIngestors": [
+                    {
+                        "Type": "Local",
+                        "FilePath": "assets/data/{{subject}}.json"
+                    }
+                ]
+            }
+            """
+        );
+
+        //Act
+        var driver = RunGenerator(additionalText);
+
+        //Assert
+        return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
+    }
+}
