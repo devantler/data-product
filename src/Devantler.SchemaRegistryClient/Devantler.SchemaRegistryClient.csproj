@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <PackageId>Devantler.SchemaRegistryClient</PackageId>
+        <Version>0.1.63</Version>
+        <Authors>devantler</Authors>
+        <Company>Devantler Software</Company>
+        <PackageDescription>Clients to interact with different schema registries.</PackageDescription>
+        <RepositoryUrl>https://github.com/devantler/data-product</RepositoryUrl>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Confluent.SchemaRegistry" Version="2.1.0" />
+        <PackageReference Include="Chr.Avro" Version="9.5.0" />
+        <PackageReference Include="Chr.Avro.Json" Version="9.5.0" />
+    </ItemGroup>
+
+</Project>

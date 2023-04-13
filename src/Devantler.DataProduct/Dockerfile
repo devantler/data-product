@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0
+
+HEALTHCHECK --start-period=30s CMD wget --quiet --tries=1 --spider http://localhost:5000 || exit 1
+
+EXPOSE 5000
+
+ENV ASPNETCORE_URLS=http://+:5000 \
+    ASPNETCORE_ENVIRONMENT=Production
+
+WORKDIR /build
+COPY src/Devantler.DataProduct/Devantler.DataProduct.csproj ./src/Devantler.DataProduct/
+COPY src/Devantler.DataProduct.Generator/Devantler.DataProduct.Generator.csproj ./src/Devantler.DataProduct.Generator/
+COPY src/Devantler.DataProduct.Configuration/Devantler.DataProduct.Configuration.csproj ./src/Devantler.DataProduct.Configuration/
+COPY src/Devantler.SchemaRegistryClient/Devantler.SchemaRegistryClient.csproj ./src/Devantler.SchemaRegistryClient/
+
+RUN dotnet restore src/Devantler.DataProduct/Devantler.DataProduct.csproj
+
+COPY . .
+
+WORKDIR /
+COPY src/Devantler.DataProduct/dockerfile-entrypoint.sh ./dockerfile-entrypoint.sh
+RUN chmod +x ./dockerfile-entrypoint.sh
+CMD ["./dockerfile-entrypoint.sh"]

@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Devantler.DataMesh.DataProduct/bin/Debug/net7.0/Devantler.DataMesh.DataProduct.dll",
+            "program": "${workspaceFolder}/src/Devantler.DataProduct/bin/Debug/net7.0/Devantler.DataProduct.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Devantler.DataMesh.DataProduct",
+            "cwd": "${workspaceFolder}/src/Devantler.DataProduct",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -25,7 +25,7 @@
             "type": "DotNetWatch",
             "request": "launch",
             "name": "Watch: DataProduct",
-            "project": "src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj",
+            "project": "src/Devantler.DataProduct/Devantler.DataProduct.csproj",
             "args": [],
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
@@ -43,7 +43,7 @@
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj"
+                "appProject": "${workspaceFolder}/src/Devantler.DataProduct/Devantler.DataProduct.csproj"
             }
         },
         {
@@ -52,7 +52,7 @@
             "request": "launch",
             "preLaunchTask": "docker-run: debug",
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Devantler.DataMesh.DataProduct/Devantler.DataMesh.DataProduct.csproj"
+                "appProject": "${workspaceFolder}/src/Devantler.DataProduct/Devantler.DataProduct.csproj"
             }
         }
     ]

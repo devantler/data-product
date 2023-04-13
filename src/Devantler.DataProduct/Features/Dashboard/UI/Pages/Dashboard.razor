@@ -1,0 +1,21 @@
+﻿@using Microsoft.Extensions.Options;
+@using Devantler.DataProduct.Configuration.Options;
+
+@inject IOptions<DataProductOptions> Options
+
+@page "/"
+
+<PageTitle>@Options.Value.Name</PageTitle>
+
+<Container Padding=Padding.Is4 Fluid>
+    <Row>
+        <Column ColumnSize="ColumnSize.Is8.OnFullHD.Is12.OnTablet">
+            <Introduction />
+            <SchemaOverview />
+        </Column>
+        <Column ColumnSize="ColumnSize.Is4.OnFullHD.Is12.OnTablet">
+            <FeatureOverview />
+            <ServiceOverview />
+        </Column>
+    </Row>
+</Container>
