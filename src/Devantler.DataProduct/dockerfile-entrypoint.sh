@@ -18,7 +18,7 @@ rm -rf /build
 rm -rf /app/publish
 rm -rf /tmp/*
 
-echo "⚙️ Install ASP.NET Core Runtime ⚙️"
+echo "⚙️ Installing and configuring ASP.NET Core Runtime ⚙️"
 wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
 chmod +x ./dotnet-install.sh
 ./dotnet-install.sh --channel 7.0 --runtime aspnetcore
