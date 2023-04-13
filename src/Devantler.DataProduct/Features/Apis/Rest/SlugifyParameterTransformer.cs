@@ -1,4 +1,4 @@
-using Devantler.Commons.StringHelpers;
+using Devantler.Commons.StringHelpers.Extensions;
 
 namespace Devantler.DataProduct.Features.Apis.Rest;
 

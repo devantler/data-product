@@ -1,4 +1,4 @@
-using Devantler.Commons.StringHelpers;
+using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Configuration.Options.LoggingExporter;
 using OpenTelemetry.Logs;
