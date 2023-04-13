@@ -3,7 +3,7 @@ using Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.E
 namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Models;
 
 /// <summary>
-/// A model that represents the root DataHub Metadata model. See 
+/// A model that represents the root DataHub Metadata model. See
 /// </summary>
 public class Metadata
 {

@@ -40,7 +40,7 @@ public interface ICacheStoreService<TValue>
     /// Sets multiple values in the cache store.
     /// </summary>
     /// <param name="keys"></param>
-    /// <param name="values"></param>    
+    /// <param name="values"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task SetAsync(IEnumerable<string> keys, IEnumerable<TValue> values, CancellationToken cancellationToken = default);

@@ -66,7 +66,6 @@ public abstract class SQLRepository<TKey, TEntity> : IRepository<TKey, TEntity>
         return _context.Database.IsNpgsql()
             ? await _context.Set<TEntity>().BulkReadAsync(ids, cancellationToken)
             : (IEnumerable<TEntity>)await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
-
     }
 
     /// <inheritdoc />

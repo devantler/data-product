@@ -31,7 +31,6 @@ public static class FeaturesStartupExtensions
     /// <param name="args"></param>
     public static void AddFeatures(this WebApplicationBuilder builder, string[] args)
     {
-
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
 
         var options = builder.AddConfiguration(args);

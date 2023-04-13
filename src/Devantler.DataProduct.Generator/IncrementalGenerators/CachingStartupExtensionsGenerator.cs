@@ -30,7 +30,7 @@ public class CachingStartupExtensionsGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        if (options.FeatureFlags.EnableCaching == false)
+        if (!options.FeatureFlags.EnableCaching)
             return new Dictionary<string, string>();
 
         var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();

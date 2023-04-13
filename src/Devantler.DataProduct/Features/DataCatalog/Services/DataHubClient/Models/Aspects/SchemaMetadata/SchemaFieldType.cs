@@ -22,7 +22,6 @@ public class SchemaFieldType
     /// The actual type of the field.
     /// </summary>
     public ActualSchemaFieldType Type { get; set; }
-
 }
 
 /// <summary>

@@ -43,8 +43,8 @@ public interface ICRUDBulkController<TKey, TSchema> where TSchema : class, Schem
     /// <remarks>
     /// It uses the limit and offset format. It means that it will return a limited number of entities starting from the offset.
     /// </remarks>
-    /// <param name="limit">20 by default</param>
     /// <param name="offset">0 by default</param>
+    /// <param name="limit">20 by default</param>
     /// <param name="cancellationToken"></param>
     Task<ActionResult<IEnumerable<TSchema>>> GetByOffset(int offset = 0, int limit = 20, CancellationToken cancellationToken = default);
 

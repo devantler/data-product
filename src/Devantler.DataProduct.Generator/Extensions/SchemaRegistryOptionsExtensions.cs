@@ -17,14 +17,12 @@ public static class SchemaRegistryOptionsExtensions
     {
         return options.Type switch
         {
-            SchemaRegistryType.Kafka => new KafkaSchemaRegistryClient(o =>
-            {
-                o.Url = options.Url;
-            }),
-            SchemaRegistryType.Local => new LocalSchemaRegistryClient(o =>
-            {
-                o.Path = options.Url;
-            }),
+            SchemaRegistryType.Kafka => new KafkaSchemaRegistryClient(
+                o => o.Url = options.Url
+            ),
+            SchemaRegistryType.Local => new LocalSchemaRegistryClient(
+                o => o.Path = options.Url
+            ),
             _ => throw new NotSupportedException($"Schema registry type '{options.Type}' is not supported.")
         };
     }

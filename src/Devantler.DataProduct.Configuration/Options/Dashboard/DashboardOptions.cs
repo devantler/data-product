@@ -2,7 +2,7 @@ namespace Devantler.DataProduct.Configuration.Options.Dashboard;
 
 /// <summary>
 /// Options for the dashboard.
-/// </summary> 
+/// </summary>
 public class DashboardOptions
 {
     /// <summary>

@@ -63,7 +63,7 @@ public class DataHubDataCatalogService : BackgroundService
             links.Add(new InstitutionalMemoryMetadata
             {
                 Url = _options.PublicUrl,
-                Description = $"Dashboard"
+                Description = "Dashboard"
             });
         }
 
@@ -72,7 +72,7 @@ public class DataHubDataCatalogService : BackgroundService
             links.Add(new InstitutionalMemoryMetadata
             {
                 Url = _options.PublicUrl + "/swagger",
-                Description = $"Rest API"
+                Description = "Rest API"
             });
         }
 
@@ -81,7 +81,7 @@ public class DataHubDataCatalogService : BackgroundService
             links.Add(new InstitutionalMemoryMetadata
             {
                 Url = _options.PublicUrl + "/graphql",
-                Description = $"GraphQL API"
+                Description = "GraphQL API"
             });
         }
 

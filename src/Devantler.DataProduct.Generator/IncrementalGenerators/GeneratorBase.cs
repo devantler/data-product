@@ -72,7 +72,6 @@ public abstract class GeneratorBase : IIncrementalGenerator
         var additionalFiles = configFiles as AdditionalFile[] ?? configFiles.ToArray();
         string configFileExtension = additionalFiles.Any(f => f.FileName.EndsWith("yaml")) ? "yaml" : "yml";
 
-
         foreach (var configFile in additionalFiles.Where(x => x.FileName.EndsWith("json")).OrderByDescending(x => x.FileName))
         {
             if (string.IsNullOrEmpty(configFile.FileDirectoryPath) && configFile.Contents != null)

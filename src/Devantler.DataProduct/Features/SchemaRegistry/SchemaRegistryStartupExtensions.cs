@@ -20,10 +20,7 @@ public static class SchemaRegistryStartupExtensions
                 _ =>
                 {
                     return new LocalSchemaRegistryClient(
-                        opt =>
-                        {
-                            opt.Path = options.SchemaRegistry.Url;
-                        }
+                        opt => opt.Path = options.SchemaRegistry.Url
                     );
                 }
             ),
@@ -31,10 +28,7 @@ public static class SchemaRegistryStartupExtensions
                 _ =>
                 {
                     return new KafkaSchemaRegistryClient(
-                        opt =>
-                        {
-                            opt.Url = options.SchemaRegistry.Url;
-                        }
+                        opt => opt.Url = options.SchemaRegistry.Url
                     );
                 }
             ),

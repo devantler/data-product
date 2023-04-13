@@ -25,7 +25,6 @@ public static class ApisStartupExtensions
         if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
             _ = services.AddGraphQL(options, environment);
 
-
         _ = services.AddGRpc();
         return services;
     }

@@ -22,7 +22,6 @@ public abstract class CRUDBulkController<TKey, TSchema> : ControllerBase, ICRUDB
     protected CRUDBulkController(IDataStoreService<TKey, TSchema> dataStoreService)
         => _dataStoreService = dataStoreService;
 
-
     /// <inheritdoc />
     [HttpPost]
     public async Task<ActionResult<IEnumerable<TSchema>>> PostAsync([FromBody] IEnumerable<TSchema> models,

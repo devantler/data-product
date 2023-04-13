@@ -2,7 +2,7 @@ namespace Devantler.DataProduct.Configuration.Options.LoggingExporter;
 
 /// <summary>
 /// Options to configure the logging exporter for the data product.
-/// </summary> 
+/// </summary>
 public class OpenTelemetryLoggingExporterOptions : LoggingExporterOptions
 {
     /// <summary>
