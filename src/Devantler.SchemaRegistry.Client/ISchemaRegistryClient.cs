@@ -1,6 +1,6 @@
 using Chr.Avro.Abstract;
 
-namespace Devantler.SchemaRegistryClient;
+namespace Devantler.SchemaRegistry.Client;
 
 /// <summary>
 /// An interface for scheme registry clients.

@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataProduct.Confi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataProduct.Generator", "src\Devantler.DataProduct.Generator\Devantler.DataProduct.Generator.csproj", "{966DE8DE-DFD2-4CFF-AA47-AF2035CE7590}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.SchemaRegistryClient", "src\Devantler.SchemaRegistryClient\Devantler.SchemaRegistryClient.csproj", "{6BCA22EB-B401-445C-8B05-879E2E2A3D34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.SchemaRegistry.Client", "src\Devantler.SchemaRegistry.Client\Devantler.SchemaRegistry.Client.csproj", "{6BCA22EB-B401-445C-8B05-879E2E2A3D34}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6BE51732-65E0-4D77-B122-6F9F679E1EE6}"
 EndProject

@@ -7,7 +7,7 @@
         <Nullable>enable</Nullable>
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <PackageId>Devantler.SchemaRegistryClient</PackageId>
+        <PackageId>Devantler.SchemaRegistry.Client</PackageId>
         <Version>0.1.63</Version>
         <Authors>devantler</Authors>
         <Company>Devantler Software</Company>

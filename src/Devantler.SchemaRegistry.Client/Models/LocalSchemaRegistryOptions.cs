@@ -1,4 +1,4 @@
-namespace Devantler.SchemaRegistryClient.Models;
+namespace Devantler.SchemaRegistry.Client.Models;
 
 /// <summary>
 /// Options for a local schema registry.

@@ -39,7 +39,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../Devantler.SchemaRegistryClient/Devantler.SchemaRegistryClient.csproj" PrivateAssets="all" />
+        <ProjectReference Include="../Devantler.SchemaRegistry.Client/Devantler.SchemaRegistry.Client.csproj" PrivateAssets="all" />
         <ProjectReference Include="../Devantler.DataProduct.Configuration/Devantler.DataProduct.Configuration.csproj" PrivateAssets="all" />
     </ItemGroup>
 
@@ -67,7 +67,7 @@
             <TargetPathWithTargetPlatformMoniker Include="$(PKGNewtonsoft_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGScriban)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(PKGYamlDotNet)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-            <TargetPathWithTargetPlatformMoniker Include="$(ProjectDir)/../Devantler.SchemaRegistryClient/$(OutputPath)/*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(ProjectDir)/../Devantler.SchemaRegistry.Client/$(OutputPath)/*.dll" IncludeRuntimeDependency="false" />
             <TargetPathWithTargetPlatformMoniker Include="$(ProjectDir)/../Devantler.DataProduct.Configuration/$(OutputPath)/*.dll" IncludeRuntimeDependency="false" />
         </ItemGroup>
     </Target>

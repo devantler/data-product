@@ -11,7 +11,7 @@ using Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.A
 using Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Aspects.SchemaMetadata;
 using Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Aspects.SchemaMetadata.PlatformSchemas;
 using Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Models.Entities;
-using Devantler.SchemaRegistryClient;
+using Devantler.SchemaRegistry.Client;
 using Microsoft.Extensions.Options;
 
 namespace Devantler.DataProduct.Features.DataCatalog.Services;

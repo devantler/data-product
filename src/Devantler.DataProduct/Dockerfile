@@ -11,7 +11,7 @@ WORKDIR /build
 COPY src/Devantler.DataProduct/Devantler.DataProduct.csproj ./src/Devantler.DataProduct/
 COPY src/Devantler.DataProduct.Generator/Devantler.DataProduct.Generator.csproj ./src/Devantler.DataProduct.Generator/
 COPY src/Devantler.DataProduct.Configuration/Devantler.DataProduct.Configuration.csproj ./src/Devantler.DataProduct.Configuration/
-COPY src/Devantler.SchemaRegistryClient/Devantler.SchemaRegistryClient.csproj ./src/Devantler.SchemaRegistryClient/
+COPY src/Devantler.SchemaRegistry.Client/Devantler.SchemaRegistry.Client.csproj ./src/Devantler.SchemaRegistry.Client/
 
 RUN dotnet restore src/Devantler.DataProduct/Devantler.DataProduct.csproj
 
