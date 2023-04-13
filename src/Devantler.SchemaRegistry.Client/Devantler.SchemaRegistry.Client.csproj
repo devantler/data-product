@@ -8,7 +8,7 @@
         <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageId>Devantler.SchemaRegistry.Client</PackageId>
-        <Version>0.1.63</Version>
+        <Version>0.1.64</Version>
         <Authors>devantler</Authors>
         <Company>Devantler Software</Company>
         <PackageDescription>Clients to interact with different schema registries.</PackageDescription>
