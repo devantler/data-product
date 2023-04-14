@@ -1,6 +1,6 @@
 using Devantler.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.CRUDControllerGeneratorTests;
+namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.ControllerGeneratorTests;
 
 [UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<CRUDControllerGenerator>

@@ -1,6 +1,6 @@
 using Devantler.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.CRUDBulkControllerGeneratorTests;
+namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.BulkControllerGeneratorTests;
 
 [UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<CRUDBulkControllerGenerator>
@@ -29,7 +29,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<CRUDBulkControllerGen
                 },
                 "Apis": {
                     "Rest": {
-                        "EnableBulkControllers": true
+                        "EnableBulkController": true
                     }
                 }
             }

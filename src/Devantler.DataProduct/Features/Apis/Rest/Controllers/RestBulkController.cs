@@ -1,8 +1,7 @@
-using Devantler.DataProduct.Features.Apis.Rest.CRUD;
 using Devantler.DataProduct.Features.DataStore.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Devantler.DataProduct.Features.Apis.Rest.CRUDBulk;
+namespace Devantler.DataProduct.Features.Apis.Rest.Controllers;
 
 /// <summary>
 /// A controller to handle REST API requests for a schema.
@@ -11,18 +10,22 @@ namespace Devantler.DataProduct.Features.Apis.Rest.CRUDBulk;
 /// <typeparam name="TSchema"></typeparam>
 [ApiController]
 [Route("[controller]")]
-public abstract class CRUDBulkController<TKey, TSchema> : ControllerBase, ICRUDBulkController<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
+public abstract class RestBulkController<TKey, TSchema> : ControllerBase where TSchema : class, Schemas.ISchema<TKey>
 {
     readonly IDataStoreService<TKey, TSchema> _dataStoreService;
 
     /// <summary>
-    /// Constructs a new instance of <see cref="CRUDController{TKey, TSchema}"/> and injects the required services.
+    /// Constructs a new instance of <see cref="RestBulkController{TKey, TSchema}"/> and injects the required services.
     /// </summary>
     /// <param name="dataStoreService"></param>
-    protected CRUDBulkController(IDataStoreService<TKey, TSchema> dataStoreService)
+    protected RestBulkController(IDataStoreService<TKey, TSchema> dataStoreService)
         => _dataStoreService = dataStoreService;
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Creates multiple entities.
+    /// </summary>
+    /// <param name="models"></param>
+    /// <param name="cancellationToken"></param>
     [HttpPost]
     public async Task<ActionResult<IEnumerable<TSchema>>> PostAsync([FromBody] IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
@@ -31,24 +34,23 @@ public abstract class CRUDBulkController<TKey, TSchema> : ControllerBase, ICRUDB
         return Ok(result);
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Reads all entities.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TSchema>>> GetAll(CancellationToken cancellationToken = default)
+    public async Task<ActionResult<IEnumerable<TSchema>>> GetAsync(CancellationToken cancellationToken = default)
     {
         var result = await _dataStoreService.ReadAllAsync(cancellationToken);
         return Ok(result);
     }
 
-    /// <inheritdoc />
-    [HttpGet("{ids}")]
-    public async Task<ActionResult<IEnumerable<TSchema>>> GetByIds([FromRoute] List<TKey> ids,
-        CancellationToken cancellationToken = default)
-    {
-        var result = await _dataStoreService.ReadMultipleAsync(ids, cancellationToken);
-        return Ok(result);
-    }
-
-    /// <inheritdoc />
+    /// <summary>
+    /// Reads paged entities.
+    /// </summary>
+    /// <param name="page"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="cancellationToken"></param>
     [HttpGet("page/{page}/pageSize/{pageSize}")]
     public async Task<ActionResult<IEnumerable<TSchema>>> GetPageAsync(int page = 1, int pageSize = 10, CancellationToken cancellationToken = default)
     {
@@ -56,7 +58,12 @@ public abstract class CRUDBulkController<TKey, TSchema> : ControllerBase, ICRUDB
         return Ok(result);
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Reads entities by offset.
+    /// </summary>
+    /// <param name="offset"></param>
+    /// <param name="limit"></param>
+    /// <param name="cancellationToken"></param>
     [HttpGet("offset/{offset}/limit/{limit}")]
     public async Task<ActionResult<IEnumerable<TSchema>>> GetByOffset(int offset = 0, int limit = 20, CancellationToken cancellationToken = default)
     {
@@ -64,7 +71,11 @@ public abstract class CRUDBulkController<TKey, TSchema> : ControllerBase, ICRUDB
         return Ok(result);
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Updates multiple entities.
+    /// </summary>
+    /// <param name="models"></param>
+    /// <param name="cancellationToken"></param>
     [HttpPut]
     public async Task<ActionResult> PutAsync(IEnumerable<TSchema> models,
         CancellationToken cancellationToken = default)
@@ -73,7 +84,11 @@ public abstract class CRUDBulkController<TKey, TSchema> : ControllerBase, ICRUDB
         return Ok();
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    /// Deletes multiple entities.
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <param name="cancellationToken"></param>
     [HttpDelete]
     public async Task<ActionResult> DeleteAsync([FromQuery] List<TKey> ids,
         CancellationToken cancellationToken = default)

@@ -6,6 +6,7 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataProduct.Generator.Extensions;
 using Devantler.DataProduct.Generator.Models;
 using Microsoft.CodeAnalysis;
@@ -16,7 +17,7 @@ namespace Devantler.DataProduct.Generator.IncrementalGenerators;
 /// A generator that generates REST API controllers in the data product.
 /// </summary>
 [Generator]
-public class CRUDControllerGenerator : GeneratorBase
+public class CRUDBulkControllerGenerator : GeneratorBase
 {
     /// <summary>
     /// Generates REST API controllers in the data product.
@@ -29,6 +30,9 @@ public class CRUDControllerGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
+        if (!options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || !options.Apis.Rest.EnableBulkController)
+            return new Dictionary<string, string>();
+
         var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
         var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject, options.SchemaRegistry.Schema.Version);
 
@@ -41,15 +45,15 @@ public class CRUDControllerGenerator : GeneratorBase
             string schemaIdType = schemaType is not null
                 ? avroSchemaParser.Parse(schemaType, Language.CSharp)
                 : "Guid";
-            var @class = new CSharpClass($"{schemaName}Controller")
+            var @class = new CSharpClass($"{schemaName.ToPlural()}Controller")
                 .AddImport(new CSharpUsing("AutoMapper"))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreService")))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "CRUDController"))
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestBulkController"))
                 .SetDocBlock(new CSharpDocBlock(
-                    $$"""A controller to handle CRUD REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
-                .SetBaseClass(new CSharpClass($"CRUDController<{schemaIdType}, {schemaName}>"));
+                    $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
+                .SetBaseClass(new CSharpClass($"RestBulkController<{schemaIdType}, {schemaName}>"));
 
             var constructor = new CSharpConstructor(@class.Name)
                 .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of <see cref="{{@class.Name}}" />"""));
