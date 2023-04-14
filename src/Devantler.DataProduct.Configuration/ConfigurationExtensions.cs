@@ -4,11 +4,9 @@ using Devantler.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataProduct.Configuration.Options.DataStore.SQL;
-using Devantler.DataProduct.Configuration.Options.LoggingExporter;
-using Devantler.DataProduct.Configuration.Options.MetricsExporter;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry.Providers;
-using Devantler.DataProduct.Configuration.Options.TracingExporter;
+using Devantler.DataProduct.Configuration.Options.TelemetryExporter;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataProduct.Configuration;
@@ -29,9 +27,7 @@ public static class ConfigurationExtensions
         ConfigureCacheStoreOptions(configuration, dataProductOptions);
         ConfigureDataCatalogOptions(configuration, dataProductOptions);
         ConfigureDataIngestorsOptions(configuration, dataProductOptions);
-        ConfigureLoggingExporterOptions(configuration, dataProductOptions);
-        ConfigureMetricsExporterOptions(configuration, dataProductOptions);
-        ConfigureTracingExporterOptions(configuration, dataProductOptions);
+        ConfigureTelemetryExporterOptions(configuration, dataProductOptions);
         ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
 
         return dataProductOptions;
@@ -95,47 +91,17 @@ public static class ConfigurationExtensions
         dataProductOptions.DataIngestors = dataIngestors;
     }
 
-    static void ConfigureLoggingExporterOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    static void ConfigureTelemetryExporterOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {
-        if (dataProductOptions.FeatureFlags.EnableLogging)
+        if (dataProductOptions.FeatureFlags.EnableTelemetry)
         {
-            dataProductOptions.LoggingExporter = dataProductOptions.LoggingExporter.Type switch
+            dataProductOptions.TelemetryExporter = dataProductOptions.TelemetryExporter.Type switch
             {
-                LoggingExporterType.OpenTelemetry => configuration.GetSection(LoggingExporterOptions.Key).Get<OpenTelemetryLoggingExporterOptions>()
-                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{LoggingExporterOptions.Key}' to the type '{typeof(OpenTelemetryLoggingExporterOptions).FullName}'."),
-                LoggingExporterType.Console => configuration.GetSection(LoggingExporterOptions.Key).Get<ConsoleLoggingExporterOptions>()
-                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{LoggingExporterOptions.Key}' to the type '{typeof(ConsoleLoggingExporterOptions).FullName}'."),
-                _ => throw new NotSupportedException($"Logging system type '{dataProductOptions.LoggingExporter.Type}' is not supported.")
-            };
-        }
-    }
-
-    static void ConfigureMetricsExporterOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
-    {
-        if (dataProductOptions.FeatureFlags.EnableTracing)
-        {
-            dataProductOptions.MetricsExporter = dataProductOptions.MetricsExporter.Type switch
-            {
-                MetricsExporterType.OpenTelemetry => configuration.GetSection(MetricsExporterOptions.Key).Get<OpenTelemetryMetricsExporterOptions>()
-                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{MetricsExporterOptions.Key}' to the type '{typeof(OpenTelemetryMetricsExporterOptions).FullName}'."),
-                MetricsExporterType.Console => configuration.GetSection(MetricsExporterOptions.Key).Get<ConsoleMetricsExporterOptions>()
-                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{MetricsExporterOptions.Key}' to the type '{typeof(ConsoleMetricsExporterOptions).FullName}'."),
-                _ => throw new NotSupportedException($"Tracing system type '{dataProductOptions.TracingExporter.Type}' is not supported.")
-            };
-        }
-    }
-
-    static void ConfigureTracingExporterOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
-    {
-        if (dataProductOptions.FeatureFlags.EnableTracing)
-        {
-            dataProductOptions.TracingExporter = dataProductOptions.TracingExporter.Type switch
-            {
-                TracingExporterType.OpenTelemetry => configuration.GetSection(TracingExporterOptions.Key).Get<OpenTelemetryTracingExporterOptions>()
-                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{TracingExporterOptions.Key}' to the type '{typeof(OpenTelemetryTracingExporterOptions).FullName}'."),
-                TracingExporterType.Console => configuration.GetSection(TracingExporterOptions.Key).Get<ConsoleTracingExporterOptions>()
-                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{TracingExporterOptions.Key}' to the type '{typeof(ConsoleTracingExporterOptions).FullName}'."),
-                _ => throw new NotSupportedException($"Tracing system type '{dataProductOptions.TracingExporter.Type}' is not supported.")
+                TelemetryExporterType.OpenTelemetry => configuration.GetSection(TelemetryExporterOptions.Key).Get<OpenTelemetryExporterOptions>()
+                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryExporterOptions.Key}' to the type '{typeof(OpenTelemetryExporterOptions).FullName}'."),
+                TelemetryExporterType.Console => configuration.GetSection(TelemetryExporterOptions.Key).Get<ConsoleExporterOptions>()
+                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryExporterOptions.Key}' to the type '{typeof(ConsoleExporterOptions).FullName}'."),
+                _ => throw new NotSupportedException($"Logging system type '{dataProductOptions.TelemetryExporter.Type}' is not supported.")
             };
         }
     }

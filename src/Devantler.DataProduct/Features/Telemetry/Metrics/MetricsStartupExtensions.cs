@@ -1,11 +1,11 @@
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Configuration.Options.FeatureFlags;
-using Devantler.DataProduct.Configuration.Options.MetricsExporter;
+using Devantler.DataProduct.Configuration.Options.TelemetryExporter;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 
-namespace Devantler.DataProduct.Features.Metrics;
+namespace Devantler.DataProduct.Features.Telemetry.Metrics;
 
 /// <summary>
 /// Extensions to register metrics to the DI container and configure the web application to use it.
@@ -29,17 +29,17 @@ public static class MetricsStartupExtensions
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
                     _ = builder.AddHttpClientInstrumentation();
 
-                _ = options.MetricsExporter.Type switch
+                _ = options.TelemetryExporter.Type switch
                 {
-                    MetricsExporterType.OpenTelemetry => builder.AddOtlpExporter(
+                    TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
                         opt =>
                         {
-                            var openTelemetryOptions = (OpenTelemetryMetricsExporterOptions)options.MetricsExporter;
+                            var openTelemetryOptions = (OpenTelemetryExporterOptions)options.TelemetryExporter;
                             opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
                         }
                     ),
-                    MetricsExporterType.Console => builder.AddConsoleExporter(),
-                    _ => throw new NotSupportedException($"Metrics system type '{options.MetricsExporter.Type}' is not supported.")
+                    TelemetryExporterType.Console => builder.AddConsoleExporter(),
+                    _ => throw new NotSupportedException($"Metrics system type '{options.TelemetryExporter.Type}' is not supported.")
                 };
             });
         return services;

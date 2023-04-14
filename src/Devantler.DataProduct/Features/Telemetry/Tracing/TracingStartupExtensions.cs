@@ -3,11 +3,11 @@ using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataProduct.Configuration.Options.FeatureFlags;
-using Devantler.DataProduct.Configuration.Options.TracingExporter;
+using Devantler.DataProduct.Configuration.Options.TelemetryExporter;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace Devantler.DataProduct.Features.Tracing;
+namespace Devantler.DataProduct.Features.Telemetry.Tracing;
 
 /// <summary>
 /// Extensions to register tracing to the DI container and configure the web application to use it.
@@ -41,17 +41,17 @@ public static class TracingStartupExtensions
                     _ = builder.AddRedisInstrumentation();
                 }
 
-                _ = options.TracingExporter.Type switch
+                _ = options.TelemetryExporter.Type switch
                 {
-                    TracingExporterType.OpenTelemetry => builder.AddOtlpExporter(
+                    TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
                         opt =>
                         {
-                            var openTelemetryOptions = (OpenTelemetryTracingExporterOptions)options.TracingExporter;
+                            var openTelemetryOptions = (OpenTelemetryExporterOptions)options.TelemetryExporter;
                             opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
                         }
                     ),
-                    TracingExporterType.Console => builder.AddConsoleExporter(),
-                    _ => throw new NotSupportedException($"Tracing system type '{options.TracingExporter.Type}' is not supported.")
+                    TelemetryExporterType.Console => builder.AddConsoleExporter(),
+                    _ => throw new NotSupportedException($"Tracing system type '{options.TelemetryExporter.Type}' is not supported.")
                 };
             });
         return services;

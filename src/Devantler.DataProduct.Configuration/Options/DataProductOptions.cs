@@ -6,11 +6,9 @@ using Devantler.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataProduct.Configuration.Options.DataStore.SQL;
 using Devantler.DataProduct.Configuration.Options.FeatureFlags;
-using Devantler.DataProduct.Configuration.Options.LoggingExporter;
-using Devantler.DataProduct.Configuration.Options.MetricsExporter;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry.Providers;
-using Devantler.DataProduct.Configuration.Options.TracingExporter;
+using Devantler.DataProduct.Configuration.Options.TelemetryExporter;
 
 namespace Devantler.DataProduct.Configuration.Options;
 
@@ -80,19 +78,9 @@ public class DataProductOptions
     public CacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
 
     /// <summary>
-    /// Options for the logging exporter.
+    /// Options for the telemetry exporter.
     /// </summary>
-    public LoggingExporterOptions LoggingExporter { get; set; } = new ConsoleLoggingExporterOptions();
-
-    /// <summary>
-    /// Options for the metrics exporter.
-    /// </summary>
-    public MetricsExporterOptions MetricsExporter { get; set; } = new ConsoleMetricsExporterOptions();
-
-    /// <summary>
-    /// Options for the tracing exporter.
-    /// </summary>
-    public TracingExporterOptions TracingExporter { get; set; } = new ConsoleTracingExporterOptions();
+    public TelemetryExporterOptions TelemetryExporter { get; set; } = new ConsoleExporterOptions();
 
     /// <summary>
     /// Options for the data ingestors.

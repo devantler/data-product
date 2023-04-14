@@ -1,10 +1,10 @@
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.LoggingExporter;
+using Devantler.DataProduct.Configuration.Options.TelemetryExporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 
-namespace Devantler.DataProduct.Features.Logging;
+namespace Devantler.DataProduct.Features.Telemetry.Logging;
 
 /// <summary>
 /// Extensions to register logging to the DI container and configure the web application to use it.
@@ -20,18 +20,21 @@ public static class LoggingStartupExtensions
         {
             _ = opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
             _ = opt.IncludeScopes = true;
-            _ = opt.AttachLogsToActivityEvent();
-            _ = options.LoggingExporter.Type switch
+
+            if (options.TelemetryExporter.EnableTracing)
+                _ = opt.AttachLogsToActivityEvent();
+
+            _ = options.TelemetryExporter.Type switch
             {
-                LoggingExporterType.OpenTelemetry => opt.AddOtlpExporter(
+                TelemetryExporterType.OpenTelemetry => opt.AddOtlpExporter(
                     opt =>
                     {
-                        var openTelemetryOptions = (OpenTelemetryLoggingExporterOptions)options.LoggingExporter;
+                        var openTelemetryOptions = (OpenTelemetryExporterOptions)options.TelemetryExporter;
                         opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
                     }
                 ),
-                LoggingExporterType.Console => opt.AddConsoleExporter(),
-                _ => throw new NotSupportedException($"Logging exporter '{options.LoggingExporter.Type}' is not supported.")
+                TelemetryExporterType.Console => opt.AddConsoleExporter(),
+                _ => throw new NotSupportedException($"Logging exporter '{options.TelemetryExporter.Type}' is not supported.")
             };
         });
         return builder;
