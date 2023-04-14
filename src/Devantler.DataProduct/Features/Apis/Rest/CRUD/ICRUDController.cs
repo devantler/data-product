@@ -26,10 +26,9 @@ public interface ICRUDController<TKey, TSchema> where TSchema : class, Schemas.I
     /// <summary>
     /// Updates an entity.
     /// </summary>
-    /// <param name="id"></param>
     /// <param name="model"></param>
     /// <param name="cancellationToken"></param>
-    Task<ActionResult> PutAsync(TKey id, TSchema model, CancellationToken cancellationToken = default);
+    Task<ActionResult> PutAsync(TSchema model, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes an entity.

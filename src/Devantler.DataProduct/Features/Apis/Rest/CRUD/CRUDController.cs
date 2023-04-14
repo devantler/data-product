@@ -36,9 +36,8 @@ public abstract class CRUDController<TKey, TSchema> : ControllerBase, ICRUDContr
 
     /// <inheritdoc />
     [HttpPut("{id}")]
-    public async Task<ActionResult> PutAsync(TKey id, TSchema model, CancellationToken cancellationToken = default)
+    public async Task<ActionResult> PutAsync(TSchema model, CancellationToken cancellationToken = default)
     {
-        model.Id = id;
         await _dataStoreService.UpdateSingleAsync(model, cancellationToken);
         return Ok();
     }
