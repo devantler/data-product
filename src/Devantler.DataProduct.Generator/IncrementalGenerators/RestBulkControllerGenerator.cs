@@ -17,7 +17,7 @@ namespace Devantler.DataProduct.Generator.IncrementalGenerators;
 /// A generator that generates REST API controllers in the data product.
 /// </summary>
 [Generator]
-public class CRUDBulkControllerGenerator : GeneratorBase
+public class RestBulkControllerGenerator : GeneratorBase
 {
     /// <summary>
     /// Generates REST API controllers in the data product.
@@ -30,7 +30,7 @@ public class CRUDBulkControllerGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        if (!options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || !options.Apis.Rest.EnableBulkControllers)
+        if (!options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || !options.Apis.Rest.EnableBulkController)
             return new Dictionary<string, string>();
 
         var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
@@ -50,10 +50,10 @@ public class CRUDBulkControllerGenerator : GeneratorBase
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreService")))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "CRUDBulkController"))
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestBulkController"))
                 .SetDocBlock(new CSharpDocBlock(
                     $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
-                .SetBaseClass(new CSharpClass($"CRUDBulkController<{schemaIdType}, {schemaName}>"));
+                .SetBaseClass(new CSharpClass($"RestBulkController<{schemaIdType}, {schemaName}>"));
 
             var constructor = new CSharpConstructor(@class.Name)
                 .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of <see cref="{{@class.Name}}" />"""));

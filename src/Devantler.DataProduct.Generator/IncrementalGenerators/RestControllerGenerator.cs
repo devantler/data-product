@@ -16,7 +16,7 @@ namespace Devantler.DataProduct.Generator.IncrementalGenerators;
 /// A generator that generates REST API controllers in the data product.
 /// </summary>
 [Generator]
-public class CRUDControllerGenerator : GeneratorBase
+public class RestControllerGenerator : GeneratorBase
 {
     /// <summary>
     /// Generates REST API controllers in the data product.
@@ -46,10 +46,10 @@ public class CRUDControllerGenerator : GeneratorBase
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
                 .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreService")))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "CRUDController"))
+                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestController"))
                 .SetDocBlock(new CSharpDocBlock(
                     $$"""A controller to handle CRUD REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
-                .SetBaseClass(new CSharpClass($"CRUDController<{schemaIdType}, {schemaName}>"));
+                .SetBaseClass(new CSharpClass($"RestController<{schemaIdType}, {schemaName}>"));
 
             var constructor = new CSharpConstructor(@class.Name)
                 .SetDocBlock(new CSharpDocBlock($$"""Creates a new instance of <see cref="{{@class.Name}}" />"""));
