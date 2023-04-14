@@ -1,4 +1,4 @@
-namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.BulkControllerGeneratorTests;
+namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.RestBulkControllerGeneratorTests;
 
 public static class TestCases
 {

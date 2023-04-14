@@ -1,9 +1,9 @@
 using Devantler.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.ControllerGeneratorTests;
+namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.RestControllerGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : IncrementalGeneratorTestsBase<CRUDControllerGenerator>
+public class GenerateTests : IncrementalGeneratorTestsBase<RestControllerGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]

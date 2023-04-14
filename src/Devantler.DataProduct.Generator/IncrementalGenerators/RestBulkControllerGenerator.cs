@@ -17,7 +17,7 @@ namespace Devantler.DataProduct.Generator.IncrementalGenerators;
 /// A generator that generates REST API controllers in the data product.
 /// </summary>
 [Generator]
-public class CRUDBulkControllerGenerator : GeneratorBase
+public class RestBulkControllerGenerator : GeneratorBase
 {
     /// <summary>
     /// Generates REST API controllers in the data product.
