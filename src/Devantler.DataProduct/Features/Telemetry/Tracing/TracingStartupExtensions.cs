@@ -3,7 +3,7 @@ using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataProduct.Configuration.Options.FeatureFlags;
-using Devantler.DataProduct.Configuration.Options.TelemetryExporter;
+using Devantler.DataProduct.Configuration.Options.Telemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -46,7 +46,7 @@ public static class TracingStartupExtensions
                     TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
                         opt =>
                         {
-                            var openTelemetryOptions = (OpenTelemetryExporterOptions)options.TelemetryExporter;
+                            var openTelemetryOptions = (OpenTelemetryOptions)options.TelemetryExporter;
                             opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
                         }
                     ),

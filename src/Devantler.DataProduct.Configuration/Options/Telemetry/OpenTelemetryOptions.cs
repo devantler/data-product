@@ -1,9 +1,9 @@
-namespace Devantler.DataProduct.Configuration.Options.TelemetryExporter;
+namespace Devantler.DataProduct.Configuration.Options.Telemetry;
 
 /// <summary>
-/// Options to configure the OpenTelemetry exporter for the data product.
+/// Options to configure the OpenTelemetry for the data product.
 /// </summary>
-public class OpenTelemetryExporterOptions : TelemetryExporterOptions
+public class OpenTelemetryOptions : TelemetryOptions
 {
     /// <inheritdoc />
     public override TelemetryExporterType Type { get; set; } = TelemetryExporterType.OpenTelemetry;

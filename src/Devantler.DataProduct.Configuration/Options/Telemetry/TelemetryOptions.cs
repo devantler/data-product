@@ -1,9 +1,9 @@
-namespace Devantler.DataProduct.Configuration.Options.TelemetryExporter;
+namespace Devantler.DataProduct.Configuration.Options.Telemetry;
 
 /// <summary>
-/// Options to configure the metrics system for the data product.
+/// Options to configure telemetry for the data product.
 /// </summary>
-public class TelemetryExporterOptions
+public class TelemetryOptions
 {
     /// <summary>
     /// A flag to indicate if logging should be enabled for the data product.
@@ -21,9 +21,9 @@ public class TelemetryExporterOptions
     public bool EnableTracing { get; set; }
 
     /// <summary>
-    /// A key to indicate the section in the configuration file that contains the telemetry exporter options.
+    /// A key to indicate the section in the configuration file that contains the telemetry options.
     /// </summary>
-    public const string Key = "TelemetryExporter";
+    public const string Key = "Telemetry";
 
     /// <summary>
     /// The type of telemetry exporter to use.

@@ -1,7 +1,7 @@
-namespace Devantler.DataProduct.Configuration.Options.TelemetryExporter;
+namespace Devantler.DataProduct.Configuration.Options.Telemetry;
 
 /// <summary>
-/// The supported logging exporters.
+/// The supported telemetry exporters.
 /// </summary>
 public enum TelemetryExporterType
 {

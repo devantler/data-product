@@ -8,7 +8,7 @@ using Devantler.DataProduct.Configuration.Options.DataStore.SQL;
 using Devantler.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry.Providers;
-using Devantler.DataProduct.Configuration.Options.TelemetryExporter;
+using Devantler.DataProduct.Configuration.Options.Telemetry;
 
 namespace Devantler.DataProduct.Configuration.Options;
 
@@ -80,7 +80,7 @@ public class DataProductOptions
     /// <summary>
     /// Options for the telemetry exporter.
     /// </summary>
-    public TelemetryExporterOptions TelemetryExporter { get; set; } = new ConsoleExporterOptions();
+    public TelemetryOptions TelemetryExporter { get; set; } = new ConsoleTelemetryOptions();
 
     /// <summary>
     /// Options for the data ingestors.

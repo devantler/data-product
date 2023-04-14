@@ -1,6 +1,6 @@
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.TelemetryExporter;
+using Devantler.DataProduct.Configuration.Options.Telemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 
@@ -29,7 +29,7 @@ public static class LoggingStartupExtensions
                 TelemetryExporterType.OpenTelemetry => opt.AddOtlpExporter(
                     opt =>
                     {
-                        var openTelemetryOptions = (OpenTelemetryExporterOptions)options.TelemetryExporter;
+                        var openTelemetryOptions = (OpenTelemetryOptions)options.TelemetryExporter;
                         opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
                     }
                 ),

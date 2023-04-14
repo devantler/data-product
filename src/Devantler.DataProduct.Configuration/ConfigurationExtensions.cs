@@ -6,7 +6,7 @@ using Devantler.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataProduct.Configuration.Options.DataStore.SQL;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry.Providers;
-using Devantler.DataProduct.Configuration.Options.TelemetryExporter;
+using Devantler.DataProduct.Configuration.Options.Telemetry;
 using Microsoft.Extensions.Configuration;
 
 namespace Devantler.DataProduct.Configuration;
@@ -97,10 +97,10 @@ public static class ConfigurationExtensions
         {
             dataProductOptions.TelemetryExporter = dataProductOptions.TelemetryExporter.Type switch
             {
-                TelemetryExporterType.OpenTelemetry => configuration.GetSection(TelemetryExporterOptions.Key).Get<OpenTelemetryExporterOptions>()
-                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryExporterOptions.Key}' to the type '{typeof(OpenTelemetryExporterOptions).FullName}'."),
-                TelemetryExporterType.Console => configuration.GetSection(TelemetryExporterOptions.Key).Get<ConsoleExporterOptions>()
-                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryExporterOptions.Key}' to the type '{typeof(ConsoleExporterOptions).FullName}'."),
+                TelemetryExporterType.OpenTelemetry => configuration.GetSection(TelemetryOptions.Key).Get<OpenTelemetryOptions>()
+                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryOptions.Key}' to the type '{typeof(OpenTelemetryOptions).FullName}'."),
+                TelemetryExporterType.Console => configuration.GetSection(TelemetryOptions.Key).Get<ConsoleTelemetryOptions>()
+                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryOptions.Key}' to the type '{typeof(ConsoleTelemetryOptions).FullName}'."),
                 _ => throw new NotSupportedException($"Logging system type '{dataProductOptions.TelemetryExporter.Type}' is not supported.")
             };
         }

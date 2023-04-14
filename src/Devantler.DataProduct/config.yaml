@@ -22,9 +22,7 @@ FeatureFlags:
   EnableDataIngestion: true
   EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
   EnableDataCatalog: false
-  EnableLogging: false
-  EnableMetrics: false
-  EnableTracing: false
+  EnableTelemetry: false
   EnableAuthentication: false # TODO: #138 Enable feature gated authentication with Duende IdentityServer and OpenID Connect
   EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
   EnableWebhooks: false # TODO: Enable feature gated webhooks
@@ -37,6 +35,12 @@ DataStore:
 Apis:
   Rest:
     EnableBulkController: true
+
+Telemetry:
+  EnableLogging: true
+  EnableMetrics: true
+  EnableTracing: true
+  Type: Console
 
 CacheStore:
   Type: InMemory
