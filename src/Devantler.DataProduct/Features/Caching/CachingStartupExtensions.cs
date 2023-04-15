@@ -1,5 +1,5 @@
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.CacheStore;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.CacheStore;
 using StackExchange.Redis;
 
 namespace Devantler.DataProduct.Features.Caching;

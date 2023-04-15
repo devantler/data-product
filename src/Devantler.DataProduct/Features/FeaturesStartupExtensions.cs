@@ -1,19 +1,14 @@
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.FeatureFlags;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.FeatureFlags;
 using Devantler.DataProduct.Features.Apis;
 using Devantler.DataProduct.Features.Caching;
-using Devantler.DataProduct.Features.Configuration;
 using Devantler.DataProduct.Features.Dashboard;
 using Devantler.DataProduct.Features.DataCatalog;
 using Devantler.DataProduct.Features.DataEgestion;
 using Devantler.DataProduct.Features.DataIngestion;
 using Devantler.DataProduct.Features.DataStore;
-using Devantler.DataProduct.Features.Logging;
-using Devantler.DataProduct.Features.Mapping;
-using Devantler.DataProduct.Features.Metrics;
 using Devantler.DataProduct.Features.SchemaRegistry;
-using Devantler.DataProduct.Features.Tracing;
-using Devantler.DataProduct.Features.Validation;
+using Devantler.DataProduct.Features.Telemetry;
 using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 
@@ -28,17 +23,13 @@ public static class FeaturesStartupExtensions
     /// Registers features to the DI container.
     /// </summary>
     /// <param name="builder"></param>
-    /// <param name="args"></param>
-    public static void AddFeatures(this WebApplicationBuilder builder, string[] args)
+    /// <param name="options"></param>
+    public static void AddFeatures(this WebApplicationBuilder builder, DataProductOptions options)
     {
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
 
-        var options = builder.AddConfiguration(args);
-
         _ = builder.Services.AddDataStore(options);
         _ = builder.Services.AddSchemaRegistry(options);
-        _ = builder.Services.AddMapping();
-        _ = builder.Services.AddValidation();
 
         if (options.FeatureFlags.EnableApis.Any())
             _ = builder.Services.AddApis(options, builder.Environment);
@@ -64,23 +55,8 @@ public static class FeaturesStartupExtensions
         if (options.FeatureFlags.EnableDataIngestion)
             _ = builder.Services.AddDataIngestion(options);
 
-        if (options.FeatureFlags.EnableMetrics)
-            _ = builder.Services.AddMetrics(options);
-
-        if (options.FeatureFlags.EnableTracing)
-        {
-            if (options.FeatureFlags.EnableLogging
-                && string.Equals(
-                    options.TracingExporter.Type.ToString(),
-                    options.LoggingExporter.Type.ToString(),
-                    StringComparison.OrdinalIgnoreCase
-                )
-            )
-            {
-                _ = builder.AddLogging(options);
-            }
-            _ = builder.Services.AddTracing(options);
-        }
+        if (options.FeatureFlags.EnableTelemetry)
+            _ = builder.AddTelemetry(options);
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
-using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.OpenApi.Models;
 

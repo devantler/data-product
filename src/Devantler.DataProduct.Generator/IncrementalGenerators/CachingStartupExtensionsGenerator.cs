@@ -5,8 +5,8 @@ using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers.Extensions;
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.CacheStore;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.CacheStore;
 using Devantler.DataProduct.Generator.Extensions;
 using Devantler.DataProduct.Generator.Models;
 using Microsoft.CodeAnalysis;
@@ -41,7 +41,7 @@ public class CachingStartupExtensionsGenerator : GeneratorBase
         var @class = new CSharpClass("CachingStartupExtensions")
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ICacheStoreService")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataProductOptions")
-                .NullIfEmpty() ?? "Devantler.DataProduct.Configuration.Options")
+                .NullIfEmpty() ?? "Devantler.DataProduct.Core.Configuration.Options")
             )
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
             .SetDocBlock(new CSharpDocBlock("A class that contains extension methods for service registrations and usages for caching."))

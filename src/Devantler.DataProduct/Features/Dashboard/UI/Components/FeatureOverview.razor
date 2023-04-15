@@ -1,6 +1,6 @@
 @using Microsoft.Extensions.Options;
-@using Devantler.DataProduct.Configuration.Options;
-@using Devantler.DataProduct.Configuration.Options.FeatureFlags;
+@using Devantler.DataProduct.Core.Configuration.Options;
+@using Devantler.DataProduct.Core.Configuration.Options.FeatureFlags;
 
 @inject IOptions<DataProductOptions> Options
 
@@ -70,31 +70,16 @@
                     <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableDataCatalog).Replace("Enable", "")}")
                         IsEnabled=Options.Value.FeatureFlags.EnableDataCatalog />
                 </ListGroupItem>
-
                 <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableLogging ? Color.Success : Color.Danger)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableLogging).Replace("Enable", "")}")
-                        IsEnabled=Options.Value.FeatureFlags.EnableLogging />
+                    Color="@(Options.Value.FeatureFlags.EnableTelemetry ? Color.Success : Color.Danger)">
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableTelemetry).Replace("Enable", "")}")
+                        IsEnabled=Options.Value.FeatureFlags.EnableTelemetry />
                 </ListGroupItem>
-
                 <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableMetrics ? Color.Success : Color.Danger)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableMetrics).Replace("Enable", "")}")
-                        IsEnabled=Options.Value.FeatureFlags.EnableMetrics />
-                </ListGroupItem>
-
-                <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableTracing ? Color.Success : Color.Danger)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableTracing).Replace("Enable", "")}")
-                        IsEnabled=Options.Value.FeatureFlags.EnableTracing />
-                </ListGroupItem>
-
-                 <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableWebhooks ? Color.Success : Color.Warning)">
                     <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableWebhooks).Replace("Enable", "")} (Not supported yet)")
                         IsEnabled=Options.Value.FeatureFlags.EnableWebhooks />
                 </ListGroupItem>
-
             </ListGroup>
         </CardText>
     </CardBody>

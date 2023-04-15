@@ -1,8 +1,8 @@
 using Chr.Avro.Confluent;
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.DataIngestors;
 using Devantler.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;
 

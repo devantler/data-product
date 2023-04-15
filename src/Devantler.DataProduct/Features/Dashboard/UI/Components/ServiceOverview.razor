@@ -1,8 +1,8 @@
 @using Microsoft.Extensions.Options;
-@using Devantler.DataProduct.Configuration.Options;
-@using Devantler.DataProduct.Configuration.Options.DataStore;
-@using Devantler.DataProduct.Configuration.Options.DataIngestors;
-@using Devantler.DataProduct.Configuration.Options.FeatureFlags;
+@using Devantler.DataProduct.Core.Configuration.Options;
+@using Devantler.DataProduct.Core.Configuration.Options.DataStore;
+@using Devantler.DataProduct.Core.Configuration.Options.DataIngestors;
+@using Devantler.DataProduct.Core.Configuration.Options.FeatureFlags;
 @using System.Globalization;
 
 @inject IOptions<DataProductOptions> Options
@@ -76,24 +76,15 @@
 
                     }
                 }
-                @if(Options.Value.FeatureFlags.EnableLogging){
+                @if(Options.Value.FeatureFlags.EnableTelemetry){
+                    var telemetrySubDescriptions = new List<string>() {
+                        Options.Value.Telemetry.EnableLogging ? "Logging Enabled" : "Logging Disabled",
+                        Options.Value.Telemetry.EnableMetrics ? "Metrics Enabled" : "Metrics Disabled",
+                        Options.Value.Telemetry.EnableTracing ? "Tracing Enabled" : "Tracing Disabled"
+                    };
                     <ListGroupItem>
-                        <ServiceDetails Name="@Options.Value.LoggingExporter.Type.ToString()" Type="LoggingExporter"
-                        Description="The logging exporter in use by the data product." />
-                    </ListGroupItem>
-                }
-
-                @if(Options.Value.FeatureFlags.EnableMetrics){
-                    <ListGroupItem>
-                        <ServiceDetails Name="@Options.Value.MetricsExporter.Type.ToString()" Type="MetricsExporter"
-                        Description="The metrics exporter in use by the data product." />
-                    </ListGroupItem>
-                }
-                @if(Options.Value.FeatureFlags.EnableTracing)
-                {
-                    <ListGroupItem>
-                        <ServiceDetails Name="@Options.Value.TracingExporter.Type.ToString()" Type="TracingExporter"
-                        Description="The tracing exporter in use by the data product." />
+                        <ServiceDetails Name="@Options.Value.Telemetry.Type.ToString()" Type="Telemetry Exporter"
+                            Description="The telemetry exporter in use by the data product." SubDescriptions=@telemetrySubDescriptions />
                     </ListGroupItem>
                 }
             </ListGroup>

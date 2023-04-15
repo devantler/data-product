@@ -6,9 +6,9 @@ using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers.Extensions;
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.DataIngestors;
-using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.DataIngestors;
+using Devantler.DataProduct.Core.Configuration.Options.SchemaRegistry;
 using Devantler.DataProduct.Generator.Extensions;
 using Devantler.DataProduct.Generator.Models;
 using Microsoft.CodeAnalysis;
@@ -44,7 +44,7 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
         var @class = new CSharpClass("DataIngestionStartupExtensions")
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataIngestionStartupExtensions") + ".Services"))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataIngestorOptions").NullIfEmpty()
-                ?? "Devantler.DataProduct.Configuration.Options.DataIngestors")
+                ?? "Devantler.DataProduct.Core.Configuration.Options.DataIngestors")
             )
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
             .SetDocBlock(new CSharpDocBlock(
