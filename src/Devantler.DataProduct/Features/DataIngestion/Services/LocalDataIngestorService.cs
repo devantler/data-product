@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.DataIngestors;
 using Devantler.DataProduct.Features.DataIngestion.JsonConverters;
 using Devantler.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;

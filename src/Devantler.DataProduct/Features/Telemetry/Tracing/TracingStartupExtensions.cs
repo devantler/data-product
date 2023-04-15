@@ -1,9 +1,9 @@
 using Devantler.Commons.StringHelpers.Extensions;
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.CacheStore;
-using Devantler.DataProduct.Configuration.Options.DataStore;
-using Devantler.DataProduct.Configuration.Options.FeatureFlags;
-using Devantler.DataProduct.Configuration.Options.Telemetry;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.CacheStore;
+using Devantler.DataProduct.Core.Configuration.Options.DataStore;
+using Devantler.DataProduct.Core.Configuration.Options.FeatureFlags;
+using Devantler.DataProduct.Core.Configuration.Options.Telemetry;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 

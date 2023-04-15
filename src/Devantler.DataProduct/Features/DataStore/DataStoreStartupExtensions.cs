@@ -1,7 +1,7 @@
 #pragma warning disable S3251
 
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.DataStore;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.DataStore;
 
 namespace Devantler.DataProduct.Features.DataStore;
 

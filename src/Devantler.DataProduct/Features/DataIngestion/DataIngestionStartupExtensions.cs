@@ -1,6 +1,6 @@
 #pragma warning disable S3251
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.DataIngestors;
 
 namespace Devantler.DataProduct.Features.DataIngestion;
 

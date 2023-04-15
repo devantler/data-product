@@ -1,5 +1,5 @@
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.SchemaRegistry;
 using Devantler.SchemaRegistry.Client;
 
 namespace Devantler.DataProduct.Features.SchemaRegistry;

@@ -1,4 +1,4 @@
-using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options;
 using Devantler.DataProduct.Features.Telemetry.Logging;
 using Devantler.DataProduct.Features.Telemetry.Metrics;
 using Devantler.DataProduct.Features.Telemetry.Tracing;

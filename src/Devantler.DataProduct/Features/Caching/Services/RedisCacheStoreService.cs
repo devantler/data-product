@@ -1,6 +1,6 @@
 using System.Text.Json;
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.CacheStore;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.CacheStore;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 

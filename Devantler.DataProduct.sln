@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BEF72F59-2FE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataProduct", "src\Devantler.DataProduct\Devantler.DataProduct.csproj", "{C6288BEB-5538-44AF-A7D5-698B77681AC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataProduct.Configuration", "src\Devantler.DataProduct.Configuration\Devantler.DataProduct.Configuration.csproj", "{26B0C7DC-0435-4D8A-A2F1-E08D838CAFC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataProduct.Core.Configuration", "src\Devantler.DataProduct.Core.Configuration\Devantler.DataProduct.Core.Configuration.csproj", "{26B0C7DC-0435-4D8A-A2F1-E08D838CAFC6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataProduct.Generator", "src\Devantler.DataProduct.Generator\Devantler.DataProduct.Generator.csproj", "{966DE8DE-DFD2-4CFF-AA47-AF2035CE7590}"
 EndProject

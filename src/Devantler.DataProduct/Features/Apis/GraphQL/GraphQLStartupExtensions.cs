@@ -1,4 +1,4 @@
-using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options;
 using HotChocolate.Types.Pagination;
 
 namespace Devantler.DataProduct.Features.Apis.GraphQL;

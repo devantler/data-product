@@ -1,5 +1,5 @@
-using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.CacheStore;
+using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options.CacheStore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 

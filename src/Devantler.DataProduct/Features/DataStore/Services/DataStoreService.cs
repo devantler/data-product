@@ -1,5 +1,5 @@
 using AutoMapper;
-using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Core.Configuration.Options;
 using Devantler.DataProduct.Features.Caching.Extensions;
 using Devantler.DataProduct.Features.Caching.Services;
 using Devantler.DataProduct.Features.DataStore.Entities;
