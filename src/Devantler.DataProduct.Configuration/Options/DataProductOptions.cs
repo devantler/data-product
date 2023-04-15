@@ -80,7 +80,7 @@ public class DataProductOptions
     /// <summary>
     /// Options for the telemetry exporter.
     /// </summary>
-    public TelemetryOptions TelemetryExporter { get; set; } = new ConsoleTelemetryOptions();
+    public TelemetryOptions Telemetry { get; set; } = new ConsoleTelemetryOptions();
 
     /// <summary>
     /// Options for the data ingestors.

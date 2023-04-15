@@ -77,26 +77,15 @@
                     }
                 }
                 @if(Options.Value.FeatureFlags.EnableTelemetry){
-                     @if(Options.Value.TelemetryExporter.EnableLogging){
-                        <ListGroupItem>
-                            <ServiceDetails Name="@Options.Value.TelemetryExporter.Type.ToString()" Type="LoggingExporter"
-                            Description="The logging exporter in use by the data product." />
-                        </ListGroupItem>
-                    }
-
-                    @if(Options.Value.TelemetryExporter.EnableMetrics){
-                        <ListGroupItem>
-                            <ServiceDetails Name="@Options.Value.TelemetryExporter.Type.ToString()" Type="MetricsExporter"
-                            Description="The metrics exporter in use by the data product." />
-                        </ListGroupItem>
-                    }
-                    @if(Options.Value.TelemetryExporter.EnableTracing)
-                    {
-                        <ListGroupItem>
-                            <ServiceDetails Name="@Options.Value.TelemetryExporter.Type.ToString()" Type="TracingExporter"
-                            Description="The tracing exporter in use by the data product." />
-                        </ListGroupItem>
-                    }
+                    var telemetrySubDescriptions = new List<string>() {
+                        Options.Value.Telemetry.EnableLogging ? "Logging Enabled" : "Logging Disabled",
+                        Options.Value.Telemetry.EnableMetrics ? "Metrics Enabled" : "Metrics Disabled",
+                        Options.Value.Telemetry.EnableTracing ? "Tracing Enabled" : "Tracing Disabled"
+                    };
+                    <ListGroupItem>
+                        <ServiceDetails Name="@Options.Value.Telemetry.Type.ToString()" Type="Telemetry Exporter"
+                            Description="The telemetry exporter in use by the data product." SubDescriptions=@telemetrySubDescriptions />
+                    </ListGroupItem>
                 }
             </ListGroup>
         </CardText>

@@ -32,7 +32,7 @@ public static class ConfigurationStartupExtensions
             o.DataCatalog = options.DataCatalog;
             o.DataIngestors = options.DataIngestors;
             o.DataStore = options.DataStore;
-            o.TelemetryExporter = options.TelemetryExporter;
+            o.Telemetry = options.Telemetry;
             o.SchemaRegistry = options.SchemaRegistry;
         });
 

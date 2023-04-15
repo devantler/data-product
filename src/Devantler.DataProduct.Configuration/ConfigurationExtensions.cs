@@ -95,13 +95,13 @@ public static class ConfigurationExtensions
     {
         if (dataProductOptions.FeatureFlags.EnableTelemetry)
         {
-            dataProductOptions.TelemetryExporter = dataProductOptions.TelemetryExporter.Type switch
+            dataProductOptions.Telemetry = dataProductOptions.Telemetry.Type switch
             {
                 TelemetryExporterType.OpenTelemetry => configuration.GetSection(TelemetryOptions.Key).Get<OpenTelemetryOptions>()
                     ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryOptions.Key}' to the type '{typeof(OpenTelemetryOptions).FullName}'."),
                 TelemetryExporterType.Console => configuration.GetSection(TelemetryOptions.Key).Get<ConsoleTelemetryOptions>()
                     ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryOptions.Key}' to the type '{typeof(ConsoleTelemetryOptions).FullName}'."),
-                _ => throw new NotSupportedException($"Logging system type '{dataProductOptions.TelemetryExporter.Type}' is not supported.")
+                _ => throw new NotSupportedException($"Logging system type '{dataProductOptions.Telemetry.Type}' is not supported.")
             };
         }
     }

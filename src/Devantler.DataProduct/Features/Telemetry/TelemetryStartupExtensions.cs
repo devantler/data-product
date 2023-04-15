@@ -15,13 +15,13 @@ public static class TelemetryStartupExtensions
     /// </summary>
     public static WebApplicationBuilder AddTelemetry(this WebApplicationBuilder builder, DataProductOptions options)
     {
-        if (options.TelemetryExporter.EnableLogging)
+        if (options.Telemetry.EnableLogging)
             _ = builder.AddLogging(options);
 
-        if (options.TelemetryExporter.EnableMetrics)
+        if (options.Telemetry.EnableMetrics)
             _ = builder.Services.AddMetrics(options);
 
-        if (options.TelemetryExporter.EnableTracing)
+        if (options.Telemetry.EnableTracing)
             _ = builder.Services.AddTracing(options);
 
         return builder;
