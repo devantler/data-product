@@ -98,7 +98,7 @@ public static class ConfigurationExtensions
                 TelemetryExporterType.OpenTelemetry => configuration.GetSection(TelemetryOptions.Key).Get<OpenTelemetryOptions>()
                     ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryOptions.Key}' to the type '{typeof(OpenTelemetryOptions).FullName}'."),
                 TelemetryExporterType.Console => configuration.GetSection(TelemetryOptions.Key).Get<ConsoleTelemetryOptions>()
-                    ?? throw new InvalidOperationException($"Failed to bind configuration section '{TelemetryOptions.Key}' to the type '{typeof(ConsoleTelemetryOptions).FullName}'."),
+                    ?? dataProductOptions.Telemetry,
                 _ => throw new NotSupportedException($"Logging system type '{dataProductOptions.Telemetry.ExporterType}' is not supported.")
             };
         }
@@ -111,7 +111,7 @@ public static class ConfigurationExtensions
             SchemaRegistryType.Kafka => configuration.GetSection(SchemaRegistryOptions.Key).Get<KafkaSchemaRegistryOptions>()
                 ?? throw new InvalidOperationException($"Failed to bind configuration section '{SchemaRegistryOptions.Key}' to the type '{typeof(KafkaSchemaRegistryOptions).FullName}'."),
             SchemaRegistryType.Local => configuration.GetSection(SchemaRegistryOptions.Key).Get<LocalSchemaRegistryOptions>()
-                ?? throw new InvalidOperationException($"Failed to bind configuration section '{SchemaRegistryOptions.Key}' to the type '{typeof(LocalSchemaRegistryOptions).FullName}'."),
+                ?? dataProductOptions.SchemaRegistry,
             _ => throw new NotSupportedException($"Schema registry type '{dataProductOptions.SchemaRegistry.Type}' is not supported.")
         };
     }

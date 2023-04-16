@@ -8,10 +8,10 @@ public class SchemaOptions
     /// <summary>
     /// The subject of the schema.
     /// </summary>
-    public string Subject { get; set; } = string.Empty;
+    public string Subject { get; set; } = "contoso-university";
 
     /// <summary>
     /// The version of the schema.
     /// </summary>
-    public int Version { get; set; }
+    public int Version { get; set; } = 1;
 }

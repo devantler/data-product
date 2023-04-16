@@ -20,36 +20,10 @@ FeatureFlags:
     - GraphQL
   EnableCaching: true
   EnableDataIngestion: true
-  EnableDataEgestion: false # TODO: #143 Enable feature gated data publication with configured pub/sub
-  EnableDataCatalog: false
-  EnableTelemetry: false
-  EnableAuthentication: false # TODO: #138 Enable feature gated authentication with Duende IdentityServer and OpenID Connect
-  EnableAuthorisation: false # TODO: #137 Enable feature gated authorisation with Duende IdentityServer and OpenID Connect
-  EnableWebhooks: false # TODO: Enable feature gated webhooks
-
-DataStore:
-  Type: SQL
-  Provider: Sqlite
-  ConnectionString: Data Source=sqlite.db
 
 Apis:
   Rest:
     EnableBulkController: true
-
-Telemetry:
-  EnableLogging: true
-  EnableMetrics: true
-  EnableTracing: true
-  ExporterType: Console
-
-CacheStore:
-  Type: InMemory
-
-SchemaRegistry:
-  Type: Local
-  Schema:
-    Subject: contoso-university
-    Version: 1
 
 DataIngestors:
   - Type: Local
