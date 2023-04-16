@@ -6,7 +6,7 @@ using Devantler.DataProduct.Core.Configuration.Options.DataStore;
 using Devantler.DataProduct.Features.DataStore.Services;
 using Devantler.DataProduct.Features.DataStore.Repositories;
 using Devantler.DataProduct.Features.DataStore.Entities;
-using Devantler.DataProduct.Features.Schemas;
+using Devantler.DataProduct.Core.Schemas;
 using Microsoft.EntityFrameworkCore;
 namespace Devantler.DataProduct.Features.DataStore;
 /// <summary>

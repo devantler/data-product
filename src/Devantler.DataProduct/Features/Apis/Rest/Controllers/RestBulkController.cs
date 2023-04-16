@@ -1,3 +1,4 @@
+using Devantler.DataProduct.Core.Schemas;
 using Devantler.DataProduct.Features.DataStore.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,7 @@ namespace Devantler.DataProduct.Features.Apis.Rest.Controllers;
 /// <typeparam name="TSchema"></typeparam>
 [ApiController]
 [Route("[controller]")]
-public abstract class RestBulkController<TKey, TSchema> : ControllerBase where TSchema : class, Schemas.ISchema<TKey>
+public abstract class RestBulkController<TKey, TSchema> : ControllerBase where TSchema : class, ISchema<TKey>
 {
     readonly IDataStoreService<TKey, TSchema> _dataStoreService;
 
