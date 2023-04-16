@@ -41,7 +41,7 @@ public static class TracingStartupExtensions
                     _ = builder.AddRedisInstrumentation();
                 }
 
-                _ = options.Telemetry.Type switch
+                _ = options.Telemetry.ExporterType switch
                 {
                     TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
                         opt =>
@@ -51,7 +51,7 @@ public static class TracingStartupExtensions
                         }
                     ),
                     TelemetryExporterType.Console => builder.AddConsoleExporter(),
-                    _ => throw new NotSupportedException($"Tracing system type '{options.Telemetry.Type}' is not supported.")
+                    _ => throw new NotSupportedException($"Tracing system type '{options.Telemetry.ExporterType}' is not supported.")
                 };
             });
         return services;
