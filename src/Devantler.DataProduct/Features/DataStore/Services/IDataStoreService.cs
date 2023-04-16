@@ -1,3 +1,5 @@
+using Devantler.DataProduct.Core.Schemas;
+
 namespace Devantler.DataProduct.Features.DataStore.Services;
 
 /// <summary>
@@ -5,7 +7,7 @@ namespace Devantler.DataProduct.Features.DataStore.Services;
 /// </summary>
 /// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TSchema"></typeparam>
-public interface IDataStoreService<TKey, TSchema> where TSchema : class, Schemas.ISchema<TKey>
+public interface IDataStoreService<TKey, TSchema> where TSchema : class, ISchema<TKey>
 {
     /// <summary>
     /// Creates a single <typeparamref name="TSchema"/> in a data store.

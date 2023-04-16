@@ -1,4 +1,4 @@
-namespace Devantler.DataProduct.Features.Schemas;
+namespace Devantler.DataProduct.Core.Schemas;
 
 /// <summary>
 /// An interface for schemas.

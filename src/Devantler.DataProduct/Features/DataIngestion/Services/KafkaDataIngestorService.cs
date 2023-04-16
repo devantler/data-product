@@ -3,6 +3,7 @@ using Confluent.Kafka;
 using Confluent.SchemaRegistry;
 using Devantler.DataProduct.Core.Configuration.Options;
 using Devantler.DataProduct.Core.Configuration.Options.DataIngestors;
+using Devantler.DataProduct.Core.Schemas;
 using Devantler.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;
 
@@ -11,8 +12,7 @@ namespace Devantler.DataProduct.Features.DataIngestion.Services;
 /// <summary>
 /// A data ingestion source service that ingests data from a Kafka topic.
 /// </summary>
-public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService
-    where TSchema : class, Schemas.ISchema<TKey>
+public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService where TSchema : class, ISchema<TKey>
 {
     readonly IDataStoreService<TKey, TSchema> _dataStoreService;
     readonly List<(IConsumer<string, TSchema>, string)> _consumers;

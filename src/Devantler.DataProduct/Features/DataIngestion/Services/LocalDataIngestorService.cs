@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Devantler.DataProduct.Core.Configuration.Options;
 using Devantler.DataProduct.Core.Configuration.Options.DataIngestors;
+using Devantler.DataProduct.Core.Schemas;
 using Devantler.DataProduct.Features.DataIngestion.JsonConverters;
 using Devantler.DataProduct.Features.DataStore.Services;
 using Microsoft.Extensions.Options;
@@ -12,7 +13,7 @@ namespace Devantler.DataProduct.Features.DataIngestion.Services;
 /// A data ingestor that ingests data from a local file.
 /// </summary>
 public class LocalDataIngestorService<TKey, TSchema> : BackgroundService
-    where TSchema : class, Schemas.ISchema<TKey>
+    where TSchema : class, ISchema<TKey>
 {
     readonly IDataStoreService<TKey, TSchema> _dataStoreService;
     readonly DataProductOptions _options;

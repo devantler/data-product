@@ -1,5 +1,6 @@
 using AutoMapper;
 using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Core.Schemas;
 using Devantler.DataProduct.Features.Caching.Extensions;
 using Devantler.DataProduct.Features.Caching.Services;
 using Devantler.DataProduct.Features.DataStore.Entities;
@@ -16,7 +17,7 @@ namespace Devantler.DataProduct.Features.DataStore.Services;
 /// <typeparam name="TEntity"></typeparam>
 public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, TSchema>
     where TKey : notnull
-    where TSchema : class, Schemas.ISchema<TKey>
+    where TSchema : class, ISchema<TKey>
     where TEntity : class, IEntity<TKey>
 {
     readonly DataProductOptions _options;
