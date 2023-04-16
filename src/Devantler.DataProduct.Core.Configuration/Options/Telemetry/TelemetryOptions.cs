@@ -8,17 +8,17 @@ public class TelemetryOptions
     /// <summary>
     /// A flag to indicate if logging should be enabled for the data product.
     /// </summary>
-    public bool EnableLogging { get; set; }
+    public bool EnableLogging { get; set; } = true;
 
     /// <summary>
     /// A flag to indicate if metrics should be enabled for the data product.
     /// </summary>
-    public bool EnableMetrics { get; set; }
+    public bool EnableMetrics { get; set; } = true;
 
     /// <summary>
     /// A flag to indicate if tracing should be enabled for the data product.
     /// </summary>
-    public bool EnableTracing { get; set; }
+    public bool EnableTracing { get; set; } = true;
 
     /// <summary>
     /// A key to indicate the section in the configuration file that contains the telemetry options.
