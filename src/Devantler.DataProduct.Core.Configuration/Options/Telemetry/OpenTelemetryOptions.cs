@@ -6,7 +6,7 @@ namespace Devantler.DataProduct.Core.Configuration.Options.Telemetry;
 public class OpenTelemetryOptions : TelemetryOptions
 {
     /// <inheritdoc />
-    public override TelemetryExporterType Type { get; set; } = TelemetryExporterType.OpenTelemetry;
+    public override TelemetryExporterType ExporterType { get; set; } = TelemetryExporterType.OpenTelemetry;
 
     /// <summary>
     /// The endpoint to send telemetry data to.

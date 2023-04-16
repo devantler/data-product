@@ -83,7 +83,7 @@
                         Options.Value.Telemetry.EnableTracing ? "Tracing Enabled" : "Tracing Disabled"
                     };
                     <ListGroupItem>
-                        <ServiceDetails Name="@Options.Value.Telemetry.Type.ToString()" Type="Telemetry Exporter"
+                        <ServiceDetails Name="@Options.Value.Telemetry.ExporterType.ToString()" Type="Telemetry Exporter"
                             Description="The telemetry exporter in use by the data product." SubDescriptions=@telemetrySubDescriptions />
                     </ListGroupItem>
                 }

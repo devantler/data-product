@@ -29,7 +29,7 @@ public static class MetricsStartupExtensions
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
                     _ = builder.AddHttpClientInstrumentation();
 
-                _ = options.Telemetry.Type switch
+                _ = options.Telemetry.ExporterType switch
                 {
                     TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
                         opt =>
@@ -39,7 +39,7 @@ public static class MetricsStartupExtensions
                         }
                     ),
                     TelemetryExporterType.Console => builder.AddConsoleExporter(),
-                    _ => throw new NotSupportedException($"Metrics system type '{options.Telemetry.Type}' is not supported.")
+                    _ => throw new NotSupportedException($"Metrics system type '{options.Telemetry.ExporterType}' is not supported.")
                 };
             });
         return services;

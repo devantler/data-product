@@ -24,7 +24,7 @@ public static class LoggingStartupExtensions
             if (options.Telemetry.EnableTracing)
                 _ = opt.AttachLogsToActivityEvent();
 
-            _ = options.Telemetry.Type switch
+            _ = options.Telemetry.ExporterType switch
             {
                 TelemetryExporterType.OpenTelemetry => opt.AddOtlpExporter(
                     opt =>
@@ -34,7 +34,7 @@ public static class LoggingStartupExtensions
                     }
                 ),
                 TelemetryExporterType.Console => opt.AddConsoleExporter(),
-                _ => throw new NotSupportedException($"Logging exporter '{options.Telemetry.Type}' is not supported.")
+                _ => throw new NotSupportedException($"Logging exporter '{options.Telemetry.ExporterType}' is not supported.")
             };
         });
         return builder;

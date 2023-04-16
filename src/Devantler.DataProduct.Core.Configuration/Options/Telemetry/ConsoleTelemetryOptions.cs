@@ -6,5 +6,5 @@ namespace Devantler.DataProduct.Core.Configuration.Options.Telemetry;
 public class ConsoleTelemetryOptions : TelemetryOptions
 {
     /// <inheritdoc />
-    public override TelemetryExporterType Type { get; set; } = TelemetryExporterType.Console;
+    public override TelemetryExporterType ExporterType { get; set; } = TelemetryExporterType.Console;
 }

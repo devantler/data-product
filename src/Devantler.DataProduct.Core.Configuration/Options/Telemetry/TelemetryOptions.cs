@@ -28,5 +28,5 @@ public class TelemetryOptions
     /// <summary>
     /// The type of telemetry exporter to use.
     /// </summary>
-    public virtual TelemetryExporterType Type { get; set; }
+    public virtual TelemetryExporterType ExporterType { get; set; }
 }

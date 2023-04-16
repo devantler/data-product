@@ -40,7 +40,7 @@ Telemetry:
   EnableLogging: true
   EnableMetrics: true
   EnableTracing: true
-  Type: Console
+  ExporterType: Console
 
 CacheStore:
   Type: InMemory
