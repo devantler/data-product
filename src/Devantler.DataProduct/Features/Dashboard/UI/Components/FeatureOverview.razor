@@ -60,12 +60,6 @@
                 </ListGroupItem>
 
                 <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableDataMigration ? Color.Success : Color.Warning)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableDataMigration).Replace("Enable", "")} (Not supported yet)")
-                        IsEnabled=Options.Value.FeatureFlags.EnableDataMigration />
-                </ListGroupItem>
-
-                <ListGroupItem
                     Color="@(Options.Value.FeatureFlags.EnableDataCatalog ? Color.Success : Color.Danger)">
                     <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableDataCatalog).Replace("Enable", "")}")
                         IsEnabled=Options.Value.FeatureFlags.EnableDataCatalog />

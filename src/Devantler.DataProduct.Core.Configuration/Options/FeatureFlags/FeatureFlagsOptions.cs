@@ -21,11 +21,6 @@ public class FeatureFlagsOptions
     public bool EnableDashboard { get; set; } = true;
 
     /// <summary>
-    /// A flag to indicate if data migration should be enabled for the data product.
-    /// </summary>
-    public bool EnableDataMigration { get; set; }
-
-    /// <summary>
     /// A flag to indicate if data ingestion should be enabled for the data product.
     /// </summary>
     public bool EnableDataIngestion { get; set; }
