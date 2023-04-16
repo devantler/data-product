@@ -23,15 +23,4 @@ public static partial class DataStoreStartupExtensions
         _ = services.AddScoped<IRepository<Guid, RecordSchemaPrimitiveTypesEntity>, RecordSchemaPrimitiveTypesRepository>();
         _ = services.AddScoped<IDataStoreService<Guid, RecordSchemaPrimitiveTypes>, RecordSchemaPrimitiveTypesDataStoreService>();
     }
-    /// <summary>
-    /// Uses generated service registrations for a data store.
-    /// </summary>
-    static partial void UseGeneratedServiceRegistrations(this WebApplication app, DataStoreOptions options)
-    {
-        using var scope = app.Services.CreateScope();
-        var services = scope.ServiceProvider;
-        var dbContextFactory = services.GetRequiredService<IDbContextFactory<SqliteDbContext>>();
-        using var context = dbContextFactory.CreateDbContext();
-        _ = context.Database.EnsureCreated();
-    }
 }
