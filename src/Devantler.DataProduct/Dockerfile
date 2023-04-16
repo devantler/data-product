@@ -4,8 +4,11 @@ HEALTHCHECK --start-period=30s CMD wget --quiet --tries=1 --spider http://localh
 
 EXPOSE 5000
 
+ARG VERSION=v0.0.0
 ENV ASPNETCORE_URLS=http://+:5000 \
-    ASPNETCORE_ENVIRONMENT=Production
+    ASPNETCORE_ENVIRONMENT=Production \
+    RELEASE=${VERSION}
+
 
 WORKDIR /build
 COPY src/Devantler.DataProduct/Devantler.DataProduct.csproj ./src/Devantler.DataProduct/

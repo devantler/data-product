@@ -51,8 +51,6 @@ public static partial class DataStoreStartupExtensions
         switch (options.DataStore.Type)
         {
             case DataStoreType.SQL:
-                if (app.Environment.IsDevelopment())
-                    _ = app.UseMigrationsEndPoint();
                 break;
             case DataStoreType.NoSQL:
                 throw new NotSupportedException("Document based data stores are not supported yet.");
@@ -61,14 +59,11 @@ public static partial class DataStoreStartupExtensions
             default:
                 throw new NotSupportedException($"The data store type {options.DataStore.Type} is not supported.");
         }
-        app.UseGeneratedServiceRegistrations(options.DataStore);
 
         return app;
     }
 
     static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, DataStoreOptions options);
-
-    static partial void UseGeneratedServiceRegistrations(this WebApplication app, DataStoreOptions options);
 }
 
 #pragma warning restore S3251

@@ -62,16 +62,6 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
             .AddParameter(servicesParameter)
             .AddParameter(optionsParameter);
 
-        var appParameter = new CSharpParameter("WebApplication", "app");
-        var useGeneratedServiceRegistrations = new CSharpMethod("UseGeneratedServiceRegistrations")
-            .SetIsStatic(true)
-            .SetIsPartial(true)
-            .SetIsExtensionMethod(true)
-            .SetDocBlock(new CSharpDocBlock("Uses generated service registrations for a data store."))
-            .SetVisibility(Visibility.Private)
-            .AddParameter(appParameter)
-            .AddParameter(optionsParameter);
-
         var avroSchemaParser = new AvroSchemaParser();
 
         switch (options.DataStore.Type)
@@ -95,16 +85,6 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
                         .AddStatement($"_ = services.AddScoped<IRepository<{schemaIdType}, {schemaName}Entity>, {schemaName}Repository>();")
                         .AddStatement($"_ = services.AddScoped<IDataStoreService<{schemaIdType}, {schemaName}>, {schemaName}DataStoreService>();");
                 }
-                _ = useGeneratedServiceRegistrations
-                    .AddStatement(
-                        /*lang=csharp,strict*/
-                        $$"""
-                        using var scope = app.Services.CreateScope();
-                        var services = scope.ServiceProvider;
-                        var dbContextFactory = services.GetRequiredService<IDbContextFactory<{{options.DataStore.Provider}}DbContext>>();
-                        using var context = dbContextFactory.CreateDbContext();
-                        _ = context.Database.EnsureCreated();
-                        """);
                 break;
             case DataStoreType.NoSQL:
                 throw new NotSupportedException("Document based data stores are not supported yet.");
@@ -115,7 +95,6 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
         }
 
         _ = @class.AddMethod(addGeneratedServiceRegistrationsMethod);
-        _ = @class.AddMethod(useGeneratedServiceRegistrations);
 
         _ = codeCompilation.AddType(@class);
 
