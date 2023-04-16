@@ -18,7 +18,7 @@ public class FeatureFlagsOptions
     /// <summary>
     /// A flag to indicate if a dashboard should be enabled for the data product.
     /// </summary>
-    public bool EnableDashboard { get; set; }
+    public bool EnableDashboard { get; set; } = true;
 
     /// <summary>
     /// A flag to indicate if data migration should be enabled for the data product.
@@ -43,17 +43,17 @@ public class FeatureFlagsOptions
     /// <summary>
     /// A flag to indicate if caching should be enabled for the data product.
     /// </summary>
-    public bool EnableCaching { get; set; }
+    public bool EnableCaching { get; set; } = true;
 
     /// <summary>
     /// A flag to indicate if authentication should be enabled for the data product.
     /// </summary>
-    public bool EnableAuthentication { get; set; }
+    public bool EnableAuthentication { get; set; } = true;
 
     /// <summary>
     /// A flag to indicate if authorisation should be enabled for the data product.
     /// </summary>
-    public bool EnableAuthorisation { get; set; }
+    public bool EnableAuthorisation { get; set; } = true;
 
     /// <summary>
     /// A flag to indicate if webhooks should be enabled for the data product.

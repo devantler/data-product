@@ -14,11 +14,9 @@ Owner:
   Website: https://test-site.com
 
 FeatureFlags:
-  EnableDashboard: true
   EnableApis:
     - Rest
     - GraphQL
-  EnableCaching: true
   EnableDataIngestion: true
 
 Apis:
