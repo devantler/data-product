@@ -35,7 +35,7 @@
         <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.0.0" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Scriban" Version="5.7.0" GeneratePathProperty="true" PrivateAssets="all" />
-        <PackageReference Include="YamlDotNet" Version="13.0.2" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="YamlDotNet" Version="13.1.0" GeneratePathProperty="true" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
