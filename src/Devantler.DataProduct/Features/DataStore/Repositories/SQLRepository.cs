@@ -98,9 +98,5 @@ public abstract class SQLRepository<TKey, TEntity> : IRepository<TKey, TEntity>
 
     /// <inheritdoc />
     public async Task DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
-    {
-        var entities = await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
-        _context.Set<TEntity>().RemoveRange(entities);
-        _ = await _context.SaveChangesAsync(cancellationToken);
-    }
+        => await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ExecuteDeleteAsync(cancellationToken: cancellationToken);
 }
