@@ -31,13 +31,6 @@ public abstract class SQLRepository<TKey, TEntity> : IRepository<TKey, TEntity>
     /// <inheritdoc />
     public async Task<IEnumerable<TEntity>> CreateMultipleAsync(IEnumerable<TEntity> entities, bool insertIfNotExists, CancellationToken cancellationToken = default)
     {
-        //Bulk insert is only supported by SQL Server and PostgreSQL
-        if (_context.Database.IsNpgsql())
-        {
-            await _context.Set<TEntity>().BulkInsertAsync(entities, o => o.InsertIfNotExists = insertIfNotExists, cancellationToken);
-            await _context.BulkSaveChangesAsync(cancellationToken);
-            return await _context.Set<TEntity>().BulkReadAsync(entities, cancellationToken);
-        }
         var entitiesToInsert = insertIfNotExists
             ? entities.Where(x => _context.Set<TEntity>().Find(x.Id) == null)
             : entities;
@@ -60,13 +53,8 @@ public abstract class SQLRepository<TKey, TEntity> : IRepository<TKey, TEntity>
         => await _context.Set<TEntity>().Select(x => x.Id).ToListAsync(cancellationToken);
 
     /// <inheritdoc />
-    public async Task<IEnumerable<TEntity>> ReadMultipleAsync(IEnumerable<TKey> ids,
-        CancellationToken cancellationToken = default)
-    {
-        return _context.Database.IsNpgsql()
-            ? await _context.Set<TEntity>().BulkReadAsync(ids, cancellationToken)
-            : (IEnumerable<TEntity>)await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
-    }
+    public async Task<IEnumerable<TEntity>> ReadMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
+        => await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
 
     /// <inheritdoc />
     public async Task<IEnumerable<TEntity>> ReadMultipleWithPaginationAsync(int page, int pageSize,
@@ -95,16 +83,8 @@ public abstract class SQLRepository<TKey, TEntity> : IRepository<TKey, TEntity>
     /// <inheritdoc />
     public async Task UpdateMultipleAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
     {
-        if (_context.Database.IsNpgsql())
-        {
-            await _context.Set<TEntity>().BulkUpdateAsync(entities, cancellationToken);
-            await _context.BulkSaveChangesAsync(cancellationToken);
-        }
-        else
-        {
-            _context.Set<TEntity>().UpdateRange(entities);
-            _ = await _context.SaveChangesAsync(cancellationToken);
-        }
+        _context.Set<TEntity>().UpdateRange(entities);
+        _ = await _context.SaveChangesAsync(cancellationToken);
     }
 
     /// <inheritdoc />
@@ -120,15 +100,7 @@ public abstract class SQLRepository<TKey, TEntity> : IRepository<TKey, TEntity>
     public async Task DeleteMultipleAsync(IEnumerable<TKey> ids, CancellationToken cancellationToken = default)
     {
         var entities = await _context.Set<TEntity>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken);
-        if (_context.Database.IsNpgsql())
-        {
-            await _context.Set<TEntity>().BulkDeleteAsync(entities, cancellationToken);
-            await _context.BulkSaveChangesAsync(cancellationToken);
-        }
-        else
-        {
-            _context.Set<TEntity>().RemoveRange(entities);
-            _ = await _context.SaveChangesAsync(cancellationToken);
-        }
+        _context.Set<TEntity>().RemoveRange(entities);
+        _ = await _context.SaveChangesAsync(cancellationToken);
     }
 }
