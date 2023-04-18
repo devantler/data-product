@@ -45,7 +45,7 @@
         <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.0.0-rc9.8" />
         <PackageReference Include="StackExchange.Redis" Version="2.6.104" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-        <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="7.20.2" />
+        <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="7.21.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Devantler.DataProduct.Generator\Devantler.DataProduct.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
