@@ -19,7 +19,8 @@ public static class GraphQLStartupExtensions
     {
         var requestExecutorBuilder = services.AddGraphQLServer()
             .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = environment.IsDevelopment())
-            .AddQueryType<Query>();
+            .AddQueryType<Query>()
+            .AddInstrumentation();
         _ = requestExecutorBuilder.SetPagingOptions(new PagingOptions
         {
             DefaultPageSize = options.Apis.GraphQL.DefaultPageSize,

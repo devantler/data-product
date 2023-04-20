@@ -34,6 +34,9 @@ public static class TracingStartupExtensions
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
                     _ = builder.AddHttpClientInstrumentation(options => options.RecordException = true);
 
+                if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
+                    _ = builder.AddHotChocolateInstrumentation();
+
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC))
                     _ = builder.AddGrpcClientInstrumentation();
 

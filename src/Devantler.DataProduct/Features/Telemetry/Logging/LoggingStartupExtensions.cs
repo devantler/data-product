@@ -22,6 +22,9 @@ public static class LoggingStartupExtensions
                 .AddService(options.Name.ToKebabCase())
                 .AddAttributes(TelemetryHelpers.GetProcessAttributes(options))
             );
+            loggingBuilder.IncludeFormattedMessage = true;
+            loggingBuilder.IncludeScopes = true;
+            loggingBuilder.ParseStateValues = true;
 
             loggingBuilder.AddLoggingExporter(options);
         });
