@@ -1,4 +1,3 @@
-using System.Reflection;
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Core.Configuration.Options;
 using Devantler.DataProduct.Core.Configuration.Options.FeatureFlags;
@@ -23,15 +22,7 @@ public static class MetricsStartupExtensions
             {
                 _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault()
                     .AddService(options.Name.ToKebabCase())
-                    .AddAttributes(
-                        new Dictionary<string, object>
-                        {
-                            ["environment"] = options.Environment,
-                            ["service"] = options.Name.ToKebabCase(),
-                            ["version"] = options.Release,
-                            ["assembly"] = Assembly.GetExecutingAssembly().GetName().FullName
-                        }
-                    )
+                    .AddAttributes(TelemetryHelpers.GetProcessAttributes(options))
                 );
 
                 _ = builder.AddAspNetCoreInstrumentation();
@@ -41,19 +32,24 @@ public static class MetricsStartupExtensions
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
                     _ = builder.AddHttpClientInstrumentation();
 
-                _ = options.Telemetry.ExporterType switch
-                {
-                    TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
-                        opt =>
-                        {
-                            var openTelemetryOptions = (OpenTelemetryOptions)options.Telemetry;
-                            opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
-                        }
-                    ),
-                    TelemetryExporterType.Console => builder.AddConsoleExporter(),
-                    _ => throw new NotSupportedException($"Metrics system type '{options.Telemetry.ExporterType}' is not supported.")
-                };
+                builder.AddMetricsExporter(options);
             });
         return services;
+    }
+
+    static void AddMetricsExporter(this MeterProviderBuilder builder, DataProductOptions options)
+    {
+        _ = options.Telemetry.ExporterType switch
+        {
+            TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
+                opt =>
+                {
+                    var openTelemetryOptions = (OpenTelemetryOptions)options.Telemetry;
+                    opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+                }
+            ),
+            TelemetryExporterType.Console => builder.AddConsoleExporter(),
+            _ => throw new NotSupportedException($"Metrics system type '{options.Telemetry.ExporterType}' is not supported.")
+        };
     }
 }

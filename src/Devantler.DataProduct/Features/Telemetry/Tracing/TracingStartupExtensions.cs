@@ -1,4 +1,3 @@
-using System.Reflection;
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Core.Configuration.Options;
 using Devantler.DataProduct.Core.Configuration.Options.CacheStore;
@@ -27,15 +26,7 @@ public static class TracingStartupExtensions
                     .AddSource(options.Name.ToKebabCase())
                     .SetResourceBuilder(ResourceBuilder.CreateDefault()
                         .AddService(options.Name.ToKebabCase())
-                        .AddAttributes(
-                            new Dictionary<string, object>
-                            {
-                                ["environment"] = options.Environment,
-                                ["service"] = options.Name.ToKebabCase(),
-                                ["version"] = options.Release,
-                                ["assembly"] = Assembly.GetExecutingAssembly().GetName().FullName
-                            }
-                        )
+                        .AddAttributes(TelemetryHelpers.GetProcessAttributes(options))
                 );
 
                 _ = builder.AddAspNetCoreInstrumentation(options => options.RecordException = true);
@@ -55,19 +46,24 @@ public static class TracingStartupExtensions
                     _ = builder.AddRedisInstrumentation(configure: config => config.SetVerboseDatabaseStatements = true);
                 }
 
-                _ = options.Telemetry.ExporterType switch
-                {
-                    TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
-                        opt =>
-                        {
-                            var openTelemetryOptions = (OpenTelemetryOptions)options.Telemetry;
-                            opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
-                        }
-                    ),
-                    TelemetryExporterType.Console => builder.AddConsoleExporter(),
-                    _ => throw new NotSupportedException($"Tracing system type '{options.Telemetry.ExporterType}' is not supported.")
-                };
+                builder.AddTracingExporter(options);
             });
         return services;
+    }
+
+    static void AddTracingExporter(this TracerProviderBuilder builder, DataProductOptions options)
+    {
+        _ = options.Telemetry.ExporterType switch
+        {
+            TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
+                opt =>
+                {
+                    var openTelemetryOptions = (OpenTelemetryOptions)options.Telemetry;
+                    opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+                }
+            ),
+            TelemetryExporterType.Console => builder.AddConsoleExporter(),
+            _ => throw new NotSupportedException($"Tracing system type '{options.Telemetry.ExporterType}' is not supported.")
+        };
     }
 }
