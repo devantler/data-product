@@ -1,8 +1,6 @@
 using System.Reflection;
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Core.Configuration.Options;
-using Devantler.DataProduct.Core.Configuration.Options.Telemetry;
-using OpenTelemetry.Trace;
 
 namespace Devantler.DataProduct.Features.Telemetry;
 
