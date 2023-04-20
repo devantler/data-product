@@ -22,10 +22,11 @@ public static class TracingStartupExtensions
         _ = services.AddOpenTelemetry()
             .WithTracing(builder =>
             {
+                string serviceName = options.Name.ToKebabCase();
                 _ = builder
-                    .AddSource(options.Name.ToKebabCase())
+                    .AddSource(serviceName)
                     .SetResourceBuilder(ResourceBuilder.CreateDefault()
-                        .AddService(options.Name.ToKebabCase())
+                        .AddService(serviceName)
                         .AddAttributes(TelemetryHelpers.GetProcessAttributes(options))
                 );
 
