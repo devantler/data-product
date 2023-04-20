@@ -1,3 +1,4 @@
+using System.Reflection;
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Core.Configuration.Options;
 using Devantler.DataProduct.Core.Configuration.Options.Telemetry;
@@ -18,11 +19,18 @@ public static class LoggingStartupExtensions
     {
         _ = builder.Logging.AddOpenTelemetry(opt =>
         {
-            _ = opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
-            _ = opt.IncludeScopes = true;
-
-            if (options.Telemetry.EnableTracing)
-                _ = opt.AttachLogsToActivityEvent();
+            _ = opt.SetResourceBuilder(ResourceBuilder.CreateDefault()
+                .AddService(options.Name.ToKebabCase())
+                .AddAttributes(
+                    new Dictionary<string, object>
+                    {
+                        ["environment"] = options.Environment,
+                        ["service"] = options.Name.ToKebabCase(),
+                        ["version"] = options.Release,
+                        ["assembly"] = Assembly.GetExecutingAssembly().GetName().FullName
+                    }
+                )
+            );
 
             _ = options.Telemetry.ExporterType switch
             {

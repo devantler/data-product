@@ -1,3 +1,4 @@
+using System.Reflection;
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Core.Configuration.Options;
 using Devantler.DataProduct.Core.Configuration.Options.CacheStore;
@@ -22,23 +23,36 @@ public static class TracingStartupExtensions
         _ = services.AddOpenTelemetry()
             .WithTracing(builder =>
             {
-                _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
+                _ = builder
+                    .AddSource(options.Name.ToKebabCase())
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault()
+                        .AddService(options.Name.ToKebabCase())
+                        .AddAttributes(
+                            new Dictionary<string, object>
+                            {
+                                ["environment"] = options.Environment,
+                                ["service"] = options.Name.ToKebabCase(),
+                                ["version"] = options.Release,
+                                ["assembly"] = Assembly.GetExecutingAssembly().GetName().FullName
+                            }
+                        )
+                );
 
-                _ = builder.AddAspNetCoreInstrumentation();
+                _ = builder.AddAspNetCoreInstrumentation(options => options.RecordException = true);
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
-                    _ = builder.AddHttpClientInstrumentation();
+                    _ = builder.AddHttpClientInstrumentation(options => options.RecordException = true);
 
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC))
                     _ = builder.AddGrpcClientInstrumentation();
 
                 if (options.DataStore.Type == DataStoreType.SQL)
                 {
-                    _ = builder.AddEntityFrameworkCoreInstrumentation();
+                    _ = builder.AddEntityFrameworkCoreInstrumentation(options => options.SetDbStatementForText = true);
                 }
 
                 if (options.FeatureFlags.EnableCaching && options.CacheStore.Type == CacheStoreType.Redis)
                 {
-                    _ = builder.AddRedisInstrumentation();
+                    _ = builder.AddRedisInstrumentation(configure: config => config.SetVerboseDatabaseStatements = true);
                 }
 
                 _ = options.Telemetry.ExporterType switch

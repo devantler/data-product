@@ -1,3 +1,4 @@
+using System.Reflection;
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Core.Configuration.Options;
 using Devantler.DataProduct.Core.Configuration.Options.FeatureFlags;
@@ -20,7 +21,18 @@ public static class MetricsStartupExtensions
         _ = services.AddOpenTelemetry()
             .WithMetrics(builder =>
             {
-                _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
+                _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault()
+                    .AddService(options.Name.ToKebabCase())
+                    .AddAttributes(
+                        new Dictionary<string, object>
+                        {
+                            ["environment"] = options.Environment,
+                            ["service"] = options.Name.ToKebabCase(),
+                            ["version"] = options.Release,
+                            ["assembly"] = Assembly.GetExecutingAssembly().GetName().FullName
+                        }
+                    )
+                );
 
                 _ = builder.AddAspNetCoreInstrumentation();
                 _ = builder.AddRuntimeInstrumentation();

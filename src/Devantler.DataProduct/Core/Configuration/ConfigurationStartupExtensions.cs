@@ -21,6 +21,7 @@ public static class ConfigurationStartupExtensions
             o.Name = options.Name;
             o.Description = options.Description;
             o.Release = options.Release;
+            o.Environment = builder.Environment.EnvironmentName;
             o.PublicUrl = options.PublicUrl;
             o.License = options.License;
             o.Owner = options.Owner;

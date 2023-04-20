@@ -91,4 +91,9 @@ public class DataProductOptions
     /// Options for the data catalog.
     /// </summary>
     public DataCatalogOptions DataCatalog { get; set; } = new DataHubDataCatalogOptions();
+
+    /// <summary>
+    /// The environment the data product is running in.
+    /// </summary>
+    public string Environment { get; set; } = string.Empty;
 }

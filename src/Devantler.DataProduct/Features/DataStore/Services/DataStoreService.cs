@@ -45,10 +45,8 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     public async Task<TSchema> CreateSingleAsync(TSchema schema, CancellationToken cancellationToken = default)
     {
         var entity = _mapper.Map<TEntity>(schema);
-        var result = await _repository.CreateSingleAsync(entity, cancellationToken)
+        return await _repository.CreateSingleAsync(entity, cancellationToken)
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
-
-        return result;
     }
 
     /// <inheritdoc/>
