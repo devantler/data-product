@@ -22,38 +22,49 @@ public static class TracingStartupExtensions
         _ = services.AddOpenTelemetry()
             .WithTracing(builder =>
             {
-                _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
+                string serviceName = options.Name.ToKebabCase();
+                _ = builder
+                    .AddSource(serviceName)
+                    .SetResourceBuilder(ResourceBuilder.CreateDefault()
+                        .AddService(serviceName)
+                        .AddAttributes(TelemetryHelpers.GetProcessAttributes(options))
+                );
 
-                _ = builder.AddAspNetCoreInstrumentation();
+                _ = builder.AddAspNetCoreInstrumentation(options => options.RecordException = true);
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.GraphQL))
-                    _ = builder.AddHttpClientInstrumentation();
+                    _ = builder.AddHttpClientInstrumentation(options => options.RecordException = true);
 
                 if (options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.gRPC))
                     _ = builder.AddGrpcClientInstrumentation();
 
                 if (options.DataStore.Type == DataStoreType.SQL)
                 {
-                    _ = builder.AddEntityFrameworkCoreInstrumentation();
+                    _ = builder.AddEntityFrameworkCoreInstrumentation(options => options.SetDbStatementForText = true);
                 }
 
                 if (options.FeatureFlags.EnableCaching && options.CacheStore.Type == CacheStoreType.Redis)
                 {
-                    _ = builder.AddRedisInstrumentation();
+                    _ = builder.AddRedisInstrumentation(configure: config => config.SetVerboseDatabaseStatements = true);
                 }
 
-                _ = options.Telemetry.ExporterType switch
-                {
-                    TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
-                        opt =>
-                        {
-                            var openTelemetryOptions = (OpenTelemetryOptions)options.Telemetry;
-                            opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
-                        }
-                    ),
-                    TelemetryExporterType.Console => builder.AddConsoleExporter(),
-                    _ => throw new NotSupportedException($"Tracing system type '{options.Telemetry.ExporterType}' is not supported.")
-                };
+                builder.AddTracingExporter(options);
             });
         return services;
+    }
+
+    static void AddTracingExporter(this TracerProviderBuilder builder, DataProductOptions options)
+    {
+        _ = options.Telemetry.ExporterType switch
+        {
+            TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
+                opt =>
+                {
+                    var openTelemetryOptions = (OpenTelemetryOptions)options.Telemetry;
+                    opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+                }
+            ),
+            TelemetryExporterType.Console => builder.AddConsoleExporter(),
+            _ => throw new NotSupportedException($"Tracing system type '{options.Telemetry.ExporterType}' is not supported.")
+        };
     }
 }

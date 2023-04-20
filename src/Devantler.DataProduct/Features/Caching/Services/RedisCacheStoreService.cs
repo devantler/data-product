@@ -40,9 +40,7 @@ public class RedisCacheStoreService<TValue> : ICacheStoreService<TValue>
 
         var redisValues = await _redis.StringGetAsync(redisKeys);
 
-        var values = redisValues.Select(v => v.HasValue ? JsonSerializer.Deserialize<TValue>(v.ToString()) : default);
-
-        return values;
+        return redisValues.Select(v => v.HasValue ? JsonSerializer.Deserialize<TValue>(v.ToString()) : default);
     }
 
     /// <inheritdoc/>

@@ -16,27 +16,31 @@ public static class LoggingStartupExtensions
     /// </summary>
     public static WebApplicationBuilder AddLogging(this WebApplicationBuilder builder, DataProductOptions options)
     {
-        _ = builder.Logging.AddOpenTelemetry(opt =>
+        _ = builder.Logging.AddOpenTelemetry(loggingBuilder =>
         {
-            _ = opt.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService($"{options.Name.ToKebabCase()}-{options.Release}"));
-            _ = opt.IncludeScopes = true;
+            _ = loggingBuilder.SetResourceBuilder(ResourceBuilder.CreateDefault()
+                .AddService(options.Name.ToKebabCase())
+                .AddAttributes(TelemetryHelpers.GetProcessAttributes(options))
+            );
 
-            if (options.Telemetry.EnableTracing)
-                _ = opt.AttachLogsToActivityEvent();
-
-            _ = options.Telemetry.ExporterType switch
-            {
-                TelemetryExporterType.OpenTelemetry => opt.AddOtlpExporter(
-                    opt =>
-                    {
-                        var openTelemetryOptions = (OpenTelemetryOptions)options.Telemetry;
-                        opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
-                    }
-                ),
-                TelemetryExporterType.Console => opt.AddConsoleExporter(),
-                _ => throw new NotSupportedException($"Logging exporter '{options.Telemetry.ExporterType}' is not supported.")
-            };
+            loggingBuilder.AddLoggingExporter(options);
         });
         return builder;
+    }
+
+    static void AddLoggingExporter(this OpenTelemetryLoggerOptions builder, DataProductOptions options)
+    {
+        _ = options.Telemetry.ExporterType switch
+        {
+            TelemetryExporterType.OpenTelemetry => builder.AddOtlpExporter(
+                opt =>
+                {
+                    var openTelemetryOptions = (OpenTelemetryOptions)options.Telemetry;
+                    opt.Endpoint = new Uri(openTelemetryOptions.Endpoint);
+                }
+            ),
+            TelemetryExporterType.Console => builder.AddConsoleExporter(),
+            _ => throw new NotSupportedException($"Logging exporter '{options.Telemetry.ExporterType}' is not supported.")
+        };
     }
 }

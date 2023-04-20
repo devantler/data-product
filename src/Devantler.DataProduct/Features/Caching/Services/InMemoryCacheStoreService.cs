@@ -32,12 +32,11 @@ public class InMemoryCacheStoreService<TValue> : ICacheStoreService<TValue>
     /// <inheritdoc />
     public Task<TValue?> GetOrSetAsync(string key, Func<Task<TValue>> valueFactory, CancellationToken cancellationToken = default)
     {
-        var cacheEntry = _memoryCache.GetOrCreateAsync(key, async entry =>
+        return _memoryCache.GetOrCreateAsync(key, async entry =>
         {
             entry.SlidingExpiration = _options.CacheStore.ExpirationTime.ToTimeSpan();
             return await valueFactory();
         });
-        return cacheEntry;
     }
 
     /// <inheritdoc />
