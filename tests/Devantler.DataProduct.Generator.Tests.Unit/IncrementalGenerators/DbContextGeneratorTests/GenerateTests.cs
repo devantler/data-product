@@ -61,10 +61,9 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
 
         //Act
         var driver = RunGenerator(additionalText);
-        Func<Task> act = () => Verify(driver);
+        Task act() => Verify(driver);
 
         //Assert
-        // Check that the task contains a NotSupported exception
-        _ = act.Should().ThrowAsync<NotSupportedException>();
+        _ = Assert.ThrowsAsync<NotSupportedException>(act);
     }
 }
