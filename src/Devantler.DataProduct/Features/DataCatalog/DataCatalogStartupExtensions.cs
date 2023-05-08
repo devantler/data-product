@@ -21,7 +21,10 @@ public static class DataCatalogStartupExtensions
                 _ = services.AddHttpClient<Services.DataHubClient.Client>(client =>
                 {
                     client.BaseAddress = new Uri(options.DataCatalog.Url);
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", options.DataCatalog.AccessToken);
+                    if (!string.IsNullOrEmpty(options.DataCatalog.AccessToken))
+                    {
+                        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", options.DataCatalog.AccessToken);
+                    }
                 });
                 _ = services.AddHostedService<DataHubDataCatalogService>();
                 break;
