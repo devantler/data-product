@@ -1,7 +1,7 @@
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
-using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options;
 
 namespace Devantler.DataProduct.Features.Dashboard;
 

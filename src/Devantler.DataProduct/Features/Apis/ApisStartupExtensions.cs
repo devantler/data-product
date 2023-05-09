@@ -1,5 +1,5 @@
-using Devantler.DataProduct.Core.Configuration.Options;
-using Devantler.DataProduct.Core.Configuration.Options.FeatureFlags;
+using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataProduct.Features.Apis.GraphQL;
 using Devantler.DataProduct.Features.Apis.gRPC;
 using Devantler.DataProduct.Features.Apis.Rest;

@@ -1,6 +1,6 @@
 using System.Reflection;
 using Devantler.Commons.StringHelpers.Extensions;
-using Devantler.DataProduct.Core.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options;
 
 namespace Devantler.DataProduct.Features.Telemetry;
 

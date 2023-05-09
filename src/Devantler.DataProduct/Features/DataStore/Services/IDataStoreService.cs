@@ -1,4 +1,4 @@
-using Devantler.DataProduct.Core.Schemas;
+using Devantler.DataProduct.Features.Schemas;
 
 namespace Devantler.DataProduct.Features.DataStore.Services;
 
