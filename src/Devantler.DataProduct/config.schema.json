@@ -459,8 +459,7 @@
             },
             "required": [
                 "Type",
-                "Url",
-                "AccessToken"
+                "Url"
             ]
         }
     }
