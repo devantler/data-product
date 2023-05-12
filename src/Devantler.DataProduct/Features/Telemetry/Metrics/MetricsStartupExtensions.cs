@@ -1,7 +1,7 @@
 using Devantler.Commons.StringHelpers.Extensions;
-using Devantler.DataProduct.Core.Configuration.Options;
-using Devantler.DataProduct.Core.Configuration.Options.FeatureFlags;
-using Devantler.DataProduct.Core.Configuration.Options.Telemetry;
+using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options.FeatureFlags;
+using Devantler.DataProduct.Configuration.Options.Telemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 

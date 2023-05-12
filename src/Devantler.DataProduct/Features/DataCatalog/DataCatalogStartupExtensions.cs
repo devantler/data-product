@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
-using Devantler.DataProduct.Core.Configuration.Options;
-using Devantler.DataProduct.Core.Configuration.Options.DataCatalog;
+using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataProduct.Features.DataCatalog.Services;
 
 namespace Devantler.DataProduct.Features.DataCatalog;

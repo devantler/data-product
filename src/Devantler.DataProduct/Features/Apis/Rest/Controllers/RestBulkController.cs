@@ -1,5 +1,5 @@
-using Devantler.DataProduct.Core.Schemas;
 using Devantler.DataProduct.Features.DataStore.Services;
+using Devantler.DataProduct.Features.Schemas;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Devantler.DataProduct.Features.Apis.Rest.Controllers;

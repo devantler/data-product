@@ -1,8 +1,8 @@
 using System.Collections.Immutable;
 using System.Text;
-using Devantler.DataProduct.Core.Configuration.Extensions;
-using Devantler.DataProduct.Core.Configuration.Options;
-using Devantler.DataProduct.Core.Configuration.Options.SchemaRegistry;
+using Devantler.DataProduct.Configuration.Extensions;
+using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataProduct.Generator.Extensions;
 using Devantler.DataProduct.Generator.Models;
 using Microsoft.CodeAnalysis;

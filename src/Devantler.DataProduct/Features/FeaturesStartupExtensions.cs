@@ -1,12 +1,14 @@
-using Devantler.DataProduct.Core.Configuration.Options;
-using Devantler.DataProduct.Core.Configuration.Options.FeatureFlags;
+using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataProduct.Features.Apis;
 using Devantler.DataProduct.Features.Caching;
+using Devantler.DataProduct.Features.Configuration;
 using Devantler.DataProduct.Features.Dashboard;
 using Devantler.DataProduct.Features.DataCatalog;
 using Devantler.DataProduct.Features.DataEgestion;
 using Devantler.DataProduct.Features.DataIngestion;
 using Devantler.DataProduct.Features.DataStore;
+using Devantler.DataProduct.Features.Mapping;
 using Devantler.DataProduct.Features.SchemaRegistry;
 using Devantler.DataProduct.Features.Telemetry;
 using Microsoft.Extensions.Options;
@@ -23,9 +25,13 @@ public static class FeaturesStartupExtensions
     /// Registers features to the DI container.
     /// </summary>
     /// <param name="builder"></param>
-    /// <param name="options"></param>
-    public static void AddFeatures(this WebApplicationBuilder builder, DataProductOptions options)
+    /// <param name="args"></param>
+    public static void AddFeatures(this WebApplicationBuilder builder, string[] args)
     {
+        var options = builder.AddConfiguration(args);
+        _ = builder.Services.AddMapping();
+        _ = builder.Services.AddValidation();
+
         _ = builder.Services.AddFeatureManagement(builder.Configuration.GetSection(FeatureFlagsOptions.Key));
 
         _ = builder.Services.AddDataStore(options);

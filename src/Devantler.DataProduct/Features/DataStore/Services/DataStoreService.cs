@@ -1,10 +1,10 @@
 using AutoMapper;
-using Devantler.DataProduct.Core.Configuration.Options;
-using Devantler.DataProduct.Core.Schemas;
+using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Features.Caching.Extensions;
 using Devantler.DataProduct.Features.Caching.Services;
 using Devantler.DataProduct.Features.DataStore.Entities;
 using Devantler.DataProduct.Features.DataStore.Repositories;
+using Devantler.DataProduct.Features.Schemas;
 using Microsoft.Extensions.Options;
 
 namespace Devantler.DataProduct.Features.DataStore.Services;

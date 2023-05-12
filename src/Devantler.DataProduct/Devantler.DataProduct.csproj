@@ -49,7 +49,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Devantler.DataProduct.Generator\Devantler.DataProduct.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
         <ProjectReference Include="..\Devantler.SchemaRegistry.Client\Devantler.SchemaRegistry.Client.csproj" />
-        <ProjectReference Include="../Devantler.DataProduct.Core.Configuration/Devantler.DataProduct.Core.Configuration.csproj" />
+        <ProjectReference Include="../Devantler.DataProduct.Configuration/Devantler.DataProduct.Configuration.csproj" />
     </ItemGroup>
     <ItemGroup>
         <!-- Exclude the output of source generators from the compilation -->

@@ -6,9 +6,9 @@ using Devantler.Commons.CodeGen.CSharp;
 using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers.Extensions;
-using Devantler.DataProduct.Core.Configuration.Options;
-using Devantler.DataProduct.Core.Configuration.Options.DataStore;
-using Devantler.DataProduct.Core.Configuration.Options.DataStore.SQL;
+using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options.DataStore;
+using Devantler.DataProduct.Configuration.Options.DataStore.SQL;
 using Devantler.DataProduct.Generator.Extensions;
 using Devantler.DataProduct.Generator.Models;
 using Microsoft.CodeAnalysis;
@@ -40,7 +40,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
         string codeNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions");
         string dataStoreOptionsNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreOptions");
         var @class = new CSharpClass("DataStoreStartupExtensions")
-            .AddImport(new CSharpUsing(string.IsNullOrEmpty(dataStoreOptionsNamespace) ? "Devantler.DataProduct.Core.Configuration.Options.DataStore" : dataStoreOptionsNamespace))
+            .AddImport(new CSharpUsing(string.IsNullOrEmpty(dataStoreOptionsNamespace) ? "Devantler.DataProduct.Configuration.Options.DataStore" : dataStoreOptionsNamespace))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
