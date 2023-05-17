@@ -25,3 +25,4 @@ DataIngestors:
     FilePath: assets/data/contoso-university-single.json
   - Type: Local
     FilePath: assets/data/contoso-university-multiple.json
+    

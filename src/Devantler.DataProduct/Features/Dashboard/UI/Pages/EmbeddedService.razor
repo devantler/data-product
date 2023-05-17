@@ -1,13 +1,18 @@
 @using System.Web;
+@using Microsoft.Extensions.Options;
+@using Devantler.DataProduct.Configuration.Options;
+@using Devantler.Commons.StringHelpers.Extensions;
 
-@page "/embedded-service/{Url?}"
+@inject IOptions<DataProductOptions> Options
 
-@if (string.IsNullOrEmpty(Url))
+@page "/embedded-service/{Name?}"
+
+@if (string.IsNullOrEmpty(Name))
 {
     <Alert Color=Color.Danger Visible>
-    <AlertMessage>Invalid URL</AlertMessage>
+     <AlertMessage>Invalid embedded service name</AlertMessage>
     <AlertDescription>
-        The URL you have entered for an embedded service is invalid. Please check the URL and try again.
+         The embedded service name you have entered is invalid. Please check the embedded service name and try again.
     </AlertDescription>
 </Alert>
 }
@@ -18,31 +23,30 @@ else
 
 @code {
     [Parameter]
+    public string Name { get; set; } = string.Empty;
     public string Url { get; set; } = string.Empty;
 
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
-        // do the same for all params
-        Url = HttpUtility.UrlDecode(Url);
 
-        if (Uri.TryCreate(Url, UriKind.Absolute, out var uri))
+        switch (Name)
         {
-            if (uri.Scheme != "http" && uri.Scheme != "https")
+            case "swagger":
+            case "graphql":
+                Url = $"{Name}/";
+                break;
+            default:
+                foreach (var embeddedService in Options.Value.Dashboard.EmbeddedServices)
+                {
+                    if (embeddedService.Name.ToKebabCase() == Name)
+                    {
+                        Url = embeddedService.Url;
+                        return;
+                    }
+                }
                 Url = string.Empty;
-        }
-        else
-        {
-            switch (Url)
-            {
-                case "swagger":
-                case "graphql":
-                    Url = $"{Url}/";
-                    break;
-                default:
-                    Url = string.Empty;
-                    break;
-            }
+                break;
         }
     }
 }
