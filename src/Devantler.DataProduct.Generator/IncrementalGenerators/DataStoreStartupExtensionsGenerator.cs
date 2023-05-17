@@ -85,6 +85,11 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
                         .AddStatement($"_ = services.AddScoped<IRepository<{schemaIdType}, {schemaName}Entity>, {schemaName}Repository>();")
                         .AddStatement($"_ = services.AddScoped<IDataStoreService<{schemaIdType}, {schemaName}>, {schemaName}DataStoreService>();");
                 }
+                _ = addGeneratedServiceRegistrationsMethod
+                    .AddStatement("using var scope = services.BuildServiceProvider().CreateScope();")
+                    .AddStatement($"var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<{options.DataStore.Provider}DbContext>>();")
+                    .AddStatement("var context = contextFactory.CreateDbContext();")
+                    .AddStatement("_ = context.Database.EnsureCreated();");
                 break;
             case DataStoreType.NoSQL:
                 throw new NotSupportedException("Document based data stores are not supported yet.");

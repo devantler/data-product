@@ -22,5 +22,9 @@ public static partial class DataStoreStartupExtensions
         _ = services.AddPooledDbContextFactory<SqliteDbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().UseSqlite(options?.ConnectionString));
         _ = services.AddScoped<IRepository<Guid, RecordSchemaPrimitiveTypesEntity>, RecordSchemaPrimitiveTypesRepository>();
         _ = services.AddScoped<IDataStoreService<Guid, RecordSchemaPrimitiveTypes>, RecordSchemaPrimitiveTypesDataStoreService>();
+        using var scope = services.BuildServiceProvider().CreateScope();
+        var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<SqliteDbContext>>();
+        var context = contextFactory.CreateDbContext();
+        _ = context.Database.EnsureCreated();
     }
 }
