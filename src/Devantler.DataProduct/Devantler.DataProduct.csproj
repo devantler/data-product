@@ -13,7 +13,6 @@
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
         <PackageReference Include="AutoMapper" Version="12.0.1" />
         <PackageReference Include="Blazorise.Bootstrap" Version="1.2.3" />
-        <PackageReference Include="Blazorise.Bootstrap5" Version="1.2.3" />
         <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.2.3" />
         <PackageReference Include="Chr.Avro.Confluent" Version="9.5.0" />
         <PackageReference Include="Confluent.Kafka" Version="2.1.1" />
