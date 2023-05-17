@@ -1,6 +1,7 @@
 @using Microsoft.Extensions.Options;
 @using Devantler.DataProduct.Configuration.Options;
 @using Devantler.DataProduct.Configuration.Options.FeatureFlags;
+@using Devantler.Commons.StringHelpers.Extensions;
 @using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 @using Devantler.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 @using System.Web;
@@ -44,7 +45,7 @@
             @foreach (var embeddedService in Options.Value.Dashboard.EmbeddedServices)
             {
                 <BarItem>
-                    <BarLink To="@($"/embedded-service/{HttpUtility.UrlEncode(embeddedService.Url)}")">
+                    <BarLink To="@($"/embedded-service/{embeddedService.Name.ToKebabCase()}")">
                         <Icon Name=IconName.Cloud /><Text Margin=Margin.Is1.FromStart>@embeddedService.Name</Text>
                     </BarLink>
                 </BarItem>

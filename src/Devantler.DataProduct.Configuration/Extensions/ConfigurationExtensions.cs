@@ -75,7 +75,7 @@ public static class ConfigurationExtensions
 
     static void ConfigureDataIngestorsOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {
-        if (!dataProductOptions.FeatureFlags.EnableDataIngestion) return;
+        if (!dataProductOptions.FeatureFlags.EnableDataIngestion || !dataProductOptions.DataIngestors.Any()) return;
 
         var dataIngestors = new List<DataIngestorOptions>();
         var localDataIngestorOptions

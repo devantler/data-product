@@ -2,6 +2,8 @@
 
 using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Configuration.Options.DataStore;
+using Devantler.DataProduct.Configuration.Options.DataStore.SQL;
+using Microsoft.EntityFrameworkCore;
 
 namespace Devantler.DataProduct.Features.DataStore;
 
@@ -48,9 +50,21 @@ public static partial class DataStoreStartupExtensions
         {
             _ = app.UseDeveloperExceptionPage();
         }
+        using var scope = app.Services.CreateScope();
         switch (options.DataStore.Type)
         {
             case DataStoreType.SQL:
+                DbContext? context = null;
+                switch (options.DataStore.Provider)
+                {
+                    case SQLDataStoreProvider.Sqlite:
+                        var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<SqliteDbContext>>();
+                        context = contextFactory.CreateDbContext();
+                        break;
+                    default:
+                        break;
+                }
+                _ = context?.Database.EnsureCreated();
                 break;
             case DataStoreType.NoSQL:
                 throw new NotSupportedException("Document based data stores are not supported yet.");
