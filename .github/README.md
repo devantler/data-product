@@ -1,4 +1,4 @@
-# Data Product
+# Data Product ⬡
 
 [![codecov](https://codecov.io/gh/devantler/data-product/branch/main/graph/badge.svg?token=9lh1Z59deC)](https://codecov.io/gh/devantler/data-product)
 
