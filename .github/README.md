@@ -6,6 +6,8 @@ This repo contains a Data Product as defined by Zhamak Dehghani in the Book [Dat
 
 The data product is built to support most cloud providers and provisioning tools by being built as a container.
 
+![concept](https://github.com/devantler/data-product/assets/26203420/da456d38-d6e8-445c-8980-e1e855e955b9)
+
 ## Prerequisites
 
 - .NET 7.0+
