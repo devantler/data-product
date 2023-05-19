@@ -14,7 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Chr.Avro.Json" Version="9.5.0" GeneratePathProperty="true" PrivateAssets="all" />
+        <PackageReference Include="Chr.Avro.Json" Version="9.5.1" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Chr.Avro" Version="9.5.1" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Confluent.SchemaRegistry" Version="2.1.1" GeneratePathProperty="true" PrivateAssets="all" />
         <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.1.64" GeneratePathProperty="true" PrivateAssets="all" />
