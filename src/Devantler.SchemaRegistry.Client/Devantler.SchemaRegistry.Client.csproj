@@ -17,7 +17,7 @@
 
     <ItemGroup>
         <PackageReference Include="Confluent.SchemaRegistry" Version="2.1.1" />
-        <PackageReference Include="Chr.Avro" Version="9.5.0" />
+        <PackageReference Include="Chr.Avro" Version="9.5.1" />
         <PackageReference Include="Chr.Avro.Json" Version="9.5.0" />
     </ItemGroup>
 
