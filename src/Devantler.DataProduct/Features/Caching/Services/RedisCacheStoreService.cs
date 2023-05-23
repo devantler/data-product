@@ -20,8 +20,8 @@ public class RedisCacheStoreService<TValue> : ICacheStoreService<TValue>
     /// <param name="options"></param>
     public RedisCacheStoreService(IConnectionMultiplexer redisConnectionMultiplexer, IOptions<DataProductOptions> options)
     {
-        _redis = redisConnectionMultiplexer.GetDatabase();
         _options = options.Value;
+        _redis = redisConnectionMultiplexer.GetDatabase(((RedisCacheStoreOptions)_options.CacheStore).Database);
     }
 
     /// <inheritdoc/>
