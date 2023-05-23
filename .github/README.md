@@ -23,3 +23,4 @@ Optionally the following infrastructure:
 - Redis
 - LinkedIn DataHub
 - PostgreSQL
+- Keycloak
