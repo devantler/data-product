@@ -17,7 +17,9 @@ public static class DashboardStartupExtensions
     public static WebApplicationBuilder AddDashboard(this WebApplicationBuilder builder)
     {
         _ = builder.WebHost.UseStaticWebAssets();
-        _ = builder.Services.AddRazorPages(opt => opt.RootDirectory = "/Features/Dashboard/UI/Pages");
+        var mvcBuilder = builder.Services
+            .AddRazorPages(opt => opt.RootDirectory = "/Features/Dashboard/UI/Pages");
+
         _ = builder.Services.AddServerSideBlazor(opt =>
         {
             if (builder.Environment.IsDevelopment())
