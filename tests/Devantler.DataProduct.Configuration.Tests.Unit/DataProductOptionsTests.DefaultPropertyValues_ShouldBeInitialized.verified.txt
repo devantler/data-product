@@ -1,0 +1,75 @@
+﻿{
+  Name: ,
+  Description: ,
+  Release: ,
+  PublicUrl: ,
+  License: {
+    Name: ,
+    Url: 
+  },
+  Owner: {
+    Name: ,
+    Email: ,
+    Organisation: ,
+    Phone: ,
+    Website: 
+  },
+  FeatureFlags: {
+    EnableApis: [
+      Rest,
+      GraphQL
+    ],
+    EnableDashboard: true,
+    EnableDataIngestion: false,
+    EnableDataEgestion: false,
+    EnableDataCatalog: false,
+    EnableCaching: true,
+    EnableAuth: false,
+    EnableWebhooks: false,
+    EnableTelemetry: false
+  },
+  Dashboard: {},
+  Apis: {
+    Rest: {
+      EnableBulkController: false
+    },
+    GraphQL: {
+      EnableFiltering: true,
+      EnableSorting: true,
+      EnableProjections: true,
+      DefaultPageSize: 10,
+      MaxPageSize: 100
+    }
+  },
+  SchemaRegistry: {
+    Url: assets/schemas,
+    Schema: {
+      Subject: contoso-university,
+      Version: 1
+    }
+  },
+  DataStore: {
+    ConnectionString: Data Source=sqlite.db,
+    Provider: Sqlite
+  },
+  CacheStore: {
+    ExpirationTime: 5m
+  },
+  Telemetry: {
+    ExporterType: Console,
+    EnableLogging: true,
+    EnableMetrics: true,
+    EnableTracing: true
+  },
+  DataCatalog: {
+    Url: ,
+    AccessToken: 
+  },
+  Auth: {
+    AuthServerUrl: ,
+    Realm: master,
+    ClientID: ,
+    ClientSecret: 
+  },
+  Environment: 
+}
