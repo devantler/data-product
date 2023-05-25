@@ -41,14 +41,9 @@ public class FeatureFlagsOptions
     public bool EnableCaching { get; set; } = true;
 
     /// <summary>
-    /// A flag to indicate if authentication should be enabled for the data product.
+    /// A flag to indicate if authentication and authorization should be enabled for the data product.
     /// </summary>
-    public bool EnableAuthentication { get; set; } = true;
-
-    /// <summary>
-    /// A flag to indicate if authorisation should be enabled for the data product.
-    /// </summary>
-    public bool EnableAuthorisation { get; set; } = true;
+    public bool EnableAuth { get; set; } = true;
 
     /// <summary>
     /// A flag to indicate if webhooks should be enabled for the data product.

@@ -1,5 +1,5 @@
 using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.Authentication;
+using Devantler.DataProduct.Configuration.Options.Auth;
 using Devantler.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataProduct.Configuration.Options.DataIngestors;
@@ -37,16 +37,16 @@ public static class ConfigurationExtensions
 
     static void ConfigureAuthenticationOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {
-        if (!dataProductOptions.FeatureFlags.EnableAuthentication) return;
+        if (!dataProductOptions.FeatureFlags.EnableAuth) return;
 
-        if (dataProductOptions.Authentication is null)
+        if (dataProductOptions.Auth is null)
             throw new InvalidOperationException($"Authentication is enabled but no options are configured. This is often a result of the configuration section '{DataCatalogOptions.Key}' being invalid or missing.");
 
-        dataProductOptions.Authentication = dataProductOptions.Authentication.Type switch
+        dataProductOptions.Auth = dataProductOptions.Auth.Type switch
         {
-            AuthenticationType.Keycloak => configuration.GetSection(AuthenticationOptions.Key).Get<KeycloakAuthenticationOptions>()
-                ?? throw new InvalidOperationException($"Failed to bind configuration section '{AuthenticationOptions.Key}' to the type '{typeof(KeycloakAuthenticationOptions).FullName}'."),
-            _ => throw new NotSupportedException($"Authentication type '{dataProductOptions.Authentication.Type}' is not supported.")
+            AuthType.Keycloak => configuration.GetSection(AuthOptions.Key).Get<KeycloakAuthOptions>()
+                ?? throw new InvalidOperationException($"Failed to bind configuration section '{AuthOptions.Key}' to the type '{typeof(KeycloakAuthOptions).FullName}'."),
+            _ => throw new NotSupportedException($"Authentication type '{dataProductOptions.Auth.Type}' is not supported.")
         };
     }
 

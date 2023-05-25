@@ -1,5 +1,5 @@
 using Devantler.DataProduct.Configuration.Options.Apis;
-using Devantler.DataProduct.Configuration.Options.Authentication;
+using Devantler.DataProduct.Configuration.Options.Auth;
 using Devantler.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataProduct.Configuration.Options.Dashboard;
 using Devantler.DataProduct.Configuration.Options.DataCatalog;
@@ -96,7 +96,7 @@ public class DataProductOptions
     /// <summary>
     /// Options for authentication.
     /// </summary>
-    public AuthenticationOptions Authentication { get; set; } = new KeycloakAuthenticationOptions();
+    public AuthOptions Auth { get; set; } = new KeycloakAuthOptions();
 
     /// <summary>
     /// The environment the data product is running in.

@@ -3,6 +3,7 @@
 
 @inject IOptions<DataProductOptions> Options
 
+@attribute [Authorize]
 @page "/"
 
 <PageTitle>@Options.Value.Name</PageTitle>

@@ -1,15 +1,15 @@
-namespace Devantler.DataProduct.Configuration.Options.Authentication;
+namespace Devantler.DataProduct.Configuration.Options.Auth;
 
 /// <summary>
-/// Options for Keycloak authentication.
+/// Options for Keycloak.
 /// </summary>
 /// <remarks>
 /// Check the Adaptor configs from the Keycloak admin console.
 /// </remarks>
-public class KeycloakAuthenticationOptions : AuthenticationOptions
+public class KeycloakAuthOptions : AuthOptions
 {
     /// <inheritdoc/>
-    public override AuthenticationType Type { get; set; } = AuthenticationType.Keycloak;
+    public override AuthType Type { get; set; } = AuthType.Keycloak;
 
     /// <summary>
     /// The keycloak server URL.
@@ -30,12 +30,4 @@ public class KeycloakAuthenticationOptions : AuthenticationOptions
     /// The keycloak client secret to use.
     /// </summary>
     public string ClientSecret { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Whether to use SSL for the connection to the keycloak server.
-    /// </summary>
-    /// <remarks>
-    /// Can be "external" or "none".
-    /// </remarks>
-    public string SslRequired { get; set; } = "external";
 }

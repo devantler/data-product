@@ -29,7 +29,7 @@ public static class ConfigurationStartupExtensions
             o.FeatureFlags = options.FeatureFlags;
 
             o.Apis = options.Apis;
-            o.Authentication = options.Authentication;
+            o.Auth = options.Auth;
             o.CacheStore = options.CacheStore;
             o.Dashboard = options.Dashboard;
             o.DataCatalog = options.DataCatalog;

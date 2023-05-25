@@ -30,15 +30,9 @@
                 </ListGroupItem>
 
                 <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableAuthentication ? Color.Success : Color.Warning)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableAuthentication).Replace("Enable", "")} (Not supported yet)")
-                        IsEnabled=Options.Value.FeatureFlags.EnableAuthentication />
-                </ListGroupItem>
-
-                <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableAuthorisation ? Color.Success : Color.Warning)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableAuthorisation).Replace("Enable", "")} (Not supported yet)")
-                        IsEnabled=Options.Value.FeatureFlags.EnableAuthentication />
+                    Color="@(Options.Value.FeatureFlags.EnableAuth ? Color.Success : Color.Danger)">
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableAuth).Replace("Enable", "")}")
+                        IsEnabled=Options.Value.FeatureFlags.EnableAuth />
                 </ListGroupItem>
 
                 <ListGroupItem

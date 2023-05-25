@@ -1,8 +1,9 @@
 @inject NavigationManager Navigation
 
 @code {
-    protected override void OnInitialized()
+    protected override Task OnInitializedAsync()
     {
-        Navigation.NavigateTo($"https://auth.devantler.com/realms/master/protocol/openid-connect/auth?client_id=oauth2&redirect_uri={Navigation.BaseUri}&response_type=code&scope=openid&state=123456789&nonce=123456789");
+        Navigation.NavigateTo("auth/sign-in");
+        return base.OnInitializedAsync();
     }
 }
