@@ -1,6 +1,7 @@
 using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Configuration.Options.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Devantler.DataProduct.Features.Auth;
 
@@ -31,7 +32,7 @@ public static class AuthStartupExtensions
     {
         _ = app.UseAuthentication();
         _ = app.UseAuthorization();
-        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        _ = app.UseForwardedHeaders(new ForwardedHeadersOptions
         {
             ForwardedHeaders = ForwardedHeaders.XForwardedProto
         });
