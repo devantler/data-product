@@ -10,7 +10,11 @@
 
 <Bar Background="Background.Light" ThemeContrast="ThemeContrast.Light" Breakpoint="Breakpoint.Desktop">
     <BarBrand>
-        @Options.Value.Name
+        <BarItem>
+            <BarLink To="/" TextColor=TextColor.White>
+                <BarIcon IconName="IconName.Dashboard" /><Text Margin=Margin.Is1.FromStart>@Options.Value.Name</Text>
+            </BarLink>
+        </BarItem>
     </BarBrand>
     <BarToggler />
     <BarMenu>
@@ -60,6 +64,9 @@
             }
         </BarStart>
         <BarEnd>
+            <BarLink To="auth/sign-out">
+                <Text Margin=Margin.Is1.FromStart>Sign out</Text>
+            </BarLink>
             <BarLink To="https://github.com/devantler/data-product/releases">
                 <Text TextWeight="TextWeight.Bold">@Options.Value.Release</Text>
             </BarLink>

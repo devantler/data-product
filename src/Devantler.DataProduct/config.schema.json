@@ -108,12 +108,8 @@
                     "description": "Whether to enable caching for the data product. A cache store must be configured for this feature to take effect.",
                     "type": "boolean"
                 },
-                "EnableAuthentication": {
-                    "description": "Whether to enable authentication for the data product. An authentication provider must be configured for this feature to take effect.",
-                    "type": "boolean"
-                },
-                "EnableAuthorisation": {
-                    "description": "Whether to enable authorisation for the data product. Policies must be configured for this feature to take effect.",
+                "EnableAuth": {
+                    "description": "Whether to enable authentication and authorization for the data product. An auth provider must be configured for this feature to take effect.",
                     "type": "boolean"
                 },
                 "EnableWebhooks": {
@@ -342,6 +338,15 @@
                     "$ref": "#/definitions/DataHubDataCatalog"
                 }
             ]
+        },
+        "Auth": {
+            "type": "object",
+            "description": "The authentication and authorization used by the data product.",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/KeycloakAuth"
+                }
+            ]
         }
     },
     "required": [
@@ -461,6 +466,39 @@
                 "Type",
                 "Url",
                 "AccessToken"
+            ]
+        },
+        "KeycloakAuth": {
+            "type": "object",
+            "properties": {
+                "Type": {
+                    "const": "Keycloak",
+                    "type": "string",
+                    "description": "The type of authentication and authorization provider to use."
+                },
+                "AuthServerUrl": {
+                    "type": "string",
+                    "description": "The keycloak server URL."
+                },
+                "Realm": {
+                    "type": "string",
+                    "description": "The keycloak realm to use."
+                },
+                "ClientID": {
+                    "type": "string",
+                    "description": "The keycloak resource/client ID to use."
+                },
+                "ClientSecret": {
+                    "type": "string",
+                    "description": "The keycloak client secret to use."
+                }
+            },
+            "required": [
+                "Type",
+                "AuthServerUrl",
+                "Realm",
+                "ClientID",
+                "ClientSecret"
             ]
         }
     }

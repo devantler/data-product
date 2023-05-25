@@ -1,0 +1,9 @@
+@inject NavigationManager Navigation
+
+@code {
+    protected override Task OnInitializedAsync()
+    {
+        Navigation.NavigateTo("auth/sign-in");
+        return base.OnInitializedAsync();
+    }
+}

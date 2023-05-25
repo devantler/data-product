@@ -1,4 +1,5 @@
 using Devantler.DataProduct.Configuration.Options;
+using Devantler.DataProduct.Configuration.Options.Auth;
 using Devantler.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataProduct.Configuration.Options.DataCatalog;
 using Devantler.DataProduct.Configuration.Options.DataIngestors;
@@ -23,6 +24,7 @@ public static class ConfigurationExtensions
     {
         var dataProductOptions = configuration.Get<DataProductOptions>() ?? throw new InvalidOperationException($"Failed to bind configuration to the type '{typeof(DataProductOptions).FullName}'.");
 
+        ConfigureAuthenticationOptions(configuration, dataProductOptions);
         ConfigureDataStoreOptions(configuration, dataProductOptions);
         ConfigureCacheStoreOptions(configuration, dataProductOptions);
         ConfigureDataCatalogOptions(configuration, dataProductOptions);
@@ -31,6 +33,21 @@ public static class ConfigurationExtensions
         ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
 
         return dataProductOptions;
+    }
+
+    static void ConfigureAuthenticationOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    {
+        if (!dataProductOptions.FeatureFlags.EnableAuth) return;
+
+        if (dataProductOptions.Auth is null)
+            throw new InvalidOperationException($"Authentication is enabled but no options are configured. This is often a result of the configuration section '{DataCatalogOptions.Key}' being invalid or missing.");
+
+        dataProductOptions.Auth = dataProductOptions.Auth.Type switch
+        {
+            AuthType.Keycloak => configuration.GetSection(AuthOptions.Key).Get<KeycloakAuthOptions>()
+                ?? throw new InvalidOperationException($"Failed to bind configuration section '{AuthOptions.Key}' to the type '{typeof(KeycloakAuthOptions).FullName}'."),
+            _ => throw new NotSupportedException($"Authentication type '{dataProductOptions.Auth.Type}' is not supported.")
+        };
     }
 
     static void ConfigureDataStoreOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
@@ -63,7 +80,7 @@ public static class ConfigurationExtensions
         if (!dataProductOptions.FeatureFlags.EnableDataCatalog) return;
 
         if (dataProductOptions.DataCatalog == null)
-            throw new InvalidOperationException($"The configuration section '{DataCatalogOptions.Key}' is invalid or missing.");
+            throw new InvalidOperationException($"DataCatalog is enabled but no options are configured. This is often a result of the configuration section '{DataCatalogOptions.Key}' being invalid or missing.");
 
         dataProductOptions.DataCatalog = dataProductOptions.DataCatalog.Type switch
         {

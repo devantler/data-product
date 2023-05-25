@@ -1,6 +1,7 @@
 using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Configuration.Options.FeatureFlags;
 using Devantler.DataProduct.Features.Apis;
+using Devantler.DataProduct.Features.Auth;
 using Devantler.DataProduct.Features.Caching;
 using Devantler.DataProduct.Features.Configuration;
 using Devantler.DataProduct.Features.Dashboard;
@@ -37,20 +38,17 @@ public static class FeaturesStartupExtensions
         _ = builder.Services.AddDataStore(options);
         _ = builder.Services.AddSchemaRegistry(options);
 
-        if (options.FeatureFlags.EnableApis.Any())
-            _ = builder.Services.AddApis(options, builder.Environment);
-
-        if (options.FeatureFlags.EnableAuthentication)
-            _ = builder.Services.AddAuthentication();
-
-        if (options.FeatureFlags.EnableAuthorisation)
-            _ = builder.Services.AddAuthorization();
-
         if (options.FeatureFlags.EnableCaching)
             _ = builder.Services.AddCaching(options);
 
+        if (options.FeatureFlags.EnableApis.Any())
+            _ = builder.Services.AddApis(options, builder.Environment);
+
         if (options.FeatureFlags.EnableDashboard)
             _ = builder.AddDashboard();
+
+        if (options.FeatureFlags.EnableAuth)
+            _ = builder.Services.AddAuth(options);
 
         if (options.FeatureFlags.EnableDataCatalog)
             _ = builder.Services.AddDataCatalog(options);
@@ -75,12 +73,6 @@ public static class FeaturesStartupExtensions
 
         _ = app.UseDataStore(options);
 
-        if (options.FeatureFlags.EnableAuthentication)
-            _ = app.UseAuthentication();
-
-        if (options.FeatureFlags.EnableAuthorisation)
-            _ = app.UseAuthorization();
-
         if (options.FeatureFlags.EnableDataCatalog)
             _ = app.UseDataCatalog();
 
@@ -89,5 +81,8 @@ public static class FeaturesStartupExtensions
 
         if (options.FeatureFlags.EnableDashboard)
             _ = app.UseDashboard(options);
+
+        if (options.FeatureFlags.EnableAuth)
+            _ = app.UseAuth();
     }
 }

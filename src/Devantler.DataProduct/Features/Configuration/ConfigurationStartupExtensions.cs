@@ -25,15 +25,18 @@ public static class ConfigurationStartupExtensions
             o.PublicUrl = options.PublicUrl;
             o.License = options.License;
             o.Owner = options.Owner;
+
             o.FeatureFlags = options.FeatureFlags;
+
             o.Apis = options.Apis;
+            o.Auth = options.Auth;
             o.CacheStore = options.CacheStore;
             o.Dashboard = options.Dashboard;
             o.DataCatalog = options.DataCatalog;
             o.DataIngestors = options.DataIngestors;
             o.DataStore = options.DataStore;
-            o.Telemetry = options.Telemetry;
             o.SchemaRegistry = options.SchemaRegistry;
+            o.Telemetry = options.Telemetry;
         });
 
         return options;
