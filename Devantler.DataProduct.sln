@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6BE51732
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataProduct.Generator.Tests.Unit", "tests\Devantler.DataProduct.Generator.Tests.Unit\Devantler.DataProduct.Generator.Tests.Unit.csproj", "{E9141EC9-C28B-446D-99A7-12B9D8BEDEF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Devantler.DataProduct.Configuration.Tests.Unit", "tests\Devantler.DataProduct.Configuration.Tests.Unit\Devantler.DataProduct.Configuration.Tests.Unit.csproj", "{206D9892-A0CF-4F7E-9A36-DF4EA2FB9AB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{E9141EC9-C28B-446D-99A7-12B9D8BEDEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9141EC9-C28B-446D-99A7-12B9D8BEDEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9141EC9-C28B-446D-99A7-12B9D8BEDEF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{206D9892-A0CF-4F7E-9A36-DF4EA2FB9AB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{206D9892-A0CF-4F7E-9A36-DF4EA2FB9AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{206D9892-A0CF-4F7E-9A36-DF4EA2FB9AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{206D9892-A0CF-4F7E-9A36-DF4EA2FB9AB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C6288BEB-5538-44AF-A7D5-698B77681AC4} = {BEF72F59-2FEB-4589-ABEC-597B5AED9617}
@@ -53,5 +59,6 @@ Global
 		{966DE8DE-DFD2-4CFF-AA47-AF2035CE7590} = {BEF72F59-2FEB-4589-ABEC-597B5AED9617}
 		{6BCA22EB-B401-445C-8B05-879E2E2A3D34} = {BEF72F59-2FEB-4589-ABEC-597B5AED9617}
 		{E9141EC9-C28B-446D-99A7-12B9D8BEDEF1} = {6BE51732-65E0-4D77-B122-6F9F679E1EE6}
+		{206D9892-A0CF-4F7E-9A36-DF4EA2FB9AB1} = {6BE51732-65E0-4D77-B122-6F9F679E1EE6}
 	EndGlobalSection
 EndGlobal
