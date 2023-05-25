@@ -5,7 +5,6 @@
 
 @inject IOptions<DataProductOptions> Options
 
-@attribute [Authorize]
 @page "/embedded-service/{Name?}"
 
 @if (string.IsNullOrEmpty(Name))

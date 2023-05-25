@@ -43,7 +43,7 @@ public class FeatureFlagsOptions
     /// <summary>
     /// A flag to indicate if authentication and authorization should be enabled for the data product.
     /// </summary>
-    public bool EnableAuth { get; set; } = true;
+    public bool EnableAuth { get; set; } = false;
 
     /// <summary>
     /// A flag to indicate if webhooks should be enabled for the data product.
