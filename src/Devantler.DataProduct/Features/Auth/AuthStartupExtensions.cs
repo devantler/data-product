@@ -31,6 +31,10 @@ public static class AuthStartupExtensions
     {
         _ = app.UseAuthentication();
         _ = app.UseAuthorization();
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedProto
+        });
         return app;
     }
 }
