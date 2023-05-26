@@ -15,6 +15,7 @@ Owner:
 
 FeatureFlags:
   EnableDataIngestion: true
+  EnableTelemetry: true
 
 Apis:
   Rest:
@@ -25,4 +26,11 @@ DataIngestors:
     FilePath: assets/data/contoso-university-single.json
   - Type: Local
     FilePath: assets/data/contoso-university-multiple.json
-    
+
+Telemetry:
+  Endpoint: http://localhost:4317
+  ExporterType: OpenTelemetry
+
+CacheStore:
+  Type: Redis
+  Server: localhost:6379
