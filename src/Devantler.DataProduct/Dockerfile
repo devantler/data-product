@@ -1,4 +1,6 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview
+ARG TARGETARCH
+ARG BUILDPLATFORM
 
 HEALTHCHECK --start-period=30s CMD wget --quiet --tries=1 --spider http://localhost:5000 || exit 1
 
@@ -16,11 +18,11 @@ COPY src/Devantler.DataProduct.Generator/Devantler.DataProduct.Generator.csproj 
 COPY src/Devantler.DataProduct.Configuration/Devantler.DataProduct.Configuration.csproj ./src/Devantler.DataProduct.Configuration/
 COPY src/Devantler.SchemaRegistry.Client/Devantler.SchemaRegistry.Client.csproj ./src/Devantler.SchemaRegistry.Client/
 
-RUN dotnet restore src/Devantler.DataProduct/Devantler.DataProduct.csproj
+RUN dotnet restore src/Devantler.DataProduct/Devantler.DataProduct.csproj -a $TARGETARCH
 
 COPY . .
 
 WORKDIR /
 COPY src/Devantler.DataProduct/dockerfile-entrypoint.sh ./dockerfile-entrypoint.sh
 RUN chmod +x ./dockerfile-entrypoint.sh
-CMD ["./dockerfile-entrypoint.sh"]
+CMD ["./dockerfile-entrypoint.sh", $TARGETARCH]
