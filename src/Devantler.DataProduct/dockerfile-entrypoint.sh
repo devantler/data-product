@@ -6,7 +6,7 @@ fi
 
 echo "📦 Publishing Data Product 📦"
 
-dotnet publish /build/src/Devantler.DataProduct -c Release --no-restore -o /app
+dotnet publish /build/src/Devantler.DataProduct -c Release --no-restore -o /app -a $1
 
 echo "🧹 Cleaning up 🧹"
 apt-get autoremove -y
