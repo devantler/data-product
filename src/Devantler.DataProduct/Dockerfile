@@ -25,4 +25,4 @@ COPY . .
 WORKDIR /
 COPY src/Devantler.DataProduct/dockerfile-entrypoint.sh ./dockerfile-entrypoint.sh
 RUN chmod +x ./dockerfile-entrypoint.sh
-CMD ["./dockerfile-entrypoint.sh", $TARGETARCH]
+CMD ["./dockerfile-entrypoint.sh", "$TARGETARCH"]
