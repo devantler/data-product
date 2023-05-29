@@ -1,5 +1,6 @@
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview
 ARG TARGETARCH
+ENV TARGETARCHENV=$TARGETARCH
 ARG BUILDPLATFORM
 
 HEALTHCHECK --start-period=30s CMD wget --quiet --tries=1 --spider http://localhost:5000 || exit 1
@@ -25,4 +26,4 @@ COPY . .
 WORKDIR /
 COPY src/Devantler.DataProduct/dockerfile-entrypoint.sh ./dockerfile-entrypoint.sh
 RUN chmod +x ./dockerfile-entrypoint.sh
-CMD ["./dockerfile-entrypoint.sh", "$TARGETARCH"]
+ENTRYPOINT ["./dockerfile-entrypoint.sh"]
