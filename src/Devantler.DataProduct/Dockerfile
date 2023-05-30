@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/nightly/sdk:8.0-preview
+FROM mcr.microsoft.com/dotnet/sdk:7.0
 
 HEALTHCHECK --start-period=30s CMD wget --quiet --tries=1 --spider http://localhost:5000 || exit 1
 
