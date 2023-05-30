@@ -5,9 +5,7 @@ if ([ -f /app/config.* ]); then
 fi
 
 echo "📦 Publishing Data Product 📦"
-echo $1
-
-dotnet publish /build/src/Devantler.DataProduct -c Release --no-restore -o /app -a $1
+dotnet publish /build/src/Devantler.DataProduct -c Release --no-restore -o /app
 
 echo "🧹 Cleaning up 🧹"
 apt-get autoremove -y
