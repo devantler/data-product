@@ -42,15 +42,15 @@
                 </ListGroupItem>
 
                 <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableDataEgestion ? Color.Success : Color.Warning)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableDataEgestion).Replace("Enable", "")} (Not supported yet)")
-                        IsEnabled=Options.Value.FeatureFlags.EnableDataEgestion />
+                    Color="@(Options.Value.FeatureFlags.EnableInputs ? Color.Success : Color.Danger)">
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableInputs).Replace("Enable", "")}")
+                        IsEnabled=Options.Value.FeatureFlags.EnableInputs />
                 </ListGroupItem>
-
+  
                 <ListGroupItem
-                    Color="@(Options.Value.FeatureFlags.EnableDataIngestion ? Color.Success : Color.Danger)">
-                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableDataIngestion).Replace("Enable", "")}")
-                        IsEnabled=Options.Value.FeatureFlags.EnableDataIngestion />
+                    Color="@(Options.Value.FeatureFlags.EnableOutputs ? Color.Success : Color.Danger)">
+                    <FeatureDetails FeatureName=@($"{nameof(Options.Value.FeatureFlags.EnableOutputs).Replace("Enable", "")}")
+                        IsEnabled=Options.Value.FeatureFlags.EnableOutputs />
                 </ListGroupItem>
 
                 <ListGroupItem

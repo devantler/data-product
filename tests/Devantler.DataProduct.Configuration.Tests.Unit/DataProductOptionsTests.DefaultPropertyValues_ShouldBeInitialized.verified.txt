@@ -20,8 +20,8 @@
       GraphQL
     ],
     EnableDashboard: true,
-    EnableDataIngestion: false,
-    EnableDataEgestion: false,
+    EnableInputs: false,
+    EnableOutputs: false,
     EnableDataCatalog: false,
     EnableCaching: true,
     EnableAuth: false,

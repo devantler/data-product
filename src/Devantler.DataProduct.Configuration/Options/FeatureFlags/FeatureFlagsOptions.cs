@@ -21,14 +21,14 @@ public class FeatureFlagsOptions
     public bool EnableDashboard { get; set; } = true;
 
     /// <summary>
-    /// A flag to indicate if data ingestion should be enabled for the data product.
+    /// A flag to indicate if inputs should be enabled for the data product.
     /// </summary>
-    public bool EnableDataIngestion { get; set; }
+    public bool EnableInputs { get; set; }
 
     /// <summary>
-    /// A flag to indicate if data publication should be enabled for the data product.
+    /// A flag to indicate if outputs should be enabled for the data product.
     /// </summary>
-    public bool EnableDataEgestion { get; set; }
+    public bool EnableOutputs { get; set; }
 
     /// <summary>
     /// A flag to indicate if a data catalog integration should be enabled for the data product.

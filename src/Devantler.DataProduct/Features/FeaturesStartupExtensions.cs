@@ -6,10 +6,10 @@ using Devantler.DataProduct.Features.Caching;
 using Devantler.DataProduct.Features.Configuration;
 using Devantler.DataProduct.Features.Dashboard;
 using Devantler.DataProduct.Features.DataCatalog;
-using Devantler.DataProduct.Features.DataEgestion;
-using Devantler.DataProduct.Features.DataIngestion;
 using Devantler.DataProduct.Features.DataStore;
+using Devantler.DataProduct.Features.Inputs;
 using Devantler.DataProduct.Features.Mapping;
+using Devantler.DataProduct.Features.Outputs;
 using Devantler.DataProduct.Features.SchemaRegistry;
 using Devantler.DataProduct.Features.Telemetry;
 using Microsoft.Extensions.Options;
@@ -53,11 +53,11 @@ public static class FeaturesStartupExtensions
         if (options.FeatureFlags.EnableDataCatalog)
             _ = builder.Services.AddDataCatalog(options);
 
-        if (options.FeatureFlags.EnableDataEgestion)
-            _ = builder.Services.AddDataEgestion();
+        if (options.FeatureFlags.EnableInputs)
+            _ = builder.Services.AddInputs(options);
 
-        if (options.FeatureFlags.EnableDataIngestion)
-            _ = builder.Services.AddDataIngestion(options);
+        if (options.FeatureFlags.EnableOutputs)
+            _ = builder.Services.AddOutputs(options);
 
         if (options.FeatureFlags.EnableTelemetry)
             _ = builder.AddTelemetry(options);

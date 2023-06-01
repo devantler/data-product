@@ -2,7 +2,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Devantler.DataProduct.Features.DataIngestion.JsonConverters;
+namespace Devantler.DataProduct.Features.Inputs.JsonConverters;
 
 /// <summary>
 /// A converter that converts numbers to strings.

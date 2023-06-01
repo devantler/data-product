@@ -2,32 +2,32 @@ using Chr.Avro.Confluent;
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
 using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataProduct.Configuration.Options.Inputs;
 using Devantler.DataProduct.Features.DataStore.Services;
 using Devantler.DataProduct.Features.Schemas;
 using Microsoft.Extensions.Options;
 
-namespace Devantler.DataProduct.Features.DataIngestion.Services;
+namespace Devantler.DataProduct.Features.Inputs.Services;
 
 /// <summary>
-/// A data ingestion source service that ingests data from a Kafka topic.
+/// A  service that ingests data from a Kafka topic.
 /// </summary>
-public class KafkaDataIngestorService<TKey, TSchema> : BackgroundService where TSchema : class, ISchema<TKey>
+public class KafkaInputService<TKey, TSchema> : BackgroundService where TSchema : class, ISchema<TKey>
 {
     readonly IDataStoreService<TKey, TSchema> _dataStoreService;
     readonly List<(IConsumer<string, TSchema>, string)> _consumers;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="KafkaDataIngestorService{TKey, TSchema}"/> class.
+    /// Initializes a new instance of the <see cref="KafkaInputService{TKey, TSchema}"/> class.
     /// </summary>
-    public KafkaDataIngestorService(IServiceScopeFactory scopeFactory)
+    public KafkaInputService(IServiceScopeFactory scopeFactory)
     {
         var scope = scopeFactory.CreateScope();
         _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TKey, TSchema>>();
         var dataProductOptions = scope.ServiceProvider.GetRequiredService<IOptions<DataProductOptions>>().Value;
-        var dataIngestorOptions = dataProductOptions.DataIngestors
-            .Where(x => x.Type == DataIngestorType.Kafka)
-            .Cast<KafkaDataIngestorOptions>();
+        var dataIngestorOptions = dataProductOptions.Inputs
+            .Where(x => x.Type == InputType.Kafka)
+            .Cast<KafkaInputOptions>();
 
         var registryConfig = new SchemaRegistryConfig
         {

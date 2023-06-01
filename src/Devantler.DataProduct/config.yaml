@@ -1,4 +1,4 @@
-Name: Contoso University Data Product Local
+Name: Contoso University Data Product File
 Description: A data product to query and manage students and courses at the Contoso University.
 Release: v0.0.0
 
@@ -14,23 +14,19 @@ Owner:
   Website: https://test-site.com
 
 FeatureFlags:
-  EnableDataIngestion: true
-  EnableTelemetry: true
+  EnableInputs: true
+  EnableOutputs: true
 
 Apis:
   Rest:
     EnableBulkController: true
 
-DataIngestors:
-  - Type: Local
-    FilePath: assets/data/contoso-university-single.json
-  - Type: Local
-    FilePath: assets/data/contoso-university-multiple.json
+Inputs:
+  - Type: File
+    FilePath: assets/input/contoso-university-single.json
+  - Type: File
+    FilePath: assets/input/contoso-university-multiple.json
 
-Telemetry:
-  Endpoint: http://localhost:4317
-  ExporterType: OpenTelemetry
-
-CacheStore:
-  Type: Redis
-  Server: localhost:6379
+Outputs:
+  - Type: File
+    FilePath: assets/output/contoso-university-single.txt

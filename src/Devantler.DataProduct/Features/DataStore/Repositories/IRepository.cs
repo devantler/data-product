@@ -14,7 +14,7 @@ public interface IRepository<TKey, TEntity> where TEntity : IEntity<TKey>
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="cancellationToken"></param>
-    Task<TEntity> CreateSingleAsync(TEntity entity, CancellationToken cancellationToken = default);
+    Task<TEntity?> CreateSingleAsync(TEntity entity, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates multiple entities in a data store.

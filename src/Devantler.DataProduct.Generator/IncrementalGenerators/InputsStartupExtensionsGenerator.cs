@@ -7,7 +7,7 @@ using Devantler.Commons.CodeGen.CSharp.Model;
 using Devantler.Commons.CodeGen.Mapping.Avro;
 using Devantler.Commons.StringHelpers.Extensions;
 using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.DataIngestors;
+using Devantler.DataProduct.Configuration.Options.Inputs;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataProduct.Generator.Extensions;
 using Devantler.DataProduct.Generator.Models;
@@ -16,10 +16,10 @@ using Microsoft.CodeAnalysis;
 namespace Devantler.DataProduct.Generator.IncrementalGenerators;
 
 /// <summary>
-/// A generator for service registrations and usages for a data ingestion.
+/// A generator for service registrations and usages for inputs.
 /// </summary>
 [Generator]
-public class DataIngestionStartupExtensionsGenerator : GeneratorBase
+public class InputsStartupExtensionsGenerator : GeneratorBase
 {
     /// <summary>
     /// Generates service registrations and usages for a data store.
@@ -32,7 +32,7 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
         ImmutableArray<AdditionalFile> additionalFiles,
         DataProductOptions options)
     {
-        if (!options.FeatureFlags.EnableDataIngestion || !options.DataIngestors.Any())
+        if (!options.FeatureFlags.EnableInputs || !options.Inputs.Any())
             return new Dictionary<string, string>();
 
         var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
@@ -41,25 +41,25 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
 
         var codeCompilation = new CSharpCompilation();
 
-        var @class = new CSharpClass("DataIngestionStartupExtensions")
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataIngestionStartupExtensions") + ".Services"))
-            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataIngestorOptions").NullIfEmpty()
-                ?? "Devantler.DataProduct.Configuration.Options.DataIngestors")
+        var @class = new CSharpClass("InputsStartupExtensions")
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "InputsStartupExtensions") + ".Services"))
+            .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "InputOptions").NullIfEmpty()
+                ?? "Devantler.DataProduct.Configuration.Options.Inputs")
             )
             .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
             .SetDocBlock(new CSharpDocBlock(
-                "A class that contains extension methods for service registrations and usages for data ingestors"))
-            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataIngestionStartupExtensions"))
+                "A class that contains extension methods for service registrations and usages for inputs"))
+            .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "InputsStartupExtensions"))
             .SetIsStatic(true)
             .SetIsPartial(true);
 
         var servicesParameter = new CSharpParameter("IServiceCollection", "services");
-        var optionsParameter = new CSharpParameter("List<DataIngestorOptions>", "options");
+        var optionsParameter = new CSharpParameter("List<InputOptions>", "options");
         var addGeneratedServiceRegistrationsMethod = new CSharpMethod("AddGeneratedServiceRegistrations")
             .SetIsStatic(true)
             .SetIsPartial(true)
             .SetIsExtensionMethod(true)
-            .SetDocBlock(new CSharpDocBlock("Adds generated service registrations for data ingestors."))
+            .SetDocBlock(new CSharpDocBlock("Adds generated service registrations for inputs."))
             .SetVisibility(Visibility.Private)
             .AddParameter(servicesParameter)
             .AddParameter(optionsParameter);
@@ -76,13 +76,13 @@ public class DataIngestionStartupExtensionsGenerator : GeneratorBase
             string schemaIdType = schemaType is not null
                 ? avroSchemaParser.Parse(schemaType, Language.CSharp)
                 : "Guid";
-            foreach (var dataIngestorOptions in options.DataIngestors.GroupBy(x => x.Type).Select(x => x.First()))
+            foreach (var dataIngestorOptions in options.Inputs.GroupBy(x => x.Type).Select(x => x.First()))
             {
-                if (dataIngestorOptions.Type == DataIngestorType.Kafka && options.SchemaRegistry.Type != SchemaRegistryType.Kafka)
+                if (dataIngestorOptions.Type == InputType.Kafka && options.SchemaRegistry.Type != SchemaRegistryType.Kafka)
                     continue;
 
                 _ = addGeneratedServiceRegistrationsMethod.AddStatement(
-                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}DataIngestorService<{schemaIdType}, {schema.Name}>>();"
+                    $"_ = services.AddHostedService<{dataIngestorOptions.Type}InputService<{schemaIdType}, {schema.Name}>>();"
                 );
             }
         }

@@ -33,7 +33,8 @@ public static class ConfigurationStartupExtensions
             o.CacheStore = options.CacheStore;
             o.Dashboard = options.Dashboard;
             o.DataCatalog = options.DataCatalog;
-            o.DataIngestors = options.DataIngestors;
+            o.Inputs = options.Inputs;
+            o.Outputs = options.Outputs;
             o.DataStore = options.DataStore;
             o.SchemaRegistry = options.SchemaRegistry;
             o.Telemetry = options.Telemetry;

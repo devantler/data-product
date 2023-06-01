@@ -2,9 +2,10 @@ using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Configuration.Options.Auth;
 using Devantler.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataProduct.Configuration.Options.DataCatalog;
-using Devantler.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataProduct.Configuration.Options.DataStore.SQL;
+using Devantler.DataProduct.Configuration.Options.Inputs;
+using Devantler.DataProduct.Configuration.Options.Outputs;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 using Devantler.DataProduct.Configuration.Options.Telemetry;
@@ -28,7 +29,8 @@ public static class ConfigurationExtensions
         ConfigureDataStoreOptions(configuration, dataProductOptions);
         ConfigureCacheStoreOptions(configuration, dataProductOptions);
         ConfigureDataCatalogOptions(configuration, dataProductOptions);
-        ConfigureDataIngestorsOptions(configuration, dataProductOptions);
+        ConfigureInputsOptions(configuration, dataProductOptions);
+        ConfigureOutputsOptions(configuration, dataProductOptions);
         ConfigureTelemetryExporterOptions(configuration, dataProductOptions);
         ConfigureSchemaRegistryOptions(configuration, dataProductOptions);
 
@@ -90,20 +92,34 @@ public static class ConfigurationExtensions
         };
     }
 
-    static void ConfigureDataIngestorsOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    static void ConfigureInputsOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
     {
-        if (!dataProductOptions.FeatureFlags.EnableDataIngestion || !dataProductOptions.DataIngestors.Any()) return;
+        if (!dataProductOptions.FeatureFlags.EnableInputs || !dataProductOptions.Inputs.Any()) return;
 
-        var dataIngestors = new List<DataIngestorOptions>();
-        var localDataIngestorOptions
-            = (configuration.GetSection(DataIngestorOptions.Key).Get<List<LocalDataIngestorOptions>>()
-                ?? throw new InvalidOperationException($"Failed to bind configuration section '{DataIngestorOptions.Key}' to the type '{typeof(LocalDataIngestorOptions).FullName}'.")).Where(x => x.Type == DataIngestorType.Local);
+        var inputs = new List<InputOptions>();
 
-        dataIngestors.AddRange(localDataIngestorOptions);
+        inputs.AddRange((configuration.GetSection(InputOptions.Key).Get<List<FileInputOptions>>()
+                ?? throw new InvalidOperationException($"Failed to bind configuration section '{InputOptions.Key}' to the type '{typeof(FileInputOptions).FullName}'.")).Where(x => x.Type == InputType.File));
 
-        dataIngestors.AddRange((configuration.GetSection(DataIngestorOptions.Key).Get<List<KafkaDataIngestorOptions>>()
-            ?? throw new InvalidOperationException($"Failed to bind configuration section '{DataIngestorOptions.Key}' to the type '{typeof(KafkaDataIngestorOptions).FullName}'.")).Where(x => x.Type == DataIngestorType.Kafka));
-        dataProductOptions.DataIngestors = dataIngestors;
+        inputs.AddRange((configuration.GetSection(InputOptions.Key).Get<List<KafkaInputOptions>>()
+            ?? throw new InvalidOperationException($"Failed to bind configuration section '{InputOptions.Key}' to the type '{typeof(KafkaInputOptions).FullName}'.")).Where(x => x.Type == InputType.Kafka));
+
+        dataProductOptions.Inputs = inputs;
+    }
+
+    static void ConfigureOutputsOptions(IConfiguration configuration, DataProductOptions dataProductOptions)
+    {
+        if (!dataProductOptions.FeatureFlags.EnableOutputs || !dataProductOptions.Outputs.Any()) return;
+
+        var outputs = new List<OutputOptions>();
+
+        outputs.AddRange((configuration.GetSection(OutputOptions.Key).Get<List<FileOutputOptions>>()
+                ?? throw new InvalidOperationException($"Failed to bind configuration section '{OutputOptions.Key}' to the type '{typeof(FileOutputOptions).FullName}'.")).Where(x => x.Type == OutputType.File));
+
+        outputs.AddRange((configuration.GetSection(OutputOptions.Key).Get<List<KafkaOutputOptions>>()
+            ?? throw new InvalidOperationException($"Failed to bind configuration section '{OutputOptions.Key}' to the type '{typeof(KafkaOutputOptions).FullName}'.")).Where(x => x.Type == OutputType.Kafka));
+
+        dataProductOptions.Outputs = outputs;
     }
 
     static void ConfigureTelemetryExporterOptions(IConfiguration configuration, DataProductOptions dataProductOptions)

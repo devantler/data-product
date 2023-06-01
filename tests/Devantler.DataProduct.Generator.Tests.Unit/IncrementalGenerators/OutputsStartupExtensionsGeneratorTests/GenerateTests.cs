@@ -1,9 +1,9 @@
 using Devantler.DataProduct.Generator.IncrementalGenerators;
 
-namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.DataIngestionStartupExtensionsGeneratorTests;
+namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.OutputsStartupExtensionsGeneratorTests;
 
 [UsesVerify]
-public class GenerateTests : IncrementalGeneratorTestsBase<DataIngestionStartupExtensionsGenerator>
+public class GenerateTests : IncrementalGeneratorTestsBase<OutputsStartupExtensionsGenerator>
 {
     [Theory]
     [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
@@ -14,7 +14,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DataIngestionStartupE
             $$"""
             {
                 "FeatureFlags": {
-                    "EnableDataIngestion": true
+                    "EnableOutputs": true
                 },
                 "SchemaRegistry": {
                     "Type": "Local",
@@ -24,10 +24,10 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DataIngestionStartupE
                         "Version": 1
                     }
                 },
-                "DataIngestors": [
+                "Outputs": [
                     {
-                        "Type": "Local",
-                        "FilePath": "assets/data/{{subject}}.json"
+                        "Type": "File",
+                        "FilePath": "assets/output/{{subject}}.json"
                     }
                 ]
             }

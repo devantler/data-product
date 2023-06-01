@@ -3,10 +3,11 @@ using Devantler.DataProduct.Configuration.Options.Auth;
 using Devantler.DataProduct.Configuration.Options.CacheStore;
 using Devantler.DataProduct.Configuration.Options.Dashboard;
 using Devantler.DataProduct.Configuration.Options.DataCatalog;
-using Devantler.DataProduct.Configuration.Options.DataIngestors;
 using Devantler.DataProduct.Configuration.Options.DataStore;
 using Devantler.DataProduct.Configuration.Options.DataStore.SQL;
 using Devantler.DataProduct.Configuration.Options.FeatureFlags;
+using Devantler.DataProduct.Configuration.Options.Inputs;
+using Devantler.DataProduct.Configuration.Options.Outputs;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 using Devantler.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 using Devantler.DataProduct.Configuration.Options.Telemetry;
@@ -84,9 +85,14 @@ public class DataProductOptions
     public TelemetryOptions Telemetry { get; set; } = new ConsoleTelemetryOptions();
 
     /// <summary>
-    /// Options for the data ingestors.
+    /// Options for the inputs.
     /// </summary>
-    public List<DataIngestorOptions> DataIngestors { get; set; } = new();
+    public List<InputOptions> Inputs { get; set; } = new();
+
+    /// <summary>
+    /// Options for the outputs.
+    /// </summary>
+    public List<OutputOptions> Outputs { get; set; } = new();
 
     /// <summary>
     /// Options for the data catalog.

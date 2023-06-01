@@ -21,11 +21,11 @@ public abstract class SQLRepository<TKey, TEntity> : IRepository<TKey, TEntity>
     protected SQLRepository(DbContext context) => _context = context;
 
     /// <inheritdoc />
-    public async Task<TEntity> CreateSingleAsync(TEntity entity, CancellationToken cancellationToken = default)
+    public async Task<TEntity?> CreateSingleAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         var result = _context.Set<TEntity>().Add(entity);
-        _ = await _context.SaveChangesAsync(cancellationToken);
-        return result.Entity;
+        int changes = await _context.SaveChangesAsync(cancellationToken);
+        return changes >= 1 ? result.Entity : null;
     }
 
     /// <inheritdoc />

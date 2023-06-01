@@ -84,11 +84,11 @@
                         ]
                     }
                 },
-                "EnableDataIngestion": {
-                    "description": "Whether to enable data ingestion for the data product. Data Ingestion Source must be configured for this feature to take effect.",
+                "EnableInputs": {
+                    "description": "Whether to enable inputs for the data product. Data Ingestion Source must be configured for this feature to take effect.",
                     "type": "boolean"
                 },
-                "EnableDataEgestion": {
+                "EnableOutputs": {
                     "description": "Whether to enable data publication for the data product. Data Publication Target must be configured for this feature to take effect.",
                     "type": "boolean"
                 },
@@ -271,7 +271,7 @@
                     "description": "The type of schema registry.",
                     "type": "string",
                     "enum": [
-                        "Local",
+                        "File",
                         "Kafka"
                     ]
                 },
@@ -316,16 +316,16 @@
                 ]
             }
         },
-        "DataIngestors": {
+        "Inputs": {
             "type": "array",
-            "description": "The data ingestors used by the data product.",
+            "description": "The inputs used by the data product.",
             "items": {
                 "anyOf": [
                     {
-                        "$ref": "#/definitions/LocalDataIngestor"
+                        "$ref": "#/definitions/FileInput"
                     },
                     {
-                        "$ref": "#/definitions/KafkaDataIngestor"
+                        "$ref": "#/definitions/KafkaInput"
                     }
                 ]
             }
@@ -397,13 +397,13 @@
                 "Server"
             ]
         },
-        "LocalDataIngestor": {
+        "FileInput": {
             "type": "object",
             "properties": {
                 "Type": {
-                    "description": "The type of data ingestor.",
+                    "description": "The type of input.",
                     "type": "string",
-                    "const": "Local"
+                    "const": "File"
                 },
                 "FilePath": {
                     "description": "The path to the file to ingest.",
@@ -415,25 +415,25 @@
                 "FilePath"
             ]
         },
-        "KafkaDataIngestor": {
+        "KafkaInput": {
             "type": "object",
             "properties": {
                 "Type": {
-                    "description": "The type of data ingestor.",
+                    "description": "The type of input.",
                     "type": "string",
                     "const": "Kafka"
                 },
                 "Servers": {
-                    "description": "The servers used by the data ingestor.",
+                    "description": "The servers used by the input.",
                     "type": "string",
                     "format": "uri-reference"
                 },
                 "GroupId": {
-                    "description": "The group ID used by the data ingestor.",
+                    "description": "The group ID used by the input.",
                     "type": "string"
                 },
                 "Topic": {
-                    "description": "The topic used by the data ingestor.",
+                    "description": "The topic used by the input.",
                     "type": "string"
                 }
             },

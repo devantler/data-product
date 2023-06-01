@@ -1,4 +1,4 @@
-namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.DataIngestionStartupExtensionsGeneratorTests;
+namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.InputsStartupExtensionsGeneratorTests;
 
 public static class TestCases
 {
