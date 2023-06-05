@@ -24,7 +24,7 @@
         <PackageReference Include="HotChocolate.AspNetCore" Version="13.2.0" />
         <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.1.0" />
         <PackageReference Include="HotChocolate.Data" Version="13.1.0" />
-        <PackageReference Include="HotChocolate.Diagnostics" Version="13.1.0" />
+        <PackageReference Include="HotChocolate.Diagnostics" Version="13.2.0" />
         <PackageReference Include="Keycloak.AuthServices.Authentication" Version="1.5.2" /> <!-- Keep an eye on this package, if it is not maintained it should be replaced by manual setup, and if it is maintained it should replace the current setup. -->
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.5" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.5" />
