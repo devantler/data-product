@@ -1,6 +1,7 @@
 # Data Product Config files
 config.Development.*
 config.Production.*
+assets/output
 
 # SQLite
 *.db

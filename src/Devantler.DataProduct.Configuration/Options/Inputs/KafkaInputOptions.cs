@@ -1,12 +1,12 @@
-namespace Devantler.DataProduct.Configuration.Options.DataIngestors;
+namespace Devantler.DataProduct.Configuration.Options.Inputs;
 
 /// <summary>
-/// Options to configure a Kafka data ingestor for the data product.
+/// Options to configure a Kafka input for the data product.
 /// </summary>
-public class KafkaDataIngestorOptions : DataIngestorOptions
+public class KafkaInputOptions : InputOptions
 {
     /// <inheritdoc/>
-    public override DataIngestorType Type { get; set; } = DataIngestorType.Kafka;
+    public override InputType Type { get; set; } = InputType.Kafka;
 
     /// <summary>
     /// The servers to connect to.

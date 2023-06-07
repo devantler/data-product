@@ -4,6 +4,7 @@ using Devantler.DataProduct.Features.Caching.Extensions;
 using Devantler.DataProduct.Features.Caching.Services;
 using Devantler.DataProduct.Features.DataStore.Entities;
 using Devantler.DataProduct.Features.DataStore.Repositories;
+using Devantler.DataProduct.Features.Outputs.Services;
 using Devantler.DataProduct.Features.Schemas;
 using Microsoft.Extensions.Options;
 
@@ -22,6 +23,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 {
     readonly DataProductOptions _options;
     readonly ICacheStoreService<TEntity>? _cacheStore;
+    readonly List<IOutputService<TKey, TSchema>> _outputServices = new();
     readonly IRepository<TKey, TEntity> _repository;
     readonly IMapper _mapper;
 
@@ -37,26 +39,38 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         if (_options.FeatureFlags.EnableCaching)
             _cacheStore = serviceProvider.GetRequiredService<ICacheStoreService<TEntity>>();
 
+        if (_options.FeatureFlags.EnableOutputs)
+            _outputServices = serviceProvider.GetServices<IOutputService<TKey, TSchema>>().ToList();
+
         _repository = repository;
         _mapper = mapper;
     }
 
     /// <inheritdoc/>
-    public async Task<TSchema> CreateSingleAsync(TSchema schema, CancellationToken cancellationToken = default)
+    public async Task<TSchema?> CreateSingleAsync(TSchema schema, CancellationToken cancellationToken = default)
     {
         var entity = _mapper.Map<TEntity>(schema);
-        return await _repository.CreateSingleAsync(entity, cancellationToken)
+        var result = await _repository.CreateSingleAsync(entity, cancellationToken)
             .ContinueWith(task => _mapper.Map<TSchema>(task.Result), cancellationToken);
+
+        if (result != null)
+            _outputServices.ForEach(async service => await service.SendAsync(result, nameof(CreateSingleAsync), cancellationToken));
+
+        return result;
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> models, bool insertIfNotExists,
+    public async Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> schemas, bool insertIfNotExists,
         CancellationToken cancellationToken = default)
     {
-        var entities = _mapper.Map<IEnumerable<TEntity>>(models);
-        var result = await _repository.CreateMultipleAsync(entities, insertIfNotExists, cancellationToken);
+        var entities = _mapper.Map<IEnumerable<TEntity>>(schemas);
+        var createdEntities = await _repository.CreateMultipleAsync(entities, insertIfNotExists, cancellationToken);
+        var result = _mapper.Map<IEnumerable<TSchema>>(createdEntities);
 
-        return _mapper.Map<IEnumerable<TSchema>>(result);
+        if (result.Any())
+            _outputServices.ForEach(async service => await service.SendAsync(result, nameof(CreateMultipleAsync), cancellationToken));
+
+        return result;
     }
 
     /// <inheritdoc/>
@@ -183,6 +197,8 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
         var entity = _mapper.Map<TEntity>(schema);
         await _repository.UpdateSingleAsync(entity, cancellationToken);
 
+        _outputServices.ForEach(async service => await service.SendAsync(schema, nameof(UpdateSingleAsync), cancellationToken));
+
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {
             await _cacheStore.RemoveAsync(entity.CreateCacheKey(), cancellationToken);
@@ -190,11 +206,13 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
     }
 
     /// <inheritdoc/>
-    public async Task UpdateMultipleAsync(IEnumerable<TSchema> models,
+    public async Task UpdateMultipleAsync(IEnumerable<TSchema> schemas,
         CancellationToken cancellationToken = default)
     {
-        var entities = _mapper.Map<IEnumerable<TEntity>>(models);
+        var entities = _mapper.Map<IEnumerable<TEntity>>(schemas);
         await _repository.UpdateMultipleAsync(entities, cancellationToken);
+
+        _outputServices.ForEach(async service => await service.SendAsync(schemas, nameof(UpdateMultipleAsync), cancellationToken));
 
         if (_options.FeatureFlags.EnableCaching && _cacheStore is not null)
         {

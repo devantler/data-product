@@ -1,7 +1,8 @@
 @using Microsoft.Extensions.Options;
 @using Devantler.DataProduct.Configuration.Options;
 @using Devantler.DataProduct.Configuration.Options.DataStore;
-@using Devantler.DataProduct.Configuration.Options.DataIngestors;
+@using Devantler.DataProduct.Configuration.Options.Inputs;
+@using Devantler.DataProduct.Configuration.Options.Outputs;
 @using  Devantler.DataProduct.Configuration.Options.FeatureFlags;
 @using System.Globalization;
 
@@ -41,34 +42,69 @@
                     </ListGroupItem>
                 }
 
-                @if (Options.Value.FeatureFlags.EnableDataIngestion)
+                @if (Options.Value.FeatureFlags.EnableInputs)
                 {
-                    @foreach (var ingestor in Options.Value.DataIngestors)
+                    @foreach (var input in Options.Value.Inputs)
                     {
-                        switch (ingestor.Type)
+                        switch (input.Type)
                         {
-                            case DataIngestorType.Kafka:
-                                var kafkaIngestor = (KafkaDataIngestorOptions)ingestor;
-                                var kafkaSubDescriptions = new List<string>() {
-                                    $"Bootstrap Servers: {kafkaIngestor.Servers}",
-                                    $"Consumer Group: {kafkaIngestor.GroupId}",
-                                    $"Topic: {kafkaIngestor.Topic}"
+                            case InputType.Kafka:
+                                var kafkaInput = (KafkaInputOptions)input;
+                                var kafkaInputSubDescriptions = new List<string>() {
+                                    $"Bootstrap Servers: {kafkaInput.Servers}",
+                                    $"Consumer Group: {kafkaInput.GroupId}",
+                                    $"Topic: {kafkaInput.Topic}"
                                 };
                                 <ListGroupItem>
-                                    <ServiceDetails Name="@ingestor.Type.ToString()" Type="Data Ingestor"
-                        Description="A Kafka Data Ingestor in use by the data product." 
-                        SubDescriptions=@kafkaSubDescriptions/>
+                                    <ServiceDetails Name="@input.Type.ToString()" Type="Input"
+                        Description="A Kafka input in use by the data product." 
+                        SubDescriptions=@kafkaInputSubDescriptions/>
                                 </ListGroupItem>
                                 break;
-                            case DataIngestorType.Local:
-                                var localIngestor = (LocalDataIngestorOptions)ingestor;
-                                var localSubDescriptions = new List<string>() {
-                                    $"File: {localIngestor.FilePath}"
+                            case InputType.File:
+                                var fileInput = (FileInputOptions)input;
+                                var fileInputSubDescriptions = new List<string>() {
+                                    $"File: {fileInput.FilePath}"
                                 };
                                 <ListGroupItem>
-                                    <ServiceDetails Name="@ingestor.Type.ToString()" Type="Data Ingestor"
-                        Description="A Local Data Ingestor in use by the data product." 
-                        SubDescriptions=@localSubDescriptions/>
+                                    <ServiceDetails Name="@input.Type.ToString()" Type="Input"
+                        Description="A local input in use by the data product." 
+                        SubDescriptions=@fileInputSubDescriptions/>
+                                </ListGroupItem>
+                                break;
+
+                        }
+
+                    }
+                }
+                @if (Options.Value.FeatureFlags.EnableOutputs)
+                {
+                    @foreach (var output in Options.Value.Outputs)
+                    {
+                        switch (output.Type)
+                        {
+                            case OutputType.Kafka:
+                                var kafkaOutput = (KafkaOutputOptions)output;
+                                var kafkaOutputSubDescriptions = new List<string>() {
+                                    $"Bootstrap Servers: {kafkaOutput.Servers}",
+                                    $"Producer Group: {kafkaOutput.GroupId}",
+                                    $"Topic: {kafkaOutput.Topic}"
+                                };
+                                <ListGroupItem>
+                                    <ServiceDetails Name="@output.Type.ToString()" Type="Output"
+                        Description="A Kafka output in use by the data product." 
+                        SubDescriptions=@kafkaOutputSubDescriptions/>
+                                </ListGroupItem>
+                                break;
+                            case OutputType.File:
+                                var fileOutput = (FileOutputOptions)output;
+                                var fileOutputSubDescriptions = new List<string>() {
+                                    $"File: {fileOutput.FilePath}"
+                                };
+                                <ListGroupItem>
+                                    <ServiceDetails Name="@output.Type.ToString()" Type="Output"
+                        Description="A file output in use by the data product." 
+                        SubDescriptions=@fileOutputSubDescriptions/>
                                 </ListGroupItem>
                                 break;
 

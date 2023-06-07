@@ -14,15 +14,15 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, ISchema
     /// </summary>
     /// <param name="schema"></param>
     /// <param name="cancellationToken"></param>
-    Task<TSchema> CreateSingleAsync(TSchema schema, CancellationToken cancellationToken = default);
+    Task<TSchema?> CreateSingleAsync(TSchema schema, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Creates multiple <typeparamref name="TSchema"/>'s in a data store.
     /// </summary>
-    /// <param name="models"></param>
+    /// <param name="schemas"></param>
     /// <param name="insertIfNotExists"></param>
     /// <param name="cancellationToken"></param>
-    Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> models, bool insertIfNotExists, CancellationToken cancellationToken = default);
+    Task<IEnumerable<TSchema>> CreateMultipleAsync(IEnumerable<TSchema> schemas, bool insertIfNotExists, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Reads a single <typeparamref name="TSchema"/> from a data store.
@@ -72,9 +72,9 @@ public interface IDataStoreService<TKey, TSchema> where TSchema : class, ISchema
     /// <summary>
     /// Updates multiple <typeparamref name="TSchema"/>'s in a data store.
     /// </summary>
-    /// <param name="models"></param>
+    /// <param name="schemas"></param>
     /// <param name="cancellationToken"></param>
-    Task UpdateMultipleAsync(IEnumerable<TSchema> models, CancellationToken cancellationToken = default);
+    Task UpdateMultipleAsync(IEnumerable<TSchema> schemas, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Deletes a single <typeparamref name="TSchema"/> from a data store.

@@ -31,7 +31,7 @@ public abstract class RestController<TKey, TSchema> : ControllerBase where TSche
     /// <param name="model"></param>
     /// <param name="cancellationToken"></param>
     [HttpPost]
-    public async Task<ActionResult<TSchema>> PostAsync(TSchema model, CancellationToken cancellationToken = default)
+    public async Task<ActionResult<TSchema?>> PostAsync(TSchema model, CancellationToken cancellationToken = default)
         => await _dataStoreService.CreateSingleAsync(model, cancellationToken);
 
     /// <summary>

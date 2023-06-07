@@ -1,27 +1,27 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Devantler.DataProduct.Configuration.Options;
-using Devantler.DataProduct.Configuration.Options.DataIngestors;
-using Devantler.DataProduct.Features.DataIngestion.JsonConverters;
+using Devantler.DataProduct.Configuration.Options.Inputs;
 using Devantler.DataProduct.Features.DataStore.Services;
+using Devantler.DataProduct.Features.Inputs.JsonConverters;
 using Devantler.DataProduct.Features.Schemas;
 using Microsoft.Extensions.Options;
 
-namespace Devantler.DataProduct.Features.DataIngestion.Services;
+namespace Devantler.DataProduct.Features.Inputs.Services;
 
 /// <summary>
-/// A data ingestor that ingests data from a local file.
+/// A input that ingests data from a local file.
 /// </summary>
-public class LocalDataIngestorService<TKey, TSchema> : BackgroundService
+public class FileInputService<TKey, TSchema> : BackgroundService
     where TSchema : class, ISchema<TKey>
 {
     readonly IDataStoreService<TKey, TSchema> _dataStoreService;
     readonly DataProductOptions _options;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="LocalDataIngestorService{TKey, TSchema}"/> class.
+    /// Initializes a new instance of the <see cref="FileInputService{TKey, TSchema}"/> class.
     /// </summary>
-    public LocalDataIngestorService(IServiceScopeFactory scopeFactory)
+    public FileInputService(IServiceScopeFactory scopeFactory)
     {
         var scope = scopeFactory.CreateScope();
         _dataStoreService = scope.ServiceProvider.GetRequiredService<IDataStoreService<TKey, TSchema>>();
@@ -31,14 +31,14 @@ public class LocalDataIngestorService<TKey, TSchema> : BackgroundService
     /// <inheritdoc />
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var localDataIngestionSources = _options.DataIngestors
-            .Where(x => x.Type == DataIngestorType.Local)
-            .Cast<LocalDataIngestorOptions>()
+        var localInputsSources = _options.Inputs
+            .Where(x => x.Type == InputType.File)
+            .Cast<FileInputOptions>()
             .ToList();
 
         var schemas = new List<TSchema>();
 
-        foreach (string? filePath in localDataIngestionSources.Select(dataIngestionSource => dataIngestionSource.FilePath))
+        foreach (string? filePath in localInputsSources.Select(InputsSource => InputsSource.FilePath))
         {
             var file = new FileInfo(filePath);
             if (!file.Exists)
