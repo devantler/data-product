@@ -1,4 +1,4 @@
-Name: Contoso University Data Product File
+Name: Contoso University Data Product Local
 Description: A data product to query and manage students and courses at the Contoso University.
 Release: v0.0.0
 
@@ -15,7 +15,6 @@ Owner:
 
 FeatureFlags:
   EnableInputs: true
-  EnableOutputs: true
 
 Apis:
   Rest:
@@ -26,7 +25,3 @@ Inputs:
     FilePath: assets/input/contoso-university-single.json
   - Type: File
     FilePath: assets/input/contoso-university-multiple.json
-
-Outputs:
-  - Type: File
-    FilePath: assets/output/contoso-university-single.txt
