@@ -20,6 +20,7 @@ public static class MetricsStartupExtensions
         _ = services.AddOpenTelemetry()
             .WithMetrics(builder =>
             {
+                _ = builder.AddMeter(options.Name.ToKebabCase());
                 _ = builder.SetResourceBuilder(ResourceBuilder.CreateDefault()
                     .AddService(options.Name.ToKebabCase())
                     .AddAttributes(TelemetryHelpers.GetProcessAttributes(options))
