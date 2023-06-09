@@ -43,7 +43,7 @@
         <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.14" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Process" Version="1.0.0-alpha.6" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.5.0" />
-        <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.0.0-rc9.9" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.0.0-rc9.10" />
         <PackageReference Include="StackExchange.Redis" Version="2.6.111" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
