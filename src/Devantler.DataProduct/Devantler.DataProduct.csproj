@@ -28,7 +28,7 @@
         <PackageReference Include="Keycloak.AuthServices.Authentication" Version="1.5.2" /> <!-- Keep an eye on this package, if it is not maintained it should be replaced by manual setup, and if it is maintained it should replace the current setup. -->
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.7" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.7" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.7" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.7" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
         <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.5.1" />
