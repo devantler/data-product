@@ -31,7 +31,7 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.8" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.8" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
-        <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.6.0" />
+        <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="2.6.1" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
         <PackageReference Include="OpenTelemetry.Contrib.Preview" Version="1.0.0-beta2" />
         <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.5.1" />
