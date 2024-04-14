@@ -2,7 +2,6 @@ using Devantler.DataProduct.Generator.IncrementalGenerators;
 
 namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.SchemaGeneratorTests;
 
-[UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<SchemaGenerator>
 {
   [Theory]

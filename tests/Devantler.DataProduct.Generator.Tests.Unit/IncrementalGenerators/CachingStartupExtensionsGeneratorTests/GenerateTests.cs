@@ -2,7 +2,6 @@ using Devantler.DataProduct.Generator.IncrementalGenerators;
 
 namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.CachingStartupExtensionsGeneratorTests;
 
-[UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<CachingStartupExtensionsGenerator>
 {
   [Theory]

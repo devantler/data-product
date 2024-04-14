@@ -2,8 +2,7 @@ namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.Graph
 
 public static class TestCases
 {
-  public static IEnumerable<object[]> ValidCases =>
-      [
-            ["record-schema-primitive-types"]
-      ];
+  public static TheoryData<string> ValidCases => new(
+    ["record-schema-primitive-types"]
+  );
 }

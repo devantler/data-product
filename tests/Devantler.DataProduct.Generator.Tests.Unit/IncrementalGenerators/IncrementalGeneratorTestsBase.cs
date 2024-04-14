@@ -22,7 +22,7 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
     _driver = CSharpGeneratorDriver.Create(new T());
   }
 
-  static IEnumerable<PortableExecutableReference> LoadAssemblyReferences()
+  static List<PortableExecutableReference> LoadAssemblyReferences()
   {
     return AppDomain.CurrentDomain.GetAssemblies()
         .Where(a => !a.IsDynamic)

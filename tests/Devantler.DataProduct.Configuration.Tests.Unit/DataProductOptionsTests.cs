@@ -2,7 +2,6 @@ using Devantler.DataProduct.Configuration.Options;
 
 namespace Devantler.DataProduct.Configuration.Tests.Unit;
 
-[UsesVerify]
 public class DataProductOptionsTests
 {
   [Fact]

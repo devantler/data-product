@@ -2,7 +2,6 @@ using Devantler.DataProduct.Generator.IncrementalGenerators;
 
 namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.DbContextGeneratorTests;
 
-[UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
 {
   [Theory]
@@ -35,7 +34,7 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
 
   [Theory]
   [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-  public void GivenOtherDataStore_DoesNothing(string subject)
+  public async Task GivenOtherDataStore_DoesNothing(string subject)
   {
     //Arrange
     var additionalText = CreateDataProductConfig(
@@ -64,6 +63,6 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
     Task act() => Verify(driver);
 
     //Assert
-    _ = Assert.ThrowsAsync<NotSupportedException>(act);
+    _ = await Assert.ThrowsAsync<NotSupportedException>(act);
   }
 }
