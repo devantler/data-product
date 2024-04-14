@@ -10,7 +10,6 @@
     <CompilerGeneratedFilesOutputPath>generated</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Blazorise.Bootstrap" Version="1.5.1" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.5.1" />

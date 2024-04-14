@@ -3,27 +3,26 @@ namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.Entit
 public static class TestCases
 {
   public static IEnumerable<object[]> ValidCases =>
-      new List<object[]>
-      {
-            new object[]{"record-schema-empty" },
-            new object[]{"record-schema-namespace"},
-            new object[]{"record-schema-primitive-type-boolean"},
-            new object[]{"record-schema-primitive-type-bytes"},
-            new object[]{"record-schema-primitive-type-double"},
-            new object[]{"record-schema-primitive-type-float"},
-            new object[]{"record-schema-primitive-type-int"},
-            new object[]{"record-schema-primitive-type-long"},
-            new object[]{"record-schema-primitive-type-null"},
-            new object[]{"record-schema-primitive-type-string"},
-            new object[]{"record-schema-primitive-types"},
-            new object[]{"enum-schema-empty"},
-            new object[]{"enum-schema-namespace"},
-            new object[]{"enum-schema-symbols"},
-            new object[]{"union-schema-empty"},
-            new object[]{"union-schema-enum-schema"},
-            new object[]{"union-schema-enum-schemas"},
-            new object[]{"union-schema-mixed-schemas"},
-            new object[]{"union-schema-record-schema"},
-            new object[]{"union-schema-record-schemas"}
-      };
+      [
+            ["record-schema-empty"],
+            ["record-schema-namespace"],
+            ["record-schema-primitive-type-boolean"],
+            ["record-schema-primitive-type-bytes"],
+            ["record-schema-primitive-type-double"],
+            ["record-schema-primitive-type-float"],
+            ["record-schema-primitive-type-int"],
+            ["record-schema-primitive-type-long"],
+            ["record-schema-primitive-type-null"],
+            ["record-schema-primitive-type-string"],
+            ["record-schema-primitive-types"],
+            ["enum-schema-empty"],
+            ["enum-schema-namespace"],
+            ["enum-schema-symbols"],
+            ["union-schema-empty"],
+            ["union-schema-enum-schema"],
+            ["union-schema-enum-schemas"],
+            ["union-schema-mixed-schemas"],
+            ["union-schema-record-schema"],
+            ["union-schema-record-schemas"]
+      ];
 }

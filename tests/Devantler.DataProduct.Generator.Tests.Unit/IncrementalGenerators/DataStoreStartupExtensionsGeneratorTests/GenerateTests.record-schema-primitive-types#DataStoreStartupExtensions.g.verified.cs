@@ -19,9 +19,9 @@ public static partial class DataStoreStartupExtensions
     /// </summary>
     static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, DataStoreOptions options)
     {
-        _ = services.AddPooledDbContextFactory<SQLiteDbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().UseSQLite(options?.ConnectionString));
-        _ = services.AddScoped<IRepository<Guid, RecordSchemaPrimitiveTypesEntity>, RecordSchemaPrimitiveTypesRepository>();
-        _ = services.AddScoped<IDataStoreService<Guid, RecordSchemaPrimitiveTypes>, RecordSchemaPrimitiveTypesDataStoreService>();
+    _ = services.AddPooledDbContextFactory<SQLiteDbContext>(dbOptions => dbOptions.UseLazyLoadingProxies().UseSqlite(options?.ConnectionString));
+    _ = services.AddScoped<IRepository<Guid, RecordSchemaPrimitiveTypesEntity>, RecordSchemaPrimitiveTypesRepository>();
+    _ = services.AddScoped<IDataStoreService<Guid, RecordSchemaPrimitiveTypes>, RecordSchemaPrimitiveTypesDataStoreService>();
         using var scope = services.BuildServiceProvider().CreateScope();
         var contextFactory = scope.ServiceProvider.GetRequiredService<IDbContextFactory<SQLiteDbContext>>();
         var context = contextFactory.CreateDbContext();
