@@ -1,17 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":disableDependencyDashboard"],
-  "flux": {
-    "fileMatch": [
-      "^k8s/.+\\.ya?ml$"
-    ]
-  },
-  "kubernetes": {
-    "fileMatch": [
-      "^k8s/.+\\.ya?ml$"
-    ]
-  },
   "github-actions": {
+    "enabled": false
+  },
+  "docker": {
+    "enabled": false
+  },
+  "nuget": {
     "enabled": false
   },
   "minor": {
