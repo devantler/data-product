@@ -41,7 +41,7 @@ public static class FeaturesStartupExtensions
     if (options.FeatureFlags.EnableCaching)
       _ = builder.Services.AddCaching(options);
 
-    if (options.FeatureFlags.EnableApis.Any())
+    if (options.FeatureFlags.EnableApis.Count != 0)
       _ = builder.Services.AddApis(options, builder.Environment);
 
     if (options.FeatureFlags.EnableDashboard)
@@ -76,7 +76,7 @@ public static class FeaturesStartupExtensions
     if (options.FeatureFlags.EnableDataCatalog)
       _ = app.UseDataCatalog();
 
-    if (options.FeatureFlags.EnableApis.Any())
+    if (options.FeatureFlags.EnableApis.Count != 0)
       _ = app.UseApis(options);
 
     if (options.FeatureFlags.EnableDashboard)

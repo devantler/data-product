@@ -15,7 +15,7 @@ public static partial class OutputsStartupExtensions
   /// <param name="options"></param>
   public static IServiceCollection AddOutputs(this IServiceCollection services, DataProductOptions options)
   {
-    if (!options.Outputs.Any())
+    if (options.Outputs.Count == 0)
       return services;
 
     services.AddGeneratedServiceRegistrations(options.Outputs);

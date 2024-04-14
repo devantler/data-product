@@ -6,25 +6,24 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient;
 /// <summary>
 /// A client that is responsible for interacting with DataHub's data catalog.
 /// </summary>
-public class Client
+/// <remarks>
+/// Initializes a new instance of the <see cref="Client"/> class.
+/// </remarks>
+public class Client(HttpClient httpClient)
 {
-  readonly HttpClient _httpClient;
+  readonly HttpClient _httpClient = httpClient;
 
-  /// <summary>
-  /// Initializes a new instance of the <see cref="Client"/> class.
-  /// </summary>
-  public Client(HttpClient httpClient)
-      => _httpClient = httpClient;
+  static readonly JsonSerializerOptions jsonSerializerOptions = new()
+  {
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+  };
 
   /// <summary>
   /// Sends metadata to DataHub.
   /// </summary>
   public async Task EmitMetadata(Metadata metadata, CancellationToken cancellationToken = default)
   {
-    string stringContent = JsonSerializer.Serialize(metadata.Entities, new JsonSerializerOptions
-    {
-      PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-    });
+    string stringContent = JsonSerializer.Serialize(metadata.Entities, jsonSerializerOptions);
 
     var request = new HttpRequestMessage(HttpMethod.Post, "openapi/entities/v1/")
     {

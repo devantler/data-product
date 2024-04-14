@@ -31,7 +31,7 @@ public class RestBulkControllerGenerator : GeneratorBase
       DataProductOptions options)
   {
     if (!options.FeatureFlags.EnableApis.Contains(ApiFeatureFlagValues.Rest) || !options.Apis.Rest.EnableBulkController)
-      return new Dictionary<string, string>();
+      return [];
 
     var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
     var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject, options.SchemaRegistry.Schema.Version);

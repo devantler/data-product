@@ -9,21 +9,21 @@ namespace Devantler.DataProduct.Features.Inputs;
 /// </summary>
 public static partial class InputsStartupExtensions
 {
-    /// <summary>
-    /// Registers inputs to the DI container.
-    /// </summary>
-    /// <param name="services"></param>
-    /// <param name="options"></param>
-    public static IServiceCollection AddInputs(this IServiceCollection services, DataProductOptions options)
-    {
-        if (!options.Inputs.Any())
-            return services;
+  /// <summary>
+  /// Registers inputs to the DI container.
+  /// </summary>
+  /// <param name="services"></param>
+  /// <param name="options"></param>
+  public static IServiceCollection AddInputs(this IServiceCollection services, DataProductOptions options)
+  {
+    if (options.Inputs.Count == 0)
+      return services;
 
-        services.AddGeneratedServiceRegistrations(options.Inputs);
+    services.AddGeneratedServiceRegistrations(options.Inputs);
 
-        return services;
-    }
+    return services;
+  }
 
-    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, List<InputOptions> options);
+  static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, List<InputOptions> options);
 }
 #pragma warning restore S3251

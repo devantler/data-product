@@ -5,14 +5,14 @@ namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.RestB
 [UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<RestBulkControllerGenerator>
 {
-    [Theory]
-    [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-    public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
-    {
-        //Arrange
-        var additionalText = CreateDataProductConfig(
-            /*lang=json,strict*/
-            $$"""
+  [Theory]
+  [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
+  public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
+  {
+    //Arrange
+    var additionalText = CreateDataProductConfig(
+        /*lang=json,strict*/
+        $$"""
             {
                 "FeatureFlags": {
                     "EnableApis": [
@@ -34,12 +34,12 @@ public class GenerateTests : IncrementalGeneratorTestsBase<RestBulkControllerGen
                 }
             }
             """
-        );
+    );
 
-        //Act
-        var driver = RunGenerator(additionalText);
+    //Act
+    var driver = RunGenerator(additionalText);
 
-        //Assert
-        return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
-    }
+    //Assert
+    return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
+  }
 }

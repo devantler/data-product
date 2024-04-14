@@ -23,7 +23,7 @@ public class DataStoreService<TKey, TSchema, TEntity> : IDataStoreService<TKey, 
 {
   readonly DataProductOptions _options;
   readonly ICacheStoreService<TEntity>? _cacheStore;
-  readonly List<IOutputService<TKey, TSchema>> _outputServices = new();
+  readonly List<IOutputService<TKey, TSchema>> _outputServices = [];
   readonly IRepository<TKey, TEntity> _repository;
   readonly IMapper _mapper;
 

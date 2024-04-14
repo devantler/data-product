@@ -13,7 +13,7 @@ public class FeatureFlagsOptions
   /// <summary>
   /// A list of APIs that should be enabled for the data product.
   /// </summary>
-  public List<ApiFeatureFlagValues> EnableApis { get; set; } = new() { ApiFeatureFlagValues.Rest, ApiFeatureFlagValues.GraphQL };
+  public List<ApiFeatureFlagValues> EnableApis { get; set; } = [ApiFeatureFlagValues.Rest, ApiFeatureFlagValues.GraphQL];
 
   /// <summary>
   /// A flag to indicate if a dashboard should be enabled for the data product.

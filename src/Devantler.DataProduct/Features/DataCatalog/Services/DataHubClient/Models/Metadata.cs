@@ -10,5 +10,5 @@ public class Metadata
   /// <summary>
   /// The metadata entities.
   /// </summary>
-  public List<IMetadataEntity> Entities { get; set; } = new List<IMetadataEntity>();
+  public List<IMetadataEntity> Entities { get; set; } = [];
 }

@@ -31,7 +31,7 @@ public class OutputsStartupExtensionsGenerator : GeneratorBase
       DataProductOptions options)
   {
     if (!options.FeatureFlags.EnableOutputs || !options.Outputs.Any())
-      return new Dictionary<string, string>();
+      return [];
 
     var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
     var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject,

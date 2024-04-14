@@ -7,12 +7,12 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Mode
 /// </summary>
 public class DatasetPropertiesAspect : IMetadataAspect
 {
-    /// <inheritdoc/>
-    [JsonPropertyName("__type")]
-    public string Type { get; set; } = "DatasetProperties";
+  /// <inheritdoc/>
+  [JsonPropertyName("__type")]
+  public string Type { get; set; } = "DatasetProperties";
 
-    /// <summary>
-    /// The description of the dataset.
-    /// </summary>
-    public string Description { get; set; } = string.Empty;
+  /// <summary>
+  /// The description of the dataset.
+  /// </summary>
+  public string Description { get; set; } = string.Empty;
 }

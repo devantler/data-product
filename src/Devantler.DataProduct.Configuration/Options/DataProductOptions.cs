@@ -87,12 +87,12 @@ public class DataProductOptions
   /// <summary>
   /// Options for the inputs.
   /// </summary>
-  public List<InputOptions> Inputs { get; set; } = new();
+  public List<InputOptions> Inputs { get; set; } = [];
 
   /// <summary>
   /// Options for the outputs.
   /// </summary>
-  public List<OutputOptions> Outputs { get; set; } = new();
+  public List<OutputOptions> Outputs { get; set; } = [];
 
   /// <summary>
   /// Options for the data catalog.

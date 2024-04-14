@@ -12,18 +12,15 @@ namespace Devantler.DataProduct.Features.Apis.Rest.Controllers;
 /// </remarks>
 /// <typeparam name="TKey"></typeparam>
 /// <typeparam name="TSchema"></typeparam>
+/// <remarks>
+/// Constructs a new instance of <see cref="RestController{TKey, TSchema}"/> and injects the required services.
+/// </remarks>
+/// <param name="dataStoreService"></param>
 [ApiController]
 [Route("[controller]")]
-public abstract class RestController<TKey, TSchema> : ControllerBase where TSchema : class, ISchema<TKey>
+public abstract class RestController<TKey, TSchema>(IDataStoreService<TKey, TSchema> dataStoreService) : ControllerBase where TSchema : class, ISchema<TKey>
 {
-  readonly IDataStoreService<TKey, TSchema> _dataStoreService;
-
-  /// <summary>
-  /// Constructs a new instance of <see cref="RestController{TKey, TSchema}"/> and injects the required services.
-  /// </summary>
-  /// <param name="dataStoreService"></param>
-  protected RestController(IDataStoreService<TKey, TSchema> dataStoreService)
-      => _dataStoreService = dataStoreService;
+  readonly IDataStoreService<TKey, TSchema> _dataStoreService = dataStoreService;
 
   /// <summary>
   /// Creates a new entity.

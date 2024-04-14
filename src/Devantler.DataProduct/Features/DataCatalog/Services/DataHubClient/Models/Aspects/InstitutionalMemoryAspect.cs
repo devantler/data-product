@@ -14,7 +14,7 @@ public class InstitutionalMemoryAspect : IMetadataAspect
   /// <summary>
   /// Institutional memory metadata elements
   /// </summary>
-  public List<InstitutionalMemoryMetadata> Elements { get; set; } = new();
+  public List<InstitutionalMemoryMetadata> Elements { get; set; } = [];
 }
 
 /// <summary>

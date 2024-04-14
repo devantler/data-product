@@ -11,15 +11,15 @@ public class DashboardOptions
   /// <remarks>
   /// This setting is only really useful if you are embedding a service that redirects to different domains. For example if you are embedding a service that uses OAuth2 and redirects to the OAuth2 provider.
   /// </remarks>
-  public List<string> CSPFrameAncestors { get; set; } = new();
+  public List<string> CSPFrameAncestors { get; set; } = [];
 
   /// <summary>
   /// The embedded services in the dashboard.
   /// </summary>
-  public List<EmbeddedServiceOptions> EmbeddedServices { get; set; } = new();
+  public List<EmbeddedServiceOptions> EmbeddedServices { get; set; } = [];
 
   /// <summary>
   /// The links to show in the dashboard.
   /// </summary>
-  public List<LinksOptions> Links { get; set; } = new();
+  public List<LinksOptions> Links { get; set; } = [];
 }

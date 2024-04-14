@@ -34,8 +34,7 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
 
   protected GeneratorDriver RunGenerator(CustomAdditionalText additionalText)
   {
-    if (additionalText is null)
-      throw new ArgumentNullException(nameof(additionalText));
+    ArgumentNullException.ThrowIfNull(additionalText);
     var additionalTexts = ImmutableArray.Create<AdditionalText>(additionalText);
     return _driver.AddAdditionalTexts(additionalTexts)
         .RunGenerators(_compilation);
@@ -45,17 +44,11 @@ public abstract class IncrementalGeneratorTestsBase<T> where T : GeneratorBase, 
       new("config.json", config);
 }
 
-public class CustomAdditionalText : AdditionalText
+public class CustomAdditionalText(string path, string text) : AdditionalText
 {
-  public override string Path { get; } = string.Empty;
+  public override string Path { get; } = path;
 
-  readonly string _text;
-
-  public CustomAdditionalText(string path, string text)
-  {
-    Path = path;
-    _text = text;
-  }
+  readonly string _text = text;
 
   public override SourceText GetText(CancellationToken cancellationToken = default) => SourceText.From(_text);
 }

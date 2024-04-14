@@ -41,7 +41,7 @@ public static class DashboardStartupExtensions
   {
     _ = app.Use(async (context, next) =>
     {
-      context.Response.Headers.Add("Content-Security-Policy", $"frame-ancestors 'self' {string.Join(" ", options.Dashboard.CSPFrameAncestors)} {string.Join(" ", options.Dashboard.EmbeddedServices.Select(x => x.Url))}");
+      context.Response.Headers.Append("Content-Security-Policy", $"frame-ancestors 'self' {string.Join(" ", options.Dashboard.CSPFrameAncestors)} {string.Join(" ", options.Dashboard.EmbeddedServices.Select(x => x.Url))}");
 
       await next();
     });

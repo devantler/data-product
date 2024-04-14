@@ -33,7 +33,7 @@ public class InputsStartupExtensionsGenerator : GeneratorBase
       DataProductOptions options)
   {
     if (!options.FeatureFlags.EnableInputs || !options.Inputs.Any())
-      return new Dictionary<string, string>();
+      return [];
 
     var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
     var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject,

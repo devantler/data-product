@@ -5,12 +5,12 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Mode
 /// </summary>
 public enum RawSchemaType
 {
-    /// <summary>
-    /// The raw schema type for Presto.
-    /// </summary>
-    PrestoDDL,
-    /// <summary>
-    /// The raw schema type for anything unknown.
-    /// </summary>
-    OtherSchema
+  /// <summary>
+  /// The raw schema type for Presto.
+  /// </summary>
+  PrestoDDL,
+  /// <summary>
+  /// The raw schema type for anything unknown.
+  /// </summary>
+  OtherSchema
 }

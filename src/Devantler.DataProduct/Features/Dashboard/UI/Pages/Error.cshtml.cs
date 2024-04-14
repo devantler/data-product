@@ -7,9 +7,12 @@ namespace Devantler.DataProduct.Features.Dashboard.UI.Pages;
 /// <summary>
 /// The error page model.
 /// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="ErrorModel"/> class.
+/// </remarks>
 [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 [IgnoreAntiforgeryToken]
-public class ErrorModel : PageModel
+public class ErrorModel(ILogger<ErrorModel> logger) : PageModel
 {
   /// <summary>
   /// The ID of the request that caused the error.
@@ -22,13 +25,9 @@ public class ErrorModel : PageModel
   public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
 #pragma warning disable IDE0052 // Remove unread private members
-  readonly ILogger<ErrorModel> _logger;
+  readonly ILogger<ErrorModel> _logger = logger;
+
 #pragma warning restore IDE0052 // Remove unread private members
-  /// <summary>
-  /// Initializes a new instance of the <see cref="ErrorModel"/> class.
-  /// </summary>
-  public ErrorModel(ILogger<ErrorModel> logger)
-      => _logger = logger;
 
   /// <summary>
   /// Sets the request ID when the error page is loaded.

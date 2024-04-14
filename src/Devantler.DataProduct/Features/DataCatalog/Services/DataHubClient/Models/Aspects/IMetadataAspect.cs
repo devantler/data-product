@@ -11,8 +11,8 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Mode
 [JsonDerivedType(typeof(InstitutionalMemoryAspect))]
 public interface IMetadataAspect
 {
-    /// <summary>
-    /// The aspect type.
-    /// </summary>
-    public string Type { get; set; }
+  /// <summary>
+  /// The aspect type.
+  /// </summary>
+  public string Type { get; set; }
 }

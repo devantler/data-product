@@ -32,7 +32,7 @@ public class DbContextGenerator : GeneratorBase
   )
   {
     if (options.DataStore.Type != DataStoreType.SQL)
-      return new Dictionary<string, string>();
+      return [];
 
     var dataStoreOptions = options.DataStore;
 

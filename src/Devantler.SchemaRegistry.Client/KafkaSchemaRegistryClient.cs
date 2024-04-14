@@ -31,10 +31,10 @@ public class KafkaSchemaRegistryClient : ISchemaRegistryClient
   public Chr.Avro.Abstract.Schema GetSchema(string subject, int version)
   {
     CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _options.Url });
-    List<RegisteredSchema> registeredSchemas = new()
-        {
+    List<RegisteredSchema> registeredSchemas =
+        [
             cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version).Result
-        };
+        ];
     var schemaReader = new JsonSchemaReader();
     return schemaReader.Read(registeredSchemas[0].SchemaString);
   }
@@ -43,10 +43,10 @@ public class KafkaSchemaRegistryClient : ISchemaRegistryClient
   public async Task<Chr.Avro.Abstract.Schema> GetSchemaAsync(string subject, int version, CancellationToken cancellationToken = default)
   {
     CachedSchemaRegistryClient cachedSchemaRegistryClient = new(new SchemaRegistryConfig { Url = _options.Url });
-    List<RegisteredSchema> registeredSchemas = new()
-        {
+    List<RegisteredSchema> registeredSchemas =
+        [
             await cachedSchemaRegistryClient.GetRegisteredSchemaAsync(subject, version)
-        };
+        ];
 
     if (registeredSchemas.Count == 0)
       throw new Exception("No schema found for subject: " + subject + " and version: " + version);

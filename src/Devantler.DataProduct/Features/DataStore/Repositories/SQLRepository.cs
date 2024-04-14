@@ -39,7 +39,7 @@ public abstract class SQLRepository<TKey, TEntity>(DbContext context) : IReposit
 
   /// <inheritdoc />
   public async Task<TEntity> ReadSingleAsync(TKey id, CancellationToken cancellationToken = default)
-      => await _context.Set<TEntity>().FindAsync(new object[] { id }, cancellationToken)
+      => await _context.Set<TEntity>().FindAsync([id], cancellationToken)
          ?? throw new InvalidOperationException($"Entity of type {typeof(TEntity).Name} with id {id} not found");
 
   ///<inheritdoc />
@@ -88,7 +88,7 @@ public abstract class SQLRepository<TKey, TEntity>(DbContext context) : IReposit
   /// <inheritdoc />
   public async Task DeleteSingleAsync(TKey id, CancellationToken cancellationToken = default)
   {
-    var entity = await _context.Set<TEntity>().FindAsync(new object[] { id }, cancellationToken)
+    var entity = await _context.Set<TEntity>().FindAsync([id], cancellationToken)
                  ?? throw new InvalidOperationException($"Entity of type {typeof(TEntity).Name} with id {id} not found");
     _ = _context.Set<TEntity>().Remove(entity);
     _ = await _context.SaveChangesAsync(cancellationToken);

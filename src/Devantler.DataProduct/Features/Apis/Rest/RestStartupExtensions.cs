@@ -26,7 +26,7 @@ public static class RestStartupExtensions
         );
     _ = services.AddSwaggerGen(swaggerOptions =>
     {
-      string[] methodsOrder = new string[7] { "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE" };
+      string[] methodsOrder = ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "TRACE"];
       swaggerOptions.OrderActionsBy((apiDesc) => $"{apiDesc.ActionDescriptor.RouteValues["controller"]}_{Array.IndexOf(methodsOrder, apiDesc.HttpMethod)}");
       swaggerOptions.SwaggerDoc(
               options.Release,
