@@ -4,12 +4,12 @@ namespace Devantler.DataProduct.Configuration.Options.Inputs;
 /// </summary>
 public enum InputType
 {
-    /// <summary>
-    /// A local file input.
-    /// </summary>
-    File,
-    /// <summary>
-    /// A kafka input.
-    /// </summary>
-    Kafka
+  /// <summary>
+  /// A local file input.
+  /// </summary>
+  File,
+  /// <summary>
+  /// A kafka input.
+  /// </summary>
+  Kafka
 }

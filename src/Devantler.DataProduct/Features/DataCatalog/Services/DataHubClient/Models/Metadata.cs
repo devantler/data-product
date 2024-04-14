@@ -7,8 +7,8 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Mode
 /// </summary>
 public class Metadata
 {
-    /// <summary>
-    /// The metadata entities.
-    /// </summary>
-    public List<IMetadataEntity> Entities { get; set; } = new List<IMetadataEntity>();
+  /// <summary>
+  /// The metadata entities.
+  /// </summary>
+  public List<IMetadataEntity> Entities { get; set; } = new List<IMetadataEntity>();
 }

@@ -5,8 +5,8 @@ namespace Devantler.DataProduct.Configuration.Options.Auth;
 /// </summary>
 public enum AuthType
 {
-    /// <summary>
-    /// Keycloak.
-    /// </summary>
-    Keycloak
+  /// <summary>
+  /// Keycloak.
+  /// </summary>
+  Keycloak
 }

@@ -8,22 +8,22 @@ namespace Devantler.DataProduct.Features.Outputs;
 /// </summary>
 public static partial class OutputsStartupExtensions
 {
-    /// <summary>
-    /// Registers outputs to the DI container.
-    /// </summary>
-    /// <param name="services"></param>
-    /// <param name="options"></param>
-    public static IServiceCollection AddOutputs(this IServiceCollection services, DataProductOptions options)
-    {
-        if (!options.Outputs.Any())
-            return services;
+  /// <summary>
+  /// Registers outputs to the DI container.
+  /// </summary>
+  /// <param name="services"></param>
+  /// <param name="options"></param>
+  public static IServiceCollection AddOutputs(this IServiceCollection services, DataProductOptions options)
+  {
+    if (!options.Outputs.Any())
+      return services;
 
-        services.AddGeneratedServiceRegistrations(options.Outputs);
+    services.AddGeneratedServiceRegistrations(options.Outputs);
 
-        return services;
-    }
+    return services;
+  }
 
-    static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, List<OutputOptions> options);
+  static partial void AddGeneratedServiceRegistrations(this IServiceCollection services, List<OutputOptions> options);
 }
 
 #pragma warning disable S3251

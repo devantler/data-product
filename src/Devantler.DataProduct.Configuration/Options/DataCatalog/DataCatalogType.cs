@@ -5,8 +5,8 @@ namespace Devantler.DataProduct.Configuration.Options.DataCatalog;
 /// </summary>
 public enum DataCatalogType
 {
-    /// <summary>
-    /// LinkedIn DataHub
-    /// </summary>
-    DataHub
+  /// <summary>
+  /// LinkedIn DataHub
+  /// </summary>
+  DataHub
 }

@@ -8,38 +8,38 @@ namespace Devantler.DataProduct.Features.Configuration;
 /// </summary>
 public static class ConfigurationStartupExtensions
 {
-    /// <summary>
-    /// Adds and configures a data product configuration from command line arguments, environment variables, config.{environment}.{json|yml|yaml}, and config.{json|yml|yaml}.
-    /// </summary>
-    public static DataProductOptions AddConfiguration(this WebApplicationBuilder builder, string[] args)
+  /// <summary>
+  /// Adds and configures a data product configuration from command line arguments, environment variables, config.{environment}.{json|yml|yaml}, and config.{json|yml|yaml}.
+  /// </summary>
+  public static DataProductOptions AddConfiguration(this WebApplicationBuilder builder, string[] args)
+  {
+    _ = builder.Configuration.AddDataProductConfiguration(builder.Environment.EnvironmentName, args);
+    var options = builder.Configuration.GetDataProductOptions();
+
+    _ = builder.Services.AddOptions<DataProductOptions>().Configure(o =>
     {
-        _ = builder.Configuration.AddDataProductConfiguration(builder.Environment.EnvironmentName, args);
-        var options = builder.Configuration.GetDataProductOptions();
+      o.Name = options.Name;
+      o.Description = options.Description;
+      o.Release = options.Release;
+      o.Environment = builder.Environment.EnvironmentName;
+      o.PublicUrl = options.PublicUrl;
+      o.License = options.License;
+      o.Owner = options.Owner;
 
-        _ = builder.Services.AddOptions<DataProductOptions>().Configure(o =>
-        {
-            o.Name = options.Name;
-            o.Description = options.Description;
-            o.Release = options.Release;
-            o.Environment = builder.Environment.EnvironmentName;
-            o.PublicUrl = options.PublicUrl;
-            o.License = options.License;
-            o.Owner = options.Owner;
+      o.FeatureFlags = options.FeatureFlags;
 
-            o.FeatureFlags = options.FeatureFlags;
+      o.Apis = options.Apis;
+      o.Auth = options.Auth;
+      o.CacheStore = options.CacheStore;
+      o.Dashboard = options.Dashboard;
+      o.DataCatalog = options.DataCatalog;
+      o.Inputs = options.Inputs;
+      o.Outputs = options.Outputs;
+      o.DataStore = options.DataStore;
+      o.SchemaRegistry = options.SchemaRegistry;
+      o.Telemetry = options.Telemetry;
+    });
 
-            o.Apis = options.Apis;
-            o.Auth = options.Auth;
-            o.CacheStore = options.CacheStore;
-            o.Dashboard = options.Dashboard;
-            o.DataCatalog = options.DataCatalog;
-            o.Inputs = options.Inputs;
-            o.Outputs = options.Outputs;
-            o.DataStore = options.DataStore;
-            o.SchemaRegistry = options.SchemaRegistry;
-            o.Telemetry = options.Telemetry;
-        });
-
-        return options;
-    }
+    return options;
+  }
 }

@@ -7,14 +7,14 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Mode
 /// </summary>
 public class DatasetEntity : IMetadataEntity
 {
-    /// <inheritdoc/>
-    public required string EntityUrn { get; set; }
+  /// <inheritdoc/>
+  public required string EntityUrn { get; set; }
 
-    /// <inheritdoc/>
-    public string EntityType { get; set; } = "dataset";
+  /// <inheritdoc/>
+  public string EntityType { get; set; } = "dataset";
 
-    /// <summary>
-    /// A schema metadata aspect that describes the schema of the data set.
-    /// </summary>
-    public required IMetadataAspect Aspect { get; set; }
+  /// <summary>
+  /// A schema metadata aspect that describes the schema of the data set.
+  /// </summary>
+  public required IMetadataAspect Aspect { get; set; }
 }

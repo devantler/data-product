@@ -5,16 +5,16 @@ namespace Devantler.DataProduct.Configuration.Options.FeatureFlags;
 /// </summary>
 public enum ApiFeatureFlagValues
 {
-    /// <summary>
-    /// A value to indicate that the REST API should be enabled.
-    /// </summary>
-    Rest,
-    /// <summary>
-    /// A value to indicate that the GraphQL API should be enabled.
-    /// </summary>
-    GraphQL,
-    /// <summary>
-    /// A value to indicate that the gRPC API should be enabled.
-    /// </summary>
-    gRPC
+  /// <summary>
+  /// A value to indicate that the REST API should be enabled.
+  /// </summary>
+  Rest,
+  /// <summary>
+  /// A value to indicate that the GraphQL API should be enabled.
+  /// </summary>
+  GraphQL,
+  /// <summary>
+  /// A value to indicate that the gRPC API should be enabled.
+  /// </summary>
+  gRPC
 }

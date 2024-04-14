@@ -7,10 +7,10 @@ namespace Devantler.DataProduct.Features.Apis.Rest;
 /// </summary>
 public class SlugifyParameterTransformer : IOutboundParameterTransformer
 {
-    /// <summary>
-    /// Transforms an outbound parameter from PascalCase to kebab-case.
-    /// </summary>
-    /// <param name="value"></param>
-    public string? TransformOutbound(object? value)
-        => (value?.ToString() ?? string.Empty).ToKebabCase();
+  /// <summary>
+  /// Transforms an outbound parameter from PascalCase to kebab-case.
+  /// </summary>
+  /// <param name="value"></param>
+  public string? TransformOutbound(object? value)
+      => (value?.ToString() ?? string.Empty).ToKebabCase();
 }

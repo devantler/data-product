@@ -8,13 +8,13 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Mode
 [JsonDerivedType(typeof(DatasetEntity))]
 public interface IMetadataEntity
 {
-    /// <summary>
-    /// The entity urn.
-    /// </summary>
-    public string EntityUrn { get; set; }
+  /// <summary>
+  /// The entity urn.
+  /// </summary>
+  public string EntityUrn { get; set; }
 
-    /// <summary>
-    /// The entity type.
-    /// </summary>
-    public string EntityType { get; set; }
+  /// <summary>
+  /// The entity type.
+  /// </summary>
+  public string EntityType { get; set; }
 }

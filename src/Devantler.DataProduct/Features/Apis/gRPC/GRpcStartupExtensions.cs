@@ -5,19 +5,19 @@ namespace Devantler.DataProduct.Features.Apis.gRPC;
 /// </summary>
 public static class GRpcStartupExtensions
 {
-    /// <summary>
-    /// Registers gRPC to the DI container.
-    /// </summary>
-    public static IServiceCollection AddGRpc(this IServiceCollection services)
-    {
-        _ = services.AddGrpc();
-        return services;
-    }
+  /// <summary>
+  /// Registers gRPC to the DI container.
+  /// </summary>
+  public static IServiceCollection AddGRpc(this IServiceCollection services)
+  {
+    _ = services.AddGrpc();
+    return services;
+  }
 
-    /// <summary>
-    /// Configures the web application to use gRPC.
-    /// </summary>
-    public static WebApplication UseGRpc(this WebApplication app) =>
-        //_ = app.MapGrpcService<GreeterService>();
-        app;
+  /// <summary>
+  /// Configures the web application to use gRPC.
+  /// </summary>
+  public static WebApplication UseGRpc(this WebApplication app) =>
+      //_ = app.MapGrpcService<GreeterService>();
+      app;
 }

@@ -8,32 +8,32 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient;
 /// </summary>
 public class Client
 {
-    readonly HttpClient _httpClient;
+  readonly HttpClient _httpClient;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Client"/> class.
-    /// </summary>
-    public Client(HttpClient httpClient)
-        => _httpClient = httpClient;
+  /// <summary>
+  /// Initializes a new instance of the <see cref="Client"/> class.
+  /// </summary>
+  public Client(HttpClient httpClient)
+      => _httpClient = httpClient;
 
-    /// <summary>
-    /// Sends metadata to DataHub.
-    /// </summary>
-    public async Task EmitMetadata(Metadata metadata, CancellationToken cancellationToken = default)
+  /// <summary>
+  /// Sends metadata to DataHub.
+  /// </summary>
+  public async Task EmitMetadata(Metadata metadata, CancellationToken cancellationToken = default)
+  {
+    string stringContent = JsonSerializer.Serialize(metadata.Entities, new JsonSerializerOptions
     {
-        string stringContent = JsonSerializer.Serialize(metadata.Entities, new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        });
+      PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    });
 
-        var request = new HttpRequestMessage(HttpMethod.Post, "openapi/entities/v1/")
-        {
-            Content = new StringContent(stringContent)
-        };
+    var request = new HttpRequestMessage(HttpMethod.Post, "openapi/entities/v1/")
+    {
+      Content = new StringContent(stringContent)
+    };
 
-        var response = await _httpClient.SendAsync(request, cancellationToken);
+    var response = await _httpClient.SendAsync(request, cancellationToken);
 
-        if (!response.IsSuccessStatusCode)
-            throw new HttpRequestException($"Failed to send metadata to DataHub. Status code: {(int)response.StatusCode} {response.StatusCode}.");
-    }
+    if (!response.IsSuccessStatusCode)
+      throw new HttpRequestException($"Failed to send metadata to DataHub. Status code: {(int)response.StatusCode} {response.StatusCode}.");
+  }
 }

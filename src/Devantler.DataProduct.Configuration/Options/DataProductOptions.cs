@@ -19,93 +19,93 @@ namespace Devantler.DataProduct.Configuration.Options;
 /// </summary>
 public class DataProductOptions
 {
-    /// <summary>
-    /// The name of the data product.
-    /// </summary>
-    public string Name { get; set; } = string.Empty;
+  /// <summary>
+  /// The name of the data product.
+  /// </summary>
+  public string Name { get; set; } = string.Empty;
 
-    /// <summary>
-    /// A description of the data product.
-    /// </summary>
-    public string Description { get; set; } = string.Empty;
+  /// <summary>
+  /// A description of the data product.
+  /// </summary>
+  public string Description { get; set; } = string.Empty;
 
-    /// <summary>
-    /// The current release of the data product.
-    /// </summary>
-    public string Release { get; set; } = string.Empty;
+  /// <summary>
+  /// The current release of the data product.
+  /// </summary>
+  public string Release { get; set; } = string.Empty;
 
-    /// <summary>
-    /// The public URL of the data product.
-    /// </summary>
-    public string PublicUrl { get; set; } = string.Empty;
+  /// <summary>
+  /// The public URL of the data product.
+  /// </summary>
+  public string PublicUrl { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Options for the license used by the data product.
-    /// </summary>
-    public LicenseOptions License { get; set; } = new();
+  /// <summary>
+  /// Options for the license used by the data product.
+  /// </summary>
+  public LicenseOptions License { get; set; } = new();
 
-    /// <summary>
-    /// Options for the owner of the data product.
-    /// </summary>
-    public OwnerOptions Owner { get; set; } = new();
+  /// <summary>
+  /// Options for the owner of the data product.
+  /// </summary>
+  public OwnerOptions Owner { get; set; } = new();
 
-    /// <summary>
-    /// Options for the features in the data product.
-    /// </summary>
-    public FeatureFlagsOptions FeatureFlags { get; set; } = new();
+  /// <summary>
+  /// Options for the features in the data product.
+  /// </summary>
+  public FeatureFlagsOptions FeatureFlags { get; set; } = new();
 
-    /// <summary>
-    /// Options for the dashboard.
-    /// </summary>
-    public DashboardOptions Dashboard { get; set; } = new();
+  /// <summary>
+  /// Options for the dashboard.
+  /// </summary>
+  public DashboardOptions Dashboard { get; set; } = new();
 
-    /// <summary>
-    /// Options for the APIs.
-    /// </summary>
-    public ApisOptions Apis { get; set; } = new();
+  /// <summary>
+  /// Options for the APIs.
+  /// </summary>
+  public ApisOptions Apis { get; set; } = new();
 
-    /// <summary>
-    /// Options for the schema registry used by the data product.
-    /// </summary>
-    public SchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
+  /// <summary>
+  /// Options for the schema registry used by the data product.
+  /// </summary>
+  public SchemaRegistryOptions SchemaRegistry { get; set; } = new LocalSchemaRegistryOptions();
 
-    /// <summary>
-    /// Options for the data store.
-    /// </summary>
-    public DataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
+  /// <summary>
+  /// Options for the data store.
+  /// </summary>
+  public DataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
 
-    /// <summary>
-    /// Options for the cache store.
-    /// </summary>
-    public CacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
+  /// <summary>
+  /// Options for the cache store.
+  /// </summary>
+  public CacheStoreOptions CacheStore { get; set; } = new InMemoryCacheStoreOptions();
 
-    /// <summary>
-    /// Options for the telemetry exporter.
-    /// </summary>
-    public TelemetryOptions Telemetry { get; set; } = new ConsoleTelemetryOptions();
+  /// <summary>
+  /// Options for the telemetry exporter.
+  /// </summary>
+  public TelemetryOptions Telemetry { get; set; } = new ConsoleTelemetryOptions();
 
-    /// <summary>
-    /// Options for the inputs.
-    /// </summary>
-    public List<InputOptions> Inputs { get; set; } = new();
+  /// <summary>
+  /// Options for the inputs.
+  /// </summary>
+  public List<InputOptions> Inputs { get; set; } = new();
 
-    /// <summary>
-    /// Options for the outputs.
-    /// </summary>
-    public List<OutputOptions> Outputs { get; set; } = new();
+  /// <summary>
+  /// Options for the outputs.
+  /// </summary>
+  public List<OutputOptions> Outputs { get; set; } = new();
 
-    /// <summary>
-    /// Options for the data catalog.
-    /// </summary>
-    public DataCatalogOptions DataCatalog { get; set; } = new DataHubDataCatalogOptions();
+  /// <summary>
+  /// Options for the data catalog.
+  /// </summary>
+  public DataCatalogOptions DataCatalog { get; set; } = new DataHubDataCatalogOptions();
 
-    /// <summary>
-    /// Options for authentication.
-    /// </summary>
-    public AuthOptions Auth { get; set; } = new KeycloakAuthOptions();
+  /// <summary>
+  /// Options for authentication.
+  /// </summary>
+  public AuthOptions Auth { get; set; } = new KeycloakAuthOptions();
 
-    /// <summary>
-    /// The environment the data product is running in.
-    /// </summary>
-    public string Environment { get; set; } = string.Empty;
+  /// <summary>
+  /// The environment the data product is running in.
+  /// </summary>
+  public string Environment { get; set; } = string.Empty;
 }

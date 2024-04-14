@@ -7,18 +7,18 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Mode
 /// </summary>
 public class PlatformDocumentSchema : IPlatformSchema
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PlatformDocumentSchema"/> class.
-    /// </summary>
-    public PlatformDocumentSchema(DocumentSchemaType documentSchemaType)
-        => Type = documentSchemaType.ToString();
+  /// <summary>
+  /// Initializes a new instance of the <see cref="PlatformDocumentSchema"/> class.
+  /// </summary>
+  public PlatformDocumentSchema(DocumentSchemaType documentSchemaType)
+      => Type = documentSchemaType.ToString();
 
-    /// <inheritdoc/>
-    [JsonPropertyName("__type")]
-    public string Type { get; set; }
+  /// <inheritdoc/>
+  [JsonPropertyName("__type")]
+  public string Type { get; set; }
 
-    /// <summary>
-    /// The value of the document schema.
-    /// </summary>
-    public string DocumentSchema { get; set; } = string.Empty;
+  /// <summary>
+  /// The value of the document schema.
+  /// </summary>
+  public string DocumentSchema { get; set; } = string.Empty;
 }

@@ -12,29 +12,29 @@ namespace Devantler.DataProduct.Features.Auth;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
-    /// <summary>
-    /// Redirects the user to the login page, and back to the home page after login.
-    /// </summary>
-    /// <remarks>
-    /// Challenges the OpenIdConnect middleware to authenticate the user with the configured OpenIdConnect provider.
-    /// </remarks>
-    [HttpGet("sign-in")]
-    public IActionResult SignIn()
-    {
-        return User.Identity?.IsAuthenticated == false
-            ? Challenge(new AuthenticationProperties { RedirectUri = "/" }, OpenIdConnectDefaults.AuthenticationScheme)
-            : Redirect("/");
-    }
+  /// <summary>
+  /// Redirects the user to the login page, and back to the home page after login.
+  /// </summary>
+  /// <remarks>
+  /// Challenges the OpenIdConnect middleware to authenticate the user with the configured OpenIdConnect provider.
+  /// </remarks>
+  [HttpGet("sign-in")]
+  public IActionResult SignIn()
+  {
+    return User.Identity?.IsAuthenticated == false
+        ? Challenge(new AuthenticationProperties { RedirectUri = "/" }, OpenIdConnectDefaults.AuthenticationScheme)
+        : Redirect("/");
+  }
 
-    /// <summary>
-    /// Signs out a user.
-    /// </summary>
-    [HttpGet("sign-out")]
-    public new IActionResult SignOut()
-    {
-        return base.SignOut(
-            new AuthenticationProperties { RedirectUri = "/" },
-            CookieAuthenticationDefaults.AuthenticationScheme,
-            OpenIdConnectDefaults.AuthenticationScheme);
-    }
+  /// <summary>
+  /// Signs out a user.
+  /// </summary>
+  [HttpGet("sign-out")]
+  public new IActionResult SignOut()
+  {
+    return base.SignOut(
+        new AuthenticationProperties { RedirectUri = "/" },
+        CookieAuthenticationDefaults.AuthenticationScheme,
+        OpenIdConnectDefaults.AuthenticationScheme);
+  }
 }

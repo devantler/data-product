@@ -5,13 +5,13 @@ namespace Devantler.DataProduct.Configuration.Options.Inputs;
 /// </summary>
 public class InputOptions
 {
-    /// <summary>
-    /// The key for the input options.
-    /// </summary>
-    public const string Key = "Inputs";
+  /// <summary>
+  /// The key for the input options.
+  /// </summary>
+  public const string Key = "Inputs";
 
-    /// <summary>
-    /// The input type to use.
-    /// </summary>
-    public virtual InputType Type { get; set; }
+  /// <summary>
+  /// The input type to use.
+  /// </summary>
+  public virtual InputType Type { get; set; }
 }

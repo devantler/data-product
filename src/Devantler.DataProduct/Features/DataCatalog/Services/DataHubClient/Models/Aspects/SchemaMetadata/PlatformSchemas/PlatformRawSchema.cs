@@ -5,20 +5,18 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Mode
 /// <summary>
 /// A platform schema that represents the raw schema.
 /// </summary>
-public class PlatformRawSchema : IPlatformSchema
+/// <remarks>
+/// Initializes a new instance of the <see cref="PlatformRawSchema"/> class.
+/// </remarks>
+public class PlatformRawSchema(RawSchemaType rawSchemaType) : IPlatformSchema
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PlatformRawSchema"/> class.
-    /// </summary>
-    public PlatformRawSchema(RawSchemaType rawSchemaType)
-        => Type = rawSchemaType.ToString();
 
-    /// <inheritdoc/>
-    [JsonPropertyName("__type")]
-    public string Type { get; set; }
+  /// <inheritdoc/>
+  [JsonPropertyName("__type")]
+  public string Type { get; set; } = rawSchemaType.ToString();
 
-    /// <summary>
-    /// The value of the raw schema.
-    /// </summary>
-    public string RawSchema { get; set; } = string.Empty;
+  /// <summary>
+  /// The value of the raw schema.
+  /// </summary>
+  public string RawSchema { get; set; } = string.Empty;
 }

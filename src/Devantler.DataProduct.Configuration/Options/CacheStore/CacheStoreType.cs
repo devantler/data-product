@@ -5,13 +5,13 @@ namespace Devantler.DataProduct.Configuration.Options.CacheStore;
 /// </summary>
 public enum CacheStoreType
 {
-    /// <summary>
-    /// An in-memory cache store.
-    /// </summary>
-    InMemory,
+  /// <summary>
+  /// An in-memory cache store.
+  /// </summary>
+  InMemory,
 
-    /// <summary>
-    /// A distributed Redis cache store.
-    /// </summary>
-    Redis
+  /// <summary>
+  /// A distributed Redis cache store.
+  /// </summary>
+  Redis
 }

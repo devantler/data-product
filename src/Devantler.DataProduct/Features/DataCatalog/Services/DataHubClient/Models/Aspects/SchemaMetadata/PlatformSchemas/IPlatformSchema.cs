@@ -10,8 +10,8 @@ namespace Devantler.DataProduct.Features.DataCatalog.Services.DataHubClient.Mode
 [JsonDerivedType(typeof(PlatformTableSchema))]
 public interface IPlatformSchema
 {
-    /// <summary>
-    /// The type of the platform schema.
-    /// </summary>
-    public string Type { get; set; }
+  /// <summary>
+  /// The type of the platform schema.
+  /// </summary>
+  public string Type { get; set; }
 }

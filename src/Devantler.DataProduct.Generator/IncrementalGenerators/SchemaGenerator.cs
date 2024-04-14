@@ -18,77 +18,77 @@ namespace Devantler.DataProduct.Generator.IncrementalGenerators;
 [Generator]
 public class SchemaGenerator : GeneratorBase
 {
-    /// <inheritdoc/>
-    public override Dictionary<string, string> Generate(
-        Compilation compilation,
-        ImmutableArray<AdditionalFile> additionalFiles,
-        DataProductOptions options)
+  /// <inheritdoc/>
+  public override Dictionary<string, string> Generate(
+      Compilation compilation,
+      ImmutableArray<AdditionalFile> additionalFiles,
+      DataProductOptions options)
+  {
+    var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
+    var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject,
+        options.SchemaRegistry.Schema.Version);
+
+    var codeCompilation = new CSharpCompilation();
+
+    var avroSchemaParser = new AvroSchemaParser();
+
+    foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
     {
-        var schemaRegistryClient = options.SchemaRegistry.CreateSchemaRegistryClient();
-        var rootSchema = schemaRegistryClient.GetSchema(options.SchemaRegistry.Schema.Subject,
-            options.SchemaRegistry.Schema.Version);
+      string schemaName = schema.Name.ToPascalCase();
+      var @class = new CSharpClass(schemaName)
+          .SetDocBlock(new CSharpDocBlock($"An schema class for the {schemaName} record."))
+          .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"));
 
-        var codeCompilation = new CSharpCompilation();
+      var idProperty = new CSharpProperty("Guid", "Id")
+          .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."))
+          .SetValue("default");
+      if (schema.Fields.Any(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase)))
+      {
+        var idField = schema.Fields.First(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase));
+        idProperty.Type = avroSchemaParser.Parse(idField.Type, Language.CSharp);
+      }
 
-        var avroSchemaParser = new AvroSchemaParser();
+      _ = @class.AddProperty(idProperty);
+      _ = @class.AddImplementation(new CSharpInterface($"ISchema<{idProperty.Type}>"));
+      foreach (var field in schema.Fields)
+      {
+        if (field.Name.Equals("id", StringComparison.OrdinalIgnoreCase))
+          continue;
 
-        foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
-        {
-            string schemaName = schema.Name.ToPascalCase();
-            var @class = new CSharpClass(schemaName)
-                .SetDocBlock(new CSharpDocBlock($"An schema class for the {schemaName} record."))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"));
+        string propertyName = field.Name.ToPascalCase();
+        string propertyType = avroSchemaParser.Parse(field.Type, Language.CSharp);
 
-            var idProperty = new CSharpProperty("Guid", "Id")
-                .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."))
-                .SetValue("default");
-            if (schema.Fields.Any(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase)))
-            {
-                var idField = schema.Fields.First(f => f.Name.Equals("id", StringComparison.OrdinalIgnoreCase));
-                idProperty.Type = avroSchemaParser.Parse(idField.Type, Language.CSharp);
-            }
+        var property = new CSharpProperty(propertyType, propertyName);
 
-            _ = @class.AddProperty(idProperty);
-            _ = @class.AddImplementation(new CSharpInterface($"ISchema<{idProperty.Type}>"));
-            foreach (var field in schema.Fields)
-            {
-                if (field.Name.Equals("id", StringComparison.OrdinalIgnoreCase))
-                    continue;
+        _ = field.Documentation is not null
+            ? property.SetDocBlock(new CSharpDocBlock(field.Documentation))
+            : property.SetDocBlock(new CSharpDocBlock($"The {propertyName} property."));
 
-                string propertyName = field.Name.ToPascalCase();
-                string propertyType = avroSchemaParser.Parse(field.Type, Language.CSharp);
+        _ = @class.AddProperty(property);
+      }
 
-                var property = new CSharpProperty(propertyType, propertyName);
-
-                _ = field.Documentation is not null
-                    ? property.SetDocBlock(new CSharpDocBlock(field.Documentation))
-                    : property.SetDocBlock(new CSharpDocBlock($"The {propertyName} property."));
-
-                _ = @class.AddProperty(property);
-            }
-
-            _ = codeCompilation.AddType(@class);
-        }
-
-        foreach (var schema in rootSchema.Flatten().FindAll(s => s is EnumSchema).Cast<EnumSchema>())
-        {
-            string schemaName = schema.Name.ToPascalCase();
-            var @enum = new CSharpEnum(schemaName)
-                .SetDocBlock(new CSharpDocBlock($"An enum class for the {schemaName} record."))
-                .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"));
-
-            foreach (string symbol in schema.Symbols)
-            {
-                _ = @enum.AddValue(
-                    new CSharpEnumSymbol(symbol)
-                        .SetDocBlock(new CSharpDocBlock($"The {symbol} value."))
-                );
-            }
-
-            _ = codeCompilation.AddType(@enum);
-        }
-
-        var generator = new CSharpCodeGenerator();
-        return generator.Generate(codeCompilation);
+      _ = codeCompilation.AddType(@class);
     }
+
+    foreach (var schema in rootSchema.Flatten().FindAll(s => s is EnumSchema).Cast<EnumSchema>())
+    {
+      string schemaName = schema.Name.ToPascalCase();
+      var @enum = new CSharpEnum(schemaName)
+          .SetDocBlock(new CSharpDocBlock($"An enum class for the {schemaName} record."))
+          .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"));
+
+      foreach (string symbol in schema.Symbols)
+      {
+        _ = @enum.AddValue(
+            new CSharpEnumSymbol(symbol)
+                .SetDocBlock(new CSharpDocBlock($"The {symbol} value."))
+        );
+      }
+
+      _ = codeCompilation.AddType(@enum);
+    }
+
+    var generator = new CSharpCodeGenerator();
+    return generator.Generate(codeCompilation);
+  }
 }

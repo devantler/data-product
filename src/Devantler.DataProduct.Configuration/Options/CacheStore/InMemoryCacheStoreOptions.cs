@@ -5,6 +5,6 @@ namespace Devantler.DataProduct.Configuration.Options.CacheStore;
 /// </summary>
 public class InMemoryCacheStoreOptions : CacheStoreOptions
 {
-    /// <inheritdoc/>
-    public override CacheStoreType Type { get; set; } = CacheStoreType.InMemory;
+  /// <inheritdoc/>
+  public override CacheStoreType Type { get; set; } = CacheStoreType.InMemory;
 }

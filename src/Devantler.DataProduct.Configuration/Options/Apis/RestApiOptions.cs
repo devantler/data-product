@@ -5,8 +5,8 @@ namespace Devantler.DataProduct.Configuration.Options.Apis;
 /// </summary>
 public class RestApiOptions
 {
-    /// <summary>
-    /// Whether to enable the bulk controller or not.
-    /// </summary>
-    public bool EnableBulkController { get; set; }
+  /// <summary>
+  /// Whether to enable the bulk controller or not.
+  /// </summary>
+  public bool EnableBulkController { get; set; }
 }
