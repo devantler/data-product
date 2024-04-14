@@ -16,8 +16,8 @@
         <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.2.4" />
         <PackageReference Include="Chr.Avro.Confluent" Version="9.5.1" />
         <PackageReference Include="Confluent.Kafka" Version="2.1.1" />
-        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.1.64" />
-        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.1.64" />
+        <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.2.0" />
+        <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.2.0" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.6.0" />
         <PackageReference Include="FluentValidation" Version="11.6.0" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
