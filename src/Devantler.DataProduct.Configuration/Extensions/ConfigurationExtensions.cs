@@ -56,7 +56,7 @@ public static class ConfigurationExtensions
   {
     dataProductOptions.DataStore = (dataProductOptions.DataStore.Type, dataProductOptions.DataStore.Provider) switch
     {
-      (DataStoreType.SQL, SQLDataStoreProvider.SQLite) => dataProductOptions.DataStore,
+      (DataStoreType.SQL, SQLDataStoreProvider.Sqlite) => dataProductOptions.DataStore,
       (DataStoreType.SQL, SQLDataStoreProvider.PostgreSQL) => configuration.GetSection(DataStoreOptions.Key).Get<PostgreSQLDataStoreOptions>()
           ?? throw new InvalidOperationException($"Failed to bind configuration section '{DataStoreOptions.Key}' to the type '{typeof(PostgreSQLDataStoreOptions).FullName}'."),
       _ => throw new NotSupportedException($"Data store type '{dataProductOptions.DataStore.Type}' and provider '{dataProductOptions.DataStore.Provider}' is not supported.")

@@ -14,13 +14,13 @@ using Microsoft.CodeAnalysis;
 namespace Devantler.DataProduct.Generator.IncrementalGenerators;
 
 /// <summary>
-/// A generator that generates a SQLite database context.
+/// A generator that generates a Sqlite database context.
 /// </summary>
 [Generator]
 public class DbContextGenerator : GeneratorBase
 {
   /// <summary>
-  /// A method to generate a SQLite database context.
+  /// A method to generate a Sqlite database context.
   /// </summary>
   /// <param name="compilation"></param>
   /// <param name="additionalFiles"></param>

@@ -72,7 +72,7 @@ public class DataProductOptions
   /// <summary>
   /// Options for the data store.
   /// </summary>
-  public DataStoreOptions DataStore { get; set; } = new SQLiteDataStoreOptions();
+  public DataStoreOptions DataStore { get; set; } = new SqliteDataStoreOptions();
 
   /// <summary>
   /// Options for the cache store.

@@ -69,7 +69,7 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
       case DataStoreType.SQL:
         string providerName = options.DataStore.Provider switch
         {
-          SQLDataStoreProvider.SQLite => "SQLite",
+          SQLDataStoreProvider.Sqlite => "Sqlite",
           SQLDataStoreProvider.PostgreSQL => "Npgsql",
           _ => throw new NotSupportedException($"The data store provider '{options.DataStore.Provider}' is not supported.")
         };

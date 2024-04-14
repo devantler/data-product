@@ -50,7 +50,7 @@
   },
   DataStore: {
     ConnectionString: Data Source=sqlite.db,
-    Provider: SQLite
+    Provider: Sqlite
   },
   CacheStore: {
     ExpirationTime: 5m

@@ -3,7 +3,7 @@ config.Development.*
 config.Production.*
 assets/output
 
-# SQLite
+# Sqlite
 *.db
 *.db-shm
 *.db-wal

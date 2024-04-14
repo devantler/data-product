@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-    <PropertyGroup>
+  <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -28,7 +28,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Microsoft.FeatureManagement.AspNetCore" Version="3.2.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
@@ -44,23 +44,23 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.8.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.StackExchangeRedis" Version="1.0.0-rc9.14" />
     <PackageReference Include="StackExchange.Redis" Version="2.7.33" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Devantler.DataProduct.Generator\Devantler.DataProduct.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-        <ProjectReference Include="..\Devantler.SchemaRegistry.Client\Devantler.SchemaRegistry.Client.csproj" />
-        <ProjectReference Include="../Devantler.DataProduct.Configuration/Devantler.DataProduct.Configuration.csproj" />
-    </ItemGroup>
-    <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Devantler.DataProduct.Generator\Devantler.DataProduct.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Devantler.SchemaRegistry.Client\Devantler.SchemaRegistry.Client.csproj" />
+    <ProjectReference Include="../Devantler.DataProduct.Configuration/Devantler.DataProduct.Configuration.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <!-- Exclude the output of source generators from the compilation -->
-        <Compile Remove="generated/**/*.g.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="assets/schemas/**/*.avsc" CopyToOutputDirectory="PreserveNewest" />
-    </ItemGroup>
-    <ItemGroup>
-        <AdditionalFiles Include="config.*" />
-        <AdditionalFiles Remove="config.schema.json" />
-        <AdditionalFiles Include="assets/**/*" />
-    </ItemGroup>
+    <Compile Remove="generated/**/*.g.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets/schemas/**/*.avsc" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="config.*" />
+    <AdditionalFiles Remove="config.schema.json" />
+    <AdditionalFiles Include="assets/**/*" />
+  </ItemGroup>
 </Project>
