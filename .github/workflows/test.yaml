@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  pull_request:
+    branches: main
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: 📑 Checkout
+        uses: actions/checkout@v4
+      - name: ⚙️ Setup .NET
+        uses: actions/setup-dotnet@v4
+      - name: 🧪 Test
+        run: dotnet test --collect:"XPlat Code Coverage"
+      - name: 📄 Upload Code Coverage to CodeCov
+        uses: codecov/codecov-action@v4
+        with:
+          files: tests/**/TestResults/**/coverage.cobertura.xml
+          fail_ci_if_error: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
