@@ -135,7 +135,7 @@
                 "Provider": {
                     "type": "string",
                     "enum": [
-                        "Sqlite",
+                        "SQLite",
                         "PostgreSQL"
                     ]
                 },

@@ -4,10 +4,10 @@ namespace Devantler.DataProduct.Configuration.Options.Inputs;
 /// </summary>
 public class FileInputOptions : InputOptions
 {
-    /// <inheritdoc/>
-    public override InputType Type { get; set; } = InputType.File;
-    /// <summary>
-    /// The path to the file to read from.
-    /// </summary>
-    public string FilePath { get; set; } = string.Empty;
+  /// <inheritdoc/>
+  public override InputType Type { get; set; } = InputType.File;
+  /// <summary>
+  /// The path to the file to read from.
+  /// </summary>
+  public string FilePath { get; set; } = string.Empty;
 }

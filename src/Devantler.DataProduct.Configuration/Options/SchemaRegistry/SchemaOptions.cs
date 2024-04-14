@@ -5,13 +5,13 @@ namespace Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 /// </summary>
 public class SchemaOptions
 {
-    /// <summary>
-    /// The subject of the schema.
-    /// </summary>
-    public string Subject { get; set; } = "contoso-university";
+  /// <summary>
+  /// The subject of the schema.
+  /// </summary>
+  public string Subject { get; set; } = "contoso-university";
 
-    /// <summary>
-    /// The version of the schema.
-    /// </summary>
-    public int Version { get; set; } = 1;
+  /// <summary>
+  /// The version of the schema.
+  /// </summary>
+  public int Version { get; set; } = 1;
 }

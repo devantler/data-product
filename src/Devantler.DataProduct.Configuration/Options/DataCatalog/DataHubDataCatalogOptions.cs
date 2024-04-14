@@ -5,6 +5,6 @@ namespace Devantler.DataProduct.Configuration.Options.DataCatalog;
 /// </summary>
 public class DataHubDataCatalogOptions : DataCatalogOptions
 {
-    /// <inheritdoc />
-    public override DataCatalogType Type { get; set; } = DataCatalogType.DataHub;
+  /// <inheritdoc />
+  public override DataCatalogType Type { get; set; } = DataCatalogType.DataHub;
 }

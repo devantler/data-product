@@ -6,9 +6,9 @@ namespace Devantler.DataProduct.Configuration.Options.DataStore.SQL;
 public abstract class SQLDataStoreProvider : IProvider
 {
   /// <summary>
-  /// The Sqlite data store provider.
+  /// The SQLite data store provider.
   /// </summary>
-  public const string Sqlite = "Sqlite";
+  public const string SQLite = "SQLite";
 
   /// <summary>
   /// The MariaDb data store provider. Not supported yet.

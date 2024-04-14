@@ -5,11 +5,11 @@ namespace Devantler.DataProduct.Configuration.Options.Telemetry;
 /// </summary>
 public class OpenTelemetryOptions : TelemetryOptions
 {
-    /// <inheritdoc />
-    public override TelemetryExporterType ExporterType { get; set; } = TelemetryExporterType.OpenTelemetry;
+  /// <inheritdoc />
+  public override TelemetryExporterType ExporterType { get; set; } = TelemetryExporterType.OpenTelemetry;
 
-    /// <summary>
-    /// The endpoint to send telemetry data to.
-    /// </summary>
-    public string Endpoint { get; set; } = "http://localhost:4317";
+  /// <summary>
+  /// The endpoint to send telemetry data to.
+  /// </summary>
+  public string Endpoint { get; set; } = "http://localhost:4317";
 }

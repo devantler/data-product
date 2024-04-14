@@ -5,9 +5,9 @@ namespace Devantler.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 /// </summary>
 public class LocalSchemaRegistryOptions : SchemaRegistryOptions
 {
-    /// <inheritdoc/>
-    public override SchemaRegistryType Type { get; set; } = SchemaRegistryType.Local;
+  /// <inheritdoc/>
+  public override SchemaRegistryType Type { get; set; } = SchemaRegistryType.Local;
 
-    /// <inheritdoc/>
-    public override string Url { get; set; } = "assets/schemas";
+  /// <inheritdoc/>
+  public override string Url { get; set; } = "assets/schemas";
 }

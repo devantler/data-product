@@ -5,13 +5,13 @@ namespace Devantler.DataProduct.Configuration.Options.SchemaRegistry;
 /// </summary>
 public enum SchemaRegistryType
 {
-    /// <summary>
-    /// A local schema registry queries and saves schemas on disk.
-    /// </summary>
-    Local,
+  /// <summary>
+  /// A local schema registry queries and saves schemas on disk.
+  /// </summary>
+  Local,
 
-    /// <summary>
-    /// A Kafka schema registry that queries and saves schemas on a kafka cluster.
-    /// </summary>
-    Kafka
+  /// <summary>
+  /// A Kafka schema registry that queries and saves schemas on a kafka cluster.
+  /// </summary>
+  Kafka
 }

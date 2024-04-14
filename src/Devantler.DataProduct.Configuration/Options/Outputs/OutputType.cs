@@ -4,12 +4,12 @@ namespace Devantler.DataProduct.Configuration.Options.Outputs;
 /// </summary>
 public enum OutputType
 {
-    /// <summary>
-    /// A local file output.
-    /// </summary>
-    File,
-    /// <summary>
-    /// A kafka output.
-    /// </summary>
-    Kafka
+  /// <summary>
+  /// A local file output.
+  /// </summary>
+  File,
+  /// <summary>
+  /// A kafka output.
+  /// </summary>
+  Kafka
 }

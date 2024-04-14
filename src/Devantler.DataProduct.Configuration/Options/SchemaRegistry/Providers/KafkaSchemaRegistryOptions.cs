@@ -5,9 +5,9 @@ namespace Devantler.DataProduct.Configuration.Options.SchemaRegistry.Providers;
 /// </summary>
 public class KafkaSchemaRegistryOptions : SchemaRegistryOptions
 {
-    /// <inheritdoc/>
-    public override SchemaRegistryType Type { get; set; } = SchemaRegistryType.Kafka;
+  /// <inheritdoc/>
+  public override SchemaRegistryType Type { get; set; } = SchemaRegistryType.Kafka;
 
-    /// <inheritdoc/>
-    public override string Url { get; set; } = string.Empty;
+  /// <inheritdoc/>
+  public override string Url { get; set; } = string.Empty;
 }

@@ -13,7 +13,7 @@ public class RecordSchemaPrimitiveTypesRepository : SQLRepository<Guid, RecordSc
     /// <summary>
     /// Creates a new instance of the <see cref="RecordSchemaPrimitiveTypesRepository"/> class.
     /// </summary>
-    public RecordSchemaPrimitiveTypesRepository(IDbContextFactory<SqliteDbContext> dbContextFactory) : base(dbContextFactory.CreateDbContext())
+    public RecordSchemaPrimitiveTypesRepository(IDbContextFactory<SQLiteDbContext> dbContextFactory) : base(dbContextFactory.CreateDbContext())
     {
     }
 }
