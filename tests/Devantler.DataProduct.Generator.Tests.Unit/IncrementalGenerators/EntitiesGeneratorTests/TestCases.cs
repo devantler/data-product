@@ -2,9 +2,9 @@ namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.Entit
 
 public static class TestCases
 {
-    public static IEnumerable<object[]> ValidCases =>
-        new List<object[]>
-        {
+  public static IEnumerable<object[]> ValidCases =>
+      new List<object[]>
+      {
             new object[]{"record-schema-empty" },
             new object[]{"record-schema-namespace"},
             new object[]{"record-schema-primitive-type-boolean"},
@@ -25,5 +25,5 @@ public static class TestCases
             new object[]{"union-schema-mixed-schemas"},
             new object[]{"union-schema-record-schema"},
             new object[]{"union-schema-record-schemas"}
-        };
+      };
 }

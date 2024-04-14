@@ -5,14 +5,14 @@ namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.DbCon
 [UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
 {
-    [Theory]
-    [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-    public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
-    {
-        //Arrange
-        var additionalText = CreateDataProductConfig(
-            /*lang=json,strict*/
-            $$"""
+  [Theory]
+  [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
+  public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
+  {
+    //Arrange
+    var additionalText = CreateDataProductConfig(
+        /*lang=json,strict*/
+        $$"""
             {
                 "SchemaRegistry": {
                     "Type": "Local",
@@ -24,23 +24,23 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
                 }
             }
             """
-        );
+    );
 
-        //Act
-        var driver = RunGenerator(additionalText);
+    //Act
+    var driver = RunGenerator(additionalText);
 
-        //Assert
-        return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
-    }
+    //Assert
+    return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
+  }
 
-    [Theory]
-    [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-    public void GivenOtherDataStore_DoesNothing(string subject)
-    {
-        //Arrange
-        var additionalText = CreateDataProductConfig(
-            /*lang=json,strict*/
-            $$"""
+  [Theory]
+  [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
+  public void GivenOtherDataStore_DoesNothing(string subject)
+  {
+    //Arrange
+    var additionalText = CreateDataProductConfig(
+        /*lang=json,strict*/
+        $$"""
             {
                 "DataStore": {
                     "Type": "NoSQL",
@@ -57,13 +57,13 @@ public class GenerateTests : IncrementalGeneratorTestsBase<DbContextGenerator>
                 }
             }
             """
-        );
+    );
 
-        //Act
-        var driver = RunGenerator(additionalText);
-        Task act() => Verify(driver);
+    //Act
+    var driver = RunGenerator(additionalText);
+    Task act() => Verify(driver);
 
-        //Assert
-        _ = Assert.ThrowsAsync<NotSupportedException>(act);
-    }
+    //Assert
+    _ = Assert.ThrowsAsync<NotSupportedException>(act);
+  }
 }

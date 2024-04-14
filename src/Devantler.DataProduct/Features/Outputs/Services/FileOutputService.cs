@@ -10,59 +10,57 @@ namespace Devantler.DataProduct.Features.Outputs.Services;
 /// <summary>
 /// An output that egests data to a local file.
 /// </summary>
-public class FileOutputService<TKey, TSchema> : IOutputService<TKey, TSchema> where TSchema : class, ISchema<TKey>
+/// <remarks>
+/// Creates a new instance of <see cref="FileOutputService{TKey, TSchema}"/>.
+/// </remarks>
+/// <param name="options"></param>
+public class FileOutputService<TKey, TSchema>(IOptions<DataProductOptions> options) : IOutputService<TKey, TSchema> where TSchema : class, ISchema<TKey>
 {
-    readonly IOptions<DataProductOptions> _options;
+  readonly IOptions<DataProductOptions> _options = options;
 
-    /// <summary>
-    /// Creates a new instance of <see cref="FileOutputService{TKey, TSchema}"/>.
-    /// </summary>
-    /// <param name="options"></param>
-    public FileOutputService(IOptions<DataProductOptions> options) => _options = options;
-
-    /// <summary>
-    /// Sends data to a file.
-    /// </summary>
-    /// <param name="schema"></param>
-    /// <param name="method"></param>
-    /// <param name="cancellationToken"></param>
-    public async Task SendAsync(TSchema schema, string method, CancellationToken cancellationToken = default)
+  /// <summary>
+  /// Sends data to a file.
+  /// </summary>
+  /// <param name="schema"></param>
+  /// <param name="method"></param>
+  /// <param name="cancellationToken"></param>
+  public async Task SendAsync(TSchema schema, string method, CancellationToken cancellationToken = default)
+  {
+    foreach (var output in _options.Value.Outputs)
     {
-        foreach (var output in _options.Value.Outputs)
-        {
-            if (output is not FileOutputOptions fileOutputOptions)
-                continue;
+      if (output is not FileOutputOptions fileOutputOptions)
+        continue;
 
-            string filePath = fileOutputOptions.FilePath;
+      string filePath = fileOutputOptions.FilePath;
 
-            // Create folder if it doesn't exist
-            if (!Directory.Exists(filePath))
-            {
-                string? directory = System.IO.Path.GetDirectoryName(filePath);
-                if (directory is not null)
-                    _ = Directory.CreateDirectory(directory);
-            }
+      // Create folder if it doesn't exist
+      if (!Directory.Exists(filePath))
+      {
+        string? directory = System.IO.Path.GetDirectoryName(filePath);
+        if (directory is not null)
+          _ = Directory.CreateDirectory(directory);
+      }
 
-            if (!File.Exists(filePath))
-                File.Create(filePath).Dispose();
+      if (!File.Exists(filePath))
+        File.Create(filePath).Dispose();
 
-            string fileContent = JsonSerializer.Serialize(schema);
+      string fileContent = JsonSerializer.Serialize(schema);
 
-            await using var streamWriter = File.AppendText(filePath);
-            await streamWriter.WriteLineAsync($"// {DateTime.Now.ToString(CultureInfo.InvariantCulture)} - {method}");
-            await streamWriter.WriteLineAsync(fileContent);
-        }
+      await using var streamWriter = File.AppendText(filePath);
+      await streamWriter.WriteLineAsync($"// {DateTime.Now.ToString(CultureInfo.InvariantCulture)} - {method}");
+      await streamWriter.WriteLineAsync(fileContent);
     }
+  }
 
-    /// <summary>
-    /// Sends data to a file.
-    /// </summary>
-    /// <param name="schemas"></param>
-    /// <param name="method"></param>
-    /// <param name="cancellationToken"></param>
-    public async Task SendAsync(IEnumerable<TSchema> schemas, string method, CancellationToken cancellationToken = default)
-    {
-        foreach (var schema in schemas)
-            await SendAsync(schema, method, cancellationToken);
-    }
+  /// <summary>
+  /// Sends data to a file.
+  /// </summary>
+  /// <param name="schemas"></param>
+  /// <param name="method"></param>
+  /// <param name="cancellationToken"></param>
+  public async Task SendAsync(IEnumerable<TSchema> schemas, string method, CancellationToken cancellationToken = default)
+  {
+    foreach (var schema in schemas)
+      await SendAsync(schema, method, cancellationToken);
+  }
 }

@@ -10,20 +10,20 @@ namespace Devantler.DataProduct.Features.Telemetry;
 /// </summary>
 public static class TelemetryStartupExtensions
 {
-    /// <summary>
-    /// Registers tracing to the DI container.
-    /// </summary>
-    public static WebApplicationBuilder AddTelemetry(this WebApplicationBuilder builder, DataProductOptions options)
-    {
-        if (options.Telemetry.EnableLogging)
-            _ = builder.AddLogging(options);
+  /// <summary>
+  /// Registers tracing to the DI container.
+  /// </summary>
+  public static WebApplicationBuilder AddTelemetry(this WebApplicationBuilder builder, DataProductOptions options)
+  {
+    if (options.Telemetry.EnableLogging)
+      _ = builder.AddLogging(options);
 
-        if (options.Telemetry.EnableMetrics)
-            _ = builder.Services.AddMetrics(options);
+    if (options.Telemetry.EnableMetrics)
+      _ = builder.Services.AddMetrics(options);
 
-        if (options.Telemetry.EnableTracing)
-            _ = builder.Services.AddTracing(options);
+    if (options.Telemetry.EnableTracing)
+      _ = builder.Services.AddTracing(options);
 
-        return builder;
-    }
+    return builder;
+  }
 }

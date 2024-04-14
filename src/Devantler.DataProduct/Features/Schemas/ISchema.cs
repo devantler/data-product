@@ -5,8 +5,8 @@ namespace Devantler.DataProduct.Features.Schemas;
 /// </summary>
 public interface ISchema<T>
 {
-    /// <summary>
-    /// The unique identifier of the schema.
-    /// </summary>
-    public T Id { get; set; }
+  /// <summary>
+  /// The unique identifier of the schema.
+  /// </summary>
+  public T Id { get; set; }
 }

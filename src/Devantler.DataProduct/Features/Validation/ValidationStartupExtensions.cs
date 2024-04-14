@@ -8,12 +8,12 @@ namespace Devantler.DataProduct.Features.Validation;
 /// </summary>
 public static class ValidationStartupExtensions
 {
-    /// <summary>
-    /// Adds validation to the DI container.
-    /// </summary>
-    public static IServiceCollection AddValidation(this IServiceCollection services)
-    {
-        _ = services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        return services;
-    }
+  /// <summary>
+  /// Adds validation to the DI container.
+  /// </summary>
+  public static IServiceCollection AddValidation(this IServiceCollection services)
+  {
+    _ = services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+    return services;
+  }
 }

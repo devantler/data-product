@@ -5,14 +5,14 @@ namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.AutoM
 [UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<AutoMapperProfileGenerator>
 {
-    [Theory]
-    [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-    public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
-    {
-        //Arrange
-        var additionalText = CreateDataProductConfig(
-            /*lang=json,strict*/
-            $$"""
+  [Theory]
+  [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
+  public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
+  {
+    //Arrange
+    var additionalText = CreateDataProductConfig(
+        /*lang=json,strict*/
+        $$"""
             {
                 "SchemaRegistry": {
                     "Type": "Local",
@@ -24,12 +24,12 @@ public class GenerateTests : IncrementalGeneratorTestsBase<AutoMapperProfileGene
                 }
             }
             """
-        );
+    );
 
-        //Act
-        var driver = RunGenerator(additionalText);
+    //Act
+    var driver = RunGenerator(additionalText);
 
-        //Assert
-        return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
-    }
+    //Assert
+    return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
+  }
 }

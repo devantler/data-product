@@ -5,14 +5,14 @@ namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.Graph
 [UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<GraphQLQueryGenerator>
 {
-    [Theory]
-    [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-    public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
-    {
-        //Arrange
-        var additionalText = CreateDataProductConfig(
-            /*lang=yaml,strict*/
-            $$"""
+  [Theory]
+  [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
+  public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
+  {
+    //Arrange
+    var additionalText = CreateDataProductConfig(
+        /*lang=yaml,strict*/
+        $$"""
             {
                 "FeatureFlags": {
                     "EnableApis": [
@@ -29,12 +29,12 @@ public class GenerateTests : IncrementalGeneratorTestsBase<GraphQLQueryGenerator
                 }
             }
             """
-        );
+    );
 
-        //Act
-        var driver = RunGenerator(additionalText);
+    //Act
+    var driver = RunGenerator(additionalText);
 
-        //Assert
-        return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
-    }
+    //Assert
+    return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
+  }
 }

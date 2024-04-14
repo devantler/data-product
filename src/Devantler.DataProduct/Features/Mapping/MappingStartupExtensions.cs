@@ -7,12 +7,12 @@ namespace Devantler.DataProduct.Features.Mapping;
 /// </summary>
 public static class MappingStartupExtensions
 {
-    /// <summary>
-    /// Adds mapping to the DI container.
-    /// </summary>
-    public static IServiceCollection AddMapping(this IServiceCollection services)
-    {
-        _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        return services;
-    }
+  /// <summary>
+  /// Adds mapping to the DI container.
+  /// </summary>
+  public static IServiceCollection AddMapping(this IServiceCollection services)
+  {
+    _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
+    return services;
+  }
 }

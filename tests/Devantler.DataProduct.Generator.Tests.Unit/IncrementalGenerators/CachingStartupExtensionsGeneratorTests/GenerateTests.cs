@@ -5,13 +5,13 @@ namespace Devantler.DataProduct.Generator.Tests.Unit.IncrementalGenerators.Cachi
 [UsesVerify]
 public class GenerateTests : IncrementalGeneratorTestsBase<CachingStartupExtensionsGenerator>
 {
-    [Theory]
-    [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
-    public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
-    {
-        //Arrange
-        var additionalText = CreateDataProductConfig(
-            $$"""
+  [Theory]
+  [MemberData(nameof(TestCases.ValidCases), MemberType = typeof(TestCases))]
+  public Task GivenValidDataProductConfig_GeneratesValidCode(string subject)
+  {
+    //Arrange
+    var additionalText = CreateDataProductConfig(
+        $$"""
             {
                 "FeatureFlags": {
                     "EnableCaching": true
@@ -29,12 +29,12 @@ public class GenerateTests : IncrementalGeneratorTestsBase<CachingStartupExtensi
                 }
             }
             """
-        );
+    );
 
-        //Act
-        var driver = RunGenerator(additionalText);
+    //Act
+    var driver = RunGenerator(additionalText);
 
-        //Assert
-        return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
-    }
+    //Assert
+    return Verify(driver).UseMethodName(subject).DisableRequireUniquePrefix();
+  }
 }

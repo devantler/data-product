@@ -5,8 +5,8 @@ namespace Devantler.SchemaRegistry.Client.Models;
 /// </summary>
 public class LocalSchemaRegistryOptions : ISchemaRegistryOptions
 {
-    /// <summary>
-    /// The path to the schema registry.
-    /// </summary>
-    public string Path { get; set; } = string.Empty;
+  /// <summary>
+  /// The path to the schema registry.
+  /// </summary>
+  public string Path { get; set; } = string.Empty;
 }
