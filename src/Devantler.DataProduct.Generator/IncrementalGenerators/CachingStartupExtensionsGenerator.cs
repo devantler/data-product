@@ -39,13 +39,12 @@ public class CachingStartupExtensionsGenerator : GeneratorBase
     var codeCompilation = new CSharpCompilation();
 
     var @class = new CSharpClass("CachingStartupExtensions")
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ICacheStoreService")))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataProductOptions")
-            .NullIfEmpty() ?? "Devantler.DataProduct.Configuration.Options")
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Caching.Services"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Configuration.Options")
         )
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Entities"))
         .SetDocBlock(new CSharpDocBlock("A class that contains extension methods for service registrations and usages for caching."))
-        .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "CachingStartupExtensions"))
+        .SetNamespace("Devantler.DataProduct.Features.Caching")
         .SetIsStatic(true)
         .SetIsPartial(true);
 

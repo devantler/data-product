@@ -42,14 +42,12 @@ public class InputsStartupExtensionsGenerator : GeneratorBase
     var codeCompilation = new CSharpCompilation();
 
     var @class = new CSharpClass("InputsStartupExtensions")
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "InputsStartupExtensions") + ".Services"))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "InputOptions").NullIfEmpty()
-            ?? "Devantler.DataProduct.Configuration.Options.Inputs")
-        )
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Inputs" + ".Services"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Configuration.Options.Inputs"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Schemas"))
         .SetDocBlock(new CSharpDocBlock(
             "A class that contains extension methods for service registrations and usages for inputs"))
-        .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "InputsStartupExtensions"))
+        .SetNamespace("Devantler.DataProduct.Features.Inputs")
         .SetIsStatic(true)
         .SetIsPartial(true);
 

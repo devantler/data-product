@@ -47,10 +47,10 @@ public class RestBulkControllerGenerator : GeneratorBase
           : "Guid";
       var @class = new CSharpClass($"{schemaName.ToPlural()}Controller")
           .AddImport(new CSharpUsing("AutoMapper"))
-          .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
-          .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
-          .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreService")))
-          .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "RestBulkController"))
+          .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Schemas"))
+          .AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Entities"))
+          .AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Services"))
+          .SetNamespace("Devantler.DataProduct.Features.Apis.Rest.Controllers")
           .SetDocBlock(new CSharpDocBlock(
               $$"""A controller to handle REST API requests for a the <see cref="{{schemaName}}" /> schema."""))
           .SetBaseClass(new CSharpClass($"RestBulkController<{schemaIdType}, {schemaName}>"));

@@ -40,9 +40,9 @@ public class GraphQLQueryGenerator : GeneratorBase
 
     var @class = new CSharpClass("Query")
         .SetIsPartial(true)
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
-        .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "GraphQLStartupExtensions"));
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Services"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Schemas"))
+        .SetNamespace("Devantler.DataProduct.Features.Apis.GraphQL");
 
     foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
     {

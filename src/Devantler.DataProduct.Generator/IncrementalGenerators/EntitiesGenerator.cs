@@ -36,8 +36,8 @@ public class EntitiesGenerator : GeneratorBase
       string schemaName = schema.Name.ToPascalCase();
       var @class = new CSharpClass($"{schemaName}Entity")
           .SetDocBlock(new CSharpDocBlock($"An entity class for the {schemaName} record."))
-          .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
-          .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity"));
+          .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Schemas"))
+          .SetNamespace("Devantler.DataProduct.Features.DataStore.Entities");
 
       var idProperty = new CSharpProperty("Guid", "Id")
           .SetDocBlock(new CSharpDocBlock("The unique identifier for this entity."));

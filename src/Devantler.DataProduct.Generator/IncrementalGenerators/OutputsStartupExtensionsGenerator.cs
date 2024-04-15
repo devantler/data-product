@@ -40,14 +40,12 @@ public class OutputsStartupExtensionsGenerator : GeneratorBase
     var codeCompilation = new CSharpCompilation();
 
     var @class = new CSharpClass("OutputsStartupExtensions")
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "OutputsStartupExtensions") + ".Services"))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "OutputOptions").NullIfEmpty()
-            ?? "Devantler.DataProduct.Configuration.Options.Outputs")
-        )
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Outputs" + ".Services"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Configuration.Options.Outputs"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Schemas"))
         .SetDocBlock(new CSharpDocBlock(
             "A class that contains extension methods for service registrations and usages for outputs"))
-        .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "OutputsStartupExtensions"))
+        .SetNamespace("Devantler.DataProduct.Features.Outputs")
         .SetIsStatic(true)
         .SetIsPartial(true);
 

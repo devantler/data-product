@@ -43,8 +43,8 @@ public class DbContextGenerator : GeneratorBase
 
     var @class = new CSharpClass($"{dataStoreOptions.Provider}DbContext")
         .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
-        .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Entities"))
+        .SetNamespace("Devantler.DataProduct.Features.DataStore")
         .SetDocBlock(new CSharpDocBlock($"A {dataStoreOptions.Provider} database context."))
         .SetBaseClass(new CSharpClass("DbContext"));
 

@@ -36,7 +36,7 @@ public class AutoMapperProfileGenerator : GeneratorBase
 
     var @class = new CSharpClass("AutoMapperProfile")
         .AddImport(new CSharpUsing("AutoMapper"))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Schemas"))
         .SetNamespace("Devantler.DataProduct")
         .SetDocBlock(new CSharpDocBlock("AutoMapper profile for mapping between models and entities."))
         .SetBaseClass(new CSharpClass("Profile"));
@@ -44,7 +44,7 @@ public class AutoMapperProfileGenerator : GeneratorBase
     var constructor = new CSharpConstructor("AutoMapperProfile")
         .SetDocBlock(new CSharpDocBlock("Creates a new instance of <see cref=\"AutoMapperProfile\"/>."));
 
-    _ = @class.AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")));
+    _ = @class.AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Entities"));
     foreach (var schema in rootSchema.Flatten().FindAll(s => s is RecordSchema).Cast<RecordSchema>())
     {
       string schemaName = schema.Name.ToPascalCase();

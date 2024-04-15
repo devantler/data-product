@@ -22,8 +22,7 @@
     <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.2.0" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Core" Version="0.2.0" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.2.0" GeneratePathProperty="true" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="4.9.2" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" GeneratePathProperty="true" PrivateAssets="all" />
@@ -68,6 +67,7 @@
       <TargetPathWithTargetPlatformMoniker Include="$(PKGNewtonsoft_Json)\lib\netstandard*\*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(PKGScriban)\lib\netstandard*\*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(PKGYamlDotNet)\lib\netstandard*\*.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(PKGMicrosoft_CodeAnalysis)\lib\netstandard2.*\*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(ProjectDir)/../Devantler.SchemaRegistry.Client/$(OutputPath)/*.dll" IncludeRuntimeDependency="false" />
       <TargetPathWithTargetPlatformMoniker Include="$(ProjectDir)/../Devantler.DataProduct.Configuration/$(OutputPath)/*.dll" IncludeRuntimeDependency="false" />
     </ItemGroup>

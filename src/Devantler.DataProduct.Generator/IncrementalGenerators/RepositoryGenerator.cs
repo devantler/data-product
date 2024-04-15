@@ -53,9 +53,9 @@ public class RepositoryGenerator : GeneratorBase
       };
 
       var repositoryClass = new CSharpClass($"{schemaName}Repository")
-          .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
+          .AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Entities"))
           .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
-          .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository"))
+          .SetNamespace("Devantler.DataProduct.Features.DataStore.Repositories")
           .SetDocBlock(new CSharpDocBlock($$"""A repository to interact with entities of type <see cref="{{schemaName}}Entity"/>"""))
           .SetBaseClass(baseClass);
 

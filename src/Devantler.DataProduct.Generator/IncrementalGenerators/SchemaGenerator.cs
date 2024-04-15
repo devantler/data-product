@@ -37,7 +37,7 @@ public class SchemaGenerator : GeneratorBase
       string schemaName = schema.Name.ToPascalCase();
       var @class = new CSharpClass(schemaName)
           .SetDocBlock(new CSharpDocBlock($"An schema class for the {schemaName} record."))
-          .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"));
+          .SetNamespace("Devantler.DataProduct.Features.Schemas");
 
       var idProperty = new CSharpProperty("Guid", "Id")
           .SetDocBlock(new CSharpDocBlock("The unique identifier for this schema."))
@@ -75,7 +75,7 @@ public class SchemaGenerator : GeneratorBase
       string schemaName = schema.Name.ToPascalCase();
       var @enum = new CSharpEnum(schemaName)
           .SetDocBlock(new CSharpDocBlock($"An enum class for the {schemaName} record."))
-          .SetNamespace(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema"));
+          .SetNamespace("Devantler.DataProduct.Features.Schemas");
 
       foreach (string symbol in schema.Symbols)
       {

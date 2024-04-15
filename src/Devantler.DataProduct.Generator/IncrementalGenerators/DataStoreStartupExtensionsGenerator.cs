@@ -37,14 +37,14 @@ public class DataStoreStartupExtensionsGenerator : GeneratorBase
 
     var codeCompilation = new CSharpCompilation();
 
-    string codeNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreStartupExtensions");
-    string dataStoreOptionsNamespace = NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "DataStoreOptions");
+    string codeNamespace = "Devantler.DataProduct.Features.DataStore";
+    string dataStoreOptionsNamespace = "Devantler.DataProduct.Configuration.Options.DataStore";
     var @class = new CSharpClass("DataStoreStartupExtensions")
         .AddImport(new CSharpUsing(string.IsNullOrEmpty(dataStoreOptionsNamespace) ? "Devantler.DataProduct.Configuration.Options.DataStore" : dataStoreOptionsNamespace))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IDataStoreService")))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IRepository")))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "IEntity")))
-        .AddImport(new CSharpUsing(NamespaceResolver.ResolveForType(compilation.GlobalNamespace, "ISchema")))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Services"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Repositories"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.DataStore.Entities"))
+        .AddImport(new CSharpUsing("Devantler.DataProduct.Features.Schemas"))
         .AddImport(new CSharpUsing("Microsoft.EntityFrameworkCore"))
         .SetDocBlock(new CSharpDocBlock("A class that contains extension methods for service registrations and usages for a data store."))
         .SetNamespace(codeNamespace)
