@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0
+FROM mcr.microsoft.com/dotnet/sdk:8.0
 
 HEALTHCHECK --start-period=30s CMD wget --quiet --tries=1 --spider http://localhost:5000 || exit 1
 
@@ -6,8 +6,8 @@ EXPOSE 5000
 
 ARG DOCKER_METADATA_OUTPUT_VERSION=v0.0.0
 ENV ASPNETCORE_URLS=http://+:5000 \
-    ASPNETCORE_ENVIRONMENT=Production \
-    RELEASE=${DOCKER_METADATA_OUTPUT_VERSION}
+  ASPNETCORE_ENVIRONMENT=Production \
+  RELEASE=${DOCKER_METADATA_OUTPUT_VERSION}
 
 
 WORKDIR /build
