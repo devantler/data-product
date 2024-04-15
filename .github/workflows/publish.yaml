@@ -10,13 +10,14 @@ on:
       - "v*"
 
 jobs:
-  build-and-publish-data-product:
+  publish-docker-image:
+    name: Publish Docker image
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     steps:
-      - name: Checkout repository
+      - name: 📑 Checkout
         uses: actions/checkout@v4
 
       - name: Set up QEMU
@@ -39,7 +40,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: src/Devantler.DataProduct/Dockerfile
