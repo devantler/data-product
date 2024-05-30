@@ -21,7 +21,7 @@
     <PackageReference Include="FluentValidation" Version="11.9.1" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.63.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="13.9.5" />
-    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.4" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="13.9.5" />
     <PackageReference Include="HotChocolate.Data" Version="13.9.5" />
     <PackageReference Include="HotChocolate.Diagnostics" Version="13.9.5" />
     <PackageReference Include="Keycloak.AuthServices.Authentication" Version="2.4.1" /> <!-- Keep an eye on this package, if it is not maintained it should be replaced by manual setup, and if it is maintained it should replace the current setup. -->
