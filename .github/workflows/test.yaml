@@ -6,7 +6,6 @@ on:
     # https://github.com/orgs/community/discussions/64119
     types: [opened, synchronize, reopened, ready_for_review, closed, edited]
     branches: main
-    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: main
 
