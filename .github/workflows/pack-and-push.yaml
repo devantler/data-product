@@ -24,4 +24,4 @@ jobs:
       - name: Pack
         run: dotnet pack --configuration Release
       - name: Push
-        run: dotnet nuget push src/**/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github" --skip-duplicate
+        run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github" --skip-duplicate
