@@ -16,6 +16,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Confluent.Kafka" Version="2.5.2" />
         <PackageReference Include="Confluent.SchemaRegistry" Version="2.4.0" />
         <PackageReference Include="Chr.Avro" Version="10.4.0" />
         <PackageReference Include="Chr.Avro.Json" Version="10.4.0" />
