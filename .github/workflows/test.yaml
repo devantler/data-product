@@ -2,8 +2,10 @@ name: Test
 
 on:
   pull_request:
+    # Added 'edited' temporarily, as there currently is no trigger for when the base branch is updated.
+    # https://github.com/orgs/community/discussions/64119
+    types: [opened, synchronize, reopened, ready_for_review, closed, edited]
     branches: main
-    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: main
 
@@ -19,7 +21,7 @@ jobs:
       - name: 📑 Checkout
         uses: actions/checkout@v4
       - name: ⚙️ Setup .NET
-        uses: actions/setup-dotnet@v4.0.0
+        uses: actions/setup-dotnet@v4.0.1
       - name: 🧪 Test
         run: dotnet test --collect:"XPlat Code Coverage"
       - name: 📄 Upload Code Coverage to CodeCov
