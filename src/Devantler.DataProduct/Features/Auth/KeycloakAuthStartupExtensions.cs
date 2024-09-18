@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Devantler.DataProduct.Configuration.Options;
 using Devantler.DataProduct.Configuration.Options.Auth;
 using Keycloak.AuthServices.Authentication;
+using Keycloak.AuthServices.Common;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -20,53 +21,50 @@ public static class KeycloakAuthStartupExtensions
   public static IServiceCollection AddKeycloakAuth(this IServiceCollection services, DataProductOptions options)
   {
     var dataProductKeycloakOptions = (KeycloakAuthOptions)options.Auth;
-    var keycloakAuthenticationOptions = new KeycloakAuthenticationOptions
+    _ = services.AddKeycloakWebApiAuthentication(options =>
     {
-      Resource = dataProductKeycloakOptions.ClientID,
-      Credentials = new Keycloak.AuthServices.Common.KeycloakClientInstallationCredentials
+      options.Resource = dataProductKeycloakOptions.ClientID;
+      options.Credentials = new KeycloakClientInstallationCredentials
       {
         Secret = dataProductKeycloakOptions.ClientSecret
-      },
-      Realm = dataProductKeycloakOptions.Realm,
-      AuthServerUrl = dataProductKeycloakOptions.AuthServerUrl,
-      SslRequired = "external"
-    };
-    _ = services.AddKeycloakAuthentication(keycloakAuthenticationOptions);
+      };
+      options.Realm = dataProductKeycloakOptions.Realm;
+      options.AuthServerUrl = dataProductKeycloakOptions.AuthServerUrl;
+      options.SslRequired = "external";
+    });
     _ = services.AddAuthentication(options =>
     {
       options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
       options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
       options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-    })
-        .AddCookie(cookie =>
-        {
-          cookie.Cookie.Name = "keycloak.cookie";
-          cookie.Cookie.MaxAge = TimeSpan.FromMinutes(60);
-          cookie.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-          cookie.SlidingExpiration = true;
-        })
-        .AddOpenIdConnect(options =>
-        {
-          options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-          options.Authority = $"{dataProductKeycloakOptions.AuthServerUrl}realms/{dataProductKeycloakOptions.Realm}";
-          options.ClientId = dataProductKeycloakOptions.ClientID;
-          options.ClientSecret = dataProductKeycloakOptions.ClientSecret;
-          options.MetadataAddress = $"{dataProductKeycloakOptions.AuthServerUrl}realms/{dataProductKeycloakOptions.Realm}/.well-known/openid-configuration";
-          options.RequireHttpsMetadata = true;
-          options.GetClaimsFromUserInfoEndpoint = true;
-          options.Scope.Add("openid");
-          options.Scope.Add("profile");
-          options.SaveTokens = true;
-          options.ResponseType = OpenIdConnectResponseType.Code;
-          options.NonceCookie.SameSite = SameSiteMode.Unspecified;
-          options.CorrelationCookie.SameSite = SameSiteMode.Unspecified;
-          options.TokenValidationParameters = new TokenValidationParameters
-          {
-            NameClaimType = "name",
-            RoleClaimType = ClaimTypes.Role,
-            ValidateIssuer = true
-          };
-        });
+    }).AddCookie(cookie =>
+    {
+      cookie.Cookie.Name = "keycloak.cookie";
+      cookie.Cookie.MaxAge = TimeSpan.FromMinutes(60);
+      cookie.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+      cookie.SlidingExpiration = true;
+    }).AddOpenIdConnect(options =>
+    {
+      options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+      options.Authority = $"{dataProductKeycloakOptions.AuthServerUrl}realms/{dataProductKeycloakOptions.Realm}";
+      options.ClientId = dataProductKeycloakOptions.ClientID;
+      options.ClientSecret = dataProductKeycloakOptions.ClientSecret;
+      options.MetadataAddress = $"{dataProductKeycloakOptions.AuthServerUrl}realms/{dataProductKeycloakOptions.Realm}/.well-known/openid-configuration";
+      options.RequireHttpsMetadata = true;
+      options.GetClaimsFromUserInfoEndpoint = true;
+      options.Scope.Add("openid");
+      options.Scope.Add("profile");
+      options.SaveTokens = true;
+      options.ResponseType = OpenIdConnectResponseType.Code;
+      options.NonceCookie.SameSite = SameSiteMode.Unspecified;
+      options.CorrelationCookie.SameSite = SameSiteMode.Unspecified;
+      options.TokenValidationParameters = new TokenValidationParameters
+      {
+        NameClaimType = "name",
+        RoleClaimType = ClaimTypes.Role,
+        ValidateIssuer = true
+      };
+    });
     //_ = services.AddKeycloakAuthorization();
     _ = services.AddAuthorization();
     // services.AddAuthorization(options =>
