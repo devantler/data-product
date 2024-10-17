@@ -21,10 +21,10 @@ public static class GraphQLStartupExtensions
         .ModifyRequestOptions(opt => opt.IncludeExceptionDetails = environment.IsDevelopment())
         .AddQueryType<Query>()
         .AddInstrumentation();
-    _ = requestExecutorBuilder.SetPagingOptions(new PagingOptions
+    _ = requestExecutorBuilder.ModifyPagingOptions(opt =>
     {
-      DefaultPageSize = options.Apis.GraphQL.DefaultPageSize,
-      MaxPageSize = options.Apis.GraphQL.MaxPageSize
+      opt.DefaultPageSize = options.Apis.GraphQL.DefaultPageSize;
+      opt.MaxPageSize = options.Apis.GraphQL.MaxPageSize;
     });
     if (options.Apis.GraphQL.EnableProjections)
       _ = requestExecutorBuilder.AddProjections();
