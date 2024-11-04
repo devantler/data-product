@@ -72,7 +72,7 @@ public class LocalSchemaRegistryClient : ISchemaRegistryClient
   /// <param name="version"></param>
   /// <param name="cancellationToken"></param>
   /// <returns></returns>
-  async Task<string> GetSchemaStringAsync(string subject, int version, CancellationToken cancellationToken)
+  async Task<string> GetSchemaStringAsync(string subject, int version, CancellationToken cancellationToken = default)
   {
     string schemaFileName = $"{subject}-v{version}.avsc";
 

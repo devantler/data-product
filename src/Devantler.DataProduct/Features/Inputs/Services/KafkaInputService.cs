@@ -74,7 +74,7 @@ public class KafkaInputService<TKey, TSchema> : BackgroundService where TSchema 
   }
 
   /// <inheritdoc />
-  public override async Task StopAsync(CancellationToken cancellationToken)
+  public override async Task StopAsync(CancellationToken cancellationToken = default)
   {
     foreach (var consumer in _consumers)
     {
