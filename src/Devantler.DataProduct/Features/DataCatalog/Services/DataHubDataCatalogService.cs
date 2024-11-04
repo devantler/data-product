@@ -51,7 +51,7 @@ public class DataHubDataCatalogService : BackgroundService
   }
 
   /// <inheritdoc />
-  public override async Task StopAsync(CancellationToken cancellationToken)
+  public override async Task StopAsync(CancellationToken cancellationToken = default)
       => await base.StopAsync(cancellationToken);
 
   void AddLinks(string urn, Metadata metadata)

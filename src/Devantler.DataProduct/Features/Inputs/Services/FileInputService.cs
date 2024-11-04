@@ -81,6 +81,6 @@ public class FileInputService<TKey, TSchema> : BackgroundService
   }
 
   /// <inheritdoc />
-  public override async Task StopAsync(CancellationToken cancellationToken)
+  public override async Task StopAsync(CancellationToken cancellationToken = default)
       => await base.StopAsync(cancellationToken);
 }
