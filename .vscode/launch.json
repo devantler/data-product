@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Devantler.DataProduct/bin/Debug/net8.0/Devantler.DataProduct.dll",
+            "program": "${workspaceFolder}/src/Devantler.DataProduct/bin/Debug/net9.0/Devantler.DataProduct.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Devantler.DataProduct",
             "stopAtEntry": false,
