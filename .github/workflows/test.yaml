@@ -21,7 +21,9 @@ jobs:
       - name: 📑 Checkout
         uses: actions/checkout@v4
       - name: ⚙️ Setup .NET
-        uses: actions/setup-dotnet@v4.1.0
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.1.0
       - name: 🧪 Test
         run: dotnet test --collect:"XPlat Code Coverage"
       - name: 📄 Upload Code Coverage to CodeCov
