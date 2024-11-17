@@ -23,7 +23,7 @@ jobs:
       - name: ⚙️ Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.1.0
+          dotnet-version: 9
       - name: 🧪 Test
         run: dotnet test --collect:"XPlat Code Coverage"
       - name: 📄 Upload Code Coverage to CodeCov
