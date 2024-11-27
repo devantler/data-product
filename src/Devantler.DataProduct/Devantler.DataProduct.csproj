@@ -16,8 +16,8 @@
     <PackageReference Include="Chr.Avro.Confluent" Version="10.4.0" />
     <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.2.0" />
     <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.2.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
-    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="14.1.0" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" Version="14.0.0" />
