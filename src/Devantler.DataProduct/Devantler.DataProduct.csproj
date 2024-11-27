@@ -13,7 +13,7 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Blazorise.Bootstrap" Version="1.6.2" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.6.2" />
-    <PackageReference Include="Chr.Avro.Confluent" Version="10.4.0" />
+    <PackageReference Include="Chr.Avro.Confluent" Version="10.5.0" />
     <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.2.0" />
     <PackageReference Include="Devantler.Commons.StringHelpers" Version="0.2.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
