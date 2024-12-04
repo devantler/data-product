@@ -19,7 +19,7 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="14.1.0" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="14.2.0" />
     <PackageReference Include="HotChocolate.Data.EntityFramework" Version="14.0.0" />
     <PackageReference Include="HotChocolate.Data" Version="14.2.0" />
     <PackageReference Include="HotChocolate.Diagnostics" Version="14.1.0" />
