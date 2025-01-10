@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Chr.Avro.Json" Version="10.5.0" GeneratePathProperty="true" PrivateAssets="all" />
-    <PackageReference Include="Chr.Avro" Version="10.5.0" GeneratePathProperty="true" PrivateAssets="all" />
+    <PackageReference Include="Chr.Avro" Version="10.6.0" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="Devantler.Commons.CodeGen.Core" Version="0.2.0" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="Devantler.Commons.CodeGen.CSharp" Version="0.2.0" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="Devantler.Commons.CodeGen.Mapping.Avro" Version="0.2.0" GeneratePathProperty="true" PrivateAssets="all" />
