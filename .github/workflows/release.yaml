@@ -31,6 +31,8 @@ jobs:
           fi
       - name: Github Action Notify Release
         if: env.ISSUE_EXISTS == false
-        uses: nearform-actions/github-action-notify-release@v1.12.2        with:
+        uses: nearform-actions/github-action-notify-release@v1.12.2
+        with:
           notify-after: 1m
+
 
